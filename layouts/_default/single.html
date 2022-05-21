@@ -38,6 +38,7 @@
                         {{- with $medium.RelPermalink -}}, {{.}} 1024w{{- end -}}
                         {{- with $large.RelPermalink -}}, {{.}} 1366w{{- end -}}"
                     src="{{ .RelPermalink }}"
+                    loading="lazy"
                     alt="banner-image">
                     </p>    
                 {{ end }}
