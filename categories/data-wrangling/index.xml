@@ -34,7 +34,7 @@
 &lt;p&gt;The program belwo simply reads the data downloaded json data from a folder to create a list of file paths to read.&lt;/p&gt;
 &lt;p&gt;It then traverses that list to find the individual case data to write to file.&lt;/p&gt;
 &lt;p&gt;For each case it create the &lt;code&gt;loc_id&lt;/code&gt; key that will be used to join with another dataset.&lt;/p&gt;
-&lt;p&gt;Finally, it writes new case dictionary to file.&lt;/p&gt;
+&lt;p&gt;Finally, it writes the new case dictionary to file.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;
 &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pandas &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; pd
 &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; glob
