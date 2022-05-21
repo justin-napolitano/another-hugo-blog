@@ -1,7 +1,7 @@
 +++
 date = '2022-05-18T14:40:32'
 description = 'Testing TensorFlow models against the SCDB data set.'
-title = 'Conduct Legal Research with AI Part 3'
+title = 'Conduct Legal Research with AI: Part 3'
 featured_image = 'post-image.png'
 author = "Justin Napolitano"
 image = "post-image.*"
