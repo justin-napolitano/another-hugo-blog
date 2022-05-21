@@ -4,8 +4,9 @@ date = "2022-05-19T22:30:32.169Z"
 description = "Importing case variables and established relationships to the graph."
 author = "Justin Napolitano"
 image = "post-image.jpeg"
-images = ["post-image.jpeg"]
 thumbnail = "post-image.jpeg"
+featured = "post-image.jpeg"
+images = ['thumbnail.jpeg']
 categories = ['Legal Research', 'Research', 'SCOTUS', 'neo4j', 'Behavioral Modeling', 'Graph Database', 'Automation']
 tags = ['python','legal', 'neo4j', 'graphDB', 'scotus', 'oop']
 +++

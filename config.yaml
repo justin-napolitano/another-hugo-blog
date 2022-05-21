@@ -18,26 +18,33 @@ menu:
     name: Archive
     title: Archive
     url: /posts/
-    weight: 4
+    weight: 5
   - identifier: tags
     name: Tags
     url: /tags/
-    weight: 3
+    weight: 4
   - identifier: categories
     name: Categories
     url: /categories/
+    weight: 3
+  - identifier: series
+    name: Series
+    url: /series/
     weight: 2
 
 
 taxonomies:
   category: categories
   tag: tags
+  series: series
 
 params:
+
+  description:  'Pretending to be a data scientist'
+  images:  ['feature-image.png']
   author: "Justin Napolitano"
   email: justin@jnapolitano.io # used for microformats
   avatar: "/images/me.png" # used for microformats
-  description: ""
   # Uncomment if you need this
   # images:
   #   - images/og-featured.png # relative path to "static" directory

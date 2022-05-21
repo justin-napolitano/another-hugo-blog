@@ -4,6 +4,7 @@
 {{ end }}
 
 <div class="post-info">
+
     {{ if .Params.date }}
         <div class="post-date dt-published">{{ .Params.date.Format $dateFormat }}</div>
     {{ end }}
@@ -13,6 +14,15 @@
 
 
     <div class="post-taxonomies">
+        {{ if .Params.series }}
+            <ul class="post-series">
+                {{ range $cat_name := .Params.series }}
+                    {{ $cat := ($.Site.GetPage (printf "/series/%s" $cat_name)) }}
+                    <li><a href="{{ $cat.Permalink }}">Series: {{ $cat.Title | default $cat_name }}</a></li>
+                {{ end }}
+            </ul>
+        {{ end }}
+        
         {{ if .Params.categories }}
             <ul class="post-categories">
                 {{ range $cat_name := .Params.categories }}
@@ -20,14 +30,14 @@
                     <li><a href="{{ $cat.Permalink }}">{{ $cat.Title | default $cat_name }}</a></li>
                 {{ end }}
             </ul>
-            {{ end }}
-            {{ if .Params.tags }}
-                <ul class="post-tags">
-                    {{ range $tag_name := .Params.tags }}
-                        {{ $tag := ($.Site.GetPage (printf "/tags/%s" $tag_name)) }}
-                        <li><a href="{{ $tag.Permalink }}">#{{ $tag.Title | default $tag_name }}</a></li>
-                    {{ end }}
-                </ul>
+        {{ end }}
+        {{ if .Params.tags }}
+            <ul class="post-tags">
+                {{ range $tag_name := .Params.tags }}
+                    {{ $tag := ($.Site.GetPage (printf "/tags/%s" $tag_name)) }}
+                    <li><a href="{{ $tag.Permalink }}">#{{ $tag.Title | default $tag_name }}</a></li>
+                {{ end }}
+            </ul>
         {{ end }}
     </div>
 </div>

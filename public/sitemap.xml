@@ -2,13 +2,49 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.jnapolitano.io/categories/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/climate-change/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/data/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/emissions/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/python/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/series/rice-paddy-methane-emissions/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/rice-paddy-emissions-1/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/series/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/statistical-analysis/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/university-of-malaysia/</loc>
+    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
+  </url><url>
     <loc>https://blog.jnapolitano.io/categories/automation/</loc>
     <lastmod>2022-05-19T22:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/categories/behavioral-modeling/</loc>
-    <lastmod>2022-05-19T22:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/</loc>
     <lastmod>2022-05-19T22:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/legal-research-part-4/</loc>
@@ -18,9 +54,6 @@
     <lastmod>2022-05-19T22:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/graphdb/</loc>
-    <lastmod>2022-05-19T22:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/</loc>
     <lastmod>2022-05-19T22:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/legal/</loc>
@@ -38,9 +71,6 @@
     <loc>https://blog.jnapolitano.io/tags/oop/</loc>
     <lastmod>2022-05-19T22:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/posts/</loc>
-    <lastmod>2022-05-19T22:30:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/tags/python/</loc>
     <lastmod>2022-05-19T22:30:32+00:00</lastmod>
   </url><url>
@@ -51,9 +81,6 @@
     <lastmod>2022-05-19T22:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/scotus/</loc>
-    <lastmod>2022-05-19T22:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/</loc>
     <lastmod>2022-05-19T22:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/ai-proof-of-concept/</loc>
@@ -74,16 +101,10 @@
     <loc>https://blog.jnapolitano.io/posts/constitution_to_neo/</loc>
     <lastmod>2022-05-17T18:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/python/</loc>
-    <lastmod>2022-05-17T18:40:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/categories/us-constitution/</loc>
     <lastmod>2022-05-17T18:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/neo4j_integration/</loc>
-    <lastmod>2022-05-16T14:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/data/</loc>
     <lastmod>2022-05-16T14:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/categories/data-integration/</loc>
@@ -159,9 +180,6 @@
     <lastmod>2022-05-07T18:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/categories/statisical-analysis/</loc>
-    <lastmod>2022-05-07T18:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/statistical-analysis/</loc>
     <lastmod>2022-05-07T18:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/coal/</loc>
