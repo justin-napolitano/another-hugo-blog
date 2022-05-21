@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on Justin&#39;s Data Blog</title>
-    <link>hugo-test-blog.jnapolitano.io/categories/python/</link>
+    <link>https://hugo-test-blog.jnapolitano.io/categories/python/</link>
     <description>Justin&#39;s Data Blog (Python)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 17 May 2022 18:40:32 +0000</lastBuildDate>
     
-    <atom:link href="hugo-test-blog.jnapolitano.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://hugo-test-blog.jnapolitano.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Conduct Legal Research with AI: Part 2</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/constitution_to_neo/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/constitution_to_neo/</link>
       <pubDate>Tue, 17 May 2022 18:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/constitution_to_neo/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/constitution_to_neo/</guid>
       <description>&lt;h1 id=&#34;integrating-the-constitution-to-neo4j&#34; &gt;Integrating the Constitution to Neo4j
 &lt;span&gt;
     &lt;a href=&#34;#integrating-the-constitution-to-neo4j&#34;&gt;
@@ -223,10 +223,10 @@
     
     <item>
       <title>Feasibility of Shipping Carbon Across the Atlantic</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/feasibility_study_shipping_carbon/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/feasibility_study_shipping_carbon/</link>
       <pubDate>Sat, 07 May 2022 18:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/feasibility_study_shipping_carbon/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/feasibility_study_shipping_carbon/</guid>
       <description>&lt;h1 id=&#34;feasibility-of-shipping-carbon-across-the-atlantic&#34; &gt;Feasibility of Shipping Carbon Across the Atlantic
 &lt;span&gt;
     &lt;a href=&#34;#feasibility-of-shipping-carbon-across-the-atlantic&#34;&gt;
@@ -1090,10 +1090,10 @@ warnings&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;filterwarnings(&
     
     <item>
       <title>Monte Carlo Projection of the Annual Cost of Shipping Carbon from Europe to the United States</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/carbon-shipping-projections/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/carbon-shipping-projections/</link>
       <pubDate>Sat, 07 May 2022 18:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/carbon-shipping-projections/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/carbon-shipping-projections/</guid>
       <description>&lt;h1 id=&#34;a-monte-carlo-projection-of-the-annual-cost-of-shipping-carbon-from-europe-to-us-ports&#34; &gt;A Monte Carlo Projection of the Annual Cost of Shipping Carbon from Europe to US Ports
 &lt;span&gt;
     &lt;a href=&#34;#a-monte-carlo-projection-of-the-annual-cost-of-shipping-carbon-from-europe-to-us-ports&#34;&gt;
@@ -1889,10 +1889,10 @@ warnings&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;filterwarnings(&
     
     <item>
       <title>US Coal Plant Distribution</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/coal/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/coal/</link>
       <pubDate>Sat, 07 May 2022 18:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/coal/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/coal/</guid>
       <description>&lt;h1 id=&#34;coal-plants&#34; &gt;Coal Plants
 &lt;span&gt;
     &lt;a href=&#34;#coal-plants&#34;&gt;
@@ -2437,10 +2437,10 @@ coal_density_map
     
     <item>
       <title>Existing Carbon and Gas Storage Facilities</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/existing-gas-storage-facilities/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/existing-gas-storage-facilities/</link>
       <pubDate>Fri, 06 May 2022 12:30:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/existing-gas-storage-facilities/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/existing-gas-storage-facilities/</guid>
       <description>&lt;h1 id=&#34;natural-gas-storage-facilities&#34; &gt;Natural Gas Storage Facilities
 &lt;span&gt;
     &lt;a href=&#34;#natural-gas-storage-facilities&#34;&gt;
@@ -2669,10 +2669,10 @@ ng_storage_map
     
     <item>
       <title>EuroZone Gas Imports and Exports</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/european-gas-imports/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/european-gas-imports/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/european-gas-imports/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/european-gas-imports/</guid>
       <description>&lt;h1 id=&#34;eurozone-gas-imports-and-exports&#34; &gt;EuroZone Gas Imports and Exports
 &lt;span&gt;
     &lt;a href=&#34;#eurozone-gas-imports-and-exports&#34;&gt;

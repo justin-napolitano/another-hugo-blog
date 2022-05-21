@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Legal Research on Justin&#39;s Data Blog</title>
-    <link>hugo-test-blog.jnapolitano.io/categories/legal-research/</link>
+    <link>https://hugo-test-blog.jnapolitano.io/categories/legal-research/</link>
     <description>Justin&#39;s Data Blog (Legal Research)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 19 May 2022 22:30:32 +0000</lastBuildDate>
     
-    <atom:link href="hugo-test-blog.jnapolitano.io/categories/legal-research/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://hugo-test-blog.jnapolitano.io/categories/legal-research/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Conduct Legal Research with AI: Part 4</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/legal-research-part-4/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/legal-research-part-4/</link>
       <pubDate>Thu, 19 May 2022 22:30:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/legal-research-part-4/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/legal-research-part-4/</guid>
       <description>&lt;h1 id=&#34;conduct-legal-research-with-ai-part-4&#34; &gt;Conduct Legal Research with AI Part 4
 &lt;span&gt;
     &lt;a href=&#34;#conduct-legal-research-with-ai-part-4&#34;&gt;
@@ -211,10 +211,10 @@
     
     <item>
       <title>Conduct Legal Research with AI: Part 2</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/constitution_to_neo/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/constitution_to_neo/</link>
       <pubDate>Tue, 17 May 2022 18:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/constitution_to_neo/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/constitution_to_neo/</guid>
       <description>&lt;h1 id=&#34;integrating-the-constitution-to-neo4j&#34; &gt;Integrating the Constitution to Neo4j
 &lt;span&gt;
     &lt;a href=&#34;#integrating-the-constitution-to-neo4j&#34;&gt;
@@ -421,10 +421,10 @@
     
     <item>
       <title>Conduct Legal Research with AI: Part 1</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/neo4j_integration/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/neo4j_integration/</link>
       <pubDate>Mon, 16 May 2022 14:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/neo4j_integration/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/neo4j_integration/</guid>
       <description>&lt;h2 id=&#34;introduction&#34; &gt;Introduction
 &lt;span&gt;
     &lt;a href=&#34;#introduction&#34;&gt;
@@ -1597,10 +1597,10 @@ case_data &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; submit_cases_
     
     <item>
       <title>Conduct Legal Research with AI: Part 0</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/loc_crawler/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/loc_crawler/</link>
       <pubDate>Mon, 16 May 2022 13:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/loc_crawler/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/loc_crawler/</guid>
       <description>&lt;h1 id=&#34;crawling-the-library-of-congress-api&#34; &gt;Crawling the Library of Congress API
 &lt;span&gt;
     &lt;a href=&#34;#crawling-the-library-of-congress-api&#34;&gt;
@@ -2455,10 +2455,10 @@ case_data &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; submit_cases_
     
     <item>
       <title>The World Trade Organization, Governments, and International Trade</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/project-evolution-of-ngos/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/project-evolution-of-ngos/</link>
       <pubDate>Wed, 04 May 2022 14:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/project-evolution-of-ngos/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/project-evolution-of-ngos/</guid>
       <description>&lt;h1 id=&#34;the-world-trade-organization-governments-and-international-trade&#34; &gt;The World Trade Organization, Governments, and International Trade
 &lt;span&gt;
     &lt;a href=&#34;#the-world-trade-organization-governments-and-international-trade&#34;&gt;
@@ -2985,10 +2985,10 @@ complicating the analysis&lt;/p&gt;
     
     <item>
       <title>Voting Behavior, Textual Analysis, and the Spirit of the Law</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/masterpiece/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/masterpiece/</link>
       <pubDate>Mon, 02 May 2022 13:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/masterpiece/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/masterpiece/</guid>
       <description>&lt;h1 id=&#34;voting-behavior-textual-analysis-and-the-spirit-of-the-law&#34; &gt;Voting Behavior, Textual Analysis, and the Spirit of the Law
 &lt;span&gt;
     &lt;a href=&#34;#voting-behavior-textual-analysis-and-the-spirit-of-the-law&#34;&gt;
