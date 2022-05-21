@@ -20,13 +20,26 @@
                     {{$image := .Resources.GetMatch .Params.image}}
                     {{$hate := $image.Height}}
                     {{$tmp := string 600}}
-                    {{$size := printf "%sx600 q90" $tmp}}
                 
-                    {{ $image := ($image.Fit "800x500") }}
+                    {{$tiny_size := printf "480x%s q90" $tmp}}
+                    {{$small_size := printf "768x%s q90" $tmp}}
+                    {{$medium_size := printf "1024x%s q90" $tmp}}
+                    {{$large_size := printf "1366x%s q90" $tmp}}
 
-                    {{with $image}}
-                        <p><img src="{{ .RelPermalink }}" alt="banner-image"/></p>    
-                    {{end}}
+                    {{ $tiny := ($image.Fill $tiny_size) }}
+                    {{ $small := ($image.Fill $small_size) }}
+                    {{ $medium := ($image.Fill $medium_size) }}
+                    {{ $large := ($image.Fill $large_size) }}
+
+                    <p><img
+                    srcset="
+                        {{- with $tiny.RelPermalink -}}{{.}} 480w{{- end -}}
+                        {{- with $small.RelPermalink -}}, {{.}} 768w{{- end -}}
+                        {{- with $medium.RelPermalink -}}, {{.}} 1024w{{- end -}}
+                        {{- with $large.RelPermalink -}}, {{.}} 1366w{{- end -}}"
+                    src="{{ .RelPermalink }}"
+                    alt="banner-image">
+                    </p>    
                 {{ end }}
 
                 {{with .Params.author}}
