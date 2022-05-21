@@ -314,7 +314,14 @@ if (!doNotTrack) {
             <h1>Table of Contents</h1>
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#the-runner-program">The Runner Program</a></li>
+    <li><a href="#the-runner-program">The Runner Program</a>
+      <ul>
+        <li><a href="#glob-the-input-older">Glob the input older</a></li>
+        <li><a href="#modify-the-case-data">Modify The Case Data</a></li>
+        <li><a href="#add--loc_id-to-the-dictionary">Add  <code>loc_id</code> to the Dictionary</a></li>
+        <li><a href="#write-to-file">Write to File</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
             <hr/>
@@ -356,10 +363,34 @@ if (!doNotTrack) {
     </a>
 </span>
 </h2><p>The raw structure of the data is organized by the results of the api requests.  There are thus 80 cases per file.  I want them organized by individual cases to facilitate integration with another dataset that will be detailed in the next post.</p>
-<p>The program belwo simply reads the data downloaded json data from a folder to create a list of file paths to read.</p>
-<p>It then traverses that list to find the individual case data to write to file.</p>
-<p>For each case it create the <code>loc_id</code> key that will be used to join with another dataset.</p>
-<p>Finally, it writes the new case dictionary to file.</p>
+<h3 id="glob-the-input-older" >Glob the input older
+<span>
+    <a href="#glob-the-input-older">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>The program below simply reads thedownloaded json data from a folder to create a list of file paths to read.</p>
+<h3 id="modify-the-case-data" >Modify The Case Data
+<span>
+    <a href="#modify-the-case-data">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>It then traverses that list to find the individual case data to write to file.</p>
+<h3 id="add--loc_id-to-the-dictionary" >Add  <code>loc_id</code> to the Dictionary
+<span>
+    <a href="#add--loc_id-to-the-dictionary">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>For each case it create the <code>loc_id</code> key that will be used to join with another dataset.</p>
+<h3 id="write-to-file" >Write to File
+<span>
+    <a href="#write-to-file">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Finally, it writes the new case dictionary to file.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
 <span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
 <span style="color:#f92672">import</span> glob

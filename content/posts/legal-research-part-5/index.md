@@ -18,11 +18,18 @@ In the previous posts in this series, I have downloaded the data required to bui
 
 The raw structure of the data is organized by the results of the api requests.  There are thus 80 cases per file.  I want them organized by individual cases to facilitate integration with another dataset that will be detailed in the next post.  
 
-The program belwo simply reads the data downloaded json data from a folder to create a list of file paths to read. 
+### Glob the input older
+The program below simply reads thedownloaded json data from a folder to create a list of file paths to read. 
+
+### Modify The Case Data
 
 It then traverses that list to find the individual case data to write to file.  
 
+### Add  `loc_id` to the Dictionary
+
 For each case it create the `loc_id` key that will be used to join with another dataset. 
+
+### Write to File
 
 Finally, it writes the new case dictionary to file.  
 
