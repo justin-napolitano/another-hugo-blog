@@ -1,10 +1,10 @@
 languageCode: "en-us"
-baseUrl: "https://hugo-test-blog.jnapolitano.io"
+baseUrl: "https://blog.jnapolitano.io"
 title: "Justin's Data Blog"
 theme: "anubis"
 paginate: 10
-disqusShortname: "yourdiscussshortname"
-googleAnalytics: "G-12345"
+disqusShortname: "jnapolitano-io"
+googleAnalytics: "G-5H9YLZK4GH"
 enableRobotsTXT: true
 
 menu:
@@ -12,7 +12,7 @@ menu:
   - identifier : feed
     name: Feed
     title: Feed
-    url : https://hugo-test-blog.jnapolitano.io
+    url : https://blog.jnapolitano.io
     weight: 1
   - identifier: archive
     name: Archive
@@ -35,7 +35,7 @@ taxonomies:
 
 params:
   author: "Justin Napolitano"
-  email: justin@jnapolitnao.io # used for microformats
+  email: justin@jnapolitano.io # used for microformats
   avatar: "/images/me.png" # used for microformats
   description: ""
   # Uncomment if you need this
@@ -60,7 +60,7 @@ params:
   utterancesLabel: "" # optional
   # isso support
   isso:
-    enabled: true # mandatory
+    enabled: false # mandatory
     data: "https://comments.example.com/" # mandatory
     jsLocation: "https://comments.example.com/js/embed.min.js" # mandatory
     css: true # optional
@@ -73,12 +73,12 @@ params:
     avatar-bg: "#f0f0f0" # optional
   graphcommentId: ""
   webmentions:
-    url: https://notes.jnapolitnao.io/webmentions/receive
+    url: https://hugo-test-blog.jnapolitano.io/webmentions/receive
     login: hugo-theme-anubis
     pingback: true
   social:
   - id: github
-    name: justin-napolitnao
+    name: justin-napolitano
   - id: email
     name: justin@jnapolitano.io
   - id: linkedin
