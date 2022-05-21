@@ -6,30 +6,26 @@
     <description>Justin&#39;s Data Blog (Research)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 May 2022 13:40:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 21 May 2022 19:40:32 +0000</lastBuildDate>
     
     <atom:link href="https://blog.jnapolitano.io/categories/research/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Voting Behavior, Textual Analysis, and the Spirit of the Law</title>
+      <title>Legal Research with AI: Part 6</title>
       <link>https://blog.jnapolitano.io/posts/masterpiece/</link>
-      <pubDate>Mon, 02 May 2022 13:40:32 +0000</pubDate>
+      <pubDate>Sat, 21 May 2022 19:40:32 +0000</pubDate>
       
       <guid>https://blog.jnapolitano.io/posts/masterpiece/</guid>
-      <description>&lt;h1 id=&#34;voting-behavior-textual-analysis-and-the-spirit-of-the-law&#34; &gt;Voting Behavior, Textual Analysis, and the Spirit of the Law
-&lt;span&gt;
-    &lt;a href=&#34;#voting-behavior-textual-analysis-and-the-spirit-of-the-law&#34;&gt;
-        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/span&gt;
-&lt;/h1&gt;&lt;h2 id=&#34;introduction&#34; &gt;Introduction
+      <description>&lt;h2 id=&#34;introduction&#34; &gt;Introduction
 &lt;span&gt;
     &lt;a href=&#34;#introduction&#34;&gt;
         &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/span&gt;
-&lt;/h2&gt;&lt;h2 id=&#34;hypothesis&#34; &gt;Hypothesis
+&lt;/h2&gt;&lt;p&gt;Currently, my server is mining data from the neo4j graph database.&lt;/p&gt;
+&lt;p&gt;This post contains a control model completed in SPSS that will serve as the base line for comparison to Ml models.  It includes a short literature review of the theoritical foundation of the Attitudinal Model of Judicial Behavior.&lt;/p&gt;
+&lt;h2 id=&#34;hypothesis&#34; &gt;Hypothesis
 &lt;span&gt;
     &lt;a href=&#34;#hypothesis&#34;&gt;
         &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
