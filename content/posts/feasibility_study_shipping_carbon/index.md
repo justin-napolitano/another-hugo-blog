@@ -1,12 +1,13 @@
 +++
-title =  "Feasibility of Shipping Carbon Across the Atlantic"
+title =  "Feasibility of Transatlantic Carbon Shipping"
 date = "2022-05-07T18:40:32.169Z"
-description = "A feasibility study of shipping carbon from Europe to the United States for storage"
+description = "A feasibility study of shipping carbon from Europe to the United States"
 author = "Justin Napolitano"
 image = "post-image.jpeg"
 featuredimage = "post-image.jpeg"
-categories = ['Python', 'Energy Sector', 'Carbon Capture', 'Economic Modeling', 'Shippping', 'Europe', 'Statistical Analysis', 'Economic Projections']
+categories = ['Python', 'Energy Sector', 'Carbon Capture', 'Economic Modeling', 'Shipping', 'EuroZone', 'Statistical Analysis', 'Economic Projections']
 tags = ['energy','lng', 'carbon-capture','python',]
+series =['Transatlantic Shipping']
 +++
 
 # Feasibility of Shipping Carbon Across the Atlantic

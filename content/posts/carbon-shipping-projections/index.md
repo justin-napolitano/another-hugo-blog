@@ -5,8 +5,9 @@ description = "Monte Carlo Carbon Shipping Projections"
 author = "Justin Napolitano"
 image = "post-image.jpeg"
 featuredimage = "post-image.jpeg"
-categories = ['Python', 'Statisical Analysis', 'Economic Projections']
+categories = ['Python', 'Statistical Analysis', 'Economic Projections']
 tags = ['ml','projections','montecarlo','python']
+series =['Transatlantic Shipping']
 +++
 
 # A Monte Carlo Projection of the Annual Cost of Shipping Carbon from Europe to US Ports

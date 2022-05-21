@@ -7,6 +7,7 @@ image = "post-image.jpeg"
 featuredimage = "post-image.jpeg"
 categories = ['Python', 'Energy Sector', 'Carbon Capture', 'Economic Modeling']
 tags = ['energy','lng', 'carbon-capture','python',]
+series = ['North American Energy']
 +++
 
 # Natural Gas Storage Facilities

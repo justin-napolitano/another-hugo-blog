@@ -2,13 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.jnapolitano.io/categories/behavioral-modeling/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/legal/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/legal-research/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/series/legal-research-with-ai/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/masterpiece/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/naive-bayesian/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/python/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/research/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/scotus/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/scotus/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/series/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/spss/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/spss/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/statistical-analysis/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/statistics/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/</loc>
+    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
+  </url><url>
     <loc>https://blog.jnapolitano.io/categories/automation/</loc>
     <lastmod>2022-05-21T14:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/automation/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/</loc>
     <lastmod>2022-05-21T14:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/legal-research-part-5/</loc>
@@ -21,33 +75,6 @@
     <lastmod>2022-05-21T14:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/json/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/legal/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/legal-research/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/series/legal-research-with-ai/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/posts/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/python/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/scotus/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/series/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/</loc>
     <lastmod>2022-05-21T14:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/climate-change/</loc>
@@ -66,9 +93,6 @@
     <lastmod>2022-05-21T08:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/rice-paddy-emissions-1/</loc>
-    <lastmod>2022-05-21T08:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/statistical-analysis/</loc>
     <lastmod>2022-05-21T08:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/university-of-malaysia/</loc>
@@ -134,7 +158,7 @@
     <loc>https://blog.jnapolitano.io/tags/energy-sector/</loc>
     <lastmod>2022-05-07T18:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/europe/</loc>
+    <loc>https://blog.jnapolitano.io/categories/eurozone/</loc>
     <lastmod>2022-05-07T18:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/feasibility_study_shipping_carbon/</loc>
@@ -155,16 +179,19 @@
     <loc>https://blog.jnapolitano.io/tags/montecarlo/</loc>
     <lastmod>2022-05-07T18:40:32+00:00</lastmod>
   </url><url>
+    <loc>https://blog.jnapolitano.io/series/north-american-energy/</loc>
+    <lastmod>2022-05-07T18:40:32+00:00</lastmod>
+  </url><url>
     <loc>https://blog.jnapolitano.io/tags/power-plants/</loc>
     <lastmod>2022-05-07T18:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/projections/</loc>
     <lastmod>2022-05-07T18:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/shippping/</loc>
+    <loc>https://blog.jnapolitano.io/categories/shipping/</loc>
     <lastmod>2022-05-07T18:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/statisical-analysis/</loc>
+    <loc>https://blog.jnapolitano.io/series/transatlantic-shipping/</loc>
     <lastmod>2022-05-07T18:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/coal/</loc>
@@ -172,9 +199,6 @@
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/existing-gas-storage-facilities/</loc>
     <lastmod>2022-05-06T12:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/business-development/</loc>
-    <lastmod>2022-05-06T08:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/carbon/</loc>
     <lastmod>2022-05-06T08:30:32+00:00</lastmod>
@@ -194,19 +218,16 @@
     <loc>https://blog.jnapolitano.io/posts/wells-near-ports/</loc>
     <lastmod>2022-05-06T08:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/shipping/</loc>
-    <lastmod>2022-05-06T08:30:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/tags/shipping/</loc>
     <lastmod>2022-05-06T08:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/wells-near-pipelines/</loc>
     <lastmod>2022-05-06T05:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/tags/gas/</loc>
+    <loc>https://blog.jnapolitano.io/categories/business-development/</loc>
     <lastmod>2022-05-05T18:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/gas-fields/</loc>
+    <loc>https://blog.jnapolitano.io/tags/gas/</loc>
     <lastmod>2022-05-05T18:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/oil/</loc>
@@ -245,33 +266,7 @@
     <loc>https://blog.jnapolitano.io/categories/world-trade-organization/</loc>
     <lastmod>2022-05-04T14:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/behavioral-modeling/</loc>
-    <lastmod>2022-05-02T13:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/naive-bayesian/</loc>
-    <lastmod>2022-05-02T13:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/research/</loc>
-    <lastmod>2022-05-02T13:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/scotus/</loc>
-    <lastmod>2022-05-02T13:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/spss/</loc>
-    <lastmod>2022-05-02T13:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/spss/</loc>
-    <lastmod>2022-05-02T13:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/statistics/</loc>
-    <lastmod>2022-05-02T13:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/posts/masterpiece/</loc>
-    <lastmod>2022-05-02T13:40:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/tags/europe/</loc>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/eurozone/</loc>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/european-gas-imports/</loc>
   </url><url>

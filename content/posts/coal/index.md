@@ -7,6 +7,7 @@ image = "post-image.jpeg"
 featuredimage = "post-image.jpeg"
 categories = ['Python', 'Geographic Information Systems', 'Energy Sector']
 tags = ['energy-sector','python', 'gis', 'coal', 'power-plants']
+series = ['North American Energy']
 +++
 
 # Coal Plants

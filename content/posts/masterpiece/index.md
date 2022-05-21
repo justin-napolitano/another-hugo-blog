@@ -1,17 +1,22 @@
 +++
-title =  "Voting Behavior, Textual Analysis, and the Spirit of the Law"
-date = "2022-05-02T13:40:32.169Z"
-description = "Crawl the Library of Congress API to automate your next research project."
+title =  "Legal Research with AI: Part 6"
+date = "2022-05-21T19:40:32.169Z"
+description = "Control Model: A traditional statistical analysis of voting behavior in SPSS."
 author = "Justin Napolitano"
 image = "post-image.jpeg"
 featuredimage = "post-image.jpeg"
 categories = ['Legal Research', 'Research', 'SCOTUS', 'SPSS', 'Behavioral Modeling', 'Naive Bayesian', 'Statistical Analysis']
 tags = ['python','legal', 'spss', 'scotus', 'statistics']
+series = ['Legal Research with AI']
 +++
 
-# Voting Behavior, Textual Analysis, and the Spirit of the Law
 
 ## Introduction
+
+Currently, my server is mining data from the neo4j graph database.
+
+This post contains a control model completed in SPSS that will serve as the base line for comparison to Ml models.  It includes a short literature review of the theoritical foundation of the Attitudinal Model of Judicial Behavior.
+
    
 ## Hypothesis
 When considering the individual Supreme Court Justices, their voting behavior may be best described by the interaction between their ideological precepts and the facts of the case.  Their vote will not be dictated entirely by the constraint of precedent. 
