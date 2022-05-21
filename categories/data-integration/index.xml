@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Data Integration on Justin&#39;s Data Blog</title>
-    <link>https://hugo-test-blog.jnapolitano.io/categories/data-integration/</link>
+    <link>https://blog.jnapolitano.io/categories/data-integration/</link>
     <description>Justin&#39;s Data Blog (Data Integration)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 16 May 2022 14:40:32 +0000</lastBuildDate>
     
-    <atom:link href="https://hugo-test-blog.jnapolitano.io/categories/data-integration/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.jnapolitano.io/categories/data-integration/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Conduct Legal Research with AI: Part 1</title>
-      <link>https://hugo-test-blog.jnapolitano.io/posts/neo4j_integration/</link>
+      <link>https://blog.jnapolitano.io/posts/neo4j_integration/</link>
       <pubDate>Mon, 16 May 2022 14:40:32 +0000</pubDate>
       
-      <guid>https://hugo-test-blog.jnapolitano.io/posts/neo4j_integration/</guid>
+      <guid>https://blog.jnapolitano.io/posts/neo4j_integration/</guid>
       <description>&lt;h2 id=&#34;introduction&#34; &gt;Introduction
 &lt;span&gt;
     &lt;a href=&#34;#introduction&#34;&gt;

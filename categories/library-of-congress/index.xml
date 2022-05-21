@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Library of Congress on Justin&#39;s Data Blog</title>
-    <link>https://hugo-test-blog.jnapolitano.io/categories/library-of-congress/</link>
+    <link>https://blog.jnapolitano.io/categories/library-of-congress/</link>
     <description>Justin&#39;s Data Blog (Library of Congress)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 16 May 2022 13:40:32 +0000</lastBuildDate>
     
-    <atom:link href="https://hugo-test-blog.jnapolitano.io/categories/library-of-congress/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.jnapolitano.io/categories/library-of-congress/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Conduct Legal Research with AI: Part 0</title>
-      <link>https://hugo-test-blog.jnapolitano.io/posts/loc_crawler/</link>
+      <link>https://blog.jnapolitano.io/posts/loc_crawler/</link>
       <pubDate>Mon, 16 May 2022 13:40:32 +0000</pubDate>
       
-      <guid>https://hugo-test-blog.jnapolitano.io/posts/loc_crawler/</guid>
+      <guid>https://blog.jnapolitano.io/posts/loc_crawler/</guid>
       <description>&lt;h1 id=&#34;crawling-the-library-of-congress-api&#34; &gt;Crawling the Library of Congress API
 &lt;span&gt;
     &lt;a href=&#34;#crawling-the-library-of-congress-api&#34;&gt;

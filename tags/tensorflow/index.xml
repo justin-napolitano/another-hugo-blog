@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tensorflow on Justin&#39;s Data Blog</title>
-    <link>https://hugo-test-blog.jnapolitano.io/tags/tensorflow/</link>
+    <link>https://blog.jnapolitano.io/tags/tensorflow/</link>
     <description>Justin&#39;s Data Blog (tensorflow)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 18 May 2022 14:40:32 +0000</lastBuildDate>
     
-    <atom:link href="https://hugo-test-blog.jnapolitano.io/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.jnapolitano.io/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Conduct Legal Research with AI Part 3</title>
-      <link>https://hugo-test-blog.jnapolitano.io/posts/ai-proof-of-concept/</link>
+      <link>https://blog.jnapolitano.io/posts/ai-proof-of-concept/</link>
       <pubDate>Wed, 18 May 2022 14:40:32 +0000</pubDate>
       
-      <guid>https://hugo-test-blog.jnapolitano.io/posts/ai-proof-of-concept/</guid>
+      <guid>https://blog.jnapolitano.io/posts/ai-proof-of-concept/</guid>
       <description>&lt;h1 id=&#34;conduct-legal-research-with-ai-part-3&#34; &gt;Conduct Legal Research with AI: Part 3
 &lt;span&gt;
     &lt;a href=&#34;#conduct-legal-research-with-ai-part-3&#34;&gt;
