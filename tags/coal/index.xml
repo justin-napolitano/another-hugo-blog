@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>coal on Justin&#39;s Data Blog</title>
-    <link>hugo-test-blog.jnapolitano.io/tags/coal/</link>
+    <link>https://hugo-test-blog.jnapolitano.io/tags/coal/</link>
     <description>Justin&#39;s Data Blog (coal)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 07 May 2022 18:40:32 +0000</lastBuildDate>
     
-    <atom:link href="hugo-test-blog.jnapolitano.io/tags/coal/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://hugo-test-blog.jnapolitano.io/tags/coal/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>US Coal Plant Distribution</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/coal/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/coal/</link>
       <pubDate>Sat, 07 May 2022 18:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/coal/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/coal/</guid>
       <description>&lt;h1 id=&#34;coal-plants&#34; &gt;Coal Plants
 &lt;span&gt;
     &lt;a href=&#34;#coal-plants&#34;&gt;

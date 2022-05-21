@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Statistical Analysis on Justin&#39;s Data Blog</title>
-    <link>hugo-test-blog.jnapolitano.io/categories/statistical-analysis/</link>
+    <link>https://hugo-test-blog.jnapolitano.io/categories/statistical-analysis/</link>
     <description>Justin&#39;s Data Blog (Statistical Analysis)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 07 May 2022 18:40:32 +0000</lastBuildDate>
     
-    <atom:link href="hugo-test-blog.jnapolitano.io/categories/statistical-analysis/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://hugo-test-blog.jnapolitano.io/categories/statistical-analysis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Feasibility of Shipping Carbon Across the Atlantic</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/feasibility_study_shipping_carbon/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/feasibility_study_shipping_carbon/</link>
       <pubDate>Sat, 07 May 2022 18:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/feasibility_study_shipping_carbon/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/feasibility_study_shipping_carbon/</guid>
       <description>&lt;h1 id=&#34;feasibility-of-shipping-carbon-across-the-atlantic&#34; &gt;Feasibility of Shipping Carbon Across the Atlantic
 &lt;span&gt;
     &lt;a href=&#34;#feasibility-of-shipping-carbon-across-the-atlantic&#34;&gt;
@@ -880,10 +880,10 @@ warnings&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;filterwarnings(&
     
     <item>
       <title>Voting Behavior, Textual Analysis, and the Spirit of the Law</title>
-      <link>hugo-test-blog.jnapolitano.io/posts/masterpiece/</link>
+      <link>https://hugo-test-blog.jnapolitano.io/posts/masterpiece/</link>
       <pubDate>Mon, 02 May 2022 13:40:32 +0000</pubDate>
       
-      <guid>hugo-test-blog.jnapolitano.io/posts/masterpiece/</guid>
+      <guid>https://hugo-test-blog.jnapolitano.io/posts/masterpiece/</guid>
       <description>&lt;h1 id=&#34;voting-behavior-textual-analysis-and-the-spirit-of-the-law&#34; &gt;Voting Behavior, Textual Analysis, and the Spirit of the Law
 &lt;span&gt;
     &lt;a href=&#34;#voting-behavior-textual-analysis-and-the-spirit-of-the-law&#34;&gt;
