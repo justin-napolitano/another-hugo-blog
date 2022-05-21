@@ -9,19 +9,24 @@ enableRobotsTXT: true
 
 menu:
   main:
+  - identifier : feed
+    name: Feed
+    title: Feed
+    url : https://hugo-test-blog.jnapolitano.io
+    weight: 1
   - identifier: archive
     name: Archive
     title: Archive
     url: /posts/
-    weight: 3
+    weight: 4
   - identifier: tags
     name: Tags
     url: /tags/
-    weight: 2
+    weight: 3
   - identifier: categories
     name: Categories
     url: /categories/
-    weight: 1
+    weight: 2
 
 
 taxonomies:
