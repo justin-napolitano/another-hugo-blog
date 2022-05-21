@@ -4,11 +4,9 @@ date = "2022-05-21T14:30:32.169Z"
 description = "Transforming the Library of Congress results into individual json documents contaning case information."
 author = "Justin Napolitano"
 image = "post-image.jpeg"
-thumbnail = "post-image.jpeg"
-featured = "post-image.jpeg"
-images = ['thumbnail.jpeg']
 categories = ['Legal Research', 'Data Wrangling', 'Graph Database', 'Automation']
 tags = ['python','legal', 'json', 'scotus', 'automation']
+images = ['feature-image.png']
 series = ['Legal Research with AI']
 +++
 
@@ -26,7 +24,7 @@ It then traverses that list to find the individual case data to write to file.
 
 For each case it create the `loc_id` key that will be used to join with another dataset. 
 
-Finally, it writes new case dictionary to file.  
+Finally, it writes the new case dictionary to file.  
 
 
 

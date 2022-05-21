@@ -6,9 +6,10 @@ author = "Justin Napolitano"
 image = "post-image.jpeg"
 thumbnail = "post-image.jpeg"
 featured = "post-image.jpeg"
-images = ['thumbnail.jpeg']
-categories = ['Legal Research', 'Research', 'SCOTUS', 'neo4j', 'Behavioral Modeling', 'Graph Database', 'Automation']
-tags = ['python','legal', 'neo4j', 'graphDB', 'scotus', 'oop']
+categories = ['Legal Research', 'Data Wrangling', 'Graph Database', 'Automation']
+tags = ['python','legal', 'json', 'scotus', 'automation']
+images = ['featured-justices.jpeg']
+series = ['Legal Research with AI']
 +++
 
 # Conduct Legal Research with AI Part 4
