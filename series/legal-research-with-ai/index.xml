@@ -6,10 +6,306 @@
     <description>Justin&#39;s Data Blog (Legal Research with AI)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 May 2022 19:40:32 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 May 2022 16:30:32 +0000</lastBuildDate>
     
     <atom:link href="https://blog.jnapolitano.io/series/legal-research-with-ai/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Legal Research with AI Part 7: Wrangling Data with Julia</title>
+      <link>https://blog.jnapolitano.io/posts/legal-research-part-7/</link>
+      <pubDate>Sun, 22 May 2022 16:30:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/legal-research-part-7/</guid>
+      <description>&lt;h2 id=&#34;intro&#34; &gt;Intro
+&lt;span&gt;
+    &lt;a href=&#34;#intro&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;In a &lt;a href=&#34;https://blog.jnapolitano.io/posts/legal-research-part-5/&#34;&gt;previous post&lt;/a&gt;, I seperated all of the results returned from the Library of Congress API into individual JSON documents to be imported as nodes into a neo4j graph.&lt;/p&gt;
+&lt;p&gt;In this post, I filter the &lt;code&gt;LOC&lt;/code&gt; data against another data set from Oyez that will be integrated in the next post.&lt;/p&gt;
+&lt;h2 id=&#34;filtering-data&#34; &gt;Filtering Data
+&lt;span&gt;
+    &lt;a href=&#34;#filtering-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Both data sets have been seperated into individual case nodes stored in the json format as a file with the format : &lt;citation&gt;.json.&lt;/p&gt;
+&lt;p&gt;The Library of Congress data contains indices, admonitions, briefs, and other data that I will not yet be incorporating into my data set.&lt;/p&gt;
+&lt;p&gt;In order to find only the case data I will be creating a dataframe containing the paths of json files with matching citations.&lt;/p&gt;
+&lt;h2 id=&#34;using-julia-instead-of-python&#34; &gt;Using Julia Instead of Python
+&lt;span&gt;
+    &lt;a href=&#34;#using-julia-instead-of-python&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I love Python, but I want to try something new.  Julia&amp;rsquo;s &lt;a href=&#34;https://docs.julialang.org/en/v1/manual/methods/&#34;&gt;multiple dispatch&lt;/a&gt; design tempted me to try it out.  This is my first Julia program.  I will be documenting the work more so than usual.&lt;/p&gt;
+&lt;h3 id=&#34;julia-import-functions&#34; &gt;Julia &amp;ldquo;import&amp;rdquo; Functions
+&lt;span&gt;
+    &lt;a href=&#34;#julia-import-functions&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;Coming from Python, I typically import libraries/packages with an &lt;code&gt;import&lt;/code&gt; call.  Something like:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; numpy
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In Julia, we use the &lt;code&gt;using&lt;/code&gt; call to import the package. Like:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; DataFrames
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; CSV
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;A package can also be imported, but this does not instantiate the methods and functions within it (As far as I understand it).&lt;/p&gt;
+&lt;p&gt;For instance &lt;code&gt;import CSV&lt;/code&gt; would only load the package but I would have to call CSV.method to actually do something.  Something like &lt;code&gt;from pandas import to_csv&lt;/code&gt; in Python.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; DataFrames
+&lt;span style=&#34;color:#66d9ef&#34;&gt;import&lt;/span&gt; CSV
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;the-main-function&#34; &gt;The Main Function
+&lt;span&gt;
+    &lt;a href=&#34;#the-main-function&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Just like in C -and like we should in Python-, I declared a main function to run the program.  I call it with main().  I do not know if there is a similar convention to Python&amp;rsquo;s &lt;code&gt;if __name__ == &amp;quot;__main__&amp;quot;&lt;/code&gt;.  I will find out soon.&lt;/p&gt;
+&lt;p&gt;The main difference in function declaration between Python and Julia is the inclusion of the &lt;code&gt;end&lt;/code&gt; keyword and the end of the function.&lt;/p&gt;
+&lt;p&gt;For instance review the main function below :&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; main()
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# outpath fo the current file&lt;/span&gt;
+    outpath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; joinpath(pwd(),&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;case_files.csv&amp;#34;&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Glob files from directory&lt;/span&gt;
+    oyez_dataframe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; get_files(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;oyez_cited&amp;#34;&lt;/span&gt;)
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Glob files from directory&lt;/span&gt;
+    loc_dataframe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; get_files(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;loc_cited&amp;#34;&lt;/span&gt;)
+
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Join on File excluding extraneous data not in the oyez dataset&lt;/span&gt;
+    master_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; innerjoin(oyez_dataframe, loc_dataframe, on &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:File&lt;/span&gt;, validate&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(true, true), makeunique &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; true)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Select every file but the .DS_Store from the dataframe.  &lt;/span&gt;
+    master_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; filter(row &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(row&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;File &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.DS_Store&amp;#34;&lt;/span&gt;), master_df)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Write to file&lt;/span&gt;
+    outpath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df_to_file(master_df,outpath)
+    
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+main()
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;creating-an-outpath&#34; &gt;Creating an outpath
+&lt;span&gt;
+    &lt;a href=&#34;#creating-an-outpath&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The main function creates an outpath to write the resultant master df to file by calling &lt;code&gt;joinpath(pwd(), &amp;quot;case_files.csv&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;the-get-files-function&#34; &gt;The Get Files Function
+&lt;span&gt;
+    &lt;a href=&#34;#the-get-files-function&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;Next, the get_files function is called to create two data frames:  the loc_df and the oyez_df.&lt;/p&gt;
+&lt;h4 id=&#34;declaring-empty-string-arrays&#34; &gt;Declaring empty string arrays
+&lt;span&gt;
+    &lt;a href=&#34;#declaring-empty-string-arrays&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;Each file name is appended to a file_name array declared with &lt;code&gt;&amp;lt;array_name&amp;gt; = String[]&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&#34;reading-files-with-readdir&#34; &gt;Reading Files with readdir()
+&lt;span&gt;
+    &lt;a href=&#34;#reading-files-with-readdir&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;File names are from from a directory passed to the built in &lt;code&gt;readdir()&lt;/code&gt; function.&lt;/p&gt;
+&lt;h4 id=&#34;appending-files-to-file_name-array&#34; &gt;Appending Files to file_name Array
+&lt;span&gt;
+    &lt;a href=&#34;#appending-files-to-file_name-array&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;Each file name is appended to a file_name array declared with &lt;code&gt;file_name = String[]&lt;/code&gt; and appended to with the push!(file_name,f) call.  Note the &lt;code&gt;!&lt;/code&gt; following push.  This typically means that the function is operating on the data in memory and will not return a new value.&lt;/p&gt;
+&lt;h4 id=&#34;appending-file-paths-to-file_path-array&#34; &gt;Appending File Paths to file_path Array
+&lt;span&gt;
+    &lt;a href=&#34;#appending-file-paths-to-file_path-array&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;I also include the file path by appending what is returned by &lt;code&gt;path = joinpath(working_path, f)&lt;/code&gt; to the file_path list.&lt;/p&gt;
+&lt;p&gt;I love the built in &lt;code&gt;joinpath&lt;/code&gt; function.  Pythons &lt;code&gt;os.sep.join()&lt;/code&gt; works well, but I really like Julia&amp;rsquo;s implementation.&lt;/p&gt;
+&lt;h4 id=&#34;sorting-the-arrays-with-merge-sort&#34; &gt;Sorting the Arrays with Merge Sort
+&lt;span&gt;
+    &lt;a href=&#34;#sorting-the-arrays-with-merge-sort&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;Arrays are soreted by call &lt;code&gt;sort_array(&amp;lt;array&amp;gt;)&lt;/code&gt;.  It returns a sorted array using the merge sort alogorithm.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; sort_array(array)
+    
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; sort(array; alg&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;MergeSort)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;crating-a-dataframe-with-the-arrays&#34; &gt;Crating a Dataframe with the Arrays
+&lt;span&gt;
+    &lt;a href=&#34;#crating-a-dataframe-with-the-arrays&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;Finally a dataframe containing the sorted file_name and file_path lists as the columns file and path is created and then returned.&lt;/p&gt;
+&lt;h4 id=&#34;a-note-on-refactoring&#34; &gt;A note on refactoring
+&lt;span&gt;
+    &lt;a href=&#34;#a-note-on-refactoring&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;This function should be refactored into seperate ones, but it works well enough with this workflow that I am going to leave it.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; get_files(directory)
+    file_name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;[]
+    file_path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;[]
+
+    working_path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; joinpath(pwd(), directory)
+    &lt;span style=&#34;color:#75715e&#34;&gt;# context management.  Cd and then go back to the orignal pwd&lt;/span&gt;
+    cd(working_path) &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; 
+        &lt;span style=&#34;color:#75715e&#34;&gt;#print(&amp;#34;Current directory: &amp;#34;, working_path)&lt;/span&gt;
+        foreach(readdir()) &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; f
+            path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; joinpath(working_path, f)
+            push!(file_name,f)
+            push!(file_path, path)
+            &lt;span style=&#34;color:#75715e&#34;&gt;#dump(stat(f.desc)) # you can customize what you want to print&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#println(&amp;#39;\n&amp;#39;, pwd())&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#display(file_paths)&lt;/span&gt;
+    file_name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sort_array(file_name)
+    file_path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sort_array(file_path)
+    df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; DataFrame(File &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; file_name, Path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; file_path)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; df
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;joining-data-frames-by-citation&#34; &gt;Joining Data Frames by Citation
+&lt;span&gt;
+    &lt;a href=&#34;#joining-data-frames-by-citation&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;Julia&amp;rsquo;s DataFrames package can easily join dataframes on a column.  In this workflow the file which is titled after a case citation is used.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Join on File excluding extraneous data not in the oyez dataset&lt;/span&gt;
+master_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; innerjoin(oyez_dataframe, loc_dataframe, on &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:File&lt;/span&gt;, validate&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(true, true), makeunique &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; true)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;filtering-the-df-for-extraneous-files&#34; &gt;Filtering the DF for Extraneous Files
+&lt;span&gt;
+    &lt;a href=&#34;#filtering-the-df-for-extraneous-files&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The master_df  is filtered to remove &lt;code&gt;.DS_Store&lt;/code&gt; from the list of files to be processed.  Below notice the &lt;code&gt;!&lt;/code&gt; in this case it will return all a data frame of values that are not equal to .DS_Store in the File column.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#Select every file but the .DS_Store from the dataframe.  &lt;/span&gt;
+master_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; filter(row &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(row&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;File &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.DS_Store&amp;#34;&lt;/span&gt;), master_df)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;the-df_to_file-function&#34; &gt;The df_to_file Function
+&lt;span&gt;
+    &lt;a href=&#34;#the-df_to_file-function&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;Finally the df is written to file.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#Write to file&lt;/span&gt;
+outpath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df_to_file(master_df,outpath)
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; df_to_file(df,outpath)
+    CSV&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;write(outpath, df)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; outpath
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;the-complete-program&#34; &gt;The Complete Program
+&lt;span&gt;
+    &lt;a href=&#34;#the-complete-program&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; DataFrames
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; CSV
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; get_files(directory)
+    file_name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;[]
+    file_path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;String&lt;/span&gt;[]
+
+    working_path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; joinpath(pwd(), directory)
+    &lt;span style=&#34;color:#75715e&#34;&gt;# context management.  Cd and then go back to the orignal pwd&lt;/span&gt;
+    cd(working_path) &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; 
+        &lt;span style=&#34;color:#75715e&#34;&gt;#print(&amp;#34;Current directory: &amp;#34;, working_path)&lt;/span&gt;
+        foreach(readdir()) &lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt; f
+            path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; joinpath(working_path, f)
+            push!(file_name,f)
+            push!(file_path, path)
+            &lt;span style=&#34;color:#75715e&#34;&gt;#dump(stat(f.desc)) # you can customize what you want to print&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#println(&amp;#39;\n&amp;#39;, pwd())&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#display(file_paths)&lt;/span&gt;
+    file_name &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sort_array(file_name)
+    file_path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sort_array(file_path)
+    df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; DataFrame(File &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; file_name, Path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; file_path)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; df
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; sort_array(array)
+    
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; sort(array; alg&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;MergeSort)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; df_to_file(df,outpath)
+    CSV&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;write(outpath, df)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; outpath
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; main()
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# outpath fo the current file&lt;/span&gt;
+    outpath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; joinpath(pwd(),&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;case_files.csv&amp;#34;&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Glob files from directory&lt;/span&gt;
+    oyez_dataframe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; get_files(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;oyez_cited&amp;#34;&lt;/span&gt;)
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Glob files from directory&lt;/span&gt;
+    loc_dataframe &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; get_files(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;loc_cited&amp;#34;&lt;/span&gt;)
+
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Join on File excluding extraneous data not in the oyez dataset&lt;/span&gt;
+    master_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; innerjoin(oyez_dataframe, loc_dataframe, on &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;:File&lt;/span&gt;, validate&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(true, true), makeunique &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; true)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Select every file but the .DS_Store from the dataframe.  &lt;/span&gt;
+    master_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; filter(row &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(row&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;File &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.DS_Store&amp;#34;&lt;/span&gt;), master_df)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Write to file&lt;/span&gt;
+    outpath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df_to_file(master_df,outpath)
+    
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+main()
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>Legal Research with AI: Part 6</title>
