@@ -2,31 +2,61 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.jnapolitano.io/categories/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/data-wrangling/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/data-wrangling/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/dataframes/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/julia/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/julia/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/legal-research/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/series/legal-research-with-ai/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/legal-research-part-7/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/scotus/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/series/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/tutorials/</loc>
+    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
+  </url><url>
     <loc>https://blog.jnapolitano.io/categories/behavioral-modeling/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/</loc>
-    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/</loc>
-    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/tags/legal/</loc>
-    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/legal-research/</loc>
-    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/series/legal-research-with-ai/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/masterpiece/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/categories/naive-bayesian/</loc>
-    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/posts/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/python/</loc>
@@ -36,12 +66,6 @@
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/categories/scotus/</loc>
-    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/scotus/</loc>
-    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/series/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/categories/spss/</loc>
@@ -56,9 +80,6 @@
     <loc>https://blog.jnapolitano.io/tags/statistics/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/tags/</loc>
-    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/categories/automation/</loc>
     <lastmod>2022-05-21T14:30:32+00:00</lastmod>
   </url><url>
@@ -66,9 +87,6 @@
     <lastmod>2022-05-21T14:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/legal-research-part-5/</loc>
-    <lastmod>2022-05-21T14:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/data-wrangling/</loc>
     <lastmod>2022-05-21T14:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/categories/graph-database/</loc>
@@ -120,9 +138,6 @@
     <lastmod>2022-05-18T14:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/legal-reserch-part-2/</loc>
-    <lastmod>2022-05-17T18:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/graphdb/</loc>
     <lastmod>2022-05-17T18:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/neo4j/</loc>
