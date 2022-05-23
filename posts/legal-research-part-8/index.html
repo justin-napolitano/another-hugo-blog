@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+
+
+<html lang="en-us" data-theme="">
+<head>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>Conduct Legal Research with AI Part 8: Case Node Mockup in JSON - Justin&#39;s Data Blog</title>
+
+<meta name="description" content="Merging Oyez and Library of Congress Data into a Comprehensive Data Set">
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="https://blog.jnapolitano.io/favicon.png">
+
+
+<style>
+  body {
+    visibility: hidden;
+    opacity: 0;
+  }
+</style>
+
+<noscript>
+  <style>
+    body {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</noscript>
+
+
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <link rel="stylesheet" href="https://blog.jnapolitano.io/css/style.min.aadd6dd80ebf123717dcfe3d847163090d744aafb3d09e967f728dc0ef68bc1b.css" integrity="sha256-qt1t2A6/EjcX3P49hHFjCQ10Sq&#43;z0J6Wf3KNwO9ovBs=">
+    
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+    
+
+
+
+
+
+
+
+<meta property="og:title" content="Conduct Legal Research with AI Part 8: Case Node Mockup in JSON" />
+<meta property="og:description" content="Merging Oyez and Library of Congress Data into a Comprehensive Data Set" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.jnapolitano.io/posts/legal-research-part-8/" /><meta property="og:image" content="https://blog.jnapolitano.io/feature-image.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-23T16:30:32+00:00" />
+<meta property="article:modified_time" content="2022-05-23T16:30:32+00:00" />
+<meta property="og:see_also" content="https://blog.jnapolitano.io/posts/legal-research-part-7/" /><meta property="og:see_also" content="https://blog.jnapolitano.io/posts/masterpiece/" /><meta property="og:see_also" content="https://blog.jnapolitano.io/posts/legal-research-part-5/" /><meta property="og:see_also" content="https://blog.jnapolitano.io/posts/legal-research-part-4/" /><meta property="og:see_also" content="https://blog.jnapolitano.io/posts/legal-research-part-3/" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.jnapolitano.io/feature-image.png"/>
+
+<meta name="twitter:title" content="Conduct Legal Research with AI Part 8: Case Node Mockup in JSON"/>
+<meta name="twitter:description" content="Merging Oyez and Library of Congress Data into a Comprehensive Data Set"/>
+
+
+
+    
+        <link rel="webmention" href="https://webmention.io/hugo-theme-anubis/webmention" />
+        
+            <link rel="pingback" href="https://webmention.io/hugo-theme-anubis/xmlrpc" />
+        
+    
+    
+        <link rel="webmention" href="https://hugo-test-blog.jnapolitano.io/webmentions/receive" />
+    
+
+
+
+
+
+
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5H9YLZK4GH"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-5H9YLZK4GH', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header"> 
+            
+                <div class="header-top">
+    <h1 class="site-title">
+    <a href="/">Justin&#39;s Data Blog</a>
+</h1>
+    <ul class="social-icons">
+
+
+    
+        
+        
+        <li>
+            <a href="https://github.com/justin-napolitano" title="Github" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="mailto:justin@jnapolitano.io" title="Email" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/justin-napolitano" title="Linkedin" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="https://twitter.com/just_napolitano" title="Twitter" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+
+
+    <li>
+            <a href="https://blog.jnapolitano.io/index.xml" title="RSS" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+</ul>
+</div>
+
+    <nav>
+        
+        
+        <a class="" href="https://blog.jnapolitano.io" title="Feed">Feed</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/series/" title="">Series</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/categories/" title="">Categories</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/tags/" title="">Tags</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/posts/" title="Archive">Archive</a>
+        
+    </nav>
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1"> 
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                <h1 class="p-name post-title">Conduct Legal Research with AI Part 8: Case Node Mockup in JSON</h1>
+                            
+
+
+                
+                
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+
+                    <p><img
+                    srcset="/posts/legal-research-part-8/post-image_hu71d65fece0ea82255c0ab1008266a448_268388_480x600_fill_q90_box_smart1.jpeg 480w, /posts/legal-research-part-8/post-image_hu71d65fece0ea82255c0ab1008266a448_268388_768x600_fill_q90_box_smart1.jpeg 768w, /posts/legal-research-part-8/post-image_hu71d65fece0ea82255c0ab1008266a448_268388_1024x600_fill_q90_box_smart1.jpeg 1024w, /posts/legal-research-part-8/post-image_hu71d65fece0ea82255c0ab1008266a448_268388_1366x600_fill_q90_box_smart1.jpeg 1366w"
+                    src="/posts/legal-research-part-8/"
+                    alt="banner-image">
+                    </p>    
+                
+
+                
+                    <p>Justin Napolitano</p>
+                
+
+                
+                <p>2022-05-23 16:30:32.169 &#43;0000 UTC</p>
+                    
+                
+
+                <hr/>
+            </header>
+        </div>
+        <div class="content e-content">
+            <h1>Table of Contents</h1>
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#main-function">Main Function</a></li>
+    <li><a href="#helper-functions">Helper Functions</a>
+      <ul>
+        <li><a href="#read-json">Read Json</a></li>
+        <li><a href="#nodify-list">Nodify List</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-complete-program">The Complete Program</a></li>
+    <li><a href="#sample-json-output">Sample Json Output</a></li>
+  </ul>
+</nav>
+            <hr/>
+            
+    
+    <h1>Series</h1>
+	<p><a href="/series/legal-research-with-ai" id="series">This is a post in the 
+	<b>Legal Research with AI</b></a> series.<br/>
+    Other posts in this series:
+    
+    <ul class="series">
+    
+    <li class="list"><a href="/posts/legal-research-part-8/">Conduct Legal Research with AI Part 8: Case Node Mockup in JSON</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-7/">Legal Research with AI Part 7: Wrangling Data with Julia</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/masterpiece/">Legal Research with AI: Part 6</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-5/">Conduct Legal Research with AI: Part 5</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-4/">Conduct Legal Research with AI: Part 4</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-3/">Conduct Legal Research with AI: Part 3</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-reserch-part-2/">Conduct Legal Research with AI: Part 2</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-1/">Conduct Legal Research with AI: Part 1</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-0/">Conduct Legal Research with AI: Part 0</a></li>
+    </ul>
+    
+
+            <hr/>
+            <h2 id="introduction" >Introduction
+<span>
+    <a href="#introduction">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>The legal Research with AI Series is expanding quickly. This is the 9th post related to it in someway.  Building this pipeline and integrating multiple datasets into nodes is proving to be verbose.</p>
+<p>This post documents merging Oyez and Library of Congress of data structured json files that represent nodes and hiearchal relationships.</p>
+<h2 id="main-function" >Main Function
+<span>
+    <a href="#main-function">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>The plan for this program is to:</p>
+<ul>
+<li>Read the prepared dataframe created in the <a href="https://blog.jnapolitano.io/posts/legal-research-part-7/">legal research part 7 post</a></li>
+<li>for each row of the df load a dictionary from the the libary of congress path and the oyez path</li>
+<li>Set keys on the Oyez dataset</li>
+<li>Write the updated Oyez dataset to file</li>
+</ul>
+<p>Review the work below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+
+    <span style="color:#75715e"># outpath fo the current file</span>
+    inpath <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([os<span style="color:#f92672">.</span>getcwd(),<span style="color:#e6db74">&#34;case_files.csv&#34;</span>])
+    outpath <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([os<span style="color:#f92672">.</span>getcwd(),<span style="color:#e6db74">&#34;nodes&#34;</span>])
+    
+    <span style="color:#75715e">#Create a df from the case_files.csv file</span>
+    master_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(inpath)
+    <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> master_df<span style="color:#f92672">.</span>iterrows():
+            
+        oyez_dict <span style="color:#f92672">=</span> read_json(row[<span style="color:#e6db74">&#34;Path&#34;</span>])
+        loc_dict <span style="color:#f92672">=</span> read_json(row[<span style="color:#e6db74">&#39;Path_1&#39;</span>])
+        oyez_dict[<span style="color:#e6db74">&#39;loc_id&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;id&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;loc_url&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;id&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;simple_citation&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;loc_id&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;shelf_id&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;shelf_id&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;title&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;title&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;issues&#39;</span>] <span style="color:#f92672">=</span> nodify_list(loc_dict[<span style="color:#e6db74">&#39;subject&#39;</span>],<span style="color:#e6db74">&#39;issue&#39;</span>)
+        <span style="color:#66d9ef">try</span>:
+            oyez_dict[<span style="color:#e6db74">&#39;major_topics&#39;</span>] <span style="color:#f92672">=</span> nodify_list(loc_dict[<span style="color:#e6db74">&#39;subject_major_case_topic&#39;</span>], <span style="color:#e6db74">&#39;major_topic&#39;</span>)
+        <span style="color:#66d9ef">except</span>:
+            oyez_dict[<span style="color:#e6db74">&#39;major_topics&#39;</span>] <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;&#34;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;loc_pdf&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;resources&#39;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;pdf&#39;</span>]
+
+        outfile <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([outpath,oyez_dict[<span style="color:#e6db74">&#39;simple_citation&#39;</span>]])
+        outfile <span style="color:#f92672">=</span> outfile <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.json&#34;</span>
+
+        <span style="color:#66d9ef">with</span> open(outfile, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f: 
+            json<span style="color:#f92672">.</span>dump(outpath,f)
+</code></pre></div><h2 id="helper-functions" >Helper Functions
+<span>
+    <a href="#helper-functions">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><h3 id="read-json" >Read Json
+<span>
+    <a href="#read-json">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>read_json simply reads json into a dictionary with the json.loads method with a context manager.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_json</span>(file_path):
+    <span style="color:#66d9ef">with</span> open(file_path) <span style="color:#66d9ef">as</span> f: 
+        dict <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>load(f)
+    <span style="color:#66d9ef">return</span> dict
+
+</code></pre></div><h3 id="nodify-list" >Nodify List
+<span>
+    <a href="#nodify-list">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Some of the data in the Loc dataset is stored in lists.  I want them to be individual nodes in the final dataset.  To account for this, the nodify_list function returns a list of dictionaries containing keys that will be used to construct graph nodes.   I will most likely need to modify these as the graph schema expands with more data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+    
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">nodify_list</span>(lst,node_name):
+    return_list<span style="color:#f92672">=</span>[]
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> lst: 
+        dict <span style="color:#f92672">=</span> {node_name: item}
+        return_list<span style="color:#f92672">.</span>append(dict)
+    <span style="color:#66d9ef">return</span> return_list
+</code></pre></div><h2 id="the-complete-program" >The Complete Program
+<span>
+    <a href="#the-complete-program">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#75715e">#merging.python</span>
+<span style="color:#f92672">from</span> doctest <span style="color:#f92672">import</span> master
+<span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+<span style="color:#f92672">from</span> pprint <span style="color:#f92672">import</span> pprint
+<span style="color:#f92672">import</span> json
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_json</span>(file_path):
+    <span style="color:#66d9ef">with</span> open(file_path) <span style="color:#66d9ef">as</span> f: 
+        dict <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>load(f)
+    <span style="color:#66d9ef">return</span> dict
+
+    
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">nodify_list</span>(lst,node_name):
+    return_list<span style="color:#f92672">=</span>[]
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> lst: 
+        dict <span style="color:#f92672">=</span> {node_name: item}
+        return_list<span style="color:#f92672">.</span>append(dict)
+    <span style="color:#66d9ef">return</span> return_list
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+
+    <span style="color:#75715e"># outpath fo the current file</span>
+    inpath <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([os<span style="color:#f92672">.</span>getcwd(),<span style="color:#e6db74">&#34;case_files.csv&#34;</span>])
+    outpath <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([os<span style="color:#f92672">.</span>getcwd(),<span style="color:#e6db74">&#34;nodes&#34;</span>])
+    
+    <span style="color:#75715e">#Create a df from the case_files.csv file</span>
+    master_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(inpath)
+    <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> master_df<span style="color:#f92672">.</span>iterrows():
+            
+        oyez_dict <span style="color:#f92672">=</span> read_json(row[<span style="color:#e6db74">&#34;Path&#34;</span>])
+        loc_dict <span style="color:#f92672">=</span> read_json(row[<span style="color:#e6db74">&#39;Path_1&#39;</span>])
+        oyez_dict[<span style="color:#e6db74">&#39;loc_id&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;id&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;loc_url&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;id&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;simple_citation&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;loc_id&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;shelf_id&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;shelf_id&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;title&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;title&#39;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;issues&#39;</span>] <span style="color:#f92672">=</span> nodify_list(loc_dict[<span style="color:#e6db74">&#39;subject&#39;</span>],<span style="color:#e6db74">&#39;issue&#39;</span>)
+        <span style="color:#66d9ef">try</span>:
+            oyez_dict[<span style="color:#e6db74">&#39;major_topics&#39;</span>] <span style="color:#f92672">=</span> nodify_list(loc_dict[<span style="color:#e6db74">&#39;subject_major_case_topic&#39;</span>], <span style="color:#e6db74">&#39;major_topic&#39;</span>)
+        <span style="color:#66d9ef">except</span>:
+            oyez_dict[<span style="color:#e6db74">&#39;major_topics&#39;</span>] <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;&#34;</span>]
+        oyez_dict[<span style="color:#e6db74">&#39;loc_pdf&#39;</span>] <span style="color:#f92672">=</span> loc_dict[<span style="color:#e6db74">&#39;resources&#39;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;pdf&#39;</span>]
+
+        outfile <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([outpath,oyez_dict[<span style="color:#e6db74">&#39;simple_citation&#39;</span>]])
+        outfile <span style="color:#f92672">=</span> outfile <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.json&#34;</span>
+
+        <span style="color:#66d9ef">with</span> open(outfile, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f: 
+            json<span style="color:#f92672">.</span>dump(oyez_dict,f, indent <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>)
+        
+
+
+    <span style="color:#75715e">#pprint(oyez_dict)</span>
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    main()
+</code></pre></div><h2 id="sample-json-output" >Sample Json Output
+<span>
+    <a href="#sample-json-output">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>Below is a sample of what the program outputs.  It is a single case.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+      <span style="color:#f92672">&#34;decisions&#34;</span>: [
+            {
+                  <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/case_decision/case_decision/16396&#34;</span>,
+                  <span style="color:#f92672">&#34;votes&#34;</span>: [
+                        {
+                              <span style="color:#f92672">&#34;ideology&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;seniority&#34;</span>: <span style="color:#ae81ff">1</span>,
+                              <span style="color:#f92672">&#34;opinion_type&#34;</span>: <span style="color:#e6db74">&#34;majority&#34;</span>,
+                              <span style="color:#f92672">&#34;member&#34;</span>: {
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/john_marshall&#34;</span>,
+                                    <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15085</span>,
+                                    <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Marshall&#34;</span>,
+                                    <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                          <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">53035</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/john_marshall/john_marshall.thumb.png&#34;</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32729</span>,
+                                          <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                    },
+                                    <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">12570</span>,
+                                    <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                    <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;john_marshall&#34;</span>,
+                                    <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                          {
+                                                <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2729&#34;</span>,
+                                                <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Chief Justice of the United States&#34;</span>,
+                                                <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4244119200</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2729</span>,
+                                                <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5330167200</span>,
+                                                <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                          }
+                                    ],
+                                    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;John Marshall&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/decision_vote/decision_vote/205605&#34;</span>,
+                              <span style="color:#f92672">&#34;vote&#34;</span>: <span style="color:#e6db74">&#34;majority&#34;</span>,
+                              <span style="color:#f92672">&#34;joining&#34;</span>: <span style="color:#66d9ef">null</span>
+                        },
+                        {
+                              <span style="color:#f92672">&#34;ideology&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;seniority&#34;</span>: <span style="color:#ae81ff">4</span>,
+                              <span style="color:#f92672">&#34;opinion_type&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+                              <span style="color:#f92672">&#34;member&#34;</span>: {
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/bushrod_washington&#34;</span>,
+                                    <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15093</span>,
+                                    <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Washington&#34;</span>,
+                                    <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                          <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">42759</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/bushrod_washington/bushrod_washington.thumb.png&#34;</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32698</span>,
+                                          <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                    },
+                                    <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">11339</span>,
+                                    <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                    <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;bushrod_washington&#34;</span>,
+                                    <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                          {
+                                                <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2737&#34;</span>,
+                                                <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                                <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4421066400</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2737</span>,
+                                                <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5400756000</span>,
+                                                <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                          }
+                                    ],
+                                    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Bushrod Washington&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/decision_vote/decision_vote/205606&#34;</span>,
+                              <span style="color:#f92672">&#34;vote&#34;</span>: <span style="color:#e6db74">&#34;majority&#34;</span>,
+                              <span style="color:#f92672">&#34;joining&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/john_marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15085</span>,
+                                          <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                                <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">53035</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/john_marshall/john_marshall.thumb.png&#34;</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32729</span>,
+                                                <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                          },
+                                          <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">12570</span>,
+                                          <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                          <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;john_marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                                {
+                                                      <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                                      <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2729&#34;</span>,
+                                                      <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Chief Justice of the United States&#34;</span>,
+                                                      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                      <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4244119200</span>,
+                                                      <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2729</span>,
+                                                      <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5330167200</span>,
+                                                      <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                                }
+                                          ],
+                                          <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;John Marshall&#34;</span>
+                                    }
+                              ]
+                        },
+                        {
+                              <span style="color:#f92672">&#34;ideology&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;seniority&#34;</span>: <span style="color:#ae81ff">5</span>,
+                              <span style="color:#f92672">&#34;opinion_type&#34;</span>: <span style="color:#e6db74">&#34;concurrence&#34;</span>,
+                              <span style="color:#f92672">&#34;member&#34;</span>: {
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/william_johnson&#34;</span>,
+                                    <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15059</span>,
+                                    <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Johnson&#34;</span>,
+                                    <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                          <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">45940</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/william_johnson/william_johnson.thumb.png&#34;</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32779</span>,
+                                          <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                    },
+                                    <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">11046</span>,
+                                    <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                    <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;william_johnson&#34;</span>,
+                                    <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                          {
+                                                <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;Thomas Jefferson&#34;</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2703&#34;</span>,
+                                                <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                                <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4273149600</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2703</span>,
+                                                <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5227524000</span>,
+                                                <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                          }
+                                    ],
+                                    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;William Johnson&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/decision_vote/decision_vote/205607&#34;</span>,
+                              <span style="color:#f92672">&#34;vote&#34;</span>: <span style="color:#e6db74">&#34;majority&#34;</span>,
+                              <span style="color:#f92672">&#34;joining&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/john_marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15085</span>,
+                                          <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                                <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">53035</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/john_marshall/john_marshall.thumb.png&#34;</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32729</span>,
+                                                <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                          },
+                                          <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">12570</span>,
+                                          <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                          <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;john_marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                                {
+                                                      <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                                      <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2729&#34;</span>,
+                                                      <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Chief Justice of the United States&#34;</span>,
+                                                      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                      <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4244119200</span>,
+                                                      <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2729</span>,
+                                                      <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5330167200</span>,
+                                                      <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                                }
+                                          ],
+                                          <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;John Marshall&#34;</span>
+                                    }
+                              ]
+                        },
+                        {
+                              <span style="color:#f92672">&#34;ideology&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;seniority&#34;</span>: <span style="color:#ae81ff">6</span>,
+                              <span style="color:#f92672">&#34;opinion_type&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+                              <span style="color:#f92672">&#34;member&#34;</span>: {
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/brockholst_livingston&#34;</span>,
+                                    <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15111</span>,
+                                    <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Livingston&#34;</span>,
+                                    <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                          <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">44786</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/brockholst_livingston/brockholst_livingston.thumb.png&#34;</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32714</span>,
+                                          <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                    },
+                                    <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">5901</span>,
+                                    <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                    <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;brockholst_livingston&#34;</span>,
+                                    <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                          {
+                                                <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;Thomas Jefferson&#34;</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2755&#34;</span>,
+                                                <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                                <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4632314400</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2755</span>,
+                                                <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5142160800</span>,
+                                                <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                          }
+                                    ],
+                                    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Henry Brockholst Livingston&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/decision_vote/decision_vote/205608&#34;</span>,
+                              <span style="color:#f92672">&#34;vote&#34;</span>: <span style="color:#e6db74">&#34;majority&#34;</span>,
+                              <span style="color:#f92672">&#34;joining&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/john_marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15085</span>,
+                                          <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                                <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">53035</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/john_marshall/john_marshall.thumb.png&#34;</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32729</span>,
+                                                <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                          },
+                                          <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">12570</span>,
+                                          <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                          <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;john_marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                                {
+                                                      <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                                      <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2729&#34;</span>,
+                                                      <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Chief Justice of the United States&#34;</span>,
+                                                      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                      <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4244119200</span>,
+                                                      <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2729</span>,
+                                                      <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5330167200</span>,
+                                                      <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                                }
+                                          ],
+                                          <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;John Marshall&#34;</span>
+                                    }
+                              ]
+                        },
+                        {
+                              <span style="color:#f92672">&#34;ideology&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;seniority&#34;</span>: <span style="color:#ae81ff">7</span>,
+                              <span style="color:#f92672">&#34;opinion_type&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+                              <span style="color:#f92672">&#34;member&#34;</span>: {
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/thomas_todd&#34;</span>,
+                                    <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15039</span>,
+                                    <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Todd&#34;</span>,
+                                    <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                          <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">41113</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/thomas_todd/thomas_todd.thumb.png&#34;</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32769</span>,
+                                          <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                    },
+                                    <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">6854</span>,
+                                    <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                    <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;thomas_todd&#34;</span>,
+                                    <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                          {
+                                                <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;Thomas Jefferson&#34;</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2683&#34;</span>,
+                                                <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                                <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4540989600</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2683</span>,
+                                                <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5133175200</span>,
+                                                <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                          }
+                                    ],
+                                    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Thomas Todd&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/decision_vote/decision_vote/205609&#34;</span>,
+                              <span style="color:#f92672">&#34;vote&#34;</span>: <span style="color:#e6db74">&#34;majority&#34;</span>,
+                              <span style="color:#f92672">&#34;joining&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/john_marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15085</span>,
+                                          <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                                <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">53035</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/john_marshall/john_marshall.thumb.png&#34;</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32729</span>,
+                                                <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                          },
+                                          <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">12570</span>,
+                                          <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                          <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;john_marshall&#34;</span>,
+                                          <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                                {
+                                                      <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                                      <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2729&#34;</span>,
+                                                      <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Chief Justice of the United States&#34;</span>,
+                                                      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                      <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4244119200</span>,
+                                                      <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2729</span>,
+                                                      <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5330167200</span>,
+                                                      <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                                }
+                                          ],
+                                          <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;John Marshall&#34;</span>
+                                    }
+                              ]
+                        },
+                        {
+                              <span style="color:#f92672">&#34;ideology&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;seniority&#34;</span>: <span style="color:#ae81ff">2</span>,
+                              <span style="color:#f92672">&#34;opinion_type&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+                              <span style="color:#f92672">&#34;member&#34;</span>: {
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/william_cushing&#34;</span>,
+                                    <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15077</span>,
+                                    <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Cushing&#34;</span>,
+                                    <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                          <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">52796</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/william_cushing/william_cushing.thumb.png&#34;</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32776</span>,
+                                          <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                    },
+                                    <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">7527</span>,
+                                    <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                    <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;william_cushing&#34;</span>,
+                                    <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                          {
+                                                <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;George Washington&#34;</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2721&#34;</span>,
+                                                <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                                <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-5027076000</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2721</span>,
+                                                <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5677408800</span>,
+                                                <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                          }
+                                    ],
+                                    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;William Cushing&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/decision_vote/decision_vote/205610&#34;</span>,
+                              <span style="color:#f92672">&#34;vote&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+                              <span style="color:#f92672">&#34;joining&#34;</span>: <span style="color:#66d9ef">null</span>
+                        },
+                        {
+                              <span style="color:#f92672">&#34;ideology&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;seniority&#34;</span>: <span style="color:#ae81ff">3</span>,
+                              <span style="color:#f92672">&#34;opinion_type&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+                              <span style="color:#f92672">&#34;member&#34;</span>: {
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/samuel_chase&#34;</span>,
+                                    <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15105</span>,
+                                    <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Chase&#34;</span>,
+                                    <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                          <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">52231</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/samuel_chase/samuel_chase.thumb.png&#34;</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32759</span>,
+                                          <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                                    },
+                                    <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">5613</span>,
+                                    <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                                    <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;samuel_chase&#34;</span>,
+                                    <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                          {
+                                                <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;George Washington&#34;</span>,
+                                                <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2749&#34;</span>,
+                                                <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                                <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                                <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-5002970400</span>,
+                                                <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2749</span>,
+                                                <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5487933600</span>,
+                                                <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                          }
+                                    ],
+                                    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Samuel Chase&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/decision_vote/decision_vote/205611&#34;</span>,
+                              <span style="color:#f92672">&#34;vote&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+                              <span style="color:#f92672">&#34;joining&#34;</span>: <span style="color:#66d9ef">null</span>
+                        }
+                  ],
+                  <span style="color:#f92672">&#34;minority_vote&#34;</span>: <span style="color:#ae81ff">0</span>,
+                  <span style="color:#f92672">&#34;winning_party&#34;</span>: <span style="color:#e6db74">&#34;Peck&#34;</span>,
+                  <span style="color:#f92672">&#34;decision_type&#34;</span>: <span style="color:#e6db74">&#34;majority opinion&#34;</span>,
+                  <span style="color:#f92672">&#34;majority_vote&#34;</span>: <span style="color:#ae81ff">5</span>,
+                  <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;Under the  Contracts Clause (Article 1, Section 10, Clause 1), states cannot rescind an agreement even if that agreement was reached illegally&#34;</span>
+            }
+      ],
+      <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/cases/1789-1850/10us87&#34;</span>,
+      <span style="color:#f92672">&#34;second_party&#34;</span>: <span style="color:#e6db74">&#34;John Peck&#34;</span>,
+      <span style="color:#f92672">&#34;first_party&#34;</span>: <span style="color:#e6db74">&#34;Robert Fletcher&#34;</span>,
+      <span style="color:#f92672">&#34;advocates&#34;</span>: <span style="color:#66d9ef">null</span>,
+      <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;A case in which the Court held that a contract is still binding and enforceable, even if secured illegally.&#34;</span>,
+      <span style="color:#f92672">&#34;first_party_label&#34;</span>: <span style="color:#e6db74">&#34;Petitioner&#34;</span>,
+      <span style="color:#f92672">&#34;related_cases&#34;</span>: <span style="color:#66d9ef">null</span>,
+      <span style="color:#f92672">&#34;conclusion&#34;</span>: <span style="color:#e6db74">&#34;&lt;p&gt;In a unanimous opinion, the Court held that since the estate had been legally \&#34;passed into the hands of a purchaser for a valuable consideration,\&#34; the Georgia legislature could not take away the land or invalidate the contract. Noting that the Constitution did not permit bills of attainder or ex post facto laws, the Court held that laws annulling contracts or grants made by previous legislative acts were constitutionally impermissible.&lt;/p&gt;\n&#34;</span>,
+      <span style="color:#f92672">&#34;facts_of_the_case&#34;</span>: <span style="color:#e6db74">&#34;&lt;p&gt;In 1795, the Georgia state legislature passed a land grant awarding territory to four companies. The following year, however, the legislature voided the law and declared all rights and claims under it to be invalid. In 1800, John Peck acquired land that was part of the original legislative grant. He then sold the land to Robert Fletcher three years later, claiming that past sales of the land had been legitimate. Fletcher argued that since the original sale of the land had been declared invalid, Peck had no legal right to sell the land and thus committed a breach of contract.&lt;/p&gt;\n&#34;</span>,
+      <span style="color:#f92672">&#34;timeline&#34;</span>: [
+            {
+                  <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/case_timeline/case_timeline/52829&#34;</span>,
+                  <span style="color:#f92672">&#34;dates&#34;</span>: [
+                        <span style="color:#ae81ff">-5045220000</span>,
+                        <span style="color:#ae81ff">-5075546400</span>,
+                        <span style="color:#ae81ff">-5075460000</span>,
+                        <span style="color:#ae81ff">-5075373600</span>,
+                        <span style="color:#ae81ff">-5075287200</span>
+                  ],
+                  <span style="color:#f92672">&#34;event&#34;</span>: <span style="color:#e6db74">&#34;Argued&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/case_timeline/case_timeline/52830&#34;</span>,
+                  <span style="color:#f92672">&#34;dates&#34;</span>: [
+                        <span style="color:#ae81ff">-5042714400</span>
+                  ],
+                  <span style="color:#f92672">&#34;event&#34;</span>: <span style="color:#e6db74">&#34;Decided&#34;</span>
+            }
+      ],
+      <span style="color:#f92672">&#34;opinion_announcement&#34;</span>: <span style="color:#66d9ef">null</span>,
+      <span style="color:#f92672">&#34;second_party_label&#34;</span>: <span style="color:#e6db74">&#34;Respondent&#34;</span>,
+      <span style="color:#f92672">&#34;heard_by&#34;</span>: [
+            {
+                  <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/courts/marshall6&#34;</span>,
+                  <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15247</span>,
+                  <span style="color:#f92672">&#34;members&#34;</span>: [
+                        {
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/john_marshall&#34;</span>,
+                              <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15085</span>,
+                              <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Marshall&#34;</span>,
+                              <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                    <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">53035</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/john_marshall/john_marshall.thumb.png&#34;</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32729</span>,
+                                    <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">12570</span>,
+                              <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;john_marshall&#34;</span>,
+                              <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2729&#34;</span>,
+                                          <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Chief Justice of the United States&#34;</span>,
+                                          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                          <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4244119200</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2729</span>,
+                                          <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5330167200</span>,
+                                          <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                    }
+                              ],
+                              <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;John Marshall&#34;</span>
+                        },
+                        {
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/william_cushing&#34;</span>,
+                              <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15077</span>,
+                              <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Cushing&#34;</span>,
+                              <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                    <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">52796</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/william_cushing/william_cushing.thumb.png&#34;</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32776</span>,
+                                    <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">7527</span>,
+                              <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;william_cushing&#34;</span>,
+                              <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;George Washington&#34;</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2721&#34;</span>,
+                                          <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                          <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-5027076000</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2721</span>,
+                                          <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5677408800</span>,
+                                          <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                    }
+                              ],
+                              <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;William Cushing&#34;</span>
+                        },
+                        {
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/samuel_chase&#34;</span>,
+                              <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15105</span>,
+                              <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Chase&#34;</span>,
+                              <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                    <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">52231</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/samuel_chase/samuel_chase.thumb.png&#34;</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32759</span>,
+                                    <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">5613</span>,
+                              <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;samuel_chase&#34;</span>,
+                              <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;George Washington&#34;</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2749&#34;</span>,
+                                          <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                          <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-5002970400</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2749</span>,
+                                          <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5487933600</span>,
+                                          <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                    }
+                              ],
+                              <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Samuel Chase&#34;</span>
+                        },
+                        {
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/bushrod_washington&#34;</span>,
+                              <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15093</span>,
+                              <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Washington&#34;</span>,
+                              <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                    <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">42759</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/bushrod_washington/bushrod_washington.thumb.png&#34;</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32698</span>,
+                                    <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">11339</span>,
+                              <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;bushrod_washington&#34;</span>,
+                              <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2737&#34;</span>,
+                                          <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                          <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4421066400</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2737</span>,
+                                          <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5400756000</span>,
+                                          <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                    }
+                              ],
+                              <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Bushrod Washington&#34;</span>
+                        },
+                        {
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/william_johnson&#34;</span>,
+                              <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15059</span>,
+                              <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Johnson&#34;</span>,
+                              <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                    <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">45940</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/william_johnson/william_johnson.thumb.png&#34;</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32779</span>,
+                                    <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">11046</span>,
+                              <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;william_johnson&#34;</span>,
+                              <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;Thomas Jefferson&#34;</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2703&#34;</span>,
+                                          <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                          <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4273149600</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2703</span>,
+                                          <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5227524000</span>,
+                                          <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                    }
+                              ],
+                              <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;William Johnson&#34;</span>
+                        },
+                        {
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/brockholst_livingston&#34;</span>,
+                              <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15111</span>,
+                              <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Livingston&#34;</span>,
+                              <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                    <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">44786</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/brockholst_livingston/brockholst_livingston.thumb.png&#34;</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32714</span>,
+                                    <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">5901</span>,
+                              <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;brockholst_livingston&#34;</span>,
+                              <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;Thomas Jefferson&#34;</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2755&#34;</span>,
+                                          <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                          <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4632314400</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2755</span>,
+                                          <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5142160800</span>,
+                                          <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                    }
+                              ],
+                              <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Henry Brockholst Livingston&#34;</span>
+                        },
+                        {
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/thomas_todd&#34;</span>,
+                              <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15039</span>,
+                              <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Todd&#34;</span>,
+                              <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                                    <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">41113</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/thomas_todd/thomas_todd.thumb.png&#34;</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32769</span>,
+                                    <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                              },
+                              <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">6854</span>,
+                              <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                              <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;thomas_todd&#34;</span>,
+                              <span style="color:#f92672">&#34;roles&#34;</span>: [
+                                    {
+                                          <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;Thomas Jefferson&#34;</span>,
+                                          <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2683&#34;</span>,
+                                          <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                          <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4540989600</span>,
+                                          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2683</span>,
+                                          <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5133175200</span>,
+                                          <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                                    }
+                              ],
+                              <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Thomas Todd&#34;</span>
+                        }
+                  ],
+                  <span style="color:#f92672">&#34;court_start&#34;</span>: <span style="color:#ae81ff">-5133175200</span>,
+                  <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                  <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;marshall6&#34;</span>,
+                  <span style="color:#f92672">&#34;images&#34;</span>: [
+                        {
+                              <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">4355969</span>,
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/courts/marshall6.jpg&#34;</span>,
+                              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">78522</span>,
+                              <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/jpeg&#34;</span>
+                        }
+                  ],
+                  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Marshall Court (1807-1810)&#34;</span>
+            }
+      ],
+      <span style="color:#f92672">&#34;manner_of_jurisdiction&#34;</span>: <span style="color:#e6db74">&#34;Writ of &lt;i&gt;certiorari&lt;/i&gt;&#34;</span>,
+      <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">1793</span>,
+      <span style="color:#f92672">&#34;lower_court&#34;</span>: <span style="color:#66d9ef">null</span>,
+      <span style="color:#f92672">&#34;justia_url&#34;</span>: <span style="color:#e6db74">&#34;https://supreme.justia.com/cases/federal/us/10/87/&#34;</span>,
+      <span style="color:#f92672">&#34;docket_number&#34;</span>: <span style="color:#e6db74">&#34;None&#34;</span>,
+      <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">62333</span>,
+      <span style="color:#f92672">&#34;written_opinion&#34;</span>: [
+            {
+                  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#66d9ef">null</span>,
+                  <span style="color:#f92672">&#34;judge_full_name&#34;</span>: <span style="color:#66d9ef">null</span>,
+                  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Syllabus&#34;</span>,
+                  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">16171</span>,
+                  <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/case_document/written_opinion/16171&#34;</span>,
+                  <span style="color:#f92672">&#34;justia_opinion_url&#34;</span>: <span style="color:#e6db74">&#34;https://supreme.justia.com/cases/federal/us/10/87/&#34;</span>,
+                  <span style="color:#f92672">&#34;judge_last_name&#34;</span>: <span style="color:#66d9ef">null</span>,
+                  <span style="color:#f92672">&#34;justia_opinion_id&#34;</span>: <span style="color:#ae81ff">1907670</span>,
+                  <span style="color:#f92672">&#34;type&#34;</span>: {
+                        <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;syllabus&#34;</span>,
+                        <span style="color:#f92672">&#34;label&#34;</span>: <span style="color:#e6db74">&#34;Syllabus&#34;</span>
+                  }
+            },
+            {
+                  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#66d9ef">null</span>,
+                  <span style="color:#f92672">&#34;judge_full_name&#34;</span>: <span style="color:#66d9ef">null</span>,
+                  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;View Case&#34;</span>,
+                  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">16172</span>,
+                  <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/case_document/written_opinion/16172&#34;</span>,
+                  <span style="color:#f92672">&#34;justia_opinion_url&#34;</span>: <span style="color:#e6db74">&#34;https://supreme.justia.com/cases/federal/us/10/87/case.html&#34;</span>,
+                  <span style="color:#f92672">&#34;judge_last_name&#34;</span>: <span style="color:#66d9ef">null</span>,
+                  <span style="color:#f92672">&#34;justia_opinion_id&#34;</span>: <span style="color:#ae81ff">1907671</span>,
+                  <span style="color:#f92672">&#34;type&#34;</span>: {
+                        <span style="color:#f92672">&#34;value&#34;</span>: <span style="color:#e6db74">&#34;case&#34;</span>,
+                        <span style="color:#f92672">&#34;label&#34;</span>: <span style="color:#66d9ef">null</span>
+                  }
+            }
+      ],
+      <span style="color:#f92672">&#34;question&#34;</span>: <span style="color:#e6db74">&#34;&lt;p&gt;Could the contract between Fletcher and Peck be invalidated by an act of the Georgia legislature?&lt;/p&gt;\n&#34;</span>,
+      <span style="color:#f92672">&#34;citation&#34;</span>: {
+            <span style="color:#f92672">&#34;page&#34;</span>: <span style="color:#e6db74">&#34;87&#34;</span>,
+            <span style="color:#f92672">&#34;volume&#34;</span>: <span style="color:#e6db74">&#34;10&#34;</span>,
+            <span style="color:#f92672">&#34;year&#34;</span>: <span style="color:#e6db74">&#34;1810&#34;</span>,
+            <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/case_citation/case_citation/27135&#34;</span>
+      },
+      <span style="color:#f92672">&#34;oral_argument_audio&#34;</span>: <span style="color:#66d9ef">null</span>,
+      <span style="color:#f92672">&#34;decided_by&#34;</span>: {
+            <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/courts/marshall6&#34;</span>,
+            <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15247</span>,
+            <span style="color:#f92672">&#34;members&#34;</span>: [
+                  {
+                        <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/john_marshall&#34;</span>,
+                        <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15085</span>,
+                        <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Marshall&#34;</span>,
+                        <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                              <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">53035</span>,
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/john_marshall/john_marshall.thumb.png&#34;</span>,
+                              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32729</span>,
+                              <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                        },
+                        <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">12570</span>,
+                        <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                        <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;john_marshall&#34;</span>,
+                        <span style="color:#f92672">&#34;roles&#34;</span>: [
+                              {
+                                    <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2729&#34;</span>,
+                                    <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Chief Justice of the United States&#34;</span>,
+                                    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                    <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4244119200</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2729</span>,
+                                    <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5330167200</span>,
+                                    <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                              }
+                        ],
+                        <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;John Marshall&#34;</span>
+                  },
+                  {
+                        <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/william_cushing&#34;</span>,
+                        <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15077</span>,
+                        <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Cushing&#34;</span>,
+                        <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                              <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">52796</span>,
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/william_cushing/william_cushing.thumb.png&#34;</span>,
+                              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32776</span>,
+                              <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                        },
+                        <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">7527</span>,
+                        <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                        <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;william_cushing&#34;</span>,
+                        <span style="color:#f92672">&#34;roles&#34;</span>: [
+                              {
+                                    <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;George Washington&#34;</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2721&#34;</span>,
+                                    <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                    <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-5027076000</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2721</span>,
+                                    <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5677408800</span>,
+                                    <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                              }
+                        ],
+                        <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;William Cushing&#34;</span>
+                  },
+                  {
+                        <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/samuel_chase&#34;</span>,
+                        <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15105</span>,
+                        <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Chase&#34;</span>,
+                        <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                              <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">52231</span>,
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/samuel_chase/samuel_chase.thumb.png&#34;</span>,
+                              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32759</span>,
+                              <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                        },
+                        <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">5613</span>,
+                        <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                        <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;samuel_chase&#34;</span>,
+                        <span style="color:#f92672">&#34;roles&#34;</span>: [
+                              {
+                                    <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;George Washington&#34;</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2749&#34;</span>,
+                                    <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                    <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-5002970400</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2749</span>,
+                                    <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5487933600</span>,
+                                    <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                              }
+                        ],
+                        <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Samuel Chase&#34;</span>
+                  },
+                  {
+                        <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/bushrod_washington&#34;</span>,
+                        <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15093</span>,
+                        <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Washington&#34;</span>,
+                        <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                              <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">42759</span>,
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/bushrod_washington/bushrod_washington.thumb.png&#34;</span>,
+                              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32698</span>,
+                              <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                        },
+                        <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">11339</span>,
+                        <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                        <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;bushrod_washington&#34;</span>,
+                        <span style="color:#f92672">&#34;roles&#34;</span>: [
+                              {
+                                    <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;John Adams&#34;</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2737&#34;</span>,
+                                    <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                    <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4421066400</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2737</span>,
+                                    <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5400756000</span>,
+                                    <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                              }
+                        ],
+                        <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Bushrod Washington&#34;</span>
+                  },
+                  {
+                        <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/william_johnson&#34;</span>,
+                        <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15059</span>,
+                        <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Johnson&#34;</span>,
+                        <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                              <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">45940</span>,
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/william_johnson/william_johnson.thumb.png&#34;</span>,
+                              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32779</span>,
+                              <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                        },
+                        <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">11046</span>,
+                        <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                        <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;william_johnson&#34;</span>,
+                        <span style="color:#f92672">&#34;roles&#34;</span>: [
+                              {
+                                    <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;Thomas Jefferson&#34;</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2703&#34;</span>,
+                                    <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                    <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4273149600</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2703</span>,
+                                    <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5227524000</span>,
+                                    <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                              }
+                        ],
+                        <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;William Johnson&#34;</span>
+                  },
+                  {
+                        <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/brockholst_livingston&#34;</span>,
+                        <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15111</span>,
+                        <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Livingston&#34;</span>,
+                        <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                              <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">44786</span>,
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/brockholst_livingston/brockholst_livingston.thumb.png&#34;</span>,
+                              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32714</span>,
+                              <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                        },
+                        <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">5901</span>,
+                        <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                        <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;brockholst_livingston&#34;</span>,
+                        <span style="color:#f92672">&#34;roles&#34;</span>: [
+                              {
+                                    <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;Thomas Jefferson&#34;</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2755&#34;</span>,
+                                    <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                    <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4632314400</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2755</span>,
+                                    <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5142160800</span>,
+                                    <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                              }
+                        ],
+                        <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Henry Brockholst Livingston&#34;</span>
+                  },
+                  {
+                        <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/people/thomas_todd&#34;</span>,
+                        <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#ae81ff">15039</span>,
+                        <span style="color:#f92672">&#34;last_name&#34;</span>: <span style="color:#e6db74">&#34;Todd&#34;</span>,
+                        <span style="color:#f92672">&#34;thumbnail&#34;</span>: {
+                              <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">41113</span>,
+                              <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/people/thomas_todd/thomas_todd.thumb.png&#34;</span>,
+                              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">32769</span>,
+                              <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/png&#34;</span>
+                        },
+                        <span style="color:#f92672">&#34;length_of_service&#34;</span>: <span style="color:#ae81ff">6854</span>,
+                        <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+                        <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;thomas_todd&#34;</span>,
+                        <span style="color:#f92672">&#34;roles&#34;</span>: [
+                              {
+                                    <span style="color:#f92672">&#34;appointing_president&#34;</span>: <span style="color:#e6db74">&#34;Thomas Jefferson&#34;</span>,
+                                    <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/preson_role/scotus_justice/2683&#34;</span>,
+                                    <span style="color:#f92672">&#34;role_title&#34;</span>: <span style="color:#e6db74">&#34;Associate Justice of the Supreme Court of the United States&#34;</span>,
+                                    <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;scotus_justice&#34;</span>,
+                                    <span style="color:#f92672">&#34;date_end&#34;</span>: <span style="color:#ae81ff">-4540989600</span>,
+                                    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">2683</span>,
+                                    <span style="color:#f92672">&#34;date_start&#34;</span>: <span style="color:#ae81ff">-5133175200</span>,
+                                    <span style="color:#f92672">&#34;institution_name&#34;</span>: <span style="color:#e6db74">&#34;Supreme Court of the United States&#34;</span>
+                              }
+                        ],
+                        <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Thomas Todd&#34;</span>
+                  }
+            ],
+            <span style="color:#f92672">&#34;court_start&#34;</span>: <span style="color:#ae81ff">-5133175200</span>,
+            <span style="color:#f92672">&#34;view_count&#34;</span>: <span style="color:#ae81ff">0</span>,
+            <span style="color:#f92672">&#34;identifier&#34;</span>: <span style="color:#e6db74">&#34;marshall6&#34;</span>,
+            <span style="color:#f92672">&#34;images&#34;</span>: [
+                  {
+                        <span style="color:#f92672">&#34;size&#34;</span>: <span style="color:#ae81ff">4355969</span>,
+                        <span style="color:#f92672">&#34;href&#34;</span>: <span style="color:#e6db74">&#34;https://api.oyez.org/sites/default/files/images/courts/marshall6.jpg&#34;</span>,
+                        <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">78522</span>,
+                        <span style="color:#f92672">&#34;mime&#34;</span>: <span style="color:#e6db74">&#34;image/jpeg&#34;</span>
+                  }
+            ],
+            <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Marshall Court (1807-1810)&#34;</span>
+      },
+      <span style="color:#f92672">&#34;location&#34;</span>: <span style="color:#66d9ef">null</span>,
+      <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Fletcher v. Peck&#34;</span>,
+      <span style="color:#f92672">&#34;term&#34;</span>: <span style="color:#e6db74">&#34;1789-1850&#34;</span>,
+      <span style="color:#f92672">&#34;additional_docket_numbers&#34;</span>: <span style="color:#66d9ef">null</span>,
+      <span style="color:#f92672">&#34;loc_id&#34;</span>: <span style="color:#e6db74">&#34;http://www.loc.gov/item/usrep010087/&#34;</span>,
+      <span style="color:#f92672">&#34;loc_url&#34;</span>: <span style="color:#e6db74">&#34;http://www.loc.gov/item/usrep010087/&#34;</span>,
+      <span style="color:#f92672">&#34;simple_citation&#34;</span>: <span style="color:#e6db74">&#34;usrep010087&#34;</span>,
+      <span style="color:#f92672">&#34;shelf_id&#34;</span>: <span style="color:#e6db74">&#34;series: Volume 10 Call Number: KF101 Series: Contracts Law&#34;</span>,
+      <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;U.S. Reports: Fletcher v. Peck, 10 U.S. (6 Cranch) 87 (1810).&#34;</span>,
+      <span style="color:#f92672">&#34;issues&#34;</span>: [
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;supreme court&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;united states&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;court opinions&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;periodical&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;land titles&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;contracts law&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;court cases&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;judicial decisions&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;equity&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;law library&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;public lands&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;judicial review and appeals&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;contracts&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;government documents&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;bills and resolutions&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;law&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;common law&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;property rights&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;court decisions&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;u.s. reports&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;legislative powers&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;real estate&#34;</span>
+            },
+            {
+                  <span style="color:#f92672">&#34;issue&#34;</span>: <span style="color:#e6db74">&#34;property&#34;</span>
+            }
+      ],
+      <span style="color:#f92672">&#34;major_topics&#34;</span>: [
+            {
+                  <span style="color:#f92672">&#34;major_topic&#34;</span>: <span style="color:#e6db74">&#34;contracts law&#34;</span>
+            }
+      ],
+      <span style="color:#f92672">&#34;loc_pdf&#34;</span>: <span style="color:#e6db74">&#34;https://tile.loc.gov/storage-services/service/ll/usrep/usrep010/usrep010087/usrep010087.pdf&#34;</span>
+}
+</code></pre></div>
+        </div>
+        
+
+    
+
+
+<div class="post-info">
+
+    
+        <div class="post-date dt-published">2022-05-23</div>
+    
+
+    <a class="post-hidden-url u-url" href="https://blog.jnapolitano.io/posts/legal-research-part-8/">https://blog.jnapolitano.io/posts/legal-research-part-8/</a>
+    <a href="https://blog.jnapolitano.io" class="p-name p-author post-hidden-author h-card" rel="me">Justin Napolitano</a>
+
+
+    <div class="post-taxonomies">
+        
+            <ul class="post-series">
+                
+                    
+                    <li><a href="">Series: Legal Research with AI</a></li>
+                
+            </ul>
+        
+        
+        
+            <ul class="post-categories">
+                
+                    
+                    <li><a href="">Legal Research</a></li>
+                
+                    
+                    <li><a href="">Data Wrangling</a></li>
+                
+                    
+                    <li><a href="">Graph Database</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/categories/automation/">Automation</a></li>
+                
+            </ul>
+        
+        
+            <ul class="post-tags">
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/python/">#python</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/legal/">#legal</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/json/">#json</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/scotus/">#scotus</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/automation/">#automation</a></li>
+                
+            </ul>
+        
+    </div>
+</div>
+
+        <hr/>
+        
+    
+    <h1>Series</h1>
+	<p><a href="/series/legal-research-with-ai" id="series">This is a post in the 
+	<b>Legal Research with AI</b></a> series.<br/>
+    Other posts in this series:
+    
+    <ul class="series">
+    
+    <li class="list"><a href="/posts/legal-research-part-8/">Conduct Legal Research with AI Part 8: Case Node Mockup in JSON</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-7/">Legal Research with AI Part 7: Wrangling Data with Julia</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/masterpiece/">Legal Research with AI: Part 6</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-5/">Conduct Legal Research with AI: Part 5</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-4/">Conduct Legal Research with AI: Part 4</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-3/">Conduct Legal Research with AI: Part 3</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-reserch-part-2/">Conduct Legal Research with AI: Part 2</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-1/">Conduct Legal Research with AI: Part 1</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/legal-research-part-0/">Conduct Legal Research with AI: Part 0</a></li>
+    </ul>
+    
+
+        <hr/>
+    </article>
+
+
+
+    
+        
+        
+            <h3 class="read-next-title">Read next</h3>
+            <ul class="read-next-posts">
+                
+                <li><a href="/posts/legal-research-part-5/">Conduct Legal Research with AI: Part 5</a></li>
+                
+                <li><a href="/posts/legal-research-part-4/">Conduct Legal Research with AI: Part 4</a></li>
+                
+                <li><a href="/posts/legal-research-part-3/">Conduct Legal Research with AI: Part 3</a></li>
+                
+                <li><a href="/posts/legal-reserch-part-2/">Conduct Legal Research with AI: Part 2</a></li>
+                
+                <li><a href="/posts/legal-research-part-1/">Conduct Legal Research with AI: Part 1</a></li>
+                
+            </ul>
+        
+    
+
+    
+
+    
+        
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jnapolitano-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+
+
+
+
+
+    
+
+        </main>
+        
+            <footer class="common-footer">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+        <div class="copyright">
+            <p>© Justin Napolitano, 2022<br>
+            Maintained by Justin Napolitano.<br>
+            
+            </p>  
+        </div> 
+
+        
+
+    
+
+
+
+    <button class="theme-switcher">
+        Dark theme
+    </button>
+
+
+<script>
+const STORAGE_KEY = 'user-color-scheme'
+const defaultTheme = "auto"
+
+let currentTheme
+let switchButton
+let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+const autoChangeScheme = e => {
+    currentTheme = e.matches ? 'dark' : 'light'
+    document.documentElement.setAttribute('data-theme', currentTheme)
+    changeButtonText()
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    switchButton = document.querySelector('.theme-switcher')
+    currentTheme = detectCurrentScheme()
+    if (currentTheme == 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark')
+    }
+    if (currentTheme == 'auto') {
+        autoChangeScheme(autoDefinedScheme);
+        autoDefinedScheme.addListener(autoChangeScheme);
+    }
+
+    if (switchButton) {
+        changeButtonText()
+        switchButton.addEventListener('click', switchTheme, false)
+    }
+  
+    showContent()
+})
+
+function detectCurrentScheme() {
+    if (localStorage.getItem(STORAGE_KEY)) {
+        return localStorage.getItem(STORAGE_KEY)
+    } 
+    if (defaultTheme) {
+        return defaultTheme
+    } 
+    if (!window.matchMedia) {
+        return 'light'
+    } 
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark'
+    }
+    return 'light'
+}
+
+function changeButtonText()
+{   
+    if (switchButton) {
+        switchButton.textContent = currentTheme == 'dark' ?  "Light theme" : "Dark theme"
+    }
+}
+
+function switchTheme(e) {
+    if (currentTheme == 'dark') {
+        localStorage.setItem(STORAGE_KEY, 'light')
+        document.documentElement.setAttribute('data-theme', 'light')
+        currentTheme = 'light'
+    } else {
+        localStorage.setItem(STORAGE_KEY, 'dark')
+        document.documentElement.setAttribute('data-theme', 'dark')
+        currentTheme = 'dark'
+    }
+    changeButtonText()
+}
+
+function showContent() {
+    document.body.style.visibility = 'visible';
+    document.body.style.opacity = 1;
+}
+</script>   
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=https://blog.jnapolitano.io class="p-name u-url url fn" rel="me">Justin Napolitano</a> 
+
+     
+        /
+        <a class="p-email u-email email" rel="me" href="mailto:justin@jnapolitano.io">justin@jnapolitano.io</a>
+    
+
+     
+        <img class="u-photo" src="/images/me.png" />
+    
+</p> 
+</footer>
+
+        
+    </div>
+</body>
+</html>
