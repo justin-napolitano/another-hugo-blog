@@ -3,7 +3,52 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://blog.jnapolitano.io/categories/</loc>
-    <lastmod>2022-05-23T19:30:32+00:00</lastmod>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/data-wrangling/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/data-wrangling/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/dataframes/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/julia/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/julia/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/legal-research/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/series/quantitative-analysis-in-julia/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/pi-with-julia/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/scotus/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/series/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/tutorials/</loc>
+    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/rocky-linux-8-julia/</loc>
+    <lastmod>2022-05-24T00:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/climate-change/</loc>
     <lastmod>2022-05-23T19:30:32+00:00</lastmod>
@@ -12,12 +57,6 @@
     <lastmod>2022-05-23T19:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/emissions/</loc>
-    <lastmod>2022-05-23T19:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/</loc>
-    <lastmod>2022-05-23T19:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/posts/</loc>
     <lastmod>2022-05-23T19:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/categories/python/</loc>
@@ -29,13 +68,7 @@
     <loc>https://blog.jnapolitano.io/posts/rice-paddy-emissions-2/</loc>
     <lastmod>2022-05-23T19:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/series/</loc>
-    <lastmod>2022-05-23T19:30:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/categories/statistical-analysis/</loc>
-    <lastmod>2022-05-23T19:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/</loc>
     <lastmod>2022-05-23T19:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/university-of-malaysia/</loc>
@@ -50,9 +83,6 @@
     <loc>https://blog.jnapolitano.io/posts/legal-research-part-8/</loc>
     <lastmod>2022-05-23T16:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/data-wrangling/</loc>
-    <lastmod>2022-05-23T16:30:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/categories/graph-database/</loc>
     <lastmod>2022-05-23T16:30:32+00:00</lastmod>
   </url><url>
@@ -62,34 +92,13 @@
     <loc>https://blog.jnapolitano.io/tags/legal/</loc>
     <lastmod>2022-05-23T16:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/legal-research/</loc>
-    <lastmod>2022-05-23T16:30:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/series/legal-research-with-ai/</loc>
     <lastmod>2022-05-23T16:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/python/</loc>
     <lastmod>2022-05-23T16:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/tags/scotus/</loc>
-    <lastmod>2022-05-23T16:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/data-wrangling/</loc>
-    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/dataframes/</loc>
-    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/julia/</loc>
-    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/julia/</loc>
-    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/posts/legal-research-part-7/</loc>
-    <lastmod>2022-05-22T16:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/tutorials/</loc>
     <lastmod>2022-05-22T16:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/categories/behavioral-modeling/</loc>
