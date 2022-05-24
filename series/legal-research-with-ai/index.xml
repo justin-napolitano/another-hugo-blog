@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>Conduct Legal Research with AI Part 8: Case Node Mockup in JSON</title>
+      <title>Conduct Legal Research with AI Part 8: Case Nodes Sample Data</title>
       <link>https://blog.jnapolitano.io/posts/legal-research-part-8/</link>
       <pubDate>Mon, 23 May 2022 16:30:32 +0000</pubDate>
       
@@ -24,7 +24,7 @@
     &lt;/a&gt;
 &lt;/span&gt;
 &lt;/h2&gt;&lt;p&gt;The legal Research with AI Series is expanding quickly. This is the 9th post related to it in someway.  Building this pipeline and integrating multiple datasets into nodes is proving to be verbose.&lt;/p&gt;
-&lt;p&gt;This post documents merging Oyez and Library of Congress of data structured json files that represent nodes and hiearchal relationships.&lt;/p&gt;
+&lt;p&gt;This post documents merging Oyez and Library of Congress of data structured json files that represent nodes and hierarchal relationships.&lt;/p&gt;
 &lt;h2 id=&#34;main-function&#34; &gt;Main Function
 &lt;span&gt;
     &lt;a href=&#34;#main-function&#34;&gt;

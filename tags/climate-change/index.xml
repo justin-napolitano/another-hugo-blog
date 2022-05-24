@@ -6,10 +6,545 @@
     <description>Justin&#39;s Data Blog (climate-change)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 May 2022 08:30:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 May 2022 19:30:32 +0000</lastBuildDate>
     
     <atom:link href="https://blog.jnapolitano.io/tags/climate-change/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Rice Paddy Methane Emissions Estimation: Part 2</title>
+      <link>https://blog.jnapolitano.io/posts/rice-paddy-emissions-2/</link>
+      <pubDate>Mon, 23 May 2022 19:30:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/rice-paddy-emissions-2/</guid>
+      <description>&lt;h1 id=&#34;methane-emissions-estimation-data-part-2-a-comparison-between-faostat-and-university-of-malaysia-estimates&#34; &gt;Methane Emissions Estimation Data Part 2: A Comparison between FAOSTAT and University of Malaysia Estimates
+&lt;span&gt;
+    &lt;a href=&#34;#methane-emissions-estimation-data-part-2-a-comparison-between-faostat-and-university-of-malaysia-estimates&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;p&gt;This post documents the data exploration phase of a project that determines whether global methane emissions produced by rice paddies are undercounted.&lt;/p&gt;
+&lt;p&gt;It is fairly code python and pandas heavy.&lt;/p&gt;
+&lt;p&gt;The code and data exploration follows the summary below.&lt;/p&gt;
+&lt;h2 id=&#34;hypothesis-testing-the-university-of-malaysia-paper&#34; &gt;Hypothesis Testing the University of Malaysia Paper
+&lt;span&gt;
+    &lt;a href=&#34;#hypothesis-testing-the-university-of-malaysia-paper&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;h2 id=&#34;claims&#34; &gt;Claims
+&lt;span&gt;
+    &lt;a href=&#34;#claims&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;That the distributions do not differ between 2020 and 2019&lt;/li&gt;
+&lt;li&gt;That the means do no differ between 2020 and 2019&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;what-will-be-testing&#34; &gt;What will be testing.
+&lt;span&gt;
+    &lt;a href=&#34;#what-will-be-testing&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Shapiro-Wilk Test&lt;/li&gt;
+&lt;li&gt;Mann-Whitney U Test&lt;/li&gt;
+&lt;li&gt;Kruskal Wallis&lt;/li&gt;
+&lt;li&gt;Friedman&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;data-import&#34; &gt;Data Import
+&lt;span&gt;
+    &lt;a href=&#34;#data-import&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pandas &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; pd
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; plt
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; numpy &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; np
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; scipy.stats &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; stats
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;filepath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Users/jnapolitano/Projects/wattime-takehome/wattime-takehome/data/ch4_2015-2021.xlsx&amp;#34;&lt;/span&gt;
+
+hypothesis_testing_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read_excel(filepath)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;drop-total-row-from-the-data&#34; &gt;Drop total row from the data
+&lt;span&gt;
+    &lt;a href=&#34;#drop-total-row-from-the-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;hypothesis_testing_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hypothesis_testing_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;loc[(hypothesis_testing_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;country_name&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Total&amp;#34;&lt;/span&gt;)]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;copy() &lt;span style=&#34;color:#75715e&#34;&gt;#copying to avoid modifying slices in memory.  Old df should also drop from memory in production environment.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;hypothesis_testing_df
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;iso3_country&lt;/th&gt;
+      &lt;th&gt;country_name&lt;/th&gt;
+      &lt;th&gt;tCH4_2015&lt;/th&gt;
+      &lt;th&gt;tCH4_2016&lt;/th&gt;
+      &lt;th&gt;tCH4_2017&lt;/th&gt;
+      &lt;th&gt;tCH4_2018&lt;/th&gt;
+      &lt;th&gt;tCH4_2019&lt;/th&gt;
+      &lt;th&gt;tCH4_2020&lt;/th&gt;
+      &lt;th&gt;tCH4_2021&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;BGD&lt;/td&gt;
+      &lt;td&gt;Bangladesh&lt;/td&gt;
+      &lt;td&gt;2.344420e+06&lt;/td&gt;
+      &lt;td&gt;2.278158e+06&lt;/td&gt;
+      &lt;td&gt;2.098958e+06&lt;/td&gt;
+      &lt;td&gt;2.141231e+06&lt;/td&gt;
+      &lt;td&gt;2.070985e+06&lt;/td&gt;
+      &lt;td&gt;2.106781e+06&lt;/td&gt;
+      &lt;td&gt;1.983974e+06&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;BRA&lt;/td&gt;
+      &lt;td&gt;Brazil&lt;/td&gt;
+      &lt;td&gt;3.410233e+05&lt;/td&gt;
+      &lt;td&gt;3.104189e+05&lt;/td&gt;
+      &lt;td&gt;3.725173e+05&lt;/td&gt;
+      &lt;td&gt;3.717030e+05&lt;/td&gt;
+      &lt;td&gt;3.294713e+05&lt;/td&gt;
+      &lt;td&gt;4.902874e+05&lt;/td&gt;
+      &lt;td&gt;4.544874e+05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;CHN&lt;/td&gt;
+      &lt;td&gt;China&lt;/td&gt;
+      &lt;td&gt;6.133647e+06&lt;/td&gt;
+      &lt;td&gt;5.859531e+06&lt;/td&gt;
+      &lt;td&gt;6.355071e+06&lt;/td&gt;
+      &lt;td&gt;5.413962e+06&lt;/td&gt;
+      &lt;td&gt;5.603352e+06&lt;/td&gt;
+      &lt;td&gt;6.402353e+06&lt;/td&gt;
+      &lt;td&gt;6.068210e+06&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;ESP&lt;/td&gt;
+      &lt;td&gt;Spain&lt;/td&gt;
+      &lt;td&gt;1.141464e+04&lt;/td&gt;
+      &lt;td&gt;1.334803e+04&lt;/td&gt;
+      &lt;td&gt;1.217299e+04&lt;/td&gt;
+      &lt;td&gt;1.405410e+04&lt;/td&gt;
+      &lt;td&gt;1.148324e+04&lt;/td&gt;
+      &lt;td&gt;1.305461e+04&lt;/td&gt;
+      &lt;td&gt;8.531579e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;IDN&lt;/td&gt;
+      &lt;td&gt;Indonesia&lt;/td&gt;
+      &lt;td&gt;1.283649e+06&lt;/td&gt;
+      &lt;td&gt;1.023129e+06&lt;/td&gt;
+      &lt;td&gt;9.615327e+05&lt;/td&gt;
+      &lt;td&gt;1.176982e+06&lt;/td&gt;
+      &lt;td&gt;1.266668e+06&lt;/td&gt;
+      &lt;td&gt;1.188195e+06&lt;/td&gt;
+      &lt;td&gt;1.009936e+06&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;IND&lt;/td&gt;
+      &lt;td&gt;India&lt;/td&gt;
+      &lt;td&gt;6.219887e+06&lt;/td&gt;
+      &lt;td&gt;5.309413e+06&lt;/td&gt;
+      &lt;td&gt;6.228451e+06&lt;/td&gt;
+      &lt;td&gt;6.589798e+06&lt;/td&gt;
+      &lt;td&gt;7.501556e+06&lt;/td&gt;
+      &lt;td&gt;7.599764e+06&lt;/td&gt;
+      &lt;td&gt;6.567960e+06&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;IRN&lt;/td&gt;
+      &lt;td&gt;Iran (Islamic Republic of)&lt;/td&gt;
+      &lt;td&gt;8.774407e+04&lt;/td&gt;
+      &lt;td&gt;9.180121e+04&lt;/td&gt;
+      &lt;td&gt;9.620217e+04&lt;/td&gt;
+      &lt;td&gt;8.875744e+04&lt;/td&gt;
+      &lt;td&gt;9.500199e+04&lt;/td&gt;
+      &lt;td&gt;9.600254e+04&lt;/td&gt;
+      &lt;td&gt;9.053525e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;ITA&lt;/td&gt;
+      &lt;td&gt;Italy&lt;/td&gt;
+      &lt;td&gt;4.995968e+04&lt;/td&gt;
+      &lt;td&gt;4.937785e+04&lt;/td&gt;
+      &lt;td&gt;5.443679e+04&lt;/td&gt;
+      &lt;td&gt;4.469902e+04&lt;/td&gt;
+      &lt;td&gt;4.566914e+04&lt;/td&gt;
+      &lt;td&gt;5.101547e+04&lt;/td&gt;
+      &lt;td&gt;5.089759e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;8&lt;/th&gt;
+      &lt;td&gt;JPN&lt;/td&gt;
+      &lt;td&gt;Japan&lt;/td&gt;
+      &lt;td&gt;2.305465e+05&lt;/td&gt;
+      &lt;td&gt;2.284133e+05&lt;/td&gt;
+      &lt;td&gt;2.708935e+05&lt;/td&gt;
+      &lt;td&gt;1.548252e+05&lt;/td&gt;
+      &lt;td&gt;2.332056e+05&lt;/td&gt;
+      &lt;td&gt;2.835167e+05&lt;/td&gt;
+      &lt;td&gt;1.574007e+05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;9&lt;/th&gt;
+      &lt;td&gt;KHM&lt;/td&gt;
+      &lt;td&gt;Cambodia&lt;/td&gt;
+      &lt;td&gt;4.954698e+05&lt;/td&gt;
+      &lt;td&gt;5.731698e+05&lt;/td&gt;
+      &lt;td&gt;4.517045e+05&lt;/td&gt;
+      &lt;td&gt;5.592610e+05&lt;/td&gt;
+      &lt;td&gt;5.947277e+05&lt;/td&gt;
+      &lt;td&gt;6.412802e+05&lt;/td&gt;
+      &lt;td&gt;5.644891e+05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;KOR&lt;/td&gt;
+      &lt;td&gt;Korea (the Republic of)&lt;/td&gt;
+      &lt;td&gt;1.451878e+05&lt;/td&gt;
+      &lt;td&gt;1.274597e+05&lt;/td&gt;
+      &lt;td&gt;1.463222e+05&lt;/td&gt;
+      &lt;td&gt;1.293543e+05&lt;/td&gt;
+      &lt;td&gt;1.327782e+05&lt;/td&gt;
+      &lt;td&gt;1.165467e+05&lt;/td&gt;
+      &lt;td&gt;1.013006e+05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;LAO&lt;/td&gt;
+      &lt;td&gt;Lao People&#39;s Democratic Republic (the)&lt;/td&gt;
+      &lt;td&gt;1.661169e+04&lt;/td&gt;
+      &lt;td&gt;1.696441e+04&lt;/td&gt;
+      &lt;td&gt;1.168063e+04&lt;/td&gt;
+      &lt;td&gt;1.009675e+04&lt;/td&gt;
+      &lt;td&gt;1.461058e+04&lt;/td&gt;
+      &lt;td&gt;2.136270e+04&lt;/td&gt;
+      &lt;td&gt;1.475014e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;12&lt;/th&gt;
+      &lt;td&gt;LKA&lt;/td&gt;
+      &lt;td&gt;Sri Lanka&lt;/td&gt;
+      &lt;td&gt;8.305626e+04&lt;/td&gt;
+      &lt;td&gt;1.011743e+05&lt;/td&gt;
+      &lt;td&gt;5.911841e+04&lt;/td&gt;
+      &lt;td&gt;9.018914e+04&lt;/td&gt;
+      &lt;td&gt;8.476088e+04&lt;/td&gt;
+      &lt;td&gt;9.248238e+04&lt;/td&gt;
+      &lt;td&gt;8.466966e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;13&lt;/th&gt;
+      &lt;td&gt;MMR&lt;/td&gt;
+      &lt;td&gt;Myanmar&lt;/td&gt;
+      &lt;td&gt;1.132082e+06&lt;/td&gt;
+      &lt;td&gt;1.290806e+06&lt;/td&gt;
+      &lt;td&gt;1.205169e+06&lt;/td&gt;
+      &lt;td&gt;1.372447e+06&lt;/td&gt;
+      &lt;td&gt;1.256888e+06&lt;/td&gt;
+      &lt;td&gt;1.221904e+06&lt;/td&gt;
+      &lt;td&gt;1.289837e+06&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;14&lt;/th&gt;
+      &lt;td&gt;MYS&lt;/td&gt;
+      &lt;td&gt;Malaysia&lt;/td&gt;
+      &lt;td&gt;1.057399e+05&lt;/td&gt;
+      &lt;td&gt;1.110049e+05&lt;/td&gt;
+      &lt;td&gt;1.111291e+05&lt;/td&gt;
+      &lt;td&gt;1.066525e+05&lt;/td&gt;
+      &lt;td&gt;1.056287e+05&lt;/td&gt;
+      &lt;td&gt;1.127141e+05&lt;/td&gt;
+      &lt;td&gt;1.069696e+05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;15&lt;/th&gt;
+      &lt;td&gt;NPL&lt;/td&gt;
+      &lt;td&gt;Nepal&lt;/td&gt;
+      &lt;td&gt;1.007479e+05&lt;/td&gt;
+      &lt;td&gt;6.667161e+04&lt;/td&gt;
+      &lt;td&gt;8.081300e+04&lt;/td&gt;
+      &lt;td&gt;9.200752e+04&lt;/td&gt;
+      &lt;td&gt;1.164235e+05&lt;/td&gt;
+      &lt;td&gt;7.168401e+04&lt;/td&gt;
+      &lt;td&gt;4.811408e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;16&lt;/th&gt;
+      &lt;td&gt;PAK&lt;/td&gt;
+      &lt;td&gt;Pakistan&lt;/td&gt;
+      &lt;td&gt;4.852431e+05&lt;/td&gt;
+      &lt;td&gt;5.945922e+05&lt;/td&gt;
+      &lt;td&gt;5.372641e+05&lt;/td&gt;
+      &lt;td&gt;4.532297e+05&lt;/td&gt;
+      &lt;td&gt;6.528548e+05&lt;/td&gt;
+      &lt;td&gt;6.401201e+05&lt;/td&gt;
+      &lt;td&gt;4.849205e+05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;17&lt;/th&gt;
+      &lt;td&gt;PHL&lt;/td&gt;
+      &lt;td&gt;Philippines (the)&lt;/td&gt;
+      &lt;td&gt;3.432021e+05&lt;/td&gt;
+      &lt;td&gt;4.073554e+05&lt;/td&gt;
+      &lt;td&gt;3.836830e+05&lt;/td&gt;
+      &lt;td&gt;4.175210e+05&lt;/td&gt;
+      &lt;td&gt;3.584550e+05&lt;/td&gt;
+      &lt;td&gt;4.462836e+05&lt;/td&gt;
+      &lt;td&gt;4.383270e+05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;18&lt;/th&gt;
+      &lt;td&gt;PRK&lt;/td&gt;
+      &lt;td&gt;Korea (the Democratic People&#39;s Republic of)&lt;/td&gt;
+      &lt;td&gt;1.143217e+05&lt;/td&gt;
+      &lt;td&gt;9.177653e+04&lt;/td&gt;
+      &lt;td&gt;1.085457e+05&lt;/td&gt;
+      &lt;td&gt;8.662578e+04&lt;/td&gt;
+      &lt;td&gt;9.655062e+04&lt;/td&gt;
+      &lt;td&gt;8.581038e+04&lt;/td&gt;
+      &lt;td&gt;7.735988e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;19&lt;/th&gt;
+      &lt;td&gt;THA&lt;/td&gt;
+      &lt;td&gt;Thailand&lt;/td&gt;
+      &lt;td&gt;1.393798e+06&lt;/td&gt;
+      &lt;td&gt;1.780993e+06&lt;/td&gt;
+      &lt;td&gt;1.164699e+06&lt;/td&gt;
+      &lt;td&gt;9.166575e+05&lt;/td&gt;
+      &lt;td&gt;1.305046e+06&lt;/td&gt;
+      &lt;td&gt;1.520788e+06&lt;/td&gt;
+      &lt;td&gt;8.528673e+05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;20&lt;/th&gt;
+      &lt;td&gt;TWN&lt;/td&gt;
+      &lt;td&gt;Taiwan (Province of China)&lt;/td&gt;
+      &lt;td&gt;7.866956e+04&lt;/td&gt;
+      &lt;td&gt;8.089149e+04&lt;/td&gt;
+      &lt;td&gt;8.705634e+04&lt;/td&gt;
+      &lt;td&gt;8.138151e+04&lt;/td&gt;
+      &lt;td&gt;8.990870e+04&lt;/td&gt;
+      &lt;td&gt;8.333327e+04&lt;/td&gt;
+      &lt;td&gt;6.619861e+04&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;21&lt;/th&gt;
+      &lt;td&gt;USA&lt;/td&gt;
+      &lt;td&gt;United States of America (the)&lt;/td&gt;
+      &lt;td&gt;1.611324e+05&lt;/td&gt;
+      &lt;td&gt;1.618576e+05&lt;/td&gt;
+      &lt;td&gt;1.684799e+05&lt;/td&gt;
+      &lt;td&gt;1.657254e+05&lt;/td&gt;
+      &lt;td&gt;1.691351e+05&lt;/td&gt;
+      &lt;td&gt;1.941455e+05&lt;/td&gt;
+      &lt;td&gt;1.634842e+05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;22&lt;/th&gt;
+      &lt;td&gt;VNM&lt;/td&gt;
+      &lt;td&gt;Viet Nam&lt;/td&gt;
+      &lt;td&gt;1.346013e+06&lt;/td&gt;
+      &lt;td&gt;1.483777e+06&lt;/td&gt;
+      &lt;td&gt;1.406437e+06&lt;/td&gt;
+      &lt;td&gt;1.317455e+06&lt;/td&gt;
+      &lt;td&gt;1.269751e+06&lt;/td&gt;
+      &lt;td&gt;1.374450e+06&lt;/td&gt;
+      &lt;td&gt;1.502787e+06&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;test-for-normality-shapiro-wilk&#34; &gt;Test for Normality: Shapiro-Wilk
+&lt;span&gt;
+    &lt;a href=&#34;#test-for-normality-shapiro-wilk&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;h4 id=&#34;2019&#34; &gt;2019
+&lt;span&gt;
+    &lt;a href=&#34;#2019&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## Selecting Malaysia 2019 Data &lt;/span&gt;
+data_2019 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hypothesis_testing_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tCH4_2019&amp;#39;&lt;/span&gt;]
+data_2019
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;0     2.070985e+06
+1     3.294713e+05
+2     5.603352e+06
+3     1.148324e+04
+4     1.266668e+06
+5     7.501556e+06
+6     9.500199e+04
+7     4.566914e+04
+8     2.332056e+05
+9     5.947277e+05
+10    1.327782e+05
+11    1.461058e+04
+12    8.476088e+04
+13    1.256888e+06
+14    1.056287e+05
+15    1.164235e+05
+16    6.528548e+05
+17    3.584550e+05
+18    9.655062e+04
+19    1.305046e+06
+20    8.990870e+04
+21    1.691351e+05
+22    1.269751e+06
+Name: tCH4_2019, dtype: float64
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;results &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; stats&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shapiro(data_2019)
+print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;stat=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;, p=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; (results&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;statistic, results&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;pvalue))
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; results&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;pvalue &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.05&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably Gaussian&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably not Gaussian&amp;#39;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;stat=0.567, p=0.000
+Probably not Gaussian
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h5 id=&#34;results&#34; &gt;Results
+&lt;span&gt;
+    &lt;a href=&#34;#results&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h5&gt;&lt;p&gt;The distribution is not gausian so a non-paremtric test must be completed.  It is not necessary to perform this test on the 2020 data, but I will do so anyways for practice.&lt;/p&gt;
+&lt;h4 id=&#34;2020&#34; &gt;2020
+&lt;span&gt;
+    &lt;a href=&#34;#2020&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## Selecting the Malaysia Data 2020&lt;/span&gt;
+data_2020 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hypothesis_testing_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tCH4_2020&amp;#39;&lt;/span&gt;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;results &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; stats&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shapiro(data_2020)
+print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;stat=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;, p=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; (results&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;statistic, results&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;pvalue))
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; results&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;pvalue &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.05&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably Gaussian&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably not Gaussian&amp;#39;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;stat=0.565, p=0.000
+Probably not Gaussian
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h5 id=&#34;results-1&#34; &gt;Results
+&lt;span&gt;
+    &lt;a href=&#34;#results-1&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h5&gt;&lt;p&gt;The 2020 data is not gausian which verifies that we will need to perform a non parmetric test&lt;/p&gt;
+&lt;h3 id=&#34;independence-of-samples&#34; &gt;Independence of Samples.
+&lt;span&gt;
+    &lt;a href=&#34;#independence-of-samples&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;We have to assume that the samples are independent of each other as we know they are dependent on hecatares.&lt;br&gt;
+Though the correlations are rather high this is due to the smiliarity of hectares per year.  Thus the amount of ch4 is similiar&lt;/p&gt;
+&lt;h3 id=&#34;distribution-similiarity&#34; &gt;Distribution Similiarity
+&lt;span&gt;
+    &lt;a href=&#34;#distribution-similiarity&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;h4 id=&#34;mann-whitney-u-test&#34; &gt;Mann-Whitney U Test
+&lt;span&gt;
+    &lt;a href=&#34;#mann-whitney-u-test&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Example of the Mann-Whitney U Test&lt;/span&gt;
+
+stat, p &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; stats&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mannwhitneyu(data_2019, data_2020)
+print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;stat=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;, p=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; (stat, p))
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; p &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.05&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably the same distribution&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably different distributions&amp;#39;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;stat=266.000, p=0.982
+Probably the same distribution
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;kruskal-wallis-test&#34; &gt;Kruskal Wallis test
+&lt;span&gt;
+    &lt;a href=&#34;#kruskal-wallis-test&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+stat, p &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; stats&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;kruskal(data_2019, data_2020)
+print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;stat=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;, p=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; (stat, p))
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; p &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.05&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably the same distribution&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably different distributions&amp;#39;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;stat=0.001, p=0.974
+Probably the same distribution
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;friedman-test&#34; &gt;Friedman Test
+&lt;span&gt;
+    &lt;a href=&#34;#friedman-test&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;Just for the sake of it I will compare data across all distributions&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Example of the Friedman Test&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#data_2014 = hypothesis_testing_df[&amp;#39;tCH4_2014&amp;#39;]&lt;/span&gt;
+data_2015 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hypothesis_testing_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tCH4_2015&amp;#39;&lt;/span&gt;]
+data_2016 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hypothesis_testing_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tCH4_2016&amp;#39;&lt;/span&gt;]
+data_2017 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hypothesis_testing_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tCH4_2017&amp;#39;&lt;/span&gt;]
+data_2018 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hypothesis_testing_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tCH4_2018&amp;#39;&lt;/span&gt;]
+
+stat, p &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; stats&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;friedmanchisquare(data_2015, data_2016, data_2017, data_2018, data_2019, data_2020)
+print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;stat=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;, p=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%.3f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; (stat, p))
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; p &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.05&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably the same distribution&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+	print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Probably different distributions&amp;#39;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;stat=11.472, p=0.043
+Probably different distributions
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;results-2&#34; &gt;Results.
+&lt;span&gt;
+    &lt;a href=&#34;#results-2&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;Some distributions differ from one another.  Which those are have yet to be discovered.  For the sake of this analysis I will not attempt to identify them.&lt;/p&gt;
+&lt;p&gt;The statment that the distributions of the 2019 and 2020 data do not differ cannot differ.  That said we also cannot claim that the means are statistically equivalent as the data is not parametric.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Rice Paddy Methane Emissions Estimation: Part 1</title>
