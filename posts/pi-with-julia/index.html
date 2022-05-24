@@ -295,6 +295,12 @@ if (!doNotTrack) {
             <nav id="TableOfContents">
   <ul>
     <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#how-to-run-the-programs">How to run the programs</a>
+      <ul>
+        <li><a href="#activate-the-project">Activate the Project</a></li>
+        <li><a href="#run-a-program">Run a program</a></li>
+      </ul>
+    </li>
     <li><a href="#estimate-the-value-of-pi">Estimate the Value of Pi</a>
       <ul>
         <li><a href="#solution">Solution</a></li>
@@ -327,8 +333,37 @@ if (!doNotTrack) {
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h2><p>The following problems are samples to test a julia install and to determine if packages have been installed.</p>
-<h2 id="estimate-the-value-of-pi" >Estimate the Value of Pi
+</h2><p>In my <a href="https://blog.jnapolitano.io/posts/rocky-linux-8-julia/">previous post</a>, I demonstrated how to configure Rocky Linux and RHEL distributions for quantitative analysis.</p>
+<p>In this post, I include a few sample programs to test your installation.</p>
+<h2 id="how-to-run-the-programs" >How to run the programs
+<span>
+    <a href="#how-to-run-the-programs">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>I saved them to a folder within the project directory.</p>
+<h3 id="activate-the-project" >Activate the Project
+<span>
+    <a href="#activate-the-project">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">
+<span style="color:#66d9ef">using</span> Pkg
+Pkg<span style="color:#f92672">.</span>activate(<span style="color:#e6db74">&#34;.&#34;</span>)
+
+<span style="color:#75715e">#cd(&#34;&lt;sub-directory-containing-files&gt;) optional</span>
+
+</code></pre></div><h3 id="run-a-program" >Run a program
+<span>
+    <a href="#run-a-program">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Julia" data-lang="Julia">
+include(<span style="color:#e6db74">&#34;path/to/script-name.jl&#34;</span>)
+
+</code></pre></div><h2 id="estimate-the-value-of-pi" >Estimate the Value of Pi
 <span>
     <a href="#estimate-the-value-of-pi">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
