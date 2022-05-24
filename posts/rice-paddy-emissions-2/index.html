@@ -316,8 +316,8 @@ if (!doNotTrack) {
   <ul>
     <li><a href="#hypothesis-testing-the-university-of-malaysia-paper">Hypothesis Testing the University of Malaysia Paper</a></li>
     <li><a href="#claims">Claims</a></li>
-    <li><a href="#what-will-be-testing">What will be testing.</a></li>
-    <li><a href="#data-import">Data Import</a>
+    <li><a href="#what-will-be-tested">What will be Tested.</a></li>
+    <li><a href="#analysis">Analysis</a>
       <ul>
         <li><a href="#drop-total-row-from-the-data">Drop total row from the data</a></li>
         <li><a href="#test-for-normality-shapiro-wilk">Test for Normality: Shapiro-Wilk</a></li>
@@ -372,9 +372,9 @@ if (!doNotTrack) {
 <li>That the distributions do not differ between 2020 and 2019</li>
 <li>That the means do no differ between 2020 and 2019</li>
 </ul>
-<h2 id="what-will-be-testing" >What will be testing.
+<h2 id="what-will-be-tested" >What will be Tested.
 <span>
-    <a href="#what-will-be-testing">
+    <a href="#what-will-be-tested">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
@@ -384,9 +384,9 @@ if (!doNotTrack) {
 <li>Kruskal Wallis</li>
 <li>Friedman</li>
 </ul>
-<h2 id="data-import" >Data Import
+<h2 id="analysis" >Analysis
 <span>
-    <a href="#data-import">
+    <a href="#analysis">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
@@ -406,7 +406,7 @@ hypothesis_testing_df <span style="color:#f92672">=</span> pd<span style="color:
 </span>
 </h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">hypothesis_testing_df <span style="color:#f92672">=</span> hypothesis_testing_df<span style="color:#f92672">.</span>loc[(hypothesis_testing_df[<span style="color:#e6db74">&#39;country_name&#39;</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;Total&#34;</span>)]<span style="color:#f92672">.</span>copy() <span style="color:#75715e">#copying to avoid modifying slices in memory.  Old df should also drop from memory in production environment.</span>
 </code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">hypothesis_testing_df
-</code></pre></div><div>
+</code></pre></div><div style="overflow-x:auto;">
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
