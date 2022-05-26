@@ -340,7 +340,7 @@ if (!doNotTrack) {
     </a>
 </span>
 </h2><p>I don&rsquo;t understand them completely.  I am grateful to <a href="https://julia.quantecon.org/tools_and_techniques/finite_markov.html">the text</a> for helping me to bettter grasp how they operate.</p>
-<p>As far as my understanding goes they permit modeling the transition of states, possibly in infinite time, according to a probability distribution.  I recommend reading <a href="https://julia.quantecon.org/tools_and_techniques/finite_markov.html#markov-chains">this source</a>for authority.</p>
+<p>As far as my understanding goes they permit modeling the transition of states, possibly in infinite time, according to a probability distribution.  I recommend reading <a href="https://julia.quantecon.org/tools_and_techniques/finite_markov.html#markov-chains">this source</a> for authority.</p>
 <h2 id="my-translation-of-markov-chains" >My Translation of Markov Chains
 <span>
     <a href="#my-translation-of-markov-chains">
@@ -348,9 +348,9 @@ if (!doNotTrack) {
     </a>
 </span>
 </h2><p>Lets start with a finite set of of elements that we call S.  In Cs terms think of this is as an array in the C Language.  It must be defined prior to an operation. <code>I think markov chains can be performed on unbounded sets as well but I'm not at that level yet</code>.</p>
-<p>The Set is called the set space.  Each value within it considered an individual state.</p>
+<p>The set is called the set space.  Each value within it considered an individual state.</p>
 <p>Markov Chains are sets that contain the Markov Property.  A markov property considers the probability of the model having a state within the space at a point in time.</p>
-<p>Thus, The probability of going from x to y in one step of unit time can be computed.  If we consider the state changes within a stochastic matrix we can then determine the overall probabily of arriving at states within a system.</p>
+<p>Thus, the probability of going from x to y in one step of unit time can be computed.  If we consider the state changes within a stochastic matrix we can then determine the overall probabily of arriving at states within a system.</p>
 <p>Review the <a href="https://julia.quantecon.org/tools_and_techniques/finite_markov.html#equation-mpp">formal defition</a>.</p>
 <h2 id="application-to-my-work" >Application to My Work
 <span>
@@ -358,7 +358,7 @@ if (!doNotTrack) {
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h2><p>I will be using this model to determine the probability of a justice transitioning from emotional states.  The central thesis of my understanding of judicial behavior is that the justices develop attitudinal states towards issue areas, legal provisions, states, religions, objects in general.  I will compute those states by first determining them.  I will then calculate the baysian probability of state transition across time.  Finally those distribution will be inputted in markov chain models.</p>
+</h2><p>I will be using this model to determine the probability of a justice transitioning from emotional states.  The central thesis of my understanding of judicial behavior is that the justices develop attitudinal states towards issue areas, legal provisions, states, religions, objects in general.  I will compute those states by first determining them.  I will then calculate the bayesian probability of state transition across time.  Finally, those distribution will be inputted in Markov Chain models.</p>
 <h2 id="markov-simulation-the-hard-way" >Markov Simulation the Hard Way
 <span>
     <a href="#markov-simulation-the-hard-way">
@@ -368,6 +368,7 @@ if (!doNotTrack) {
 </h2><p>The work below is not my own.  I attribute it to <a href="https://julia.quantecon.org/tools_and_techniques/finite_markov.html#equation-mpp">julia.quantecon.org/</a>.</p>
 <p>The alogorithm takes a stochastic probability matrix(square in this case) and create a random distribution according to those probabilities.</p>
 <p>The simulation then randomly selects values from the random distibution.  That discrete value is stored in the output.  As I understand it currently, the output is the Markov Chain.</p>
+<p>The comments in the code are mine.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Julia" data-lang="Julia">
 <span style="color:#66d9ef">using</span> LinearAlgebra, Statistics
 <span style="color:#66d9ef">using</span> Distributions, Plots, Printf, QuantEcon, Random
