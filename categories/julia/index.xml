@@ -609,5 +609,361 @@ main()
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
+    <item>
+      <title>Churn Modelling Marketing Data with Julia</title>
+      <link>https://blog.jnapolitano.io/posts/propensity_scoring/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/propensity_scoring/</guid>
+      <description>&lt;h1 id=&#34;churn-modelling-marketing-data-with-julia&#34; &gt;Churn Modelling Marketing Data with Julia
+&lt;span&gt;
+    &lt;a href=&#34;#churn-modelling-marketing-data-with-julia&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;h2 id=&#34;introduction&#34; &gt;Introduction
+&lt;span&gt;
+    &lt;a href=&#34;#introduction&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I prepared this analysis to learn the logistic regression in Julia. The work is fairly straightforward.  I am modelling if a customer will exit a website based on a number of sites.  I&amp;rsquo;ll improve the model in an upcoming post.  As if, is not as interesting as asking when. That will be my next project&lt;/p&gt;
+&lt;h3 id=&#34;imports&#34; &gt;Imports
+&lt;span&gt;
+    &lt;a href=&#34;#imports&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Pkg
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; DataFrames
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; CSV
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Plots
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; GLM
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; StatsBase
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Lathe
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; MLBase
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; ClassImbalance
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; ROCAnalysis
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; PyCall
+sklearn &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pyimport(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sklearn.metrics&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;PyObject &amp;lt;module &#39;sklearn.metrics&#39; from &#39;/Users/jnapolitano/venvs/finance/lib/python3.9/site-packages/sklearn/metrics/__init__.py&#39;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; load_csv() 
+
+    df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; DataFrame(CSV&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;File(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;./Churn_Modelling.csv&amp;#34;&lt;/span&gt;)) 
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; df 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;load_csv (generic function with 1 method)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;loading-data&#34; &gt;Loading Data
+&lt;span&gt;
+    &lt;a href=&#34;#loading-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;marketing_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; load_csv()
+first(marketing_df,&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;table class=&#34;data-frame&#34;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;RowNumber&lt;/th&gt;&lt;th&gt;CustomerId&lt;/th&gt;&lt;th&gt;Surname&lt;/th&gt;&lt;th&gt;CreditScore&lt;/th&gt;&lt;th&gt;Geography&lt;/th&gt;&lt;th&gt;Gender&lt;/th&gt;&lt;th&gt;Age&lt;/th&gt;&lt;th&gt;Tenure&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;String31&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;String7&lt;/th&gt;&lt;th&gt;String7&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;p&gt;5 rows × 14 columns (omitted printing of 6 columns)&lt;/p&gt;&lt;tr&gt;&lt;th&gt;1&lt;/th&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;15634602&lt;/td&gt;&lt;td&gt;Hargrave&lt;/td&gt;&lt;td&gt;619&lt;/td&gt;&lt;td&gt;France&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;2&lt;/th&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;15647311&lt;/td&gt;&lt;td&gt;Hill&lt;/td&gt;&lt;td&gt;608&lt;/td&gt;&lt;td&gt;Spain&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;41&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;3&lt;/th&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;15619304&lt;/td&gt;&lt;td&gt;Onio&lt;/td&gt;&lt;td&gt;502&lt;/td&gt;&lt;td&gt;France&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;4&lt;/th&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;15701354&lt;/td&gt;&lt;td&gt;Boni&lt;/td&gt;&lt;td&gt;699&lt;/td&gt;&lt;td&gt;France&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;39&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;5&lt;/th&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;15737888&lt;/td&gt;&lt;td&gt;Mitchell&lt;/td&gt;&lt;td&gt;850&lt;/td&gt;&lt;td&gt;Spain&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;43&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;println(size(marketing_df))
+describe(marketing_df)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(10000, 14)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;table class=&#34;data-frame&#34;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;variable&lt;/th&gt;&lt;th&gt;mean&lt;/th&gt;&lt;th&gt;min&lt;/th&gt;&lt;th&gt;median&lt;/th&gt;&lt;th&gt;max&lt;/th&gt;&lt;th&gt;nunique&lt;/th&gt;&lt;th&gt;nmissing&lt;/th&gt;&lt;th&gt;eltype&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Symbol&lt;/th&gt;&lt;th&gt;Union…&lt;/th&gt;&lt;th&gt;Any&lt;/th&gt;&lt;th&gt;Union…&lt;/th&gt;&lt;th&gt;Any&lt;/th&gt;&lt;th&gt;Union…&lt;/th&gt;&lt;th&gt;Nothing&lt;/th&gt;&lt;th&gt;DataType&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;p&gt;14 rows × 8 columns&lt;/p&gt;&lt;tr&gt;&lt;th&gt;1&lt;/th&gt;&lt;td&gt;RowNumber&lt;/td&gt;&lt;td&gt;5000.5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;5000.5&lt;/td&gt;&lt;td&gt;10000&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;2&lt;/th&gt;&lt;td&gt;CustomerId&lt;/td&gt;&lt;td&gt;1.56909e7&lt;/td&gt;&lt;td&gt;15565701&lt;/td&gt;&lt;td&gt;1.56907e7&lt;/td&gt;&lt;td&gt;15815690&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;3&lt;/th&gt;&lt;td&gt;Surname&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Abazu&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Zuyeva&lt;/td&gt;&lt;td&gt;2932&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;String31&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;4&lt;/th&gt;&lt;td&gt;CreditScore&lt;/td&gt;&lt;td&gt;650.529&lt;/td&gt;&lt;td&gt;350&lt;/td&gt;&lt;td&gt;652.0&lt;/td&gt;&lt;td&gt;850&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;5&lt;/th&gt;&lt;td&gt;Geography&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;France&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Spain&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;String7&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;6&lt;/th&gt;&lt;td&gt;Gender&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Male&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;String7&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;7&lt;/th&gt;&lt;td&gt;Age&lt;/td&gt;&lt;td&gt;38.9218&lt;/td&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;37.0&lt;/td&gt;&lt;td&gt;92&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;8&lt;/th&gt;&lt;td&gt;Tenure&lt;/td&gt;&lt;td&gt;5.0128&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;5.0&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;9&lt;/th&gt;&lt;td&gt;Balance&lt;/td&gt;&lt;td&gt;76485.9&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;97198.5&lt;/td&gt;&lt;td&gt;2.50898e5&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Float64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;10&lt;/th&gt;&lt;td&gt;NumOfProducts&lt;/td&gt;&lt;td&gt;1.5302&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1.0&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;11&lt;/th&gt;&lt;td&gt;HasCrCard&lt;/td&gt;&lt;td&gt;0.7055&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;12&lt;/th&gt;&lt;td&gt;IsActiveMember&lt;/td&gt;&lt;td&gt;0.5151&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;13&lt;/th&gt;&lt;td&gt;EstimatedSalary&lt;/td&gt;&lt;td&gt;1.0009e5&lt;/td&gt;&lt;td&gt;11.58&lt;/td&gt;&lt;td&gt;1.00194e5&lt;/td&gt;&lt;td&gt;1.99992e5&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Float64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;14&lt;/th&gt;&lt;td&gt;Exited&lt;/td&gt;&lt;td&gt;0.2037&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Check column names&lt;/span&gt;
+names(marketing_df)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;14-element Vector{Symbol}:
+ :RowNumber
+ :CustomerId
+ :Surname
+ :CreditScore
+ :Geography
+ :Gender
+ :Age
+ :Tenure
+ :Balance
+ :NumOfProducts
+ :HasCrCard
+ :IsActiveMember
+ :EstimatedSalary
+ :Exited
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;check-class-imbalance&#34; &gt;Check Class Imbalance
+&lt;span&gt;
+    &lt;a href=&#34;#check-class-imbalance&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Count the classes&lt;/span&gt;
+countmap(marketing_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Dict{Int64, Int64} with 2 entries:
+  0 =&amp;gt; 7963
+  1 =&amp;gt; 2037
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;data-preprocessing&#34; &gt;Data Preprocessing
+&lt;span&gt;
+    &lt;a href=&#34;#data-preprocessing&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;h3 id=&#34;one-hot-encoding&#34; &gt;One Hot Encoding
+&lt;span&gt;
+    &lt;a href=&#34;#one-hot-encoding&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# One hot encoding&lt;/span&gt;
+Lathe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;preprocess&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;OneHotEncode(marketing_df,&lt;span style=&#34;color:#e6db74&#34;&gt;:Geography&lt;/span&gt;)
+Lathe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;preprocess&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;OneHotEncode(marketing_df,&lt;span style=&#34;color:#e6db74&#34;&gt;:Gender&lt;/span&gt;)
+select!(marketing_df, Not([&lt;span style=&#34;color:#e6db74&#34;&gt;:RowNumber&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:CustomerId&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Surname&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Geography&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Gender&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Male&lt;/span&gt;]))
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;table class=&#34;data-frame&#34;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;CreditScore&lt;/th&gt;&lt;th&gt;Age&lt;/th&gt;&lt;th&gt;Tenure&lt;/th&gt;&lt;th&gt;Balance&lt;/th&gt;&lt;th&gt;NumOfProducts&lt;/th&gt;&lt;th&gt;HasCrCard&lt;/th&gt;&lt;th&gt;IsActiveMember&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Float64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;p&gt;10,000 rows × 13 columns (omitted printing of 6 columns)&lt;/p&gt;&lt;tr&gt;&lt;th&gt;1&lt;/th&gt;&lt;td&gt;619&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;2&lt;/th&gt;&lt;td&gt;608&lt;/td&gt;&lt;td&gt;41&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;83807.9&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;3&lt;/th&gt;&lt;td&gt;502&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;1.59661e5&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;4&lt;/th&gt;&lt;td&gt;699&lt;/td&gt;&lt;td&gt;39&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;5&lt;/th&gt;&lt;td&gt;850&lt;/td&gt;&lt;td&gt;43&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1.25511e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;6&lt;/th&gt;&lt;td&gt;645&lt;/td&gt;&lt;td&gt;44&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;1.13756e5&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;7&lt;/th&gt;&lt;td&gt;822&lt;/td&gt;&lt;td&gt;50&lt;/td&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;8&lt;/th&gt;&lt;td&gt;376&lt;/td&gt;&lt;td&gt;29&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;1.15047e5&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;9&lt;/th&gt;&lt;td&gt;501&lt;/td&gt;&lt;td&gt;44&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;1.42051e5&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;10&lt;/th&gt;&lt;td&gt;684&lt;/td&gt;&lt;td&gt;27&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1.34604e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;11&lt;/th&gt;&lt;td&gt;528&lt;/td&gt;&lt;td&gt;31&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;1.02017e5&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;12&lt;/th&gt;&lt;td&gt;497&lt;/td&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;13&lt;/th&gt;&lt;td&gt;476&lt;/td&gt;&lt;td&gt;34&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;14&lt;/th&gt;&lt;td&gt;549&lt;/td&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;15&lt;/th&gt;&lt;td&gt;635&lt;/td&gt;&lt;td&gt;35&lt;/td&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;16&lt;/th&gt;&lt;td&gt;616&lt;/td&gt;&lt;td&gt;45&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;1.43129e5&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;17&lt;/th&gt;&lt;td&gt;653&lt;/td&gt;&lt;td&gt;58&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1.32603e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;18&lt;/th&gt;&lt;td&gt;549&lt;/td&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;19&lt;/th&gt;&lt;td&gt;587&lt;/td&gt;&lt;td&gt;45&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;20&lt;/th&gt;&lt;td&gt;726&lt;/td&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;21&lt;/th&gt;&lt;td&gt;732&lt;/td&gt;&lt;td&gt;41&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;22&lt;/th&gt;&lt;td&gt;636&lt;/td&gt;&lt;td&gt;32&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;23&lt;/th&gt;&lt;td&gt;510&lt;/td&gt;&lt;td&gt;38&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;24&lt;/th&gt;&lt;td&gt;669&lt;/td&gt;&lt;td&gt;46&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;25&lt;/th&gt;&lt;td&gt;846&lt;/td&gt;&lt;td&gt;38&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;26&lt;/th&gt;&lt;td&gt;577&lt;/td&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;27&lt;/th&gt;&lt;td&gt;756&lt;/td&gt;&lt;td&gt;36&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1.36816e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;28&lt;/th&gt;&lt;td&gt;571&lt;/td&gt;&lt;td&gt;44&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;29&lt;/th&gt;&lt;td&gt;574&lt;/td&gt;&lt;td&gt;43&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;1.41349e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;30&lt;/th&gt;&lt;td&gt;411&lt;/td&gt;&lt;td&gt;29&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;59697.2&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&amp;vellip;&lt;/th&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;split-trainand-test-data&#34; &gt;Split Train/and Test Data
+&lt;span&gt;
+    &lt;a href=&#34;#split-trainand-test-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Train test split&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Lathe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;preprocess&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; TrainTestSplit
+train, test &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; TrainTestSplit(marketing_df,&lt;span style=&#34;color:#ae81ff&#34;&gt;.75&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;build-model&#34; &gt;Build Model
+&lt;span&gt;
+    &lt;a href=&#34;#build-model&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Train logistic regression model&lt;/span&gt;
+fm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;@formula&lt;/span&gt;(Exited &lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt; CreditScore &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Age &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Tenure &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Balance &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; NumOfProducts &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; HasCrCard &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; IsActiveMember &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; EstimatedSalary &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Female &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; France &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Spain)
+logit &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; glm(fm, train, Binomial(), ProbitLink())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;StatsModels.TableRegressionModel{GeneralizedLinearModel{GLM.GlmResp{Vector{Float64}, Binomial{Float64}, ProbitLink}, GLM.DensePredChol{Float64, LinearAlgebra.Cholesky{Float64, Matrix{Float64}}}}, Matrix{Float64}}
+
+Exited ~ 1 + CreditScore + Age + Tenure + Balance + NumOfProducts + HasCrCard + IsActiveMember + EstimatedSalary + Female + France + Spain
+
+Coefficients:
+───────────────────────────────────────────────────────────────────────────────────────
+                        Coef.   Std. Error       z  Pr(&amp;gt;|z|)     Lower 95%    Upper 95%
+───────────────────────────────────────────────────────────────────────────────────────
+(Intercept)      -1.90933      0.165007     -11.57    &amp;lt;1e-30  -2.23274      -1.58592
+CreditScore      -0.000321917  0.000183184   -1.76    0.0789  -0.000680951   3.71172e-5
+Age               0.040893     0.00165251    24.75    &amp;lt;1e-99   0.0376541     0.0441318
+Tenure           -0.008864     0.00611129    -1.45    0.1469  -0.0208419     0.0031139
+Balance           1.65933e-6   3.30286e-7     5.02    &amp;lt;1e-06   1.01198e-6    2.30668e-6
+NumOfProducts    -0.040173     0.0309946     -1.30    0.1949  -0.100921      0.0205753
+HasCrCard        -0.00442931   0.0386394     -0.11    0.9087  -0.0801612     0.0713026
+IsActiveMember   -0.557894     0.0365213    -15.28    &amp;lt;1e-51  -0.629475     -0.486314
+EstimatedSalary   2.2925e-7    3.07604e-7     0.75    0.4561  -3.73644e-7    8.32143e-7
+Female            0.301642     0.0354259      8.51    &amp;lt;1e-16   0.232209      0.371076
+France           -0.450226     0.0446176    -10.09    &amp;lt;1e-23  -0.537674     -0.362777
+Spain            -0.443184     0.051707      -8.57    &amp;lt;1e-16  -0.544527     -0.34184
+───────────────────────────────────────────────────────────────────────────────────────
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;model-predictions-and-evaluation&#34; &gt;Model Predictions and Evaluation
+&lt;span&gt;
+    &lt;a href=&#34;#model-predictions-and-evaluation&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Predict the target variable on test data &lt;/span&gt;
+prediction &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; predict(logit,test)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;2406-element Vector{Union{Missing, Float64}}:
+ 0.24401107345293602
+ 0.1266535868551322
+ 0.031721959583257124
+ 0.11357816519004983
+ 0.24824114578495612
+ 0.024688755265128235
+ 0.14209354336141483
+ 0.18528877855991494
+ 0.15470097145575007
+ 0.25962439112051505
+ 0.15117890643161475
+ 0.2110682947689441
+ 0.06358192272871947
+ ⋮
+ 0.24899439141513482
+ 0.23449577199293972
+ 0.13610439167926225
+ 0.1737934374110589
+ 0.1341643450975004
+ 0.5831068095078078
+ 0.2950497674661655
+ 0.04139159536998556
+ 0.06795785137729822
+ 0.017204995327274736
+ 0.12888818685657766
+ 0.15310112069144077
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Convert probability score to class&lt;/span&gt;
+prediction_class &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; x &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; prediction];
+
+prediction_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; DataFrame(y_actual &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; test&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited, y_predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction_class, prob_predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction);
+prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;correctly_classified &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual &lt;span style=&#34;color:#f92672&#34;&gt;.==&lt;/span&gt; prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_predicted
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;2406-element BitVector:
+ 0
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 0
+ 1
+ 1
+ 1
+ ⋮
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;prediction-accuracy&#34; &gt;Prediction Accuracy
+&lt;span&gt;
+    &lt;a href=&#34;#prediction-accuracy&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;accuracy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;correctly_classified)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;0.8100581878636741
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;confusion-matrix&#34; &gt;Confusion Matrix
+&lt;span&gt;
+    &lt;a href=&#34;#confusion-matrix&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# confusion_matrix = confusmat(2,prediction_df.y_actual, prediction_df.y_predicted)&lt;/span&gt;
+confusion_matrix &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; MLBase&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;roc(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual, prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_predicted)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;ROCNums{Int64}
+  p = 510
+  n = 1896
+  tp = 105
+  tn = 1844
+  fp = 52
+  fn = 405
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;results&#34; &gt;Results
+&lt;span&gt;
+    &lt;a href=&#34;#results&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The model is estimating far to many exiting cases.  About 4 times the true value.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;fpr, tpr, thresholds &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sklearn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;roc_curve(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual, prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;prob_predicted)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;([0.0, 0.0, 0.0, 0.0005274261603375527, 0.0005274261603375527, 0.0010548523206751054, 0.0010548523206751054, 0.0015822784810126582, 0.0015822784810126582, 0.0026371308016877636  …  0.8829113924050633, 0.9066455696202531, 0.9066455696202531, 0.9193037974683544, 0.9193037974683544, 0.92457805907173, 0.92457805907173, 0.9725738396624473, 0.9725738396624473, 1.0], [0.0, 0.00196078431372549, 0.00392156862745098, 0.00392156862745098, 0.00784313725490196, 0.00784313725490196, 0.01568627450980392, 0.01568627450980392, 0.03137254901960784, 0.03137254901960784  …  0.9921568627450981, 0.9921568627450981, 0.9941176470588236, 0.9941176470588236, 0.996078431372549, 0.996078431372549, 0.9980392156862745, 0.9980392156862745, 1.0, 1.0], [1.8467335270755767, 0.8467335270755767, 0.8140811888019499, 0.8092555110984978, 0.7970873802691381, 0.79684704533007, 0.7719016175181805, 0.7709263202992206, 0.7060214606993195, 0.6994801619873218  …  0.04233143871590189, 0.03786940431261241, 0.037850945580692276, 0.035665362242897694, 0.03532968973176317, 0.03416668456674327, 0.03407543014692377, 0.020932892669754958, 0.020885871157504798, 0.00597005405256463])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Plot ROC curve&lt;/span&gt;
+plot(fpr, tpr)
+title!(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ROC curve&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;propensity_scoring_files/propensity_scoring_24_0.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;the-class-imbalance-problem&#34; &gt;The Class Imbalance Problem
+&lt;span&gt;
+    &lt;a href=&#34;#the-class-imbalance-problem&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Count the classes&lt;/span&gt;
+countmap(marketing_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Dict{Int64, Int64} with 2 entries:
+  0 =&amp;gt; 7963
+  1 =&amp;gt; 2037
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;smote-to-fix-imbalance&#34; &gt;Smote to fix imbalance
+&lt;span&gt;
+    &lt;a href=&#34;#smote-to-fix-imbalance&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;X2, y2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;smote(marketing_df[&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;,[&lt;span style=&#34;color:#e6db74&#34;&gt;:CreditScore&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Age&lt;/span&gt; ,&lt;span style=&#34;color:#e6db74&#34;&gt;:Tenure&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:Balance&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:NumOfProducts&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:HasCrCard&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:IsActiveMember&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:EstimatedSalary&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:Female&lt;/span&gt; , &lt;span style=&#34;color:#e6db74&#34;&gt;:France&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:Spain&lt;/span&gt;]], marketing_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited, k &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;, pct_under &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;150&lt;/span&gt;, pct_over &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;200&lt;/span&gt;)
+df_balanced &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; X2
+df_balanced&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; y2;
+
+df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df_balanced;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Count the classes&lt;/span&gt;
+countmap(df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Dict{Int64, Int64} with 2 entries:
+  0 =&amp;gt; 6111
+  1 =&amp;gt; 6111
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;retest&#34; &gt;Retest
+&lt;span&gt;
+    &lt;a href=&#34;#retest&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Train test split&lt;/span&gt;
+train, test &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; TrainTestSplit(df,&lt;span style=&#34;color:#ae81ff&#34;&gt;.75&lt;/span&gt;);
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Model Building&lt;/span&gt;
+fm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;@formula&lt;/span&gt;(Exited &lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt; CreditScore &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Age &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Tenure &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Balance &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; NumOfProducts &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; HasCrCard &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; IsActiveMember &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; EstimatedSalary &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Female &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; France &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Spain)
+logit &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; glm(fm, train, Binomial(), ProbitLink())
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Predict the target variable on test data &lt;/span&gt;
+prediction &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; predict(logit,test)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Convert probability score to class&lt;/span&gt;
+prediction_class &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; x &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; prediction];
+
+prediction_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; DataFrame(y_actual &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; test&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited, y_predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction_class, prob_predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction);
+prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;correctly_classified &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual &lt;span style=&#34;color:#f92672&#34;&gt;.==&lt;/span&gt; prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_predicted
+
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Accuracy Score&lt;/span&gt;
+accuracy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;correctly_classified)
+print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Accuracy of the model is : &amp;#34;&lt;/span&gt;,accuracy)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Confusion Matrix&lt;/span&gt;
+confusion_matrix &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; MLBase&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;roc(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual, prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_predicted)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Accuracy of the model is : 0.7169563791407019
+
+
+
+
+ROCNums{Int64}
+  p = 1550
+  n = 1499
+  tp = 1091
+  tn = 1095
+  fp = 404
+  fn = 459
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;fpr, tpr, thresholds &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sklearn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;roc_curve(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual, prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;prob_predicted)
+&lt;span style=&#34;color:#75715e&#34;&gt;# Plot ROC curve&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;([0.0, 0.0, 0.0, 0.00066711140760507, 0.00066711140760507, 0.00133422281521014, 0.00133422281521014, 0.0020013342228152103, 0.0020013342228152103, 0.00266844563042028  …  0.9846564376250834, 0.9893262174783188, 0.9893262174783188, 0.9913275517011341, 0.9913275517011341, 0.9973315543695798, 0.9986657771847899, 0.9993328885923949, 0.9993328885923949, 1.0], [0.0, 0.0006451612903225806, 0.0025806451612903226, 0.0025806451612903226, 0.005161290322580645, 0.005161290322580645, 0.007741935483870968, 0.007741935483870968, 0.00903225806451613, 0.00903225806451613  …  0.9980645161290322, 0.9980645161290322, 0.9987096774193548, 0.9987096774193548, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 1.0, 1.0], [1.9907624292252022, 0.9907624292252022, 0.983731024429679, 0.97951657298985, 0.9730082291507035, 0.9713532719467679, 0.9629327481173712, 0.9604203755106321, 0.9593444340323958, 0.9584649467140461  …  0.06923199350115271, 0.06553287523911823, 0.06469253560487893, 0.058594401854125504, 0.057872556108602216, 0.034170953161915506, 0.03357051125028141, 0.03297342671224324, 0.030937011626933943, 0.023743078872535135])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;plot(fpr, tpr)
+title!(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ROC curve&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;propensity_scoring_files/propensity_scoring_32_0.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;final-discussion&#34; &gt;Final Discussion
+&lt;span&gt;
+    &lt;a href=&#34;#final-discussion&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;When accounting for class imbalance, the model accuracy is reduced to 71 percent from about 81 percent.&lt;/p&gt;
+&lt;p&gt;While this seems counterintutive, the second model is actually a better model overall.&lt;/p&gt;
+&lt;p&gt;The model with 81 percent accuracy is simply more accurate by chance.  The bin of exits to remains is far larger.  Thus, reported accuracy is higher.&lt;/p&gt;
+&lt;p&gt;When the classes are normalized, we see a prediction of about 71 percent.  Confidently, I can say that this model would scale appropriately.&lt;/p&gt;
+&lt;p&gt;The first model on the other hand would scale to about 25-30 percent accuracy.&lt;/p&gt;
+</description>
+    </item>
+    
   </channel>
 </rss>

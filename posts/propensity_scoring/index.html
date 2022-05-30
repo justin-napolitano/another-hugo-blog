@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+
+
+<html lang="en-us" data-theme="">
+<head>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>Churn Modelling Marketing Data with Julia - Justin&#39;s Data Blog</title>
+
+<meta name="description" content="Logistic Regression Propemnsity Models of Marketing Data with Julia.">
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="https://blog.jnapolitano.io/favicon.png">
+
+
+<style>
+  body {
+    visibility: hidden;
+    opacity: 0;
+  }
+</style>
+
+<noscript>
+  <style>
+    body {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</noscript>
+
+
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <link rel="stylesheet" href="https://blog.jnapolitano.io/css/style.min.aadd6dd80ebf123717dcfe3d847163090d744aafb3d09e967f728dc0ef68bc1b.css" integrity="sha256-qt1t2A6/EjcX3P49hHFjCQ10Sq&#43;z0J6Wf3KNwO9ovBs=">
+    
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+    
+
+
+
+
+
+
+
+<meta property="og:title" content="Churn Modelling Marketing Data with Julia" />
+<meta property="og:description" content="Logistic Regression Propemnsity Models of Marketing Data with Julia." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.jnapolitano.io/posts/propensity_scoring/" /><meta property="og:image" content="https://blog.jnapolitano.io/featured-julia.png" /><meta property="article:section" content="posts" />
+
+
+<meta property="og:see_also" content="https://blog.jnapolitano.io/posts/markov-models-julia/" /><meta property="og:see_also" content="https://blog.jnapolitano.io/posts/pi-with-julia/" /><meta property="og:see_also" content="https://blog.jnapolitano.io/posts/rocky-linux-8-julia/" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.jnapolitano.io/featured-julia.png"/>
+
+<meta name="twitter:title" content="Churn Modelling Marketing Data with Julia"/>
+<meta name="twitter:description" content="Logistic Regression Propemnsity Models of Marketing Data with Julia."/>
+
+
+
+    
+        <link rel="webmention" href="https://webmention.io/hugo-theme-anubis/webmention" />
+        
+            <link rel="pingback" href="https://webmention.io/hugo-theme-anubis/xmlrpc" />
+        
+    
+    
+        <link rel="webmention" href="https://hugo-test-blog.jnapolitano.io/webmentions/receive" />
+    
+
+
+
+
+
+
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5H9YLZK4GH"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-5H9YLZK4GH', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header"> 
+            
+                <div class="header-top">
+    <h1 class="site-title">
+    <a href="/">Justin&#39;s Data Blog</a>
+</h1>
+    <ul class="social-icons">
+
+
+    
+        
+        
+        <li>
+            <a href="https://github.com/justin-napolitano" title="Github" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="mailto:justin@jnapolitano.io" title="Email" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/justin-napolitano" title="Linkedin" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="https://twitter.com/just_napolitano" title="Twitter" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+
+
+    <li>
+            <a href="https://blog.jnapolitano.io/index.xml" title="RSS" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+</ul>
+</div>
+
+    <nav>
+        
+        
+        <a class="" href="https://blog.jnapolitano.io" title="Feed">Feed</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/series/" title="">Series</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/categories/" title="">Categories</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/tags/" title="">Tags</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/posts/" title="Archive">Archive</a>
+        
+    </nav>
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1"> 
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                <h1 class="p-name post-title">Churn Modelling Marketing Data with Julia</h1>
+                            
+
+
+                
+                
+                
+
+                
+                    <p>Justin Napolitano</p>
+                
+
+                
+
+                <hr/>
+            </header>
+        </div>
+        <div class="content e-content">
+            <h1>Table of Contents</h1>
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#imports">Imports</a></li>
+      </ul>
+    </li>
+    <li><a href="#loading-data">Loading Data</a>
+      <ul>
+        <li><a href="#check-class-imbalance">Check Class Imbalance</a></li>
+      </ul>
+    </li>
+    <li><a href="#data-preprocessing">Data Preprocessing</a>
+      <ul>
+        <li><a href="#one-hot-encoding">One Hot Encoding</a></li>
+        <li><a href="#split-trainand-test-data">Split Train/and Test Data</a></li>
+      </ul>
+    </li>
+    <li><a href="#build-model">Build Model</a></li>
+    <li><a href="#model-predictions-and-evaluation">Model Predictions and Evaluation</a>
+      <ul>
+        <li><a href="#prediction-accuracy">Prediction Accuracy</a></li>
+        <li><a href="#confusion-matrix">Confusion Matrix</a></li>
+        <li><a href="#results">Results</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-class-imbalance-problem">The Class Imbalance Problem</a>
+      <ul>
+        <li><a href="#smote-to-fix-imbalance">Smote to fix imbalance</a></li>
+        <li><a href="#retest">Retest</a></li>
+      </ul>
+    </li>
+    <li><a href="#final-discussion">Final Discussion</a></li>
+  </ul>
+</nav>
+            <hr/>
+            
+    
+    <h1>Series</h1>
+	<p><a href="/series/quantitative-analysis-in-julia" id="series">This is a post in the 
+	<b>Quantitative Analysis in Julia</b></a> series.<br/>
+    Other posts in this series:
+    
+    <ul class="series">
+    
+    <li class="list"><a href="/posts/markov-models-julia/">Markov Chains in Julia</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/pi-with-julia/">Quantitative Julia Problems</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/rocky-linux-8-julia/">Configuring Rocky Linux 8 for Quantitative Analysis in Julia</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/propensity_scoring/">Churn Modelling Marketing Data with Julia</a></li>
+    </ul>
+    
+
+            <hr/>
+            <h1 id="churn-modelling-marketing-data-with-julia" >Churn Modelling Marketing Data with Julia
+<span>
+    <a href="#churn-modelling-marketing-data-with-julia">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h1><h2 id="introduction" >Introduction
+<span>
+    <a href="#introduction">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>I prepared this analysis to learn the logistic regression in Julia. The work is fairly straightforward.  I am modelling if a customer will exit a website based on a number of sites.  I&rsquo;ll improve the model in an upcoming post.  As if, is not as interesting as asking when. That will be my next project</p>
+<h3 id="imports" >Imports
+<span>
+    <a href="#imports">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> Pkg
+<span style="color:#66d9ef">using</span> DataFrames
+<span style="color:#66d9ef">using</span> CSV
+<span style="color:#66d9ef">using</span> Plots
+<span style="color:#66d9ef">using</span> GLM
+<span style="color:#66d9ef">using</span> StatsBase
+<span style="color:#66d9ef">using</span> Lathe
+<span style="color:#66d9ef">using</span> MLBase
+<span style="color:#66d9ef">using</span> ClassImbalance
+<span style="color:#66d9ef">using</span> ROCAnalysis
+<span style="color:#66d9ef">using</span> PyCall
+sklearn <span style="color:#f92672">=</span> pyimport(<span style="color:#e6db74">&#34;sklearn.metrics&#34;</span>)
+</code></pre></div><pre><code>PyObject &lt;module 'sklearn.metrics' from '/Users/jnapolitano/venvs/finance/lib/python3.9/site-packages/sklearn/metrics/__init__.py'&gt;
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> load_csv() 
+
+    df <span style="color:#f92672">=</span> DataFrame(CSV<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#34;./Churn_Modelling.csv&#34;</span>)) 
+    <span style="color:#66d9ef">return</span> df 
+<span style="color:#66d9ef">end</span>
+</code></pre></div><pre><code>load_csv (generic function with 1 method)
+</code></pre>
+<h2 id="loading-data" >Loading Data
+<span>
+    <a href="#loading-data">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">marketing_df <span style="color:#f92672">=</span> load_csv()
+first(marketing_df,<span style="color:#ae81ff">5</span>)
+</code></pre></div><div style="overflow-x:auto;">
+<table class="data-frame"><thead><tr><th></th><th>RowNumber</th><th>CustomerId</th><th>Surname</th><th>CreditScore</th><th>Geography</th><th>Gender</th><th>Age</th><th>Tenure</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String31</th><th>Int64</th><th>String7</th><th>String7</th><th>Int64</th><th>Int64</th></tr></thead><tbody><p>5 rows × 14 columns (omitted printing of 6 columns)</p><tr><th>1</th><td>1</td><td>15634602</td><td>Hargrave</td><td>619</td><td>France</td><td>Female</td><td>42</td><td>2</td></tr><tr><th>2</th><td>2</td><td>15647311</td><td>Hill</td><td>608</td><td>Spain</td><td>Female</td><td>41</td><td>1</td></tr><tr><th>3</th><td>3</td><td>15619304</td><td>Onio</td><td>502</td><td>France</td><td>Female</td><td>42</td><td>8</td></tr><tr><th>4</th><td>4</td><td>15701354</td><td>Boni</td><td>699</td><td>France</td><td>Female</td><td>39</td><td>1</td></tr><tr><th>5</th><td>5</td><td>15737888</td><td>Mitchell</td><td>850</td><td>Spain</td><td>Female</td><td>43</td><td>2</td></tr></tbody></table>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">println(size(marketing_df))
+describe(marketing_df)
+</code></pre></div><pre><code>(10000, 14)
+</code></pre>
+<div style="overflow-x:auto;">
+<table class="data-frame"><thead><tr><th></th><th>variable</th><th>mean</th><th>min</th><th>median</th><th>max</th><th>nunique</th><th>nmissing</th><th>eltype</th></tr><tr><th></th><th>Symbol</th><th>Union…</th><th>Any</th><th>Union…</th><th>Any</th><th>Union…</th><th>Nothing</th><th>DataType</th></tr></thead><tbody><p>14 rows × 8 columns</p><tr><th>1</th><td>RowNumber</td><td>5000.5</td><td>1</td><td>5000.5</td><td>10000</td><td></td><td></td><td>Int64</td></tr><tr><th>2</th><td>CustomerId</td><td>1.56909e7</td><td>15565701</td><td>1.56907e7</td><td>15815690</td><td></td><td></td><td>Int64</td></tr><tr><th>3</th><td>Surname</td><td></td><td>Abazu</td><td></td><td>Zuyeva</td><td>2932</td><td></td><td>String31</td></tr><tr><th>4</th><td>CreditScore</td><td>650.529</td><td>350</td><td>652.0</td><td>850</td><td></td><td></td><td>Int64</td></tr><tr><th>5</th><td>Geography</td><td></td><td>France</td><td></td><td>Spain</td><td>3</td><td></td><td>String7</td></tr><tr><th>6</th><td>Gender</td><td></td><td>Female</td><td></td><td>Male</td><td>2</td><td></td><td>String7</td></tr><tr><th>7</th><td>Age</td><td>38.9218</td><td>18</td><td>37.0</td><td>92</td><td></td><td></td><td>Int64</td></tr><tr><th>8</th><td>Tenure</td><td>5.0128</td><td>0</td><td>5.0</td><td>10</td><td></td><td></td><td>Int64</td></tr><tr><th>9</th><td>Balance</td><td>76485.9</td><td>0.0</td><td>97198.5</td><td>2.50898e5</td><td></td><td></td><td>Float64</td></tr><tr><th>10</th><td>NumOfProducts</td><td>1.5302</td><td>1</td><td>1.0</td><td>4</td><td></td><td></td><td>Int64</td></tr><tr><th>11</th><td>HasCrCard</td><td>0.7055</td><td>0</td><td>1.0</td><td>1</td><td></td><td></td><td>Int64</td></tr><tr><th>12</th><td>IsActiveMember</td><td>0.5151</td><td>0</td><td>1.0</td><td>1</td><td></td><td></td><td>Int64</td></tr><tr><th>13</th><td>EstimatedSalary</td><td>1.0009e5</td><td>11.58</td><td>1.00194e5</td><td>1.99992e5</td><td></td><td></td><td>Float64</td></tr><tr><th>14</th><td>Exited</td><td>0.2037</td><td>0</td><td>0.0</td><td>1</td><td></td><td></td><td>Int64</td></tr></tbody></table>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Check column names</span>
+names(marketing_df)
+</code></pre></div><pre><code>14-element Vector{Symbol}:
+ :RowNumber
+ :CustomerId
+ :Surname
+ :CreditScore
+ :Geography
+ :Gender
+ :Age
+ :Tenure
+ :Balance
+ :NumOfProducts
+ :HasCrCard
+ :IsActiveMember
+ :EstimatedSalary
+ :Exited
+</code></pre>
+<h3 id="check-class-imbalance" >Check Class Imbalance
+<span>
+    <a href="#check-class-imbalance">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Count the classes</span>
+countmap(marketing_df<span style="color:#f92672">.</span>Exited)
+</code></pre></div><pre><code>Dict{Int64, Int64} with 2 entries:
+  0 =&gt; 7963
+  1 =&gt; 2037
+</code></pre>
+<h2 id="data-preprocessing" >Data Preprocessing
+<span>
+    <a href="#data-preprocessing">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><h3 id="one-hot-encoding" >One Hot Encoding
+<span>
+    <a href="#one-hot-encoding">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># One hot encoding</span>
+Lathe<span style="color:#f92672">.</span>preprocess<span style="color:#f92672">.</span>OneHotEncode(marketing_df,<span style="color:#e6db74">:Geography</span>)
+Lathe<span style="color:#f92672">.</span>preprocess<span style="color:#f92672">.</span>OneHotEncode(marketing_df,<span style="color:#e6db74">:Gender</span>)
+select!(marketing_df, Not([<span style="color:#e6db74">:RowNumber</span>, <span style="color:#e6db74">:CustomerId</span>,<span style="color:#e6db74">:Surname</span>,<span style="color:#e6db74">:Geography</span>,<span style="color:#e6db74">:Gender</span>,<span style="color:#e6db74">:Male</span>]))
+
+</code></pre></div><div style="overflow-x:auto;">
+<table class="data-frame"><thead><tr><th></th><th>CreditScore</th><th>Age</th><th>Tenure</th><th>Balance</th><th>NumOfProducts</th><th>HasCrCard</th><th>IsActiveMember</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>Int64</th><th>Float64</th><th>Int64</th><th>Int64</th><th>Int64</th></tr></thead><tbody><p>10,000 rows × 13 columns (omitted printing of 6 columns)</p><tr><th>1</th><td>619</td><td>42</td><td>2</td><td>0.0</td><td>1</td><td>1</td><td>1</td></tr><tr><th>2</th><td>608</td><td>41</td><td>1</td><td>83807.9</td><td>1</td><td>0</td><td>1</td></tr><tr><th>3</th><td>502</td><td>42</td><td>8</td><td>1.59661e5</td><td>3</td><td>1</td><td>0</td></tr><tr><th>4</th><td>699</td><td>39</td><td>1</td><td>0.0</td><td>2</td><td>0</td><td>0</td></tr><tr><th>5</th><td>850</td><td>43</td><td>2</td><td>1.25511e5</td><td>1</td><td>1</td><td>1</td></tr><tr><th>6</th><td>645</td><td>44</td><td>8</td><td>1.13756e5</td><td>2</td><td>1</td><td>0</td></tr><tr><th>7</th><td>822</td><td>50</td><td>7</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>8</th><td>376</td><td>29</td><td>4</td><td>1.15047e5</td><td>4</td><td>1</td><td>0</td></tr><tr><th>9</th><td>501</td><td>44</td><td>4</td><td>1.42051e5</td><td>2</td><td>0</td><td>1</td></tr><tr><th>10</th><td>684</td><td>27</td><td>2</td><td>1.34604e5</td><td>1</td><td>1</td><td>1</td></tr><tr><th>11</th><td>528</td><td>31</td><td>6</td><td>1.02017e5</td><td>2</td><td>0</td><td>0</td></tr><tr><th>12</th><td>497</td><td>24</td><td>3</td><td>0.0</td><td>2</td><td>1</td><td>0</td></tr><tr><th>13</th><td>476</td><td>34</td><td>10</td><td>0.0</td><td>2</td><td>1</td><td>0</td></tr><tr><th>14</th><td>549</td><td>25</td><td>5</td><td>0.0</td><td>2</td><td>0</td><td>0</td></tr><tr><th>15</th><td>635</td><td>35</td><td>7</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>16</th><td>616</td><td>45</td><td>3</td><td>1.43129e5</td><td>2</td><td>0</td><td>1</td></tr><tr><th>17</th><td>653</td><td>58</td><td>1</td><td>1.32603e5</td><td>1</td><td>1</td><td>0</td></tr><tr><th>18</th><td>549</td><td>24</td><td>9</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>19</th><td>587</td><td>45</td><td>6</td><td>0.0</td><td>1</td><td>0</td><td>0</td></tr><tr><th>20</th><td>726</td><td>24</td><td>6</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>21</th><td>732</td><td>41</td><td>8</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>22</th><td>636</td><td>32</td><td>8</td><td>0.0</td><td>2</td><td>1</td><td>0</td></tr><tr><th>23</th><td>510</td><td>38</td><td>4</td><td>0.0</td><td>1</td><td>1</td><td>0</td></tr><tr><th>24</th><td>669</td><td>46</td><td>3</td><td>0.0</td><td>2</td><td>0</td><td>1</td></tr><tr><th>25</th><td>846</td><td>38</td><td>5</td><td>0.0</td><td>1</td><td>1</td><td>1</td></tr><tr><th>26</th><td>577</td><td>25</td><td>3</td><td>0.0</td><td>2</td><td>0</td><td>1</td></tr><tr><th>27</th><td>756</td><td>36</td><td>2</td><td>1.36816e5</td><td>1</td><td>1</td><td>1</td></tr><tr><th>28</th><td>571</td><td>44</td><td>9</td><td>0.0</td><td>2</td><td>0</td><td>0</td></tr><tr><th>29</th><td>574</td><td>43</td><td>3</td><td>1.41349e5</td><td>1</td><td>1</td><td>1</td></tr><tr><th>30</th><td>411</td><td>29</td><td>0</td><td>59697.2</td><td>2</td><td>1</td><td>1</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table>
+</div>
+<h3 id="split-trainand-test-data" >Split Train/and Test Data
+<span>
+    <a href="#split-trainand-test-data">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Train test split</span>
+<span style="color:#66d9ef">using</span> Lathe<span style="color:#f92672">.</span>preprocess<span style="color:#f92672">:</span> TrainTestSplit
+train, test <span style="color:#f92672">=</span> TrainTestSplit(marketing_df,<span style="color:#ae81ff">.75</span>);
+</code></pre></div><h2 id="build-model" >Build Model
+<span>
+    <a href="#build-model">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Train logistic regression model</span>
+fm <span style="color:#f92672">=</span> <span style="color:#a6e22e">@formula</span>(Exited <span style="color:#f92672">~</span> CreditScore <span style="color:#f92672">+</span> Age <span style="color:#f92672">+</span> Tenure <span style="color:#f92672">+</span> Balance <span style="color:#f92672">+</span> NumOfProducts <span style="color:#f92672">+</span> HasCrCard <span style="color:#f92672">+</span> IsActiveMember <span style="color:#f92672">+</span> EstimatedSalary <span style="color:#f92672">+</span> Female <span style="color:#f92672">+</span> France <span style="color:#f92672">+</span> Spain)
+logit <span style="color:#f92672">=</span> glm(fm, train, Binomial(), ProbitLink())
+</code></pre></div><pre><code>StatsModels.TableRegressionModel{GeneralizedLinearModel{GLM.GlmResp{Vector{Float64}, Binomial{Float64}, ProbitLink}, GLM.DensePredChol{Float64, LinearAlgebra.Cholesky{Float64, Matrix{Float64}}}}, Matrix{Float64}}
+
+Exited ~ 1 + CreditScore + Age + Tenure + Balance + NumOfProducts + HasCrCard + IsActiveMember + EstimatedSalary + Female + France + Spain
+
+Coefficients:
+───────────────────────────────────────────────────────────────────────────────────────
+                        Coef.   Std. Error       z  Pr(&gt;|z|)     Lower 95%    Upper 95%
+───────────────────────────────────────────────────────────────────────────────────────
+(Intercept)      -1.90933      0.165007     -11.57    &lt;1e-30  -2.23274      -1.58592
+CreditScore      -0.000321917  0.000183184   -1.76    0.0789  -0.000680951   3.71172e-5
+Age               0.040893     0.00165251    24.75    &lt;1e-99   0.0376541     0.0441318
+Tenure           -0.008864     0.00611129    -1.45    0.1469  -0.0208419     0.0031139
+Balance           1.65933e-6   3.30286e-7     5.02    &lt;1e-06   1.01198e-6    2.30668e-6
+NumOfProducts    -0.040173     0.0309946     -1.30    0.1949  -0.100921      0.0205753
+HasCrCard        -0.00442931   0.0386394     -0.11    0.9087  -0.0801612     0.0713026
+IsActiveMember   -0.557894     0.0365213    -15.28    &lt;1e-51  -0.629475     -0.486314
+EstimatedSalary   2.2925e-7    3.07604e-7     0.75    0.4561  -3.73644e-7    8.32143e-7
+Female            0.301642     0.0354259      8.51    &lt;1e-16   0.232209      0.371076
+France           -0.450226     0.0446176    -10.09    &lt;1e-23  -0.537674     -0.362777
+Spain            -0.443184     0.051707      -8.57    &lt;1e-16  -0.544527     -0.34184
+───────────────────────────────────────────────────────────────────────────────────────
+</code></pre>
+<h2 id="model-predictions-and-evaluation" >Model Predictions and Evaluation
+<span>
+    <a href="#model-predictions-and-evaluation">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Predict the target variable on test data </span>
+prediction <span style="color:#f92672">=</span> predict(logit,test)
+</code></pre></div><pre><code>2406-element Vector{Union{Missing, Float64}}:
+ 0.24401107345293602
+ 0.1266535868551322
+ 0.031721959583257124
+ 0.11357816519004983
+ 0.24824114578495612
+ 0.024688755265128235
+ 0.14209354336141483
+ 0.18528877855991494
+ 0.15470097145575007
+ 0.25962439112051505
+ 0.15117890643161475
+ 0.2110682947689441
+ 0.06358192272871947
+ ⋮
+ 0.24899439141513482
+ 0.23449577199293972
+ 0.13610439167926225
+ 0.1737934374110589
+ 0.1341643450975004
+ 0.5831068095078078
+ 0.2950497674661655
+ 0.04139159536998556
+ 0.06795785137729822
+ 0.017204995327274736
+ 0.12888818685657766
+ 0.15310112069144077
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Convert probability score to class</span>
+prediction_class <span style="color:#f92672">=</span> [<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">end</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> prediction];
+
+prediction_df <span style="color:#f92672">=</span> DataFrame(y_actual <span style="color:#f92672">=</span> test<span style="color:#f92672">.</span>Exited, y_predicted <span style="color:#f92672">=</span> prediction_class, prob_predicted <span style="color:#f92672">=</span> prediction);
+prediction_df<span style="color:#f92672">.</span>correctly_classified <span style="color:#f92672">=</span> prediction_df<span style="color:#f92672">.</span>y_actual <span style="color:#f92672">.==</span> prediction_df<span style="color:#f92672">.</span>y_predicted
+</code></pre></div><pre><code>2406-element BitVector:
+ 0
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 0
+ 1
+ 1
+ 1
+ ⋮
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+</code></pre>
+<h3 id="prediction-accuracy" >Prediction Accuracy
+<span>
+    <a href="#prediction-accuracy">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">accuracy <span style="color:#f92672">=</span> mean(prediction_df<span style="color:#f92672">.</span>correctly_classified)
+</code></pre></div><pre><code>0.8100581878636741
+</code></pre>
+<h3 id="confusion-matrix" >Confusion Matrix
+<span>
+    <a href="#confusion-matrix">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># confusion_matrix = confusmat(2,prediction_df.y_actual, prediction_df.y_predicted)</span>
+confusion_matrix <span style="color:#f92672">=</span> MLBase<span style="color:#f92672">.</span>roc(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>y_predicted)
+</code></pre></div><pre><code>ROCNums{Int64}
+  p = 510
+  n = 1896
+  tp = 105
+  tn = 1844
+  fp = 52
+  fn = 405
+</code></pre>
+<h3 id="results" >Results
+<span>
+    <a href="#results">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>The model is estimating far to many exiting cases.  About 4 times the true value.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">fpr, tpr, thresholds <span style="color:#f92672">=</span> sklearn<span style="color:#f92672">.</span>roc_curve(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>prob_predicted)
+</code></pre></div><pre><code>([0.0, 0.0, 0.0, 0.0005274261603375527, 0.0005274261603375527, 0.0010548523206751054, 0.0010548523206751054, 0.0015822784810126582, 0.0015822784810126582, 0.0026371308016877636  …  0.8829113924050633, 0.9066455696202531, 0.9066455696202531, 0.9193037974683544, 0.9193037974683544, 0.92457805907173, 0.92457805907173, 0.9725738396624473, 0.9725738396624473, 1.0], [0.0, 0.00196078431372549, 0.00392156862745098, 0.00392156862745098, 0.00784313725490196, 0.00784313725490196, 0.01568627450980392, 0.01568627450980392, 0.03137254901960784, 0.03137254901960784  …  0.9921568627450981, 0.9921568627450981, 0.9941176470588236, 0.9941176470588236, 0.996078431372549, 0.996078431372549, 0.9980392156862745, 0.9980392156862745, 1.0, 1.0], [1.8467335270755767, 0.8467335270755767, 0.8140811888019499, 0.8092555110984978, 0.7970873802691381, 0.79684704533007, 0.7719016175181805, 0.7709263202992206, 0.7060214606993195, 0.6994801619873218  …  0.04233143871590189, 0.03786940431261241, 0.037850945580692276, 0.035665362242897694, 0.03532968973176317, 0.03416668456674327, 0.03407543014692377, 0.020932892669754958, 0.020885871157504798, 0.00597005405256463])
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Plot ROC curve</span>
+plot(fpr, tpr)
+title!(<span style="color:#e6db74">&#34;ROC curve&#34;</span>)
+</code></pre></div><p><img src="propensity_scoring_files/propensity_scoring_24_0.svg" alt="svg"></p>
+<h2 id="the-class-imbalance-problem" >The Class Imbalance Problem
+<span>
+    <a href="#the-class-imbalance-problem">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Count the classes</span>
+countmap(marketing_df<span style="color:#f92672">.</span>Exited)
+</code></pre></div><pre><code>Dict{Int64, Int64} with 2 entries:
+  0 =&gt; 7963
+  1 =&gt; 2037
+</code></pre>
+<h3 id="smote-to-fix-imbalance" >Smote to fix imbalance
+<span>
+    <a href="#smote-to-fix-imbalance">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">X2, y2 <span style="color:#f92672">=</span>smote(marketing_df[<span style="color:#f92672">!</span>,[<span style="color:#e6db74">:CreditScore</span>,<span style="color:#e6db74">:Age</span> ,<span style="color:#e6db74">:Tenure</span>, <span style="color:#e6db74">:Balance</span>, <span style="color:#e6db74">:NumOfProducts</span>, <span style="color:#e6db74">:HasCrCard</span>, <span style="color:#e6db74">:IsActiveMember</span>, <span style="color:#e6db74">:EstimatedSalary</span>, <span style="color:#e6db74">:Female</span> , <span style="color:#e6db74">:France</span>, <span style="color:#e6db74">:Spain</span>]], marketing_df<span style="color:#f92672">.</span>Exited, k <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>, pct_under <span style="color:#f92672">=</span> <span style="color:#ae81ff">150</span>, pct_over <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>)
+df_balanced <span style="color:#f92672">=</span> X2
+df_balanced<span style="color:#f92672">.</span>Exited <span style="color:#f92672">=</span> y2;
+
+df <span style="color:#f92672">=</span> df_balanced;
+
+<span style="color:#75715e"># Count the classes</span>
+countmap(df<span style="color:#f92672">.</span>Exited)
+</code></pre></div><pre><code>Dict{Int64, Int64} with 2 entries:
+  0 =&gt; 6111
+  1 =&gt; 6111
+</code></pre>
+<h3 id="retest" >Retest
+<span>
+    <a href="#retest">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Train test split</span>
+train, test <span style="color:#f92672">=</span> TrainTestSplit(df,<span style="color:#ae81ff">.75</span>);
+
+<span style="color:#75715e"># Model Building</span>
+fm <span style="color:#f92672">=</span> <span style="color:#a6e22e">@formula</span>(Exited <span style="color:#f92672">~</span> CreditScore <span style="color:#f92672">+</span> Age <span style="color:#f92672">+</span> Tenure <span style="color:#f92672">+</span> Balance <span style="color:#f92672">+</span> NumOfProducts <span style="color:#f92672">+</span> HasCrCard <span style="color:#f92672">+</span> IsActiveMember <span style="color:#f92672">+</span> EstimatedSalary <span style="color:#f92672">+</span> Female <span style="color:#f92672">+</span> France <span style="color:#f92672">+</span> Spain)
+logit <span style="color:#f92672">=</span> glm(fm, train, Binomial(), ProbitLink())
+
+<span style="color:#75715e"># Predict the target variable on test data </span>
+prediction <span style="color:#f92672">=</span> predict(logit,test)
+
+<span style="color:#75715e"># Convert probability score to class</span>
+prediction_class <span style="color:#f92672">=</span> [<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">end</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> prediction];
+
+prediction_df <span style="color:#f92672">=</span> DataFrame(y_actual <span style="color:#f92672">=</span> test<span style="color:#f92672">.</span>Exited, y_predicted <span style="color:#f92672">=</span> prediction_class, prob_predicted <span style="color:#f92672">=</span> prediction);
+prediction_df<span style="color:#f92672">.</span>correctly_classified <span style="color:#f92672">=</span> prediction_df<span style="color:#f92672">.</span>y_actual <span style="color:#f92672">.==</span> prediction_df<span style="color:#f92672">.</span>y_predicted
+
+
+<span style="color:#75715e"># Accuracy Score</span>
+accuracy <span style="color:#f92672">=</span> mean(prediction_df<span style="color:#f92672">.</span>correctly_classified)
+print(<span style="color:#e6db74">&#34;Accuracy of the model is : &#34;</span>,accuracy)
+
+<span style="color:#75715e"># Confusion Matrix</span>
+confusion_matrix <span style="color:#f92672">=</span> MLBase<span style="color:#f92672">.</span>roc(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>y_predicted)
+</code></pre></div><pre><code>Accuracy of the model is : 0.7169563791407019
+
+
+
+
+ROCNums{Int64}
+  p = 1550
+  n = 1499
+  tp = 1091
+  tn = 1095
+  fp = 404
+  fn = 459
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">fpr, tpr, thresholds <span style="color:#f92672">=</span> sklearn<span style="color:#f92672">.</span>roc_curve(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>prob_predicted)
+<span style="color:#75715e"># Plot ROC curve</span>
+
+</code></pre></div><pre><code>([0.0, 0.0, 0.0, 0.00066711140760507, 0.00066711140760507, 0.00133422281521014, 0.00133422281521014, 0.0020013342228152103, 0.0020013342228152103, 0.00266844563042028  …  0.9846564376250834, 0.9893262174783188, 0.9893262174783188, 0.9913275517011341, 0.9913275517011341, 0.9973315543695798, 0.9986657771847899, 0.9993328885923949, 0.9993328885923949, 1.0], [0.0, 0.0006451612903225806, 0.0025806451612903226, 0.0025806451612903226, 0.005161290322580645, 0.005161290322580645, 0.007741935483870968, 0.007741935483870968, 0.00903225806451613, 0.00903225806451613  …  0.9980645161290322, 0.9980645161290322, 0.9987096774193548, 0.9987096774193548, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 1.0, 1.0], [1.9907624292252022, 0.9907624292252022, 0.983731024429679, 0.97951657298985, 0.9730082291507035, 0.9713532719467679, 0.9629327481173712, 0.9604203755106321, 0.9593444340323958, 0.9584649467140461  …  0.06923199350115271, 0.06553287523911823, 0.06469253560487893, 0.058594401854125504, 0.057872556108602216, 0.034170953161915506, 0.03357051125028141, 0.03297342671224324, 0.030937011626933943, 0.023743078872535135])
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">plot(fpr, tpr)
+title!(<span style="color:#e6db74">&#34;ROC curve&#34;</span>)
+</code></pre></div><p><img src="propensity_scoring_files/propensity_scoring_32_0.svg" alt="svg"></p>
+<h2 id="final-discussion" >Final Discussion
+<span>
+    <a href="#final-discussion">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>When accounting for class imbalance, the model accuracy is reduced to 71 percent from about 81 percent.</p>
+<p>While this seems counterintutive, the second model is actually a better model overall.</p>
+<p>The model with 81 percent accuracy is simply more accurate by chance.  The bin of exits to remains is far larger.  Thus, reported accuracy is higher.</p>
+<p>When the classes are normalized, we see a prediction of about 71 percent.  Confidently, I can say that this model would scale appropriately.</p>
+<p>The first model on the other hand would scale to about 25-30 percent accuracy.</p>
+
+        </div>
+        
+
+    
+
+
+<div class="post-info">
+
+    
+
+    <a class="post-hidden-url u-url" href="https://blog.jnapolitano.io/posts/propensity_scoring/">https://blog.jnapolitano.io/posts/propensity_scoring/</a>
+    <a href="https://blog.jnapolitano.io" class="p-name p-author post-hidden-author h-card" rel="me">Justin Napolitano</a>
+
+
+    <div class="post-taxonomies">
+        
+            <ul class="post-series">
+                
+                    
+                    <li><a href="">Series: Quantitative Analysis in Julia</a></li>
+                
+            </ul>
+        
+        
+        
+            <ul class="post-categories">
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/categories/julia/">Julia</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/categories/tutorials/">Tutorials</a></li>
+                
+                    
+                    <li><a href="">Quantitative Analysis</a></li>
+                
+            </ul>
+        
+        
+            <ul class="post-tags">
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/julia/">#julia</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/logisitic-regression/">#logisitic-regression</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/propensity-models/">#propensity-models</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/marketing-analsyis/">#marketing-analsyis</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/statistics/">#statistics</a></li>
+                
+            </ul>
+        
+    </div>
+</div>
+
+        <hr/>
+        
+    
+    <h1>Series</h1>
+	<p><a href="/series/quantitative-analysis-in-julia" id="series">This is a post in the 
+	<b>Quantitative Analysis in Julia</b></a> series.<br/>
+    Other posts in this series:
+    
+    <ul class="series">
+    
+    <li class="list"><a href="/posts/markov-models-julia/">Markov Chains in Julia</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/pi-with-julia/">Quantitative Julia Problems</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/rocky-linux-8-julia/">Configuring Rocky Linux 8 for Quantitative Analysis in Julia</a></li>
+    </ul>
+    
+    <li class="list"><a href="/posts/propensity_scoring/">Churn Modelling Marketing Data with Julia</a></li>
+    </ul>
+    
+
+        <hr/>
+    </article>
+
+
+
+    
+        
+        
+            <h3 class="read-next-title">Read next</h3>
+            <ul class="read-next-posts">
+                
+                <li><a href="/posts/markov-models-julia/">Markov Chains in Julia</a></li>
+                
+                <li><a href="/posts/pi-with-julia/">Quantitative Julia Problems</a></li>
+                
+                <li><a href="/posts/rocky-linux-8-julia/">Configuring Rocky Linux 8 for Quantitative Analysis in Julia</a></li>
+                
+                <li><a href="/posts/legal-research-part-7/">Legal Research with AI Part 7: Wrangling Data with Julia</a></li>
+                
+                <li><a href="/posts/masterpiece/">Legal Research with AI: Part 6</a></li>
+                
+            </ul>
+        
+    
+
+    
+
+    
+        
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jnapolitano-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+
+
+
+
+
+    
+
+        </main>
+        
+            <footer class="common-footer">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+        <div class="copyright">
+            <p>© Justin Napolitano, 2022<br>
+            Maintained by Justin Napolitano.<br>
+            
+            </p>  
+        </div> 
+
+        
+
+    
+
+
+
+    <button class="theme-switcher">
+        Dark theme
+    </button>
+
+
+<script>
+const STORAGE_KEY = 'user-color-scheme'
+const defaultTheme = "auto"
+
+let currentTheme
+let switchButton
+let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+const autoChangeScheme = e => {
+    currentTheme = e.matches ? 'dark' : 'light'
+    document.documentElement.setAttribute('data-theme', currentTheme)
+    changeButtonText()
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    switchButton = document.querySelector('.theme-switcher')
+    currentTheme = detectCurrentScheme()
+    if (currentTheme == 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark')
+    }
+    if (currentTheme == 'auto') {
+        autoChangeScheme(autoDefinedScheme);
+        autoDefinedScheme.addListener(autoChangeScheme);
+    }
+
+    if (switchButton) {
+        changeButtonText()
+        switchButton.addEventListener('click', switchTheme, false)
+    }
+  
+    showContent()
+})
+
+function detectCurrentScheme() {
+    if (localStorage.getItem(STORAGE_KEY)) {
+        return localStorage.getItem(STORAGE_KEY)
+    } 
+    if (defaultTheme) {
+        return defaultTheme
+    } 
+    if (!window.matchMedia) {
+        return 'light'
+    } 
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark'
+    }
+    return 'light'
+}
+
+function changeButtonText()
+{   
+    if (switchButton) {
+        switchButton.textContent = currentTheme == 'dark' ?  "Light theme" : "Dark theme"
+    }
+}
+
+function switchTheme(e) {
+    if (currentTheme == 'dark') {
+        localStorage.setItem(STORAGE_KEY, 'light')
+        document.documentElement.setAttribute('data-theme', 'light')
+        currentTheme = 'light'
+    } else {
+        localStorage.setItem(STORAGE_KEY, 'dark')
+        document.documentElement.setAttribute('data-theme', 'dark')
+        currentTheme = 'dark'
+    }
+    changeButtonText()
+}
+
+function showContent() {
+    document.body.style.visibility = 'visible';
+    document.body.style.opacity = 1;
+}
+</script>   
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=https://blog.jnapolitano.io class="p-name u-url url fn" rel="me">Justin Napolitano</a> 
+
+     
+        /
+        <a class="p-email u-email email" rel="me" href="mailto:justin@jnapolitano.io">justin@jnapolitano.io</a>
+    
+
+     
+        <img class="u-photo" src="/images/me.png" />
+    
+</p> 
+</footer>
+
+        
+    </div>
+</body>
+</html>
