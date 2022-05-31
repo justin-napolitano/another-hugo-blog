@@ -6,6 +6,7 @@
     <description>Justin&#39;s Data Blog (propensity-models)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Mon, 30 May 2022 13:30:32 +0000</lastBuildDate>
     
     <atom:link href="https://blog.jnapolitano.io/tags/propensity-models/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +14,7 @@
     <item>
       <title>Churn Modelling Marketing Data with Julia</title>
       <link>https://blog.jnapolitano.io/posts/propensity_scoring/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 30 May 2022 13:30:32 +0000</pubDate>
       
       <guid>https://blog.jnapolitano.io/posts/propensity_scoring/</guid>
       <description>&lt;h1 id=&#34;churn-modelling-marketing-data-with-julia&#34; &gt;Churn Modelling Marketing Data with Julia
