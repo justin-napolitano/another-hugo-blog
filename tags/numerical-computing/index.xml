@@ -6,10 +6,971 @@
     <description>Justin&#39;s Data Blog (numerical-computing)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 May 2022 20:20:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jun 2022 15:24:32 +0000</lastBuildDate>
     
     <atom:link href="https://blog.jnapolitano.io/tags/numerical-computing/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Annual Cost of Living Monte Carlo Models</title>
+      <link>https://blog.jnapolitano.io/posts/cost-of-living-projections/</link>
+      <pubDate>Wed, 01 Jun 2022 15:24:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/cost-of-living-projections/</guid>
+      <description>&lt;h1 id=&#34;cost-of-living-projections&#34; &gt;Cost of Living Projections
+&lt;span&gt;
+    &lt;a href=&#34;#cost-of-living-projections&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;h2 id=&#34;introduction&#34; &gt;Introduction
+&lt;span&gt;
+    &lt;a href=&#34;#introduction&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I do not like negotiating for salary. Especially, without valid projections to determine a range.&lt;/p&gt;
+&lt;p&gt;I prepared this report to estimate a salary expectation that will maintain my current standard of living.&lt;/p&gt;
+&lt;p&gt;I present two Monte Carlo models of Houston and NYC annual living costs.  The data is somewhat dated and &amp;ndash;particularly in the case of houston&amp;ndash; are high level estimates.&lt;/p&gt;
+&lt;p&gt;In order to produce a better report, I am currently scraping data from the internet for more accurate sample distributions.  I will be able to present that soon.&lt;/p&gt;
+&lt;p&gt;With that said, the model should not deviate by more than about 5-10 percent from what is presented in below.&lt;/p&gt;
+&lt;h2 id=&#34;findings&#34; &gt;Findings
+&lt;span&gt;
+    &lt;a href=&#34;#findings&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;An annual salary of $90,000 would be sufficient to qualify for rent in Houston and most likely the median level income neighbors of NYC.&lt;/p&gt;
+&lt;p&gt;I came about this number by quantifying a confidence inverval of annual rent costs in boths cities across a normal distribution.  I then simply multiplied that number by 3 in order to meet the lease qualifications of most landlords.&lt;/p&gt;
+&lt;h2 id=&#34;limitations-of-the-model&#34; &gt;Limitations of the Model
+&lt;span&gt;
+    &lt;a href=&#34;#limitations-of-the-model&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;h3 id=&#34;old-nyc-data&#34; &gt;Old Nyc Data
+&lt;span&gt;
+    &lt;a href=&#34;#old-nyc-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data I am using was sourced from 2018.   I will be updating it soon.&lt;/p&gt;
+&lt;h3 id=&#34;houston-data&#34; &gt;Houston Data
+&lt;span&gt;
+    &lt;a href=&#34;#houston-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The houston estimate is based an estimate to stay in the property I am currently staying in.  The rent is 2400 a month.  I estimated that it could raise at maximum to about 2600 in the next year.  If I were to move similiar housing goes for around 2200 to about 2600 a month. I used these as the bounds of my estimates&lt;/p&gt;
+&lt;h2 id=&#34;houston-cost-of-living-expenses&#34; &gt;Houston Cost of Living Expenses
+&lt;span&gt;
+    &lt;a href=&#34;#houston-cost-of-living-expenses&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I intend to stay in Houston for the next year.  I would like to move to NY eventually to be nearer to a central office, but not in the near future.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;2400&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;2600&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2500&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;#file:///Users/jnapolitano/Downloads/LNG_Shipping_a_Descriptive_Analysis.pdf&lt;/span&gt;
+
+cap_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+rent_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+rent_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;houston-monthly-food-costs&#34; &gt;Houston Monthly food costs
+&lt;span&gt;
+    &lt;a href=&#34;#houston-monthly-food-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;400&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt; 
+
+food_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+food_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+food_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;houston-insurance-costs&#34; &gt;Houston Insurance Costs
+&lt;span&gt;
+    &lt;a href=&#34;#houston-insurance-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;200&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;250&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;25&lt;/span&gt;
+
+insurance_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+insurance_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;the-houston-cost-of-living-df&#34; &gt;The Houston Cost of Living DF
+&lt;span&gt;
+    &lt;a href=&#34;#the-houston-cost-of-living-df&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;cost_of_living_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(insurance_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance
+cost_of_living_df
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;rent&lt;/th&gt;
+      &lt;th&gt;food&lt;/th&gt;
+      &lt;th&gt;insurance&lt;/th&gt;
+      &lt;th&gt;monthly_cost&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;2472.688851&lt;/td&gt;
+      &lt;td&gt;334.419350&lt;/td&gt;
+      &lt;td&gt;231.162225&lt;/td&gt;
+      &lt;td&gt;3038.270426&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;2399.284893&lt;/td&gt;
+      &lt;td&gt;444.677340&lt;/td&gt;
+      &lt;td&gt;248.645107&lt;/td&gt;
+      &lt;td&gt;3092.607340&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2684.456976&lt;/td&gt;
+      &lt;td&gt;430.277801&lt;/td&gt;
+      &lt;td&gt;252.578613&lt;/td&gt;
+      &lt;td&gt;3367.313390&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;2478.390464&lt;/td&gt;
+      &lt;td&gt;360.661703&lt;/td&gt;
+      &lt;td&gt;291.989836&lt;/td&gt;
+      &lt;td&gt;3131.042002&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;2513.324309&lt;/td&gt;
+      &lt;td&gt;429.771020&lt;/td&gt;
+      &lt;td&gt;252.866861&lt;/td&gt;
+      &lt;td&gt;3195.962190&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;2501.390892&lt;/td&gt;
+      &lt;td&gt;413.121444&lt;/td&gt;
+      &lt;td&gt;243.717854&lt;/td&gt;
+      &lt;td&gt;3158.230190&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;2554.433859&lt;/td&gt;
+      &lt;td&gt;363.994333&lt;/td&gt;
+      &lt;td&gt;226.672435&lt;/td&gt;
+      &lt;td&gt;3145.100627&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;2530.369935&lt;/td&gt;
+      &lt;td&gt;299.997467&lt;/td&gt;
+      &lt;td&gt;239.663510&lt;/td&gt;
+      &lt;td&gt;3070.030911&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;8&lt;/th&gt;
+      &lt;td&gt;2635.681318&lt;/td&gt;
+      &lt;td&gt;394.667441&lt;/td&gt;
+      &lt;td&gt;241.502045&lt;/td&gt;
+      &lt;td&gt;3271.850803&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;9&lt;/th&gt;
+      &lt;td&gt;2596.457738&lt;/td&gt;
+      &lt;td&gt;513.944623&lt;/td&gt;
+      &lt;td&gt;229.362551&lt;/td&gt;
+      &lt;td&gt;3339.764912&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;2455.017883&lt;/td&gt;
+      &lt;td&gt;371.266360&lt;/td&gt;
+      &lt;td&gt;283.637179&lt;/td&gt;
+      &lt;td&gt;3109.921421&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;2427.449703&lt;/td&gt;
+      &lt;td&gt;485.960065&lt;/td&gt;
+      &lt;td&gt;276.488430&lt;/td&gt;
+      &lt;td&gt;3189.898198&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;houston-costs-per-annum-algorithm&#34; &gt;Houston Costs Per Annum Algorithm
+&lt;span&gt;
+    &lt;a href=&#34;#houston-costs-per-annum-algorithm&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The algorithm below calculates the annual cost of rent, food, and insurance to determine total cost per year.  Rent, food, and insurance are set by random choice based on the distributions defined in the functions above.&lt;/p&gt;
+&lt;p&gt;I run the simulation 10,000 times which in theory corresponds to 10,000 random samples of annual costs.  The point in doing this is to create a random normal distribution to define convidence intervals of my total annual costs.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+years &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;
+year_counter &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#carbon_total_millions_metric_tons = 300000000&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#total_tons_shipped = 0&lt;/span&gt;
+total_price &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+cycle_price_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_rent_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_food_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_insurance_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+annual_cost &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; year &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(years):
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Define a New DataFrame. It should fall out of scope with each iteration &lt;/span&gt;
+    cost_of_living_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random choice of rent &lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random choice of food&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random Choice of Insurance&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(insurance_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Random Choice of total annual cost&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance
+    &lt;span style=&#34;color:#75715e&#34;&gt;# must use apply to account for multiple 0 conditions.  If i simply vectorized the function across the dataframe in a single call i would assign the the same values each day &lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#calculate cost per day for fun...&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# query all that are = o.  Summate the capacities deduct the total &lt;/span&gt;
+    annual_cost &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_rent &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_food &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_insurance &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    cycle_price_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_cost
+    cycle_food_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_food
+    cycle_insurance_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_insurance
+    cycle_rent_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_rent
+    &lt;span style=&#34;color:#75715e&#34;&gt;#print(carbon_total_millions_metric_tons)&lt;/span&gt;
+    year_counter &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; year_counter&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;houston-prediction-df&#34; &gt;Houston Prediction Df
+&lt;span&gt;
+    &lt;a href=&#34;#houston-prediction-df&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_rent_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_food_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_insurance_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;total&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_price_samples
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;rent&lt;/th&gt;
+      &lt;th&gt;food&lt;/th&gt;
+      &lt;th&gt;insurance&lt;/th&gt;
+      &lt;th&gt;total&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;30003.016272&lt;/td&gt;
+      &lt;td&gt;4800.864106&lt;/td&gt;
+      &lt;td&gt;2997.910667&lt;/td&gt;
+      &lt;td&gt;37801.791045&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;344.473477&lt;/td&gt;
+      &lt;td&gt;171.736899&lt;/td&gt;
+      &lt;td&gt;86.991071&lt;/td&gt;
+      &lt;td&gt;394.976839&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;28586.298471&lt;/td&gt;
+      &lt;td&gt;4159.970425&lt;/td&gt;
+      &lt;td&gt;2699.038887&lt;/td&gt;
+      &lt;td&gt;36163.596078&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;29771.562236&lt;/td&gt;
+      &lt;td&gt;4683.226307&lt;/td&gt;
+      &lt;td&gt;2940.117598&lt;/td&gt;
+      &lt;td&gt;37537.005225&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;30003.442289&lt;/td&gt;
+      &lt;td&gt;4800.664909&lt;/td&gt;
+      &lt;td&gt;2997.584664&lt;/td&gt;
+      &lt;td&gt;37797.598919&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;30234.927776&lt;/td&gt;
+      &lt;td&gt;4915.307716&lt;/td&gt;
+      &lt;td&gt;3056.853675&lt;/td&gt;
+      &lt;td&gt;38072.961560&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;31370.239418&lt;/td&gt;
+      &lt;td&gt;5495.020896&lt;/td&gt;
+      &lt;td&gt;3314.016695&lt;/td&gt;
+      &lt;td&gt;39469.935965&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;houston-annual-cost-histogram&#34; &gt;Houston Annual Cost Histogram
+&lt;span&gt;
+    &lt;a href=&#34;#houston-annual-cost-histogram&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;plot&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(grid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, bins&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;, rwidth&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;,
+                   color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#607c8e&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Total Costs Price USD&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Frequency&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;grid(axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt;, alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.75&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;cost_of_living_monte_carlo_files/cost_of_living_monte_carlo_17_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;houston-calculating-the-confidence-interval-for-total-costs&#34; &gt;Houston: Calculating the Confidence Interval For Total Costs
+&lt;span&gt;
+    &lt;a href=&#34;#houston-calculating-the-confidence-interval-for-total-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data is nearly normal. Greater samples sizes would produce a graph of nearly perfect normality&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;norm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;interval(alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.90&lt;/span&gt;, loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total), scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sem(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(37795.2942543157, 37808.287836034055)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;houston-annual-rent-histogram&#34; &gt;Houston Annual Rent Histogram
+&lt;span&gt;
+    &lt;a href=&#34;#houston-annual-rent-histogram&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;### Annual Cost Histogram Histogram&lt;/span&gt;
+prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;plot&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(grid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, bins&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;, rwidth&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;,
+                   color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#607c8e&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Rent Cost Distribution &amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Rent Costs Price USD&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Frequency&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;grid(axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt;, alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.75&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;cost_of_living_monte_carlo_files/cost_of_living_monte_carlo_21_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;houston-calculating-the-confidence-interval-for-annual-rent&#34; &gt;Houston: Calculating the Confidence Interval For Annual Rent
+&lt;span&gt;
+    &lt;a href=&#34;#houston-calculating-the-confidence-interval-for-annual-rent&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data is nearly normal. Greater samples sizes would produce a graph of nearly perfect normality&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;norm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;interval(alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.95&lt;/span&gt;, loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent), scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sem(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(29996.264715447538, 30009.767827637417)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;new-york-cost-of-living-expenses&#34; &gt;New York Cost of Living Expenses
+&lt;span&gt;
+    &lt;a href=&#34;#new-york-cost-of-living-expenses&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;For the sake of comparison, the New York Expense distributions are calculated below.  I assume that everything but rent will be equivalent to Houston.  A more accurate model would account for insurance, food, and incidental differences.&lt;/p&gt;
+&lt;p&gt;I am assuming the rent of a two bedroom apartment.&lt;/p&gt;
+&lt;p&gt;The data i am using was scraped from craigslist in 2018.  I will redo it later for 2022 data to get a better model.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;nyc_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read_csv(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Users/jnapolitano/Projects/cost-of-living-projections/nyc-housing.csv&amp;#34;&lt;/span&gt;, encoding&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;unicode-escape&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#assuiming a two bedroom&lt;/span&gt;
+nyc_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nyc_df[nyc_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bedrooms&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;2br&amp;#39;&lt;/span&gt;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;nyc_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Zipcode&lt;/th&gt;
+      &lt;th&gt;Price&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;2626.000000&lt;/td&gt;
+      &lt;td&gt;2625.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;10845.203351&lt;/td&gt;
+      &lt;td&gt;2755.018286&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;556.758722&lt;/td&gt;
+      &lt;td&gt;7465.827048&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;10001.000000&lt;/td&gt;
+      &lt;td&gt;16.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;10065.000000&lt;/td&gt;
+      &lt;td&gt;1950.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;11210.000000&lt;/td&gt;
+      &lt;td&gt;2330.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;11231.000000&lt;/td&gt;
+      &lt;td&gt;2922.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;11697.000000&lt;/td&gt;
+      &lt;td&gt;378888.000000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;The price is about 2800 with a std of 7,465.  Which is absurd.  To do a better analysis, I need to clean the data.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+idx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (nyc_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Price &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (nyc_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Price &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;4500&lt;/span&gt;)
+nyc_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nyc_df[idx]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;nyc_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Zipcode&lt;/th&gt;
+      &lt;th&gt;Price&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;2441.000000&lt;/td&gt;
+      &lt;td&gt;2441.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;10881.331422&lt;/td&gt;
+      &lt;td&gt;2435.25891&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;541.102216&lt;/td&gt;
+      &lt;td&gt;728.96291&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;10001.000000&lt;/td&gt;
+      &lt;td&gt;600.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;10302.000000&lt;/td&gt;
+      &lt;td&gt;1950.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;11211.000000&lt;/td&gt;
+      &lt;td&gt;2300.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;11233.000000&lt;/td&gt;
+      &lt;td&gt;2750.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;11697.000000&lt;/td&gt;
+      &lt;td&gt;4495.00000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;When accounting for outliers the data is far more managable.  I&amp;rsquo;m surprised by the mean price.  Again this data is old, but it is also does not accout for neighborhoods.  I will redo the analysis at a later data filtered by neighborhoods.&lt;/p&gt;
+&lt;h3 id=&#34;creating-the-nyc-distributions&#34; &gt;Creating the NYC Distributions
+&lt;span&gt;
+    &lt;a href=&#34;#creating-the-nyc-distributions&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;600&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;4500&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2435&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;729&lt;/span&gt; 
+
+cap_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+rent_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+rent_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;nyc-monthly-food-costs&#34; &gt;NYC Monthly food costs
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-monthly-food-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;400&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt; 
+
+food_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+food_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+food_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;nyc-insurance-costs&#34; &gt;NYC Insurance Costs
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-insurance-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;200&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;250&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;25&lt;/span&gt;
+
+insurance_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+insurance_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;nyc-cost-of-living-distribution&#34; &gt;NYC Cost of Living Distribution
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-cost-of-living-distribution&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;cost_of_living_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(insurance_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance
+cost_of_living_df
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;rent&lt;/th&gt;
+      &lt;th&gt;food&lt;/th&gt;
+      &lt;th&gt;insurance&lt;/th&gt;
+      &lt;th&gt;monthly_cost&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;2440.594149&lt;/td&gt;
+      &lt;td&gt;404.104193&lt;/td&gt;
+      &lt;td&gt;263.802114&lt;/td&gt;
+      &lt;td&gt;3108.500457&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;3509.157666&lt;/td&gt;
+      &lt;td&gt;399.234822&lt;/td&gt;
+      &lt;td&gt;206.641152&lt;/td&gt;
+      &lt;td&gt;4115.033640&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;3351.649621&lt;/td&gt;
+      &lt;td&gt;297.314475&lt;/td&gt;
+      &lt;td&gt;284.177204&lt;/td&gt;
+      &lt;td&gt;3933.141300&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;1977.607960&lt;/td&gt;
+      &lt;td&gt;359.872656&lt;/td&gt;
+      &lt;td&gt;255.831381&lt;/td&gt;
+      &lt;td&gt;2593.311996&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;2169.224724&lt;/td&gt;
+      &lt;td&gt;386.271512&lt;/td&gt;
+      &lt;td&gt;244.469415&lt;/td&gt;
+      &lt;td&gt;2799.965652&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;2661.843885&lt;/td&gt;
+      &lt;td&gt;356.660878&lt;/td&gt;
+      &lt;td&gt;218.425732&lt;/td&gt;
+      &lt;td&gt;3236.930495&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;3595.833071&lt;/td&gt;
+      &lt;td&gt;385.012912&lt;/td&gt;
+      &lt;td&gt;273.882653&lt;/td&gt;
+      &lt;td&gt;4254.728637&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;1765.419028&lt;/td&gt;
+      &lt;td&gt;404.770447&lt;/td&gt;
+      &lt;td&gt;236.665360&lt;/td&gt;
+      &lt;td&gt;2406.854835&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;8&lt;/th&gt;
+      &lt;td&gt;1708.955308&lt;/td&gt;
+      &lt;td&gt;348.178355&lt;/td&gt;
+      &lt;td&gt;231.690103&lt;/td&gt;
+      &lt;td&gt;2288.823766&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;9&lt;/th&gt;
+      &lt;td&gt;3227.258413&lt;/td&gt;
+      &lt;td&gt;392.787025&lt;/td&gt;
+      &lt;td&gt;252.315570&lt;/td&gt;
+      &lt;td&gt;3872.361007&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;1941.492537&lt;/td&gt;
+      &lt;td&gt;404.384587&lt;/td&gt;
+      &lt;td&gt;247.628257&lt;/td&gt;
+      &lt;td&gt;2593.505381&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;2081.218740&lt;/td&gt;
+      &lt;td&gt;416.678465&lt;/td&gt;
+      &lt;td&gt;213.204362&lt;/td&gt;
+      &lt;td&gt;2711.101567&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;nyc-costs-per-annum-algorithm&#34; &gt;NYC Costs Per Annum Algorithm
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-costs-per-annum-algorithm&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The algorithm below calculates the annual cost of rent, food, and insurance to determine total cost per year.  Rent, food, and insurance are set by random choice based on the distributions defined in the functions above.&lt;/p&gt;
+&lt;p&gt;I run the simulation 10,000 times which in theory corresponds to 10,000 random samples of annual costs.  The point in doing this is to create a random normal distribution to define convidence intervals of my total annual costs.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+years &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;
+year_counter &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#carbon_total_millions_metric_tons = 300000000&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#total_tons_shipped = 0&lt;/span&gt;
+total_price &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+cycle_price_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_rent_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_food_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_insurance_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+annual_cost &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; year &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(years):
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Define a New DataFrame. It should fall out of scope with each iteration &lt;/span&gt;
+    cost_of_living_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random choice of rent &lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random choice of food&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random Choice of Insurance&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(insurance_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Random Choice of total annual cost&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance
+    &lt;span style=&#34;color:#75715e&#34;&gt;# must use apply to account for multiple 0 conditions.  If i simply vectorized the function across the dataframe in a single call i would assign the the same values each day &lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#calculate cost per day for fun...&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# query all that are = o.  Summate the capacities deduct the total &lt;/span&gt;
+    annual_cost &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_rent &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_food &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_insurance &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    cycle_price_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_cost
+    cycle_food_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_food
+    cycle_insurance_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_insurance
+    cycle_rent_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_rent
+    &lt;span style=&#34;color:#75715e&#34;&gt;#print(carbon_total_millions_metric_tons)&lt;/span&gt;
+    year_counter &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; year_counter&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;nyc-prediction-df&#34; &gt;NYC Prediction Df
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-prediction-df&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_rent_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_food_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_insurance_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;total&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_price_samples
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;rent&lt;/th&gt;
+      &lt;th&gt;food&lt;/th&gt;
+      &lt;th&gt;insurance&lt;/th&gt;
+      &lt;th&gt;total&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;29219.509691&lt;/td&gt;
+      &lt;td&gt;4797.809482&lt;/td&gt;
+      &lt;td&gt;3004.224643&lt;/td&gt;
+      &lt;td&gt;37021.543816&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;2532.300418&lt;/td&gt;
+      &lt;td&gt;172.673041&lt;/td&gt;
+      &lt;td&gt;87.221734&lt;/td&gt;
+      &lt;td&gt;2542.267617&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;18744.517281&lt;/td&gt;
+      &lt;td&gt;4116.639699&lt;/td&gt;
+      &lt;td&gt;2574.323735&lt;/td&gt;
+      &lt;td&gt;26447.949901&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;27545.387716&lt;/td&gt;
+      &lt;td&gt;4678.877662&lt;/td&gt;
+      &lt;td&gt;2945.270499&lt;/td&gt;
+      &lt;td&gt;35351.052672&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;29244.878069&lt;/td&gt;
+      &lt;td&gt;4797.251203&lt;/td&gt;
+      &lt;td&gt;3005.337764&lt;/td&gt;
+      &lt;td&gt;37034.425389&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;30915.545611&lt;/td&gt;
+      &lt;td&gt;4915.266687&lt;/td&gt;
+      &lt;td&gt;3062.210984&lt;/td&gt;
+      &lt;td&gt;38722.269645&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;38516.336096&lt;/td&gt;
+      &lt;td&gt;5429.519670&lt;/td&gt;
+      &lt;td&gt;3327.233629&lt;/td&gt;
+      &lt;td&gt;46383.324453&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;nyc-annual-cost-histogram&#34; &gt;NYC Annual Cost Histogram
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-annual-cost-histogram&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;plot&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(grid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, bins&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;, rwidth&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;,
+                   color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#607c8e&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Total Costs Price USD&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Frequency&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;grid(axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt;, alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.75&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;cost_of_living_monte_carlo_files/cost_of_living_monte_carlo_47_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;nyc-calculating-the-confidence-interval-for-total-costs&#34; &gt;NYC: Calculating the Confidence Interval For Total Costs
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-calculating-the-confidence-interval-for-total-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data is nearly normal. Greater samples sizes would produce a graph of nearly perfect normality&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;norm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;interval(alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.90&lt;/span&gt;, loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total), scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sem(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(36979.727235126586, 37063.36039733022)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;nyc-annual-rent-histogram&#34; &gt;NYC Annual Rent Histogram
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-annual-rent-histogram&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;### Annual Cost Histogram Histogram&lt;/span&gt;
+prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;plot&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(grid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, bins&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;, rwidth&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;,
+                   color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#607c8e&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Rent Cost Distribution &amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Rent Costs Price USD&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Frequency&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;grid(axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt;, alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.75&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;cost_of_living_monte_carlo_files/cost_of_living_monte_carlo_51_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;calculating-the-confidence-interval-for-annual-rent&#34; &gt;Calculating the Confidence Interval For Annual Rent
+&lt;span&gt;
+    &lt;a href=&#34;#calculating-the-confidence-interval-for-annual-rent&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data is nearly normal. Greater samples sizes would produce a graph of nearly perfect normality&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;norm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;interval(alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.95&lt;/span&gt;, loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent), scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sem(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(29169.877514702926, 29269.14186706609)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;nyc-closing-remarks&#34; &gt;NYC Closing Remarks
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-closing-remarks&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The rent distribution in NYC with 2018 data is actually nearly comparible to my houston estimate.  An annual salary of 90,000 would permit me to live at about the median level in the city.  I will be redoing this report soon as the data is old.  I am currently scraping data in houston and nyc to produce a better analysis.&lt;/p&gt;
+&lt;h2 id=&#34;imports&#34; &gt;Imports
+&lt;span&gt;
+    &lt;a href=&#34;#imports&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pandas &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; pd
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; plt
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; numpy &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; np
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; scipy.stats &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; st
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; shapely.geometry &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; Point
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; numpy.random &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; choice
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; warnings
+
+warnings&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;filterwarnings(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ignore&amp;#39;&lt;/span&gt;)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>Spearman Rank in Standard Julia</title>
