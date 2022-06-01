@@ -6,10 +6,170 @@
     <description>Justin&#39;s Data Blog (Quantitative Analysis in Julia)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 May 2022 13:30:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 May 2022 20:20:32 +0000</lastBuildDate>
     
     <atom:link href="https://blog.jnapolitano.io/series/quantitative-analysis-in-julia/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Spearman Rank in Standard Julia</title>
+      <link>https://blog.jnapolitano.io/posts/spearman_rank_julia/</link>
+      <pubDate>Mon, 30 May 2022 20:20:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/spearman_rank_julia/</guid>
+      <description>&lt;h2 id=&#34;spearman-rank-in-standard-julia&#34; &gt;Spearman Rank in Standard Julia
+&lt;span&gt;
+    &lt;a href=&#34;#spearman-rank-in-standard-julia&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Well nearly, I did import the erfc function from the SpecialFunctions package.  I don&amp;rsquo;t like it either.  I&amp;rsquo;ll write my own soon to make up for it.&lt;/p&gt;
+&lt;h2 id=&#34;special-thanks&#34; &gt;Special Thanks
+&lt;span&gt;
+    &lt;a href=&#34;#special-thanks&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I came across the text Numerical Recipes in C.  It was first published in 1988, by the Cambridge University Press.  The authors are William H. Press, Brian P. Flannery, Saul. A. Teukolsky, and William T. Veterling.&lt;/p&gt;
+&lt;p&gt;The book is beautiful.  You should try to find a copy.  It comes in Pascal and Fortran too!!!&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m having fun with it and will translate some of the recipes from my first love C to Julia.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll write up a review on the functions below in an upcoming edit.  I&amp;rsquo;m so excited that it works that I had to publish.&lt;/p&gt;
+&lt;h2 id=&#34;update-there-is-a-website&#34; &gt;Update: There is a Website!!!
+&lt;span&gt;
+    &lt;a href=&#34;#update-there-is-a-website&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;a href=&#34;http://numerical.recipes/&#34;&gt;numerical.recipes&lt;/a&gt; is a website with all of the code and the ebook.  I thought it was open source at first, but they want some money.  I guess it&amp;rsquo;s okay, but still.  Check it out there.&lt;/p&gt;
+&lt;p&gt;The amazonbook link is below:&lt;/p&gt;
+&lt;p&gt;*&lt;a href=&#34;https://www.amazon.com/Numerical-Recipes-Scientific-Computing-Second/dp/0521431085#:~:text=The%20product%20of%20a%20unique,to%20actual%20practical%20computer%20routines&#34;&gt;book link&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;update-again&#34; &gt;Update Again:
+&lt;span&gt;
+    &lt;a href=&#34;#update-again&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I found the PDF!  It is available via penn state university. Here&amp;rsquo;s the &lt;a href=&#34;https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.129.5354&amp;amp;rep=rep1&amp;amp;type=pdf&#34;&gt;download link&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;using-specialfunctionserfc&#34; &gt;Using SpecialFunctions:erfc
+&lt;span&gt;
+    &lt;a href=&#34;#using-specialfunctionserfc&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I had to import the complementary error function.  I wanted to use just the standard library, but I had to test the code below first.  I&amp;rsquo;ll write the compelemntary error function in pure julia next.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; SpecialFunctions&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;erfc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;spearman-correlation-function&#34; &gt;Spearman Correlation Function.
+&lt;span&gt;
+    &lt;a href=&#34;#spearman-correlation-function&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;It takes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;two distributions&lt;/li&gt;
+&lt;li&gt;the sample size&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It returns a t score  The original, used pointers to return multiple variables.  I&amp;rsquo;ll probably rewrite the function to calculate the copmlimentary variables in seperate methods.  Might as well take advantage of the multiple dispatch capability of the language.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; spearman(data1,data2,n)
+
+    j &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; 
+    
+    wksp1m&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Vector&lt;/span&gt;{&lt;span style=&#34;color:#66d9ef&#34;&gt;Float64&lt;/span&gt;}(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;n)
+    wksp2m &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Vector&lt;/span&gt;{&lt;span style=&#34;color:#66d9ef&#34;&gt;Float64&lt;/span&gt;}(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;n)
+    
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;(n)
+        wksp1m[j]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;data1[j]
+        wksp2m[j]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;data2[j]
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+    sort!(wksp1m)
+    sort!(wksp2m)
+
+    sf &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; crank(n,wksp1m)
+    sg &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; crank(n,wksp2m)
+
+    d &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;n
+        d &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; sqrt((&lt;span style=&#34;color:#66d9ef&#34;&gt;Complex&lt;/span&gt;(wksp1m[j]&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;wksp2m[j])))
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    
+    en&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;n
+    en3n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (en&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;en&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;en)&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;en
+    aved&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(en3n&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;((sf&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;sg)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    fac&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;sf&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;en3n)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;(sg&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;en3n))
+    vard &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;((en&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;en&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;en&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;sqrt(en&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;36.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;fac
+    zd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (d&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;aved&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;sqrt(vard))
+    probd&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;erfc((abs(zd)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.4142136&lt;/span&gt;))
+    rs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;6.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;en3n)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(d&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(sf&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;sg)))&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;fac
+    t&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(rs)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;sqrt((en&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;((rs&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;rs)))
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; t
+    
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;spearman (generic function with 2 methods)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;crank&#34; &gt;Crank
+&lt;span&gt;
+    &lt;a href=&#34;#crank&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;It ranks the distributions by modifying the original sorted array.  So very C.  I may play with this to return a new value, but I like that it modifies in place.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; crank(n,w)
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;#w= Vector{Float64}(1:n)&lt;/span&gt;
+    c &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+    j &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+    s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;(n&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; w[j&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; w[j]
+            w[j] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; j
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; jt &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;(n)
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (w[jt] &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; w[j])
+                    &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+            rank &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;.5&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(j&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;jt&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; ji &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; j&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;(jt&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+                w[ji] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rank
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+            t &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; jt&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;j
+            s &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; t&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;t&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;t&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+        c &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; j
+        j&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;j
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; c &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; n 
+        w[n]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;n
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; s
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;crank (generic function with 1 method)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;main&#34; &gt;Main()
+&lt;span&gt;
+    &lt;a href=&#34;#main&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Creates two random distributions and ranks tests them for correlation..&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; main()
+    d1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;rand()&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;]
+    d2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;rand()&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;]
+
+    t &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;spearman(d1,d2,&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+    display(t)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;main (generic function with 1 method)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;main()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;619.0719816953838 - 0.0im
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>Churn Modelling Marketing Data with Julia</title>
