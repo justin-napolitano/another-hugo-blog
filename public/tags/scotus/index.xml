@@ -6,105 +6,10 @@
     <description>Justin&#39;s Data Blog (scotus)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 May 2022 01:30:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 May 2022 00:30:32 +0000</lastBuildDate>
     
     <atom:link href="https://blog.jnapolitano.io/tags/scotus/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Quantitative Julia Problems</title>
-      <link>https://blog.jnapolitano.io/posts/pi-with-julia/</link>
-      <pubDate>Tue, 24 May 2022 01:30:32 +0000</pubDate>
-      
-      <guid>https://blog.jnapolitano.io/posts/pi-with-julia/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34; &gt;Introduction
-&lt;span&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;
-        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/span&gt;
-&lt;/h2&gt;&lt;p&gt;In my &lt;a href=&#34;https://blog.jnapolitano.io/posts/rocky-linux-8-julia/&#34;&gt;previous post&lt;/a&gt;, I demonstrated how to configure Rocky Linux and RHEL distributions for quantitative analysis.&lt;/p&gt;
-&lt;p&gt;In this post, I include a few sample programs to test your installation.&lt;/p&gt;
-&lt;h2 id=&#34;how-to-run-the-programs&#34; &gt;How to run the programs
-&lt;span&gt;
-    &lt;a href=&#34;#how-to-run-the-programs&#34;&gt;
-        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/span&gt;
-&lt;/h2&gt;&lt;p&gt;I saved them to a folder within the project directory.&lt;/p&gt;
-&lt;h3 id=&#34;activate-the-project&#34; &gt;Activate the Project
-&lt;span&gt;
-    &lt;a href=&#34;#activate-the-project&#34;&gt;
-        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/span&gt;
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Pkg
-Pkg&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;activate(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt;)
-
-&lt;span style=&#34;color:#75715e&#34;&gt;#cd(&amp;#34;&amp;lt;sub-directory-containing-files&amp;gt;) optional&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;run-a-program&#34; &gt;Run a program
-&lt;span&gt;
-    &lt;a href=&#34;#run-a-program&#34;&gt;
-        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/span&gt;
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Julia&#34; data-lang=&#34;Julia&#34;&gt;
-include(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;path/to/script-name.jl&amp;#34;&lt;/span&gt;)
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;estimate-the-value-of-pi&#34; &gt;Estimate the Value of Pi
-&lt;span&gt;
-    &lt;a href=&#34;#estimate-the-value-of-pi&#34;&gt;
-        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/span&gt;
-&lt;/h2&gt;&lt;p&gt;Use the Monte Carlo method to estimate the value of pi.&lt;/p&gt;
-&lt;h3 id=&#34;solution&#34; &gt;Solution
-&lt;span&gt;
-    &lt;a href=&#34;#solution&#34;&gt;
-        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/span&gt;
-&lt;/h3&gt;&lt;p&gt;We estimate the area by sampling bivariate uniforms and looking at the fraction that fall into the unit circle.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Julia&#34; data-lang=&#34;Julia&#34;&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;# Number of iterations&lt;/span&gt;
-n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1000000&lt;/span&gt;
-&lt;span style=&#34;color:#75715e&#34;&gt;#counter variable&lt;/span&gt;
-count &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;n &lt;span style=&#34;color:#75715e&#34;&gt;# for i in the range of 1 to n&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;global&lt;/span&gt; count  &lt;span style=&#34;color:#75715e&#34;&gt;# make count global to reference within the loop.  Otherwise the the variable will be understood to be a local within the for loop&lt;/span&gt;
-    &lt;span style=&#34;color:#75715e&#34;&gt;#rand(2) Returns a two element vector.  &lt;/span&gt;
-    &lt;span style=&#34;color:#75715e&#34;&gt;#Can be read as let u be equal to the first index of the vector and let v be equal to the second&lt;/span&gt;
-    u, v &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rand(&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
-    
-    d &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sqrt((u &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;^&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; (v &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;^&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;# distance from middle of square&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; d &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;
-        count &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
-
-area_estimate &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; count &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; n
-
-print(area_estimate &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;# dividing by radius**2&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;use-quadgk-to-aproximate-an-integral&#34; &gt;Use QuadGk to Aproximate an integral
-&lt;span&gt;
-    &lt;a href=&#34;#use-quadgk-to-aproximate-an-integral&#34;&gt;
-        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/span&gt;
-&lt;/h2&gt;&lt;p&gt;The trapezoidal rule can be used to aproximate an integral.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Julia&#34; data-lang=&#34;Julia&#34;&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; QuadGK
-
-f(x) &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; x&lt;span style=&#34;color:#f92672&#34;&gt;^&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# The Function&lt;/span&gt;
-
-value, accuracy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; quadgk(f, &lt;span style=&#34;color:#ae81ff&#34;&gt;0.0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;) &lt;span style=&#34;color:#75715e&#34;&gt;# pass the function, the lower bound and the upper bound&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
     
     <item>
       <title>Configuring Rocky Linux 8 for Quantitative Analysis in Julia</title>

@@ -2,52 +2,103 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://blog.jnapolitano.io/posts/cost-of-living-projections/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
     <loc>https://blog.jnapolitano.io/categories/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/data-wrangling/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/data-wrangling/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/dataframes/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/julia/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/julia/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/legal-research/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+    <loc>https://blog.jnapolitano.io/tags/monte-carlo/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/numerical-computing/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/numerical-computing/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/python/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/python/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/quantitative-analysis/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/statistics/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/tutorials/</loc>
+    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/julia/</loc>
+    <lastmod>2022-05-30T20:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/julia/</loc>
+    <lastmod>2022-05-30T20:20:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/series/quantitative-analysis-in-julia/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
+    <lastmod>2022-05-30T20:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/series/</loc>
+    <lastmod>2022-05-30T20:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/spearman_rank_julia/</loc>
+    <lastmod>2022-05-30T20:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/spearman-rank-correlation/</loc>
+    <lastmod>2022-05-30T20:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/propensity_scoring/</loc>
+    <lastmod>2022-05-30T13:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/logisitic-regression/</loc>
+    <lastmod>2022-05-30T13:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/marketing-analsyis/</loc>
+    <lastmod>2022-05-30T13:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/propensity-models/</loc>
+    <lastmod>2022-05-30T13:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/dataframes/</loc>
+    <lastmod>2022-05-26T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/markov/</loc>
+    <lastmod>2022-05-26T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/markov-models-julia/</loc>
+    <lastmod>2022-05-26T01:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/mathematics/</loc>
+    <lastmod>2022-05-26T01:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/pi-with-julia/</loc>
     <lastmod>2022-05-24T01:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/tags/scotus/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/series/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/tutorials/</loc>
-    <lastmod>2022-05-24T01:30:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/posts/rocky-linux-8-julia/</loc>
+    <lastmod>2022-05-24T00:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/data-wrangling/</loc>
+    <lastmod>2022-05-24T00:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/data-wrangling/</loc>
+    <lastmod>2022-05-24T00:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/legal-research/</loc>
+    <lastmod>2022-05-24T00:30:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/scotus/</loc>
     <lastmod>2022-05-24T00:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/climate-change/</loc>
@@ -57,9 +108,6 @@
     <lastmod>2022-05-23T19:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/emissions/</loc>
-    <lastmod>2022-05-23T19:30:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/python/</loc>
     <lastmod>2022-05-23T19:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/series/rice-paddy-methane-emissions/</loc>
@@ -95,9 +143,6 @@
     <loc>https://blog.jnapolitano.io/series/legal-research-with-ai/</loc>
     <lastmod>2022-05-23T16:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/tags/python/</loc>
-    <lastmod>2022-05-23T16:30:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/posts/legal-research-part-7/</loc>
     <lastmod>2022-05-22T16:30:32+00:00</lastmod>
   </url><url>
@@ -120,9 +165,6 @@
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/spss/</loc>
-    <lastmod>2022-05-21T19:40:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/statistics/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/legal-research-part-5/</loc>

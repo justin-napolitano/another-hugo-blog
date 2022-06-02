@@ -3,8 +3,8 @@ title =  "Quantitative Julia Problems"
 date = "2022-05-24T01:30:32.169Z"
 description = "Testing your Julia Configuration with some numerical computing."
 author = "Justin Napolitano"
-categories = ['Julia','Tutorials', 'Legal Research', 'Data Wrangling']
-tags = ['julia', 'dataframes', 'SCOTUS','data-wrangling' ]
+categories = ['Julia','Tutorials', 'Quantitative Analysis']
+tags = ['julia', 'dataframes', 'mathematics' ]
 images = ['featured-julia.png']
 series = ['Quantitative Analysis in Julia']
 +++

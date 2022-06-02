@@ -6,10 +6,1586 @@
     <description>Justin&#39;s Data Blog (statistics)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 May 2022 19:40:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jun 2022 15:24:32 +0000</lastBuildDate>
     
     <atom:link href="https://blog.jnapolitano.io/tags/statistics/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Annual Cost of Living Monte Carlo Models</title>
+      <link>https://blog.jnapolitano.io/posts/cost-of-living-projections/</link>
+      <pubDate>Wed, 01 Jun 2022 15:24:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/cost-of-living-projections/</guid>
+      <description>&lt;h1 id=&#34;cost-of-living-projections&#34; &gt;Cost of Living Projections
+&lt;span&gt;
+    &lt;a href=&#34;#cost-of-living-projections&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;h2 id=&#34;introduction&#34; &gt;Introduction
+&lt;span&gt;
+    &lt;a href=&#34;#introduction&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I do not like negotiating for salary. Especially, without valid projections to determine a range.&lt;/p&gt;
+&lt;p&gt;I prepared this report to estimate a salary expectation that will maintain my current standard of living.&lt;/p&gt;
+&lt;p&gt;I present two Monte Carlo models of Houston and NYC annual living costs.  The data is somewhat dated and &amp;ndash;particularly in the case of houston&amp;ndash; are high level estimates.&lt;/p&gt;
+&lt;p&gt;In order to produce a better report, I am currently scraping data from the internet for more accurate sample distributions.  I will be able to present that soon.&lt;/p&gt;
+&lt;p&gt;With that said, the model should not deviate by more than about 5-10 percent from what is presented in below.&lt;/p&gt;
+&lt;h2 id=&#34;findings&#34; &gt;Findings
+&lt;span&gt;
+    &lt;a href=&#34;#findings&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;An annual salary of $90,000 would be sufficient to qualify for rent in Houston and most likely the median level income neighbors of NYC.&lt;/p&gt;
+&lt;p&gt;I came about this number by quantifying a confidence inverval of annual rent costs in boths cities across a normal distribution.  I then simply multiplied that number by 3 in order to meet the lease qualifications of most landlords.&lt;/p&gt;
+&lt;h2 id=&#34;limitations-of-the-model&#34; &gt;Limitations of the Model
+&lt;span&gt;
+    &lt;a href=&#34;#limitations-of-the-model&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;h3 id=&#34;old-nyc-data&#34; &gt;Old Nyc Data
+&lt;span&gt;
+    &lt;a href=&#34;#old-nyc-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data I am using was sourced from 2018.   I will be updating it soon.&lt;/p&gt;
+&lt;h3 id=&#34;houston-data&#34; &gt;Houston Data
+&lt;span&gt;
+    &lt;a href=&#34;#houston-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The houston estimate is based an estimate to stay in the property I am currently staying in.  The rent is 2400 a month.  I estimated that it could raise at maximum to about 2600 in the next year.  If I were to move similiar housing goes for around 2200 to about 2600 a month. I used these as the bounds of my estimates&lt;/p&gt;
+&lt;h2 id=&#34;houston-cost-of-living-expenses&#34; &gt;Houston Cost of Living Expenses
+&lt;span&gt;
+    &lt;a href=&#34;#houston-cost-of-living-expenses&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I intend to stay in Houston for the next year.  I would like to move to NY eventually to be nearer to a central office, but not in the near future.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;2400&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;2600&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2500&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;#file:///Users/jnapolitano/Downloads/LNG_Shipping_a_Descriptive_Analysis.pdf&lt;/span&gt;
+
+cap_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+rent_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+rent_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;houston-monthly-food-costs&#34; &gt;Houston Monthly food costs
+&lt;span&gt;
+    &lt;a href=&#34;#houston-monthly-food-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;400&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt; 
+
+food_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+food_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+food_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;houston-insurance-costs&#34; &gt;Houston Insurance Costs
+&lt;span&gt;
+    &lt;a href=&#34;#houston-insurance-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;200&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;250&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;25&lt;/span&gt;
+
+insurance_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+insurance_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;the-houston-cost-of-living-df&#34; &gt;The Houston Cost of Living DF
+&lt;span&gt;
+    &lt;a href=&#34;#the-houston-cost-of-living-df&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;cost_of_living_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(insurance_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance
+cost_of_living_df
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;rent&lt;/th&gt;
+      &lt;th&gt;food&lt;/th&gt;
+      &lt;th&gt;insurance&lt;/th&gt;
+      &lt;th&gt;monthly_cost&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;2472.688851&lt;/td&gt;
+      &lt;td&gt;334.419350&lt;/td&gt;
+      &lt;td&gt;231.162225&lt;/td&gt;
+      &lt;td&gt;3038.270426&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;2399.284893&lt;/td&gt;
+      &lt;td&gt;444.677340&lt;/td&gt;
+      &lt;td&gt;248.645107&lt;/td&gt;
+      &lt;td&gt;3092.607340&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2684.456976&lt;/td&gt;
+      &lt;td&gt;430.277801&lt;/td&gt;
+      &lt;td&gt;252.578613&lt;/td&gt;
+      &lt;td&gt;3367.313390&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;2478.390464&lt;/td&gt;
+      &lt;td&gt;360.661703&lt;/td&gt;
+      &lt;td&gt;291.989836&lt;/td&gt;
+      &lt;td&gt;3131.042002&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;2513.324309&lt;/td&gt;
+      &lt;td&gt;429.771020&lt;/td&gt;
+      &lt;td&gt;252.866861&lt;/td&gt;
+      &lt;td&gt;3195.962190&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;2501.390892&lt;/td&gt;
+      &lt;td&gt;413.121444&lt;/td&gt;
+      &lt;td&gt;243.717854&lt;/td&gt;
+      &lt;td&gt;3158.230190&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;2554.433859&lt;/td&gt;
+      &lt;td&gt;363.994333&lt;/td&gt;
+      &lt;td&gt;226.672435&lt;/td&gt;
+      &lt;td&gt;3145.100627&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;2530.369935&lt;/td&gt;
+      &lt;td&gt;299.997467&lt;/td&gt;
+      &lt;td&gt;239.663510&lt;/td&gt;
+      &lt;td&gt;3070.030911&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;8&lt;/th&gt;
+      &lt;td&gt;2635.681318&lt;/td&gt;
+      &lt;td&gt;394.667441&lt;/td&gt;
+      &lt;td&gt;241.502045&lt;/td&gt;
+      &lt;td&gt;3271.850803&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;9&lt;/th&gt;
+      &lt;td&gt;2596.457738&lt;/td&gt;
+      &lt;td&gt;513.944623&lt;/td&gt;
+      &lt;td&gt;229.362551&lt;/td&gt;
+      &lt;td&gt;3339.764912&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;2455.017883&lt;/td&gt;
+      &lt;td&gt;371.266360&lt;/td&gt;
+      &lt;td&gt;283.637179&lt;/td&gt;
+      &lt;td&gt;3109.921421&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;2427.449703&lt;/td&gt;
+      &lt;td&gt;485.960065&lt;/td&gt;
+      &lt;td&gt;276.488430&lt;/td&gt;
+      &lt;td&gt;3189.898198&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;houston-costs-per-annum-algorithm&#34; &gt;Houston Costs Per Annum Algorithm
+&lt;span&gt;
+    &lt;a href=&#34;#houston-costs-per-annum-algorithm&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The algorithm below calculates the annual cost of rent, food, and insurance to determine total cost per year.  Rent, food, and insurance are set by random choice based on the distributions defined in the functions above.&lt;/p&gt;
+&lt;p&gt;I run the simulation 10,000 times which in theory corresponds to 10,000 random samples of annual costs.  The point in doing this is to create a random normal distribution to define convidence intervals of my total annual costs.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+years &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;
+year_counter &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#carbon_total_millions_metric_tons = 300000000&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#total_tons_shipped = 0&lt;/span&gt;
+total_price &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+cycle_price_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_rent_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_food_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_insurance_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+annual_cost &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; year &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(years):
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Define a New DataFrame. It should fall out of scope with each iteration &lt;/span&gt;
+    cost_of_living_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random choice of rent &lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random choice of food&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random Choice of Insurance&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(insurance_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Random Choice of total annual cost&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance
+    &lt;span style=&#34;color:#75715e&#34;&gt;# must use apply to account for multiple 0 conditions.  If i simply vectorized the function across the dataframe in a single call i would assign the the same values each day &lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#calculate cost per day for fun...&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# query all that are = o.  Summate the capacities deduct the total &lt;/span&gt;
+    annual_cost &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_rent &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_food &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_insurance &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    cycle_price_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_cost
+    cycle_food_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_food
+    cycle_insurance_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_insurance
+    cycle_rent_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_rent
+    &lt;span style=&#34;color:#75715e&#34;&gt;#print(carbon_total_millions_metric_tons)&lt;/span&gt;
+    year_counter &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; year_counter&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;houston-prediction-df&#34; &gt;Houston Prediction Df
+&lt;span&gt;
+    &lt;a href=&#34;#houston-prediction-df&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_rent_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_food_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_insurance_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;total&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_price_samples
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;rent&lt;/th&gt;
+      &lt;th&gt;food&lt;/th&gt;
+      &lt;th&gt;insurance&lt;/th&gt;
+      &lt;th&gt;total&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;30003.016272&lt;/td&gt;
+      &lt;td&gt;4800.864106&lt;/td&gt;
+      &lt;td&gt;2997.910667&lt;/td&gt;
+      &lt;td&gt;37801.791045&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;344.473477&lt;/td&gt;
+      &lt;td&gt;171.736899&lt;/td&gt;
+      &lt;td&gt;86.991071&lt;/td&gt;
+      &lt;td&gt;394.976839&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;28586.298471&lt;/td&gt;
+      &lt;td&gt;4159.970425&lt;/td&gt;
+      &lt;td&gt;2699.038887&lt;/td&gt;
+      &lt;td&gt;36163.596078&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;29771.562236&lt;/td&gt;
+      &lt;td&gt;4683.226307&lt;/td&gt;
+      &lt;td&gt;2940.117598&lt;/td&gt;
+      &lt;td&gt;37537.005225&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;30003.442289&lt;/td&gt;
+      &lt;td&gt;4800.664909&lt;/td&gt;
+      &lt;td&gt;2997.584664&lt;/td&gt;
+      &lt;td&gt;37797.598919&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;30234.927776&lt;/td&gt;
+      &lt;td&gt;4915.307716&lt;/td&gt;
+      &lt;td&gt;3056.853675&lt;/td&gt;
+      &lt;td&gt;38072.961560&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;31370.239418&lt;/td&gt;
+      &lt;td&gt;5495.020896&lt;/td&gt;
+      &lt;td&gt;3314.016695&lt;/td&gt;
+      &lt;td&gt;39469.935965&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;houston-annual-cost-histogram&#34; &gt;Houston Annual Cost Histogram
+&lt;span&gt;
+    &lt;a href=&#34;#houston-annual-cost-histogram&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;plot&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(grid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, bins&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;, rwidth&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;,
+                   color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#607c8e&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Total Costs Price USD&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Frequency&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;grid(axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt;, alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.75&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;cost_of_living_monte_carlo_files/cost_of_living_monte_carlo_17_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;houston-calculating-the-confidence-interval-for-total-costs&#34; &gt;Houston: Calculating the Confidence Interval For Total Costs
+&lt;span&gt;
+    &lt;a href=&#34;#houston-calculating-the-confidence-interval-for-total-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data is nearly normal. Greater samples sizes would produce a graph of nearly perfect normality&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;norm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;interval(alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.90&lt;/span&gt;, loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total), scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sem(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(37795.2942543157, 37808.287836034055)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;houston-annual-rent-histogram&#34; &gt;Houston Annual Rent Histogram
+&lt;span&gt;
+    &lt;a href=&#34;#houston-annual-rent-histogram&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;### Annual Cost Histogram Histogram&lt;/span&gt;
+prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;plot&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(grid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, bins&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;, rwidth&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;,
+                   color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#607c8e&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Rent Cost Distribution &amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Rent Costs Price USD&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Frequency&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;grid(axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt;, alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.75&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;cost_of_living_monte_carlo_files/cost_of_living_monte_carlo_21_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;houston-calculating-the-confidence-interval-for-annual-rent&#34; &gt;Houston: Calculating the Confidence Interval For Annual Rent
+&lt;span&gt;
+    &lt;a href=&#34;#houston-calculating-the-confidence-interval-for-annual-rent&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data is nearly normal. Greater samples sizes would produce a graph of nearly perfect normality&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;norm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;interval(alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.95&lt;/span&gt;, loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent), scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sem(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(29996.264715447538, 30009.767827637417)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;new-york-cost-of-living-expenses&#34; &gt;New York Cost of Living Expenses
+&lt;span&gt;
+    &lt;a href=&#34;#new-york-cost-of-living-expenses&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;For the sake of comparison, the New York Expense distributions are calculated below.  I assume that everything but rent will be equivalent to Houston.  A more accurate model would account for insurance, food, and incidental differences.&lt;/p&gt;
+&lt;p&gt;I am assuming the rent of a two bedroom apartment.&lt;/p&gt;
+&lt;p&gt;The data i am using was scraped from craigslist in 2018.  I will redo it later for 2022 data to get a better model.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;nyc_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read_csv(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Users/jnapolitano/Projects/cost-of-living-projections/nyc-housing.csv&amp;#34;&lt;/span&gt;, encoding&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;unicode-escape&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#assuiming a two bedroom&lt;/span&gt;
+nyc_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nyc_df[nyc_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Bedrooms&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;2br&amp;#39;&lt;/span&gt;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;nyc_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Zipcode&lt;/th&gt;
+      &lt;th&gt;Price&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;2626.000000&lt;/td&gt;
+      &lt;td&gt;2625.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;10845.203351&lt;/td&gt;
+      &lt;td&gt;2755.018286&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;556.758722&lt;/td&gt;
+      &lt;td&gt;7465.827048&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;10001.000000&lt;/td&gt;
+      &lt;td&gt;16.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;10065.000000&lt;/td&gt;
+      &lt;td&gt;1950.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;11210.000000&lt;/td&gt;
+      &lt;td&gt;2330.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;11231.000000&lt;/td&gt;
+      &lt;td&gt;2922.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;11697.000000&lt;/td&gt;
+      &lt;td&gt;378888.000000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;The price is about 2800 with a std of 7,465.  Which is absurd.  To do a better analysis, I need to clean the data.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+idx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (nyc_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Price &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (nyc_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Price &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;4500&lt;/span&gt;)
+nyc_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; nyc_df[idx]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;nyc_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Zipcode&lt;/th&gt;
+      &lt;th&gt;Price&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;2441.000000&lt;/td&gt;
+      &lt;td&gt;2441.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;10881.331422&lt;/td&gt;
+      &lt;td&gt;2435.25891&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;541.102216&lt;/td&gt;
+      &lt;td&gt;728.96291&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;10001.000000&lt;/td&gt;
+      &lt;td&gt;600.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;10302.000000&lt;/td&gt;
+      &lt;td&gt;1950.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;11211.000000&lt;/td&gt;
+      &lt;td&gt;2300.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;11233.000000&lt;/td&gt;
+      &lt;td&gt;2750.00000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;11697.000000&lt;/td&gt;
+      &lt;td&gt;4495.00000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;When accounting for outliers the data is far more managable.  I&amp;rsquo;m surprised by the mean price.  Again this data is old, but it is also does not accout for neighborhoods.  I will redo the analysis at a later data filtered by neighborhoods.&lt;/p&gt;
+&lt;h3 id=&#34;creating-the-nyc-distributions&#34; &gt;Creating the NYC Distributions
+&lt;span&gt;
+    &lt;a href=&#34;#creating-the-nyc-distributions&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;600&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;4500&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2435&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;729&lt;/span&gt; 
+
+cap_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+rent_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+rent_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;nyc-monthly-food-costs&#34; &gt;NYC Monthly food costs
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-monthly-food-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;500&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;400&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt; 
+
+food_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+food_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+food_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;nyc-insurance-costs&#34; &gt;NYC Insurance Costs
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-insurance-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;200&lt;/span&gt;)
+upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; int(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;)
+
+median &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;250&lt;/span&gt;
+standard_dev &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;25&lt;/span&gt;
+
+insurance_range &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; range(lower_bound, upper_bound)
+
+insurance_distribution &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;normal(loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;median , scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;standard_dev, size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;nyc-cost-of-living-distribution&#34; &gt;NYC Cost of Living Distribution
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-cost-of-living-distribution&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;cost_of_living_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(insurance_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance
+cost_of_living_df
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;rent&lt;/th&gt;
+      &lt;th&gt;food&lt;/th&gt;
+      &lt;th&gt;insurance&lt;/th&gt;
+      &lt;th&gt;monthly_cost&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;2440.594149&lt;/td&gt;
+      &lt;td&gt;404.104193&lt;/td&gt;
+      &lt;td&gt;263.802114&lt;/td&gt;
+      &lt;td&gt;3108.500457&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;3509.157666&lt;/td&gt;
+      &lt;td&gt;399.234822&lt;/td&gt;
+      &lt;td&gt;206.641152&lt;/td&gt;
+      &lt;td&gt;4115.033640&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;3351.649621&lt;/td&gt;
+      &lt;td&gt;297.314475&lt;/td&gt;
+      &lt;td&gt;284.177204&lt;/td&gt;
+      &lt;td&gt;3933.141300&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;1977.607960&lt;/td&gt;
+      &lt;td&gt;359.872656&lt;/td&gt;
+      &lt;td&gt;255.831381&lt;/td&gt;
+      &lt;td&gt;2593.311996&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;2169.224724&lt;/td&gt;
+      &lt;td&gt;386.271512&lt;/td&gt;
+      &lt;td&gt;244.469415&lt;/td&gt;
+      &lt;td&gt;2799.965652&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;2661.843885&lt;/td&gt;
+      &lt;td&gt;356.660878&lt;/td&gt;
+      &lt;td&gt;218.425732&lt;/td&gt;
+      &lt;td&gt;3236.930495&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;3595.833071&lt;/td&gt;
+      &lt;td&gt;385.012912&lt;/td&gt;
+      &lt;td&gt;273.882653&lt;/td&gt;
+      &lt;td&gt;4254.728637&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;1765.419028&lt;/td&gt;
+      &lt;td&gt;404.770447&lt;/td&gt;
+      &lt;td&gt;236.665360&lt;/td&gt;
+      &lt;td&gt;2406.854835&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;8&lt;/th&gt;
+      &lt;td&gt;1708.955308&lt;/td&gt;
+      &lt;td&gt;348.178355&lt;/td&gt;
+      &lt;td&gt;231.690103&lt;/td&gt;
+      &lt;td&gt;2288.823766&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;9&lt;/th&gt;
+      &lt;td&gt;3227.258413&lt;/td&gt;
+      &lt;td&gt;392.787025&lt;/td&gt;
+      &lt;td&gt;252.315570&lt;/td&gt;
+      &lt;td&gt;3872.361007&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10&lt;/th&gt;
+      &lt;td&gt;1941.492537&lt;/td&gt;
+      &lt;td&gt;404.384587&lt;/td&gt;
+      &lt;td&gt;247.628257&lt;/td&gt;
+      &lt;td&gt;2593.505381&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;11&lt;/th&gt;
+      &lt;td&gt;2081.218740&lt;/td&gt;
+      &lt;td&gt;416.678465&lt;/td&gt;
+      &lt;td&gt;213.204362&lt;/td&gt;
+      &lt;td&gt;2711.101567&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;nyc-costs-per-annum-algorithm&#34; &gt;NYC Costs Per Annum Algorithm
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-costs-per-annum-algorithm&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The algorithm below calculates the annual cost of rent, food, and insurance to determine total cost per year.  Rent, food, and insurance are set by random choice based on the distributions defined in the functions above.&lt;/p&gt;
+&lt;p&gt;I run the simulation 10,000 times which in theory corresponds to 10,000 random samples of annual costs.  The point in doing this is to create a random normal distribution to define convidence intervals of my total annual costs.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+years &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;
+year_counter &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#carbon_total_millions_metric_tons = 300000000&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;#total_tons_shipped = 0&lt;/span&gt;
+total_price &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+cycle_price_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_rent_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_food_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+cycle_insurance_samples &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zeros(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;years)
+annual_cost &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; year &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(years):
+    &lt;span style=&#34;color:#75715e&#34;&gt;# Define a New DataFrame. It should fall out of scope with each iteration &lt;/span&gt;
+    cost_of_living_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random choice of rent &lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(rent_distribution,&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random choice of food&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(food_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#random Choice of Insurance&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; choice(insurance_distribution, &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    &lt;span style=&#34;color:#75715e&#34;&gt;#Random Choice of total annual cost&lt;/span&gt;
+    cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance
+    &lt;span style=&#34;color:#75715e&#34;&gt;# must use apply to account for multiple 0 conditions.  If i simply vectorized the function across the dataframe in a single call i would assign the the same values each day &lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#calculate cost per day for fun...&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# query all that are = o.  Summate the capacities deduct the total &lt;/span&gt;
+    annual_cost &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;monthly_cost&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_rent &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_food &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;food&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    annual_insurance &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cost_of_living_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;insurance&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sum()
+    cycle_price_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_cost
+    cycle_food_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_food
+    cycle_insurance_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_insurance
+    cycle_rent_samples[year] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; annual_rent
+    &lt;span style=&#34;color:#75715e&#34;&gt;#print(carbon_total_millions_metric_tons)&lt;/span&gt;
+    year_counter &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; year_counter&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;nyc-prediction-df&#34; &gt;NYC Prediction Df
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-prediction-df&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;DataFrame()
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rent&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_rent_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;food&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_food_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;insurance&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_insurance_samples
+prediction_df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;total&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycle_price_samples
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;rent&lt;/th&gt;
+      &lt;th&gt;food&lt;/th&gt;
+      &lt;th&gt;insurance&lt;/th&gt;
+      &lt;th&gt;total&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+      &lt;td&gt;10000.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;29219.509691&lt;/td&gt;
+      &lt;td&gt;4797.809482&lt;/td&gt;
+      &lt;td&gt;3004.224643&lt;/td&gt;
+      &lt;td&gt;37021.543816&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;2532.300418&lt;/td&gt;
+      &lt;td&gt;172.673041&lt;/td&gt;
+      &lt;td&gt;87.221734&lt;/td&gt;
+      &lt;td&gt;2542.267617&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;18744.517281&lt;/td&gt;
+      &lt;td&gt;4116.639699&lt;/td&gt;
+      &lt;td&gt;2574.323735&lt;/td&gt;
+      &lt;td&gt;26447.949901&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;27545.387716&lt;/td&gt;
+      &lt;td&gt;4678.877662&lt;/td&gt;
+      &lt;td&gt;2945.270499&lt;/td&gt;
+      &lt;td&gt;35351.052672&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;29244.878069&lt;/td&gt;
+      &lt;td&gt;4797.251203&lt;/td&gt;
+      &lt;td&gt;3005.337764&lt;/td&gt;
+      &lt;td&gt;37034.425389&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;30915.545611&lt;/td&gt;
+      &lt;td&gt;4915.266687&lt;/td&gt;
+      &lt;td&gt;3062.210984&lt;/td&gt;
+      &lt;td&gt;38722.269645&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;38516.336096&lt;/td&gt;
+      &lt;td&gt;5429.519670&lt;/td&gt;
+      &lt;td&gt;3327.233629&lt;/td&gt;
+      &lt;td&gt;46383.324453&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;nyc-annual-cost-histogram&#34; &gt;NYC Annual Cost Histogram
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-annual-cost-histogram&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;plot&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(grid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, bins&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;, rwidth&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;,
+                   color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#607c8e&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Total Costs Price USD&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Frequency&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;grid(axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt;, alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.75&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;cost_of_living_monte_carlo_files/cost_of_living_monte_carlo_47_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;nyc-calculating-the-confidence-interval-for-total-costs&#34; &gt;NYC: Calculating the Confidence Interval For Total Costs
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-calculating-the-confidence-interval-for-total-costs&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data is nearly normal. Greater samples sizes would produce a graph of nearly perfect normality&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;norm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;interval(alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.90&lt;/span&gt;, loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total), scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sem(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;total))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(36979.727235126586, 37063.36039733022)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;nyc-annual-rent-histogram&#34; &gt;NYC Annual Rent Histogram
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-annual-rent-histogram&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;### Annual Cost Histogram Histogram&lt;/span&gt;
+prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;plot&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(grid&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;, bins&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20&lt;/span&gt;, rwidth&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.9&lt;/span&gt;,
+                   color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#607c8e&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Rent Cost Distribution &amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Annual Rent Costs Price USD&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Frequency&amp;#39;&lt;/span&gt;)
+plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;grid(axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt;, alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.75&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;cost_of_living_monte_carlo_files/cost_of_living_monte_carlo_51_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;calculating-the-confidence-interval-for-annual-rent&#34; &gt;Calculating the Confidence Interval For Annual Rent
+&lt;span&gt;
+    &lt;a href=&#34;#calculating-the-confidence-interval-for-annual-rent&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The data is nearly normal. Greater samples sizes would produce a graph of nearly perfect normality&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;
+st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;norm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;interval(alpha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.95&lt;/span&gt;, loc&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent), scale&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;st&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sem(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rent))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(29169.877514702926, 29269.14186706609)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;nyc-closing-remarks&#34; &gt;NYC Closing Remarks
+&lt;span&gt;
+    &lt;a href=&#34;#nyc-closing-remarks&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The rent distribution in NYC with 2018 data is actually nearly comparible to my houston estimate.  An annual salary of 90,000 would permit me to live at about the median level in the city.  I will be redoing this report soon as the data is old.  I am currently scraping data in houston and nyc to produce a better analysis.&lt;/p&gt;
+&lt;h2 id=&#34;imports&#34; &gt;Imports
+&lt;span&gt;
+    &lt;a href=&#34;#imports&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pandas &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; pd
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; plt
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; numpy &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; np
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; scipy.stats &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; st
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; shapely.geometry &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; Point
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; numpy.random &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; choice
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; warnings
+
+warnings&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;filterwarnings(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ignore&amp;#39;&lt;/span&gt;)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Spearman Rank in Standard Julia</title>
+      <link>https://blog.jnapolitano.io/posts/spearman_rank_julia/</link>
+      <pubDate>Mon, 30 May 2022 20:20:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/spearman_rank_julia/</guid>
+      <description>&lt;h2 id=&#34;spearman-rank-in-standard-julia&#34; &gt;Spearman Rank in Standard Julia
+&lt;span&gt;
+    &lt;a href=&#34;#spearman-rank-in-standard-julia&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Well nearly, I did import the erfc function from the SpecialFunctions package.  I don&amp;rsquo;t like it either.  I&amp;rsquo;ll write my own soon to make up for it.&lt;/p&gt;
+&lt;h2 id=&#34;special-thanks&#34; &gt;Special Thanks
+&lt;span&gt;
+    &lt;a href=&#34;#special-thanks&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I came across the text Numerical Recipes in C.  It was first published in 1988, by the Cambridge University Press.  The authors are William H. Press, Brian P. Flannery, Saul. A. Teukolsky, and William T. Veterling.&lt;/p&gt;
+&lt;p&gt;The book is beautiful.  You should try to find a copy.  It comes in Pascal and Fortran too!!!&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m having fun with it and will translate some of the recipes from my first love C to Julia.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll write up a review on the functions below in an upcoming edit.  I&amp;rsquo;m so excited that it works that I had to publish.&lt;/p&gt;
+&lt;h2 id=&#34;update-there-is-a-website&#34; &gt;Update: There is a Website!!!
+&lt;span&gt;
+    &lt;a href=&#34;#update-there-is-a-website&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;a href=&#34;http://numerical.recipes/&#34;&gt;numerical.recipes&lt;/a&gt; is a website with all of the code and the ebook.  I thought it was open source at first, but they want some money.  I guess it&amp;rsquo;s okay, but still.  Check it out there.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.amazon.com/Numerical-Recipes-Scientific-Computing-Second/dp/0521431085#:~:text=The%20product%20of%20a%20unique,to%20actual%20practical%20computer%20routines&#34;&gt;The amazon book link is here&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;update-again&#34; &gt;Update Again:
+&lt;span&gt;
+    &lt;a href=&#34;#update-again&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I found the PDF!  It is available via penn state university. Here&amp;rsquo;s the &lt;a href=&#34;https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.129.5354&amp;amp;rep=rep1&amp;amp;type=pdf&#34;&gt;download link&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;using-specialfunctionserfc&#34; &gt;Using SpecialFunctions:erfc
+&lt;span&gt;
+    &lt;a href=&#34;#using-specialfunctionserfc&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I had to import the complementary error function.  I wanted to use just the standard library, but I had to test the code below first.  I&amp;rsquo;ll write the compelemntary error function in pure julia next.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; SpecialFunctions&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;erfc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;spearman-correlation-function&#34; &gt;Spearman Correlation Function.
+&lt;span&gt;
+    &lt;a href=&#34;#spearman-correlation-function&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;It takes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;two distributions&lt;/li&gt;
+&lt;li&gt;the sample size&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It returns a t score  The original, used pointers to return multiple variables.  I&amp;rsquo;ll probably rewrite the function to calculate the copmlimentary variables in seperate methods.  Might as well take advantage of the multiple dispatch capability of the language.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; spearman(data1,data2,n)
+
+    j &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; 
+    
+    wksp1m&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Vector&lt;/span&gt;{&lt;span style=&#34;color:#66d9ef&#34;&gt;Float64&lt;/span&gt;}(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;n)
+    wksp2m &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;Vector&lt;/span&gt;{&lt;span style=&#34;color:#66d9ef&#34;&gt;Float64&lt;/span&gt;}(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;n)
+    
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;(n)
+        wksp1m[j]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;data1[j]
+        wksp2m[j]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;data2[j]
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+    sort!(wksp1m)
+    sort!(wksp2m)
+
+    sf &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; crank(n,wksp1m)
+    sg &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; crank(n,wksp2m)
+
+    d &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;n
+        d &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; sqrt((&lt;span style=&#34;color:#66d9ef&#34;&gt;Complex&lt;/span&gt;(wksp1m[j]&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;wksp2m[j])))
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    
+    en&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;n
+    en3n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (en&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;en&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;en)&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;en
+    aved&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(en3n&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;6.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;((sf&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;sg)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt;)
+    fac&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;sf&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;en3n)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;(sg&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;en3n))
+    vard &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;((en&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;en&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;en&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;sqrt(en&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;36.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;fac
+    zd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (d&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;aved&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;sqrt(vard))
+    probd&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;erfc((abs(zd)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.4142136&lt;/span&gt;))
+    rs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;6.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;en3n)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(d&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(sf&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;sg)))&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;fac
+    t&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(rs)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;sqrt((en&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;((rs&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;rs)))
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; t
+    
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;spearman (generic function with 2 methods)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;crank&#34; &gt;Crank
+&lt;span&gt;
+    &lt;a href=&#34;#crank&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;It ranks the distributions by modifying the original sorted array.  So very C.  I may play with this to return a new value, but I like that it modifies in place.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; crank(n,w)
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;#w= Vector{Float64}(1:n)&lt;/span&gt;
+    c &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+    j &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+    s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;(n&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; w[j&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; w[j]
+            w[j] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; j
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; jt &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;(n)
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (w[jt] &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; w[j])
+                    &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+            rank &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;.5&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(j&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;jt&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; ji &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; j&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;(jt&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+                w[ji] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rank
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+            t &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; jt&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;j
+            s &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; t&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;t&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;t&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+        c &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; j
+        j&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;j
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; c &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; n 
+        w[n]&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;n
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; s
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;crank (generic function with 1 method)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;main&#34; &gt;Main()
+&lt;span&gt;
+    &lt;a href=&#34;#main&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Creates two random distributions and ranks tests them for correlation..&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; main()
+    d1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;rand()&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;]
+    d2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;rand()&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;]
+
+    t &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;spearman(d1,d2,&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+    display(t)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;main (generic function with 1 method)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;main()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;619.0719816953838 - 0.0im
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Churn Modelling Marketing Data with Julia</title>
+      <link>https://blog.jnapolitano.io/posts/propensity_scoring/</link>
+      <pubDate>Mon, 30 May 2022 13:30:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/propensity_scoring/</guid>
+      <description>&lt;h1 id=&#34;churn-modelling-marketing-data-with-julia&#34; &gt;Churn Modelling Marketing Data with Julia
+&lt;span&gt;
+    &lt;a href=&#34;#churn-modelling-marketing-data-with-julia&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;h2 id=&#34;introduction&#34; &gt;Introduction
+&lt;span&gt;
+    &lt;a href=&#34;#introduction&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I prepared this analysis to learn the logistic regression in Julia. The work is fairly straightforward.  I am modelling if a customer will exit a website based on a number of sites.  I&amp;rsquo;ll improve the model in an upcoming post.  As if, is not as interesting as asking when. That will be my next project&lt;/p&gt;
+&lt;h3 id=&#34;imports&#34; &gt;Imports
+&lt;span&gt;
+    &lt;a href=&#34;#imports&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Pkg
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; DataFrames
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; CSV
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Plots
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; GLM
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; StatsBase
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Lathe
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; MLBase
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; ClassImbalance
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; ROCAnalysis
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; PyCall
+sklearn &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pyimport(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sklearn.metrics&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;PyObject &amp;lt;module &#39;sklearn.metrics&#39; from &#39;/Users/jnapolitano/venvs/finance/lib/python3.9/site-packages/sklearn/metrics/__init__.py&#39;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; load_csv() 
+
+    df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; DataFrame(CSV&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;File(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;./Churn_Modelling.csv&amp;#34;&lt;/span&gt;)) 
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; df 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;load_csv (generic function with 1 method)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;loading-data&#34; &gt;Loading Data
+&lt;span&gt;
+    &lt;a href=&#34;#loading-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;marketing_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; load_csv()
+first(marketing_df,&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;table class=&#34;data-frame&#34;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;RowNumber&lt;/th&gt;&lt;th&gt;CustomerId&lt;/th&gt;&lt;th&gt;Surname&lt;/th&gt;&lt;th&gt;CreditScore&lt;/th&gt;&lt;th&gt;Geography&lt;/th&gt;&lt;th&gt;Gender&lt;/th&gt;&lt;th&gt;Age&lt;/th&gt;&lt;th&gt;Tenure&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;String31&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;String7&lt;/th&gt;&lt;th&gt;String7&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;p&gt;5 rows × 14 columns (omitted printing of 6 columns)&lt;/p&gt;&lt;tr&gt;&lt;th&gt;1&lt;/th&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;15634602&lt;/td&gt;&lt;td&gt;Hargrave&lt;/td&gt;&lt;td&gt;619&lt;/td&gt;&lt;td&gt;France&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;2&lt;/th&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;15647311&lt;/td&gt;&lt;td&gt;Hill&lt;/td&gt;&lt;td&gt;608&lt;/td&gt;&lt;td&gt;Spain&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;41&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;3&lt;/th&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;15619304&lt;/td&gt;&lt;td&gt;Onio&lt;/td&gt;&lt;td&gt;502&lt;/td&gt;&lt;td&gt;France&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;4&lt;/th&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;15701354&lt;/td&gt;&lt;td&gt;Boni&lt;/td&gt;&lt;td&gt;699&lt;/td&gt;&lt;td&gt;France&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;39&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;5&lt;/th&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;15737888&lt;/td&gt;&lt;td&gt;Mitchell&lt;/td&gt;&lt;td&gt;850&lt;/td&gt;&lt;td&gt;Spain&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;43&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;println(size(marketing_df))
+describe(marketing_df)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;(10000, 14)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;table class=&#34;data-frame&#34;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;variable&lt;/th&gt;&lt;th&gt;mean&lt;/th&gt;&lt;th&gt;min&lt;/th&gt;&lt;th&gt;median&lt;/th&gt;&lt;th&gt;max&lt;/th&gt;&lt;th&gt;nunique&lt;/th&gt;&lt;th&gt;nmissing&lt;/th&gt;&lt;th&gt;eltype&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Symbol&lt;/th&gt;&lt;th&gt;Union…&lt;/th&gt;&lt;th&gt;Any&lt;/th&gt;&lt;th&gt;Union…&lt;/th&gt;&lt;th&gt;Any&lt;/th&gt;&lt;th&gt;Union…&lt;/th&gt;&lt;th&gt;Nothing&lt;/th&gt;&lt;th&gt;DataType&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;p&gt;14 rows × 8 columns&lt;/p&gt;&lt;tr&gt;&lt;th&gt;1&lt;/th&gt;&lt;td&gt;RowNumber&lt;/td&gt;&lt;td&gt;5000.5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;5000.5&lt;/td&gt;&lt;td&gt;10000&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;2&lt;/th&gt;&lt;td&gt;CustomerId&lt;/td&gt;&lt;td&gt;1.56909e7&lt;/td&gt;&lt;td&gt;15565701&lt;/td&gt;&lt;td&gt;1.56907e7&lt;/td&gt;&lt;td&gt;15815690&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;3&lt;/th&gt;&lt;td&gt;Surname&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Abazu&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Zuyeva&lt;/td&gt;&lt;td&gt;2932&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;String31&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;4&lt;/th&gt;&lt;td&gt;CreditScore&lt;/td&gt;&lt;td&gt;650.529&lt;/td&gt;&lt;td&gt;350&lt;/td&gt;&lt;td&gt;652.0&lt;/td&gt;&lt;td&gt;850&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;5&lt;/th&gt;&lt;td&gt;Geography&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;France&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Spain&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;String7&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;6&lt;/th&gt;&lt;td&gt;Gender&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Female&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Male&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;String7&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;7&lt;/th&gt;&lt;td&gt;Age&lt;/td&gt;&lt;td&gt;38.9218&lt;/td&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;37.0&lt;/td&gt;&lt;td&gt;92&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;8&lt;/th&gt;&lt;td&gt;Tenure&lt;/td&gt;&lt;td&gt;5.0128&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;5.0&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;9&lt;/th&gt;&lt;td&gt;Balance&lt;/td&gt;&lt;td&gt;76485.9&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;97198.5&lt;/td&gt;&lt;td&gt;2.50898e5&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Float64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;10&lt;/th&gt;&lt;td&gt;NumOfProducts&lt;/td&gt;&lt;td&gt;1.5302&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1.0&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;11&lt;/th&gt;&lt;td&gt;HasCrCard&lt;/td&gt;&lt;td&gt;0.7055&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;12&lt;/th&gt;&lt;td&gt;IsActiveMember&lt;/td&gt;&lt;td&gt;0.5151&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;13&lt;/th&gt;&lt;td&gt;EstimatedSalary&lt;/td&gt;&lt;td&gt;1.0009e5&lt;/td&gt;&lt;td&gt;11.58&lt;/td&gt;&lt;td&gt;1.00194e5&lt;/td&gt;&lt;td&gt;1.99992e5&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Float64&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;14&lt;/th&gt;&lt;td&gt;Exited&lt;/td&gt;&lt;td&gt;0.2037&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;Int64&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Check column names&lt;/span&gt;
+names(marketing_df)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;14-element Vector{Symbol}:
+ :RowNumber
+ :CustomerId
+ :Surname
+ :CreditScore
+ :Geography
+ :Gender
+ :Age
+ :Tenure
+ :Balance
+ :NumOfProducts
+ :HasCrCard
+ :IsActiveMember
+ :EstimatedSalary
+ :Exited
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;check-class-imbalance&#34; &gt;Check Class Imbalance
+&lt;span&gt;
+    &lt;a href=&#34;#check-class-imbalance&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Count the classes&lt;/span&gt;
+countmap(marketing_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Dict{Int64, Int64} with 2 entries:
+  0 =&amp;gt; 7963
+  1 =&amp;gt; 2037
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;data-preprocessing&#34; &gt;Data Preprocessing
+&lt;span&gt;
+    &lt;a href=&#34;#data-preprocessing&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;h3 id=&#34;one-hot-encoding&#34; &gt;One Hot Encoding
+&lt;span&gt;
+    &lt;a href=&#34;#one-hot-encoding&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# One hot encoding&lt;/span&gt;
+Lathe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;preprocess&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;OneHotEncode(marketing_df,&lt;span style=&#34;color:#e6db74&#34;&gt;:Geography&lt;/span&gt;)
+Lathe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;preprocess&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;OneHotEncode(marketing_df,&lt;span style=&#34;color:#e6db74&#34;&gt;:Gender&lt;/span&gt;)
+select!(marketing_df, Not([&lt;span style=&#34;color:#e6db74&#34;&gt;:RowNumber&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:CustomerId&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Surname&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Geography&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Gender&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Male&lt;/span&gt;]))
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;table class=&#34;data-frame&#34;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;CreditScore&lt;/th&gt;&lt;th&gt;Age&lt;/th&gt;&lt;th&gt;Tenure&lt;/th&gt;&lt;th&gt;Balance&lt;/th&gt;&lt;th&gt;NumOfProducts&lt;/th&gt;&lt;th&gt;HasCrCard&lt;/th&gt;&lt;th&gt;IsActiveMember&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Float64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;th&gt;Int64&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;p&gt;10,000 rows × 13 columns (omitted printing of 6 columns)&lt;/p&gt;&lt;tr&gt;&lt;th&gt;1&lt;/th&gt;&lt;td&gt;619&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;2&lt;/th&gt;&lt;td&gt;608&lt;/td&gt;&lt;td&gt;41&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;83807.9&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;3&lt;/th&gt;&lt;td&gt;502&lt;/td&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;1.59661e5&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;4&lt;/th&gt;&lt;td&gt;699&lt;/td&gt;&lt;td&gt;39&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;5&lt;/th&gt;&lt;td&gt;850&lt;/td&gt;&lt;td&gt;43&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1.25511e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;6&lt;/th&gt;&lt;td&gt;645&lt;/td&gt;&lt;td&gt;44&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;1.13756e5&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;7&lt;/th&gt;&lt;td&gt;822&lt;/td&gt;&lt;td&gt;50&lt;/td&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;8&lt;/th&gt;&lt;td&gt;376&lt;/td&gt;&lt;td&gt;29&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;1.15047e5&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;9&lt;/th&gt;&lt;td&gt;501&lt;/td&gt;&lt;td&gt;44&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;1.42051e5&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;10&lt;/th&gt;&lt;td&gt;684&lt;/td&gt;&lt;td&gt;27&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1.34604e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;11&lt;/th&gt;&lt;td&gt;528&lt;/td&gt;&lt;td&gt;31&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;1.02017e5&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;12&lt;/th&gt;&lt;td&gt;497&lt;/td&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;13&lt;/th&gt;&lt;td&gt;476&lt;/td&gt;&lt;td&gt;34&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;14&lt;/th&gt;&lt;td&gt;549&lt;/td&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;15&lt;/th&gt;&lt;td&gt;635&lt;/td&gt;&lt;td&gt;35&lt;/td&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;16&lt;/th&gt;&lt;td&gt;616&lt;/td&gt;&lt;td&gt;45&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;1.43129e5&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;17&lt;/th&gt;&lt;td&gt;653&lt;/td&gt;&lt;td&gt;58&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1.32603e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;18&lt;/th&gt;&lt;td&gt;549&lt;/td&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;19&lt;/th&gt;&lt;td&gt;587&lt;/td&gt;&lt;td&gt;45&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;20&lt;/th&gt;&lt;td&gt;726&lt;/td&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;21&lt;/th&gt;&lt;td&gt;732&lt;/td&gt;&lt;td&gt;41&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;22&lt;/th&gt;&lt;td&gt;636&lt;/td&gt;&lt;td&gt;32&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;23&lt;/th&gt;&lt;td&gt;510&lt;/td&gt;&lt;td&gt;38&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;24&lt;/th&gt;&lt;td&gt;669&lt;/td&gt;&lt;td&gt;46&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;25&lt;/th&gt;&lt;td&gt;846&lt;/td&gt;&lt;td&gt;38&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;26&lt;/th&gt;&lt;td&gt;577&lt;/td&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;27&lt;/th&gt;&lt;td&gt;756&lt;/td&gt;&lt;td&gt;36&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1.36816e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;28&lt;/th&gt;&lt;td&gt;571&lt;/td&gt;&lt;td&gt;44&lt;/td&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;0.0&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;29&lt;/th&gt;&lt;td&gt;574&lt;/td&gt;&lt;td&gt;43&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;1.41349e5&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;30&lt;/th&gt;&lt;td&gt;411&lt;/td&gt;&lt;td&gt;29&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;59697.2&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&amp;vellip;&lt;/th&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;td&gt;&amp;vellip;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;split-trainand-test-data&#34; &gt;Split Train/and Test Data
+&lt;span&gt;
+    &lt;a href=&#34;#split-trainand-test-data&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Train test split&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Lathe&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;preprocess&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; TrainTestSplit
+train, test &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; TrainTestSplit(marketing_df,&lt;span style=&#34;color:#ae81ff&#34;&gt;.75&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;build-model&#34; &gt;Build Model
+&lt;span&gt;
+    &lt;a href=&#34;#build-model&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Train logistic regression model&lt;/span&gt;
+fm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;@formula&lt;/span&gt;(Exited &lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt; CreditScore &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Age &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Tenure &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Balance &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; NumOfProducts &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; HasCrCard &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; IsActiveMember &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; EstimatedSalary &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Female &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; France &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Spain)
+logit &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; glm(fm, train, Binomial(), ProbitLink())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;StatsModels.TableRegressionModel{GeneralizedLinearModel{GLM.GlmResp{Vector{Float64}, Binomial{Float64}, ProbitLink}, GLM.DensePredChol{Float64, LinearAlgebra.Cholesky{Float64, Matrix{Float64}}}}, Matrix{Float64}}
+
+Exited ~ 1 + CreditScore + Age + Tenure + Balance + NumOfProducts + HasCrCard + IsActiveMember + EstimatedSalary + Female + France + Spain
+
+Coefficients:
+───────────────────────────────────────────────────────────────────────────────────────
+                        Coef.   Std. Error       z  Pr(&amp;gt;|z|)     Lower 95%    Upper 95%
+───────────────────────────────────────────────────────────────────────────────────────
+(Intercept)      -1.90933      0.165007     -11.57    &amp;lt;1e-30  -2.23274      -1.58592
+CreditScore      -0.000321917  0.000183184   -1.76    0.0789  -0.000680951   3.71172e-5
+Age               0.040893     0.00165251    24.75    &amp;lt;1e-99   0.0376541     0.0441318
+Tenure           -0.008864     0.00611129    -1.45    0.1469  -0.0208419     0.0031139
+Balance           1.65933e-6   3.30286e-7     5.02    &amp;lt;1e-06   1.01198e-6    2.30668e-6
+NumOfProducts    -0.040173     0.0309946     -1.30    0.1949  -0.100921      0.0205753
+HasCrCard        -0.00442931   0.0386394     -0.11    0.9087  -0.0801612     0.0713026
+IsActiveMember   -0.557894     0.0365213    -15.28    &amp;lt;1e-51  -0.629475     -0.486314
+EstimatedSalary   2.2925e-7    3.07604e-7     0.75    0.4561  -3.73644e-7    8.32143e-7
+Female            0.301642     0.0354259      8.51    &amp;lt;1e-16   0.232209      0.371076
+France           -0.450226     0.0446176    -10.09    &amp;lt;1e-23  -0.537674     -0.362777
+Spain            -0.443184     0.051707      -8.57    &amp;lt;1e-16  -0.544527     -0.34184
+───────────────────────────────────────────────────────────────────────────────────────
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;model-predictions-and-evaluation&#34; &gt;Model Predictions and Evaluation
+&lt;span&gt;
+    &lt;a href=&#34;#model-predictions-and-evaluation&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Predict the target variable on test data &lt;/span&gt;
+prediction &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; predict(logit,test)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;2406-element Vector{Union{Missing, Float64}}:
+ 0.24401107345293602
+ 0.1266535868551322
+ 0.031721959583257124
+ 0.11357816519004983
+ 0.24824114578495612
+ 0.024688755265128235
+ 0.14209354336141483
+ 0.18528877855991494
+ 0.15470097145575007
+ 0.25962439112051505
+ 0.15117890643161475
+ 0.2110682947689441
+ 0.06358192272871947
+ ⋮
+ 0.24899439141513482
+ 0.23449577199293972
+ 0.13610439167926225
+ 0.1737934374110589
+ 0.1341643450975004
+ 0.5831068095078078
+ 0.2950497674661655
+ 0.04139159536998556
+ 0.06795785137729822
+ 0.017204995327274736
+ 0.12888818685657766
+ 0.15310112069144077
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Convert probability score to class&lt;/span&gt;
+prediction_class &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; x &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; prediction];
+
+prediction_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; DataFrame(y_actual &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; test&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited, y_predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction_class, prob_predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction);
+prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;correctly_classified &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual &lt;span style=&#34;color:#f92672&#34;&gt;.==&lt;/span&gt; prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_predicted
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;2406-element BitVector:
+ 0
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 0
+ 1
+ 1
+ 1
+ ⋮
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+ 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;prediction-accuracy&#34; &gt;Prediction Accuracy
+&lt;span&gt;
+    &lt;a href=&#34;#prediction-accuracy&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;accuracy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;correctly_classified)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;0.8100581878636741
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;confusion-matrix&#34; &gt;Confusion Matrix
+&lt;span&gt;
+    &lt;a href=&#34;#confusion-matrix&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# confusion_matrix = confusmat(2,prediction_df.y_actual, prediction_df.y_predicted)&lt;/span&gt;
+confusion_matrix &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; MLBase&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;roc(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual, prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_predicted)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;ROCNums{Int64}
+  p = 510
+  n = 1896
+  tp = 105
+  tn = 1844
+  fp = 52
+  fn = 405
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;results&#34; &gt;Results
+&lt;span&gt;
+    &lt;a href=&#34;#results&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;The model is estimating far to many exiting cases.  About 4 times the true value.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;fpr, tpr, thresholds &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sklearn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;roc_curve(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual, prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;prob_predicted)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;([0.0, 0.0, 0.0, 0.0005274261603375527, 0.0005274261603375527, 0.0010548523206751054, 0.0010548523206751054, 0.0015822784810126582, 0.0015822784810126582, 0.0026371308016877636  …  0.8829113924050633, 0.9066455696202531, 0.9066455696202531, 0.9193037974683544, 0.9193037974683544, 0.92457805907173, 0.92457805907173, 0.9725738396624473, 0.9725738396624473, 1.0], [0.0, 0.00196078431372549, 0.00392156862745098, 0.00392156862745098, 0.00784313725490196, 0.00784313725490196, 0.01568627450980392, 0.01568627450980392, 0.03137254901960784, 0.03137254901960784  …  0.9921568627450981, 0.9921568627450981, 0.9941176470588236, 0.9941176470588236, 0.996078431372549, 0.996078431372549, 0.9980392156862745, 0.9980392156862745, 1.0, 1.0], [1.8467335270755767, 0.8467335270755767, 0.8140811888019499, 0.8092555110984978, 0.7970873802691381, 0.79684704533007, 0.7719016175181805, 0.7709263202992206, 0.7060214606993195, 0.6994801619873218  …  0.04233143871590189, 0.03786940431261241, 0.037850945580692276, 0.035665362242897694, 0.03532968973176317, 0.03416668456674327, 0.03407543014692377, 0.020932892669754958, 0.020885871157504798, 0.00597005405256463])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Plot ROC curve&lt;/span&gt;
+plot(fpr, tpr)
+title!(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ROC curve&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;propensity_scoring_files/propensity_scoring_24_0.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;the-class-imbalance-problem&#34; &gt;The Class Imbalance Problem
+&lt;span&gt;
+    &lt;a href=&#34;#the-class-imbalance-problem&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Count the classes&lt;/span&gt;
+countmap(marketing_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Dict{Int64, Int64} with 2 entries:
+  0 =&amp;gt; 7963
+  1 =&amp;gt; 2037
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;smote-to-fix-imbalance&#34; &gt;Smote to fix imbalance
+&lt;span&gt;
+    &lt;a href=&#34;#smote-to-fix-imbalance&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;X2, y2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;smote(marketing_df[&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;,[&lt;span style=&#34;color:#e6db74&#34;&gt;:CreditScore&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;:Age&lt;/span&gt; ,&lt;span style=&#34;color:#e6db74&#34;&gt;:Tenure&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:Balance&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:NumOfProducts&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:HasCrCard&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:IsActiveMember&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:EstimatedSalary&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:Female&lt;/span&gt; , &lt;span style=&#34;color:#e6db74&#34;&gt;:France&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;:Spain&lt;/span&gt;]], marketing_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited, k &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;, pct_under &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;150&lt;/span&gt;, pct_over &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;200&lt;/span&gt;)
+df_balanced &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; X2
+df_balanced&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; y2;
+
+df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df_balanced;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Count the classes&lt;/span&gt;
+countmap(df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Dict{Int64, Int64} with 2 entries:
+  0 =&amp;gt; 6111
+  1 =&amp;gt; 6111
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;retest&#34; &gt;Retest
+&lt;span&gt;
+    &lt;a href=&#34;#retest&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Train test split&lt;/span&gt;
+train, test &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; TrainTestSplit(df,&lt;span style=&#34;color:#ae81ff&#34;&gt;.75&lt;/span&gt;);
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Model Building&lt;/span&gt;
+fm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;@formula&lt;/span&gt;(Exited &lt;span style=&#34;color:#f92672&#34;&gt;~&lt;/span&gt; CreditScore &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Age &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Tenure &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Balance &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; NumOfProducts &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; HasCrCard &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; IsActiveMember &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; EstimatedSalary &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Female &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; France &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; Spain)
+logit &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; glm(fm, train, Binomial(), ProbitLink())
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Predict the target variable on test data &lt;/span&gt;
+prediction &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; predict(logit,test)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Convert probability score to class&lt;/span&gt;
+prediction_class &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; x &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; prediction];
+
+prediction_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; DataFrame(y_actual &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; test&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Exited, y_predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction_class, prob_predicted &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction);
+prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;correctly_classified &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual &lt;span style=&#34;color:#f92672&#34;&gt;.==&lt;/span&gt; prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_predicted
+
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Accuracy Score&lt;/span&gt;
+accuracy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; mean(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;correctly_classified)
+print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Accuracy of the model is : &amp;#34;&lt;/span&gt;,accuracy)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Confusion Matrix&lt;/span&gt;
+confusion_matrix &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; MLBase&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;roc(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual, prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_predicted)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Accuracy of the model is : 0.7169563791407019
+
+
+
+
+ROCNums{Int64}
+  p = 1550
+  n = 1499
+  tp = 1091
+  tn = 1095
+  fp = 404
+  fn = 459
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;fpr, tpr, thresholds &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sklearn&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;roc_curve(prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;y_actual, prediction_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;prob_predicted)
+&lt;span style=&#34;color:#75715e&#34;&gt;# Plot ROC curve&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;([0.0, 0.0, 0.0, 0.00066711140760507, 0.00066711140760507, 0.00133422281521014, 0.00133422281521014, 0.0020013342228152103, 0.0020013342228152103, 0.00266844563042028  …  0.9846564376250834, 0.9893262174783188, 0.9893262174783188, 0.9913275517011341, 0.9913275517011341, 0.9973315543695798, 0.9986657771847899, 0.9993328885923949, 0.9993328885923949, 1.0], [0.0, 0.0006451612903225806, 0.0025806451612903226, 0.0025806451612903226, 0.005161290322580645, 0.005161290322580645, 0.007741935483870968, 0.007741935483870968, 0.00903225806451613, 0.00903225806451613  …  0.9980645161290322, 0.9980645161290322, 0.9987096774193548, 0.9987096774193548, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 1.0, 1.0], [1.9907624292252022, 0.9907624292252022, 0.983731024429679, 0.97951657298985, 0.9730082291507035, 0.9713532719467679, 0.9629327481173712, 0.9604203755106321, 0.9593444340323958, 0.9584649467140461  …  0.06923199350115271, 0.06553287523911823, 0.06469253560487893, 0.058594401854125504, 0.057872556108602216, 0.034170953161915506, 0.03357051125028141, 0.03297342671224324, 0.030937011626933943, 0.023743078872535135])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-julia&#34; data-lang=&#34;julia&#34;&gt;plot(fpr, tpr)
+title!(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ROC curve&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;propensity_scoring_files/propensity_scoring_32_0.svg&#34; alt=&#34;svg&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;final-discussion&#34; &gt;Final Discussion
+&lt;span&gt;
+    &lt;a href=&#34;#final-discussion&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;When accounting for class imbalance, the model accuracy is reduced to 71 percent from about 81 percent.&lt;/p&gt;
+&lt;p&gt;While this seems counterintutive, the second model is actually a better model overall.&lt;/p&gt;
+&lt;p&gt;The model with 81 percent accuracy is simply more accurate by chance.  The bin of exits to remains is far larger.  Thus, reported accuracy is higher.&lt;/p&gt;
+&lt;p&gt;When the classes are normalized, we see a prediction of about 71 percent.  Confidently, I can say that this model would scale appropriately.&lt;/p&gt;
+&lt;p&gt;The first model on the other hand would scale to about 25-30 percent accuracy.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Markov Chains in Julia</title>
+      <link>https://blog.jnapolitano.io/posts/markov-models-julia/</link>
+      <pubDate>Thu, 26 May 2022 01:30:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/markov-models-julia/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34; &gt;Introduction
+&lt;span&gt;
+    &lt;a href=&#34;#introduction&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I am currently working on a &lt;a href=&#34;https://blog.jnapolitano.io/series/legal-research-with-ai/&#34;&gt;legal research series&lt;/a&gt; where I perform statistical analysis and ml models to legal datasets.  My intention is to model the behavior of courts, determine the outcome of cases, and build a pipeline capable of identifying relevant case law by issue area.&lt;/p&gt;
+&lt;p&gt;That data set is nearly complete, but I have not decided which models to apply to it.  This is where Julia comes into play.&lt;/p&gt;
+&lt;p&gt;I plan to perform the statistical analysis and possible the ml workload with Julia.&lt;/p&gt;
+&lt;p&gt;In this post, I share an Algorithm to compute Markov Chains.&lt;/p&gt;
+&lt;h2 id=&#34;markov-chains&#34; &gt;Markov Chains
+&lt;span&gt;
+    &lt;a href=&#34;#markov-chains&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I don&amp;rsquo;t understand them completely.  I am grateful to &lt;a href=&#34;https://julia.quantecon.org/tools_and_techniques/finite_markov.html&#34;&gt;the text&lt;/a&gt; for helping me to bettter grasp how they operate.&lt;/p&gt;
+&lt;p&gt;As far as my understanding goes they permit modeling the transition of states, possibly in infinite time, according to a probability distribution.  I recommend reading &lt;a href=&#34;https://julia.quantecon.org/tools_and_techniques/finite_markov.html#markov-chains&#34;&gt;this source&lt;/a&gt; for authority.&lt;/p&gt;
+&lt;h2 id=&#34;my-translation-of-markov-chains&#34; &gt;My Translation of Markov Chains
+&lt;span&gt;
+    &lt;a href=&#34;#my-translation-of-markov-chains&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Lets start with a finite set of of elements that we call S.  In Cs terms think of this is as an array in the C Language.  It must be defined prior to an operation. &lt;code&gt;I think markov chains can be performed on unbounded sets as well but I&#39;m not at that level yet&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The set is called the set space.  Each value within it considered an individual state.&lt;/p&gt;
+&lt;p&gt;Markov Chains are sets that contain the Markov Property.  A markov property considers the probability of the model having a state within the space at a point in time.&lt;/p&gt;
+&lt;p&gt;Thus, the probability of going from x to y in one step of unit time can be computed.  If we consider the state changes within a stochastic matrix we can then determine the overall probabily of arriving at states within a system.&lt;/p&gt;
+&lt;p&gt;Review the &lt;a href=&#34;https://julia.quantecon.org/tools_and_techniques/finite_markov.html#equation-mpp&#34;&gt;formal defition&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;application-to-my-work&#34; &gt;Application to My Work
+&lt;span&gt;
+    &lt;a href=&#34;#application-to-my-work&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I will be using this model to determine the probability of a justice transitioning from emotional states.  The central thesis of my understanding of judicial behavior is that the justices develop attitudinal states towards issue areas, legal provisions, states, religions, objects in general.  I will compute those states by first determining them.  I will then calculate the bayesian probability of state transition across time.  Finally, those distribution will be inputted in Markov Chain models.&lt;/p&gt;
+&lt;h2 id=&#34;markov-simulation-the-hard-way&#34; &gt;Markov Simulation the Hard Way
+&lt;span&gt;
+    &lt;a href=&#34;#markov-simulation-the-hard-way&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The work below is not my own.  I attribute it to &lt;a href=&#34;https://julia.quantecon.org/tools_and_techniques/finite_markov.html#equation-mpp&#34;&gt;julia.quantecon.org/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The alogorithm takes a stochastic probability matrix(square in this case) and create a random distribution according to those probabilities.&lt;/p&gt;
+&lt;p&gt;The simulation then randomly selects values from the random distibution.  That discrete value is stored in the output.  As I understand it currently, the output is the Markov Chain.&lt;/p&gt;
+&lt;p&gt;The comments in the code are mine.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Julia&#34; data-lang=&#34;Julia&#34;&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; LinearAlgebra, Statistics
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Distributions, Plots, Printf, QuantEcon, Random
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; mc_sample_path(P; init &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, sample_size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt;)
+
+
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;@assert&lt;/span&gt; size(P)[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; size(P)[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;] &lt;span style=&#34;color:#75715e&#34;&gt;# square required&lt;/span&gt;
+    N &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; size(P)[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#75715e&#34;&gt;# should be square # well it&amp;#39;s been asserted&lt;/span&gt;
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# create vector of discrete RVs for each row&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# In human terminology. Create a Categorical distribution of length = the size of the row of the matrix.  &lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#IF that makes sense&lt;/span&gt;
+    dists &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [Categorical(P[i, &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;]) &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;N]
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# setup the simulation&lt;/span&gt;
+    X &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fill(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, sample_size) &lt;span style=&#34;color:#75715e&#34;&gt;# allocate memory, or zeros(Int64, sample_size) # I love Julia.  Readable syntax and low level contro&lt;/span&gt;
+    X[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; init &lt;span style=&#34;color:#75715e&#34;&gt;# set the initial state Equal to 1 in this case.  &lt;/span&gt;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; t &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;sample_size &lt;span style=&#34;color:#75715e&#34;&gt;# start at position 2.  Work from t-1# This is a common technique.  Couldn&amp;#39;t figure this out once in a technical interview.  I wrote an if else for the zero condition.... Not so smart&lt;/span&gt;
+        dist &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; dists[X[t&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]] &lt;span style=&#34;color:#75715e&#34;&gt;# get discrete RV from last state&amp;#39;s transition distribution&lt;/span&gt;
+        X[t] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rand(dist) &lt;span style=&#34;color:#75715e&#34;&gt;# draw new value&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; X
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;markov-simulation-the-easier-way&#34; &gt;Markov Simulation the Easier Way
+&lt;span&gt;
+    &lt;a href=&#34;#markov-simulation-the-easier-way&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Given a stochastic probability matrix, the Markov Chain function will produce a chain.&lt;/p&gt;
+&lt;p&gt;The simulate method will then simulate the chain across a n steps.&lt;/p&gt;
+&lt;p&gt;We can then take the mean of the output to determine the average amount of time spent in a state.  In this case the average amount of time spent in state 1 which should correlate to unemployment.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Julia&#34; data-lang=&#34;Julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; LinearAlgebra, Statistics
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Distributions, Plots, Printf, QuantEcon, Random
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; easy_way()
+    P &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.4&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.6&lt;/span&gt;; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.8&lt;/span&gt;];
+    mc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; MarkovChain(P)
+    X &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; simulate(mc, &lt;span style=&#34;color:#ae81ff&#34;&gt;100_000&lt;/span&gt;);
+    μ_2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; count(X &lt;span style=&#34;color:#f92672&#34;&gt;.==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;length(X) &lt;span style=&#34;color:#75715e&#34;&gt;# or mean(x -&amp;gt; x == 1, X)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+&lt;span style=&#34;color:#e6db74&#34;&gt;```julia&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>Legal Research with AI: Part 6</title>

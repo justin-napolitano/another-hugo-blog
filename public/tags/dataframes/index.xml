@@ -6,10 +6,110 @@
     <description>Justin&#39;s Data Blog (dataframes)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 May 2022 01:30:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 May 2022 01:30:32 +0000</lastBuildDate>
     
     <atom:link href="https://blog.jnapolitano.io/tags/dataframes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Markov Chains in Julia</title>
+      <link>https://blog.jnapolitano.io/posts/markov-models-julia/</link>
+      <pubDate>Thu, 26 May 2022 01:30:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/markov-models-julia/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34; &gt;Introduction
+&lt;span&gt;
+    &lt;a href=&#34;#introduction&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I am currently working on a &lt;a href=&#34;https://blog.jnapolitano.io/series/legal-research-with-ai/&#34;&gt;legal research series&lt;/a&gt; where I perform statistical analysis and ml models to legal datasets.  My intention is to model the behavior of courts, determine the outcome of cases, and build a pipeline capable of identifying relevant case law by issue area.&lt;/p&gt;
+&lt;p&gt;That data set is nearly complete, but I have not decided which models to apply to it.  This is where Julia comes into play.&lt;/p&gt;
+&lt;p&gt;I plan to perform the statistical analysis and possible the ml workload with Julia.&lt;/p&gt;
+&lt;p&gt;In this post, I share an Algorithm to compute Markov Chains.&lt;/p&gt;
+&lt;h2 id=&#34;markov-chains&#34; &gt;Markov Chains
+&lt;span&gt;
+    &lt;a href=&#34;#markov-chains&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I don&amp;rsquo;t understand them completely.  I am grateful to &lt;a href=&#34;https://julia.quantecon.org/tools_and_techniques/finite_markov.html&#34;&gt;the text&lt;/a&gt; for helping me to bettter grasp how they operate.&lt;/p&gt;
+&lt;p&gt;As far as my understanding goes they permit modeling the transition of states, possibly in infinite time, according to a probability distribution.  I recommend reading &lt;a href=&#34;https://julia.quantecon.org/tools_and_techniques/finite_markov.html#markov-chains&#34;&gt;this source&lt;/a&gt; for authority.&lt;/p&gt;
+&lt;h2 id=&#34;my-translation-of-markov-chains&#34; &gt;My Translation of Markov Chains
+&lt;span&gt;
+    &lt;a href=&#34;#my-translation-of-markov-chains&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Lets start with a finite set of of elements that we call S.  In Cs terms think of this is as an array in the C Language.  It must be defined prior to an operation. &lt;code&gt;I think markov chains can be performed on unbounded sets as well but I&#39;m not at that level yet&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The set is called the set space.  Each value within it considered an individual state.&lt;/p&gt;
+&lt;p&gt;Markov Chains are sets that contain the Markov Property.  A markov property considers the probability of the model having a state within the space at a point in time.&lt;/p&gt;
+&lt;p&gt;Thus, the probability of going from x to y in one step of unit time can be computed.  If we consider the state changes within a stochastic matrix we can then determine the overall probabily of arriving at states within a system.&lt;/p&gt;
+&lt;p&gt;Review the &lt;a href=&#34;https://julia.quantecon.org/tools_and_techniques/finite_markov.html#equation-mpp&#34;&gt;formal defition&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;application-to-my-work&#34; &gt;Application to My Work
+&lt;span&gt;
+    &lt;a href=&#34;#application-to-my-work&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I will be using this model to determine the probability of a justice transitioning from emotional states.  The central thesis of my understanding of judicial behavior is that the justices develop attitudinal states towards issue areas, legal provisions, states, religions, objects in general.  I will compute those states by first determining them.  I will then calculate the bayesian probability of state transition across time.  Finally, those distribution will be inputted in Markov Chain models.&lt;/p&gt;
+&lt;h2 id=&#34;markov-simulation-the-hard-way&#34; &gt;Markov Simulation the Hard Way
+&lt;span&gt;
+    &lt;a href=&#34;#markov-simulation-the-hard-way&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The work below is not my own.  I attribute it to &lt;a href=&#34;https://julia.quantecon.org/tools_and_techniques/finite_markov.html#equation-mpp&#34;&gt;julia.quantecon.org/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The alogorithm takes a stochastic probability matrix(square in this case) and create a random distribution according to those probabilities.&lt;/p&gt;
+&lt;p&gt;The simulation then randomly selects values from the random distibution.  That discrete value is stored in the output.  As I understand it currently, the output is the Markov Chain.&lt;/p&gt;
+&lt;p&gt;The comments in the code are mine.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Julia&#34; data-lang=&#34;Julia&#34;&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; LinearAlgebra, Statistics
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Distributions, Plots, Printf, QuantEcon, Random
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; mc_sample_path(P; init &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, sample_size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt;)
+
+
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;@assert&lt;/span&gt; size(P)[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; size(P)[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;] &lt;span style=&#34;color:#75715e&#34;&gt;# square required&lt;/span&gt;
+    N &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; size(P)[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#75715e&#34;&gt;# should be square # well it&amp;#39;s been asserted&lt;/span&gt;
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# create vector of discrete RVs for each row&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# In human terminology. Create a Categorical distribution of length = the size of the row of the matrix.  &lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;#IF that makes sense&lt;/span&gt;
+    dists &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [Categorical(P[i, &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;]) &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;N]
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# setup the simulation&lt;/span&gt;
+    X &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; fill(&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, sample_size) &lt;span style=&#34;color:#75715e&#34;&gt;# allocate memory, or zeros(Int64, sample_size) # I love Julia.  Readable syntax and low level contro&lt;/span&gt;
+    X[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; init &lt;span style=&#34;color:#75715e&#34;&gt;# set the initial state Equal to 1 in this case.  &lt;/span&gt;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; t &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;sample_size &lt;span style=&#34;color:#75715e&#34;&gt;# start at position 2.  Work from t-1# This is a common technique.  Couldn&amp;#39;t figure this out once in a technical interview.  I wrote an if else for the zero condition.... Not so smart&lt;/span&gt;
+        dist &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; dists[X[t&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]] &lt;span style=&#34;color:#75715e&#34;&gt;# get discrete RV from last state&amp;#39;s transition distribution&lt;/span&gt;
+        X[t] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; rand(dist) &lt;span style=&#34;color:#75715e&#34;&gt;# draw new value&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; X
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;markov-simulation-the-easier-way&#34; &gt;Markov Simulation the Easier Way
+&lt;span&gt;
+    &lt;a href=&#34;#markov-simulation-the-easier-way&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Given a stochastic probability matrix, the Markov Chain function will produce a chain.&lt;/p&gt;
+&lt;p&gt;The simulate method will then simulate the chain across a n steps.&lt;/p&gt;
+&lt;p&gt;We can then take the mean of the output to determine the average amount of time spent in a state.  In this case the average amount of time spent in state 1 which should correlate to unemployment.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Julia&#34; data-lang=&#34;Julia&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; LinearAlgebra, Statistics
+&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; Distributions, Plots, Printf, QuantEcon, Random
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; easy_way()
+    P &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;0.4&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.6&lt;/span&gt;; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.8&lt;/span&gt;];
+    mc &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; MarkovChain(P)
+    X &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; simulate(mc, &lt;span style=&#34;color:#ae81ff&#34;&gt;100_000&lt;/span&gt;);
+    μ_2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; count(X &lt;span style=&#34;color:#f92672&#34;&gt;.==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;length(X) &lt;span style=&#34;color:#75715e&#34;&gt;# or mean(x -&amp;gt; x == 1, X)&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;end&lt;/span&gt;
+
+&lt;span style=&#34;color:#e6db74&#34;&gt;```julia&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>Quantitative Julia Problems</title>
