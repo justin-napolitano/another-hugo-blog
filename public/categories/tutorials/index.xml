@@ -46,13 +46,14 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; sklearn.metrics &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; classification_report, confusion_matrix
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; sklearn.model_selection &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; train_test_split
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; sklearn.preprocessing &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; StandardScaler
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;data-import&#34; &gt;Data Import
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;data&#34; &gt;Data
 &lt;span&gt;
-    &lt;a href=&#34;#data-import&#34;&gt;
+    &lt;a href=&#34;#data&#34;&gt;
         &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/span&gt;
-&lt;/h2&gt;&lt;h3 id=&#34;data--description&#34; &gt;Data  Description
+&lt;/h2&gt;&lt;p&gt;include a raw html here  to include the project description data file in the final markdown document&lt;/p&gt;
+&lt;h3 id=&#34;data--description&#34; &gt;Data  Description
 &lt;span&gt;
     &lt;a href=&#34;#data--description&#34;&gt;
         &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
@@ -60,7 +61,7 @@
 &lt;/span&gt;
 &lt;/h3&gt;&lt;p&gt;Chinese Longitudinal Healthy Longevity Survey (CLHLS), Biomarkers Datasets, 2009, 2012, 2014 (ICPSR 37226)
 Principal Investigator(s): Yi Zeng, Duke University, and Peking University; James W. Vaupel, Max Planck Institutes, and Duke University&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Users/jnapolitano/Projects/nih/ICPSR_37226/DS0003/pmc-submission/jupyter-book/notebooks/37226-0003-Data.tsv&amp;#34;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Users/jnapolitano/Projects/biostatistics/data/37226-0003-Data.tsv&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read_csv(filename, sep&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# read data in pandas dataframe&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
@@ -291,6 +292,7 @@ Principal Investigator(s): Yi Zeng, Duke University, and Peking University; Jame
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
+&lt;p&gt;The float collumns were not interpretted correctly by pandas. I&amp;rsquo;ll fix that&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;columns
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Index([&#39;ID&#39;, &#39;TRUEAGE&#39;, &#39;A1&#39;, &#39;ALB&#39;, &#39;GLU&#39;, &#39;BUN&#39;, &#39;CREA&#39;, &#39;CHO&#39;, &#39;TG&#39;, &#39;GSP&#39;,
        &#39;CRPHS&#39;, &#39;UA&#39;, &#39;HDLC&#39;, &#39;SOD&#39;, &#39;MDA&#39;, &#39;VD3&#39;, &#39;VITB12&#39;, &#39;UALB&#39;, &#39;UCR&#39;,
@@ -335,9 +337,11 @@ PDW          object
 PCT          object
 dtype: object
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Everything was read an object.  I&amp;rsquo;ll cast everything to numeric&amp;hellip; Thank you numpy&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# replace empty space with na&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;replace(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;, np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;nan)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# convert numeric objects to numeric data types.  I checked in the code book there will not be any false positives&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;just to be safe, I&amp;rsquo;ll replace all blank spaces with np.nan.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# convert numeric objects to numeric data types.  I checked in the code book there will not be any false positives&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;apply(pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to_numeric, errors&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;raise&amp;#39;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Recheck dictypes&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dtypes
@@ -858,18 +862,27 @@ dtype: object
 &lt;/table&gt;
 &lt;p&gt;8 rows × 33 columns&lt;/p&gt;
 &lt;/div&gt;
-&lt;p&gt;We remove about 4/5 of our data, but the counts are not equivalent.&lt;/p&gt;
-&lt;h2 id=&#34;age-histogram&#34; &gt;Age Histogram
+&lt;p&gt;We remove about 4/5 of our data.  The counts are now equivalent. Everything is in the correct data type.&lt;/p&gt;
+&lt;h4 id=&#34;visualizing-age-distribution&#34; &gt;Visualizing Age Distribution
 &lt;span&gt;
-    &lt;a href=&#34;#age-histogram&#34;&gt;
+    &lt;a href=&#34;#visualizing-age-distribution&#34;&gt;
         &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/span&gt;
-&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# plot histogram of fare&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;I am curious what the age spread looks like. An even spread could be used to determine health outcomes.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# plot histogram of fare&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TRUEAGE&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(figsize&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;14&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;))
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Age&amp;#39;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Histogram&amp;#39;&lt;/span&gt;);
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;logistic_regression_files/logistic_regression_22_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;logistic_regression_files/logistic_regression_24_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Unfortunately, the spread is not evenly distributed.&lt;/p&gt;
+&lt;h4 id=&#34;visualizing-age-to-triglyceride-levels&#34; &gt;Visualizing Age to Triglyceride Levels
+&lt;span&gt;
+    &lt;a href=&#34;#visualizing-age-to-triglyceride-levels&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;A predictive model relating health factors to longevity is probably possible.   Certain factors must be met, but I&amp;rsquo;ll assume they are for the sake of this mockup.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#idx = (df.trip_distance &amp;lt; 3) &amp;amp; (gdf.fare_amount &amp;lt; 100)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;scatter(df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TRUEAGE, df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TG)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;True Age&amp;#39;&lt;/span&gt;)
@@ -877,14 +890,15 @@ dtype: object
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# theta here is estimated by hand&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;show()
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;logistic_regression_files/logistic_regression_23_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;logistic_regression_files/logistic_regression_26_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;filter-examples&#34; &gt;Filter Examples
 &lt;span&gt;
     &lt;a href=&#34;#filter-examples&#34;&gt;
         &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/span&gt;
-&lt;/h2&gt;&lt;p&gt;To fit the specificities of the conditions in the training video I&amp;rsquo;ll add some randomized columns.&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;The data above doesn&amp;rsquo;t really need to be filtered.  To demonstrate how it could be, I include some randomized columns that are then filtered according to specific conditions.&lt;/p&gt;
+&lt;p&gt;To fit the specificities of the conditions in the training video I&amp;rsquo;ll add some randomized columns.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#inclusive&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# exclusive&lt;/span&gt;
@@ -989,12 +1003,12 @@ dtype: object
       &lt;td&gt;9.1&lt;/td&gt;
       &lt;td&gt;15.000000&lt;/td&gt;
       &lt;td&gt;0.13&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;20&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
@@ -1013,10 +1027,10 @@ dtype: object
       &lt;td&gt;8.3&lt;/td&gt;
       &lt;td&gt;12.000000&lt;/td&gt;
       &lt;td&gt;0.16&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;14&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
@@ -1038,11 +1052,11 @@ dtype: object
       &lt;td&gt;16.799999&lt;/td&gt;
       &lt;td&gt;0.14&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;94&lt;/td&gt;
+      &lt;td&gt;36&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
@@ -1062,11 +1076,11 @@ dtype: object
       &lt;td&gt;12.300000&lt;/td&gt;
       &lt;td&gt;0.12&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;75&lt;/td&gt;
+      &lt;td&gt;84&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
@@ -1086,10 +1100,10 @@ dtype: object
       &lt;td&gt;16.400000&lt;/td&gt;
       &lt;td&gt;0.20&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;58&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
     &lt;/tr&gt;
@@ -1133,12 +1147,12 @@ dtype: object
       &lt;td&gt;9.9&lt;/td&gt;
       &lt;td&gt;16.200001&lt;/td&gt;
       &lt;td&gt;0.26&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;93&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
@@ -1158,9 +1172,9 @@ dtype: object
       &lt;td&gt;16.000000&lt;/td&gt;
       &lt;td&gt;0.23&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;25&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;31&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
@@ -1182,10 +1196,10 @@ dtype: object
       &lt;td&gt;16.299999&lt;/td&gt;
       &lt;td&gt;0.14&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;66&lt;/td&gt;
+      &lt;td&gt;39&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
     &lt;/tr&gt;
@@ -1205,10 +1219,10 @@ dtype: object
       &lt;td&gt;10.0&lt;/td&gt;
       &lt;td&gt;15.900000&lt;/td&gt;
       &lt;td&gt;0.20&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;77&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;57&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
@@ -1230,12 +1244,12 @@ dtype: object
       &lt;td&gt;16.299999&lt;/td&gt;
       &lt;td&gt;0.21&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
+      &lt;td&gt;32&lt;/td&gt;
       &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1263,9 +1277,11 @@ dtype: object
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Ideally the english and spanish speakers would have been filtered prior to this, but for the sake of exploration this will work. &lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;idx_english &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TRUEAGE &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CANCER_TYPE &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;EMERGENCY &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; \
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ICPI_HIST &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;LANG &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;FOLLOW_UP &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CONSENT &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;PREGNANT &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I created spanish and english dataframes for the sake of data manipulation.  It is not realy necessary, but it would permit modifying and recoding the data if it were formatted differently.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filtered_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;concat([df[idx_english], df[idx_spanish]], ignore_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filtered_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;the filtered df is a concattenation of the english and spanish filtered data.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filtered_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
 &lt;style scoped&gt;
     .dataframe tbody tr th:only-of-type {
@@ -1310,91 +1326,91 @@ dtype: object
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;count&lt;/th&gt;
-      &lt;td&gt;4.300000e+01&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;3.300000e+01&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
       &lt;td&gt;...&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.0&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.0&lt;/td&gt;
-      &lt;td&gt;43.000000&lt;/td&gt;
-      &lt;td&gt;43.0&lt;/td&gt;
-      &lt;td&gt;43.0&lt;/td&gt;
-      &lt;td&gt;43.0&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.0&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.0&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
+      &lt;td&gt;33.0&lt;/td&gt;
+      &lt;td&gt;33.0&lt;/td&gt;
+      &lt;td&gt;33.0&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;mean&lt;/th&gt;
-      &lt;td&gt;4.016529e+07&lt;/td&gt;
-      &lt;td&gt;83.534884&lt;/td&gt;
-      &lt;td&gt;1.604651&lt;/td&gt;
-      &lt;td&gt;43.174419&lt;/td&gt;
-      &lt;td&gt;5.397674&lt;/td&gt;
-      &lt;td&gt;7.680698&lt;/td&gt;
-      &lt;td&gt;87.769768&lt;/td&gt;
-      &lt;td&gt;5.216744&lt;/td&gt;
-      &lt;td&gt;1.609302&lt;/td&gt;
-      &lt;td&gt;253.172094&lt;/td&gt;
+      &lt;td&gt;4.023138e+07&lt;/td&gt;
+      &lt;td&gt;85.000000&lt;/td&gt;
+      &lt;td&gt;1.636364&lt;/td&gt;
+      &lt;td&gt;41.563636&lt;/td&gt;
+      &lt;td&gt;5.139697&lt;/td&gt;
+      &lt;td&gt;6.289394&lt;/td&gt;
+      &lt;td&gt;83.718182&lt;/td&gt;
+      &lt;td&gt;4.893030&lt;/td&gt;
+      &lt;td&gt;1.168788&lt;/td&gt;
+      &lt;td&gt;244.539395&lt;/td&gt;
       &lt;td&gt;...&lt;/td&gt;
-      &lt;td&gt;9.613953&lt;/td&gt;
-      &lt;td&gt;15.353488&lt;/td&gt;
-      &lt;td&gt;0.202093&lt;/td&gt;
+      &lt;td&gt;9.715151&lt;/td&gt;
+      &lt;td&gt;14.945455&lt;/td&gt;
+      &lt;td&gt;0.202424&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
-      &lt;td&gt;53.604651&lt;/td&gt;
+      &lt;td&gt;49.969697&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
-      &lt;td&gt;0.465116&lt;/td&gt;
+      &lt;td&gt;0.575758&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;std&lt;/th&gt;
-      &lt;td&gt;4.398812e+06&lt;/td&gt;
-      &lt;td&gt;10.443382&lt;/td&gt;
-      &lt;td&gt;0.494712&lt;/td&gt;
-      &lt;td&gt;3.597029&lt;/td&gt;
-      &lt;td&gt;1.360812&lt;/td&gt;
-      &lt;td&gt;2.461784&lt;/td&gt;
-      &lt;td&gt;30.562509&lt;/td&gt;
-      &lt;td&gt;1.068372&lt;/td&gt;
-      &lt;td&gt;1.144799&lt;/td&gt;
-      &lt;td&gt;32.250908&lt;/td&gt;
+      &lt;td&gt;4.523359e+06&lt;/td&gt;
+      &lt;td&gt;12.080459&lt;/td&gt;
+      &lt;td&gt;0.488504&lt;/td&gt;
+      &lt;td&gt;5.748577&lt;/td&gt;
+      &lt;td&gt;1.516953&lt;/td&gt;
+      &lt;td&gt;1.695724&lt;/td&gt;
+      &lt;td&gt;28.692055&lt;/td&gt;
+      &lt;td&gt;1.158084&lt;/td&gt;
+      &lt;td&gt;0.510090&lt;/td&gt;
+      &lt;td&gt;30.776044&lt;/td&gt;
       &lt;td&gt;...&lt;/td&gt;
-      &lt;td&gt;1.306865&lt;/td&gt;
-      &lt;td&gt;1.739779&lt;/td&gt;
-      &lt;td&gt;0.105640&lt;/td&gt;
+      &lt;td&gt;1.466953&lt;/td&gt;
+      &lt;td&gt;1.866161&lt;/td&gt;
+      &lt;td&gt;0.080856&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
-      &lt;td&gt;30.090451&lt;/td&gt;
+      &lt;td&gt;26.886898&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
-      &lt;td&gt;0.504685&lt;/td&gt;
+      &lt;td&gt;0.501890&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;min&lt;/th&gt;
-      &lt;td&gt;3.216841e+07&lt;/td&gt;
-      &lt;td&gt;61.000000&lt;/td&gt;
+      &lt;td&gt;3.244411e+07&lt;/td&gt;
+      &lt;td&gt;64.000000&lt;/td&gt;
       &lt;td&gt;1.000000&lt;/td&gt;
-      &lt;td&gt;35.599998&lt;/td&gt;
-      &lt;td&gt;2.550000&lt;/td&gt;
-      &lt;td&gt;3.690000&lt;/td&gt;
-      &lt;td&gt;53.900002&lt;/td&gt;
-      &lt;td&gt;3.560000&lt;/td&gt;
-      &lt;td&gt;0.580000&lt;/td&gt;
-      &lt;td&gt;195.300003&lt;/td&gt;
+      &lt;td&gt;29.600000&lt;/td&gt;
+      &lt;td&gt;3.350000&lt;/td&gt;
+      &lt;td&gt;3.550000&lt;/td&gt;
+      &lt;td&gt;43.700001&lt;/td&gt;
+      &lt;td&gt;3.160000&lt;/td&gt;
+      &lt;td&gt;0.410000&lt;/td&gt;
+      &lt;td&gt;196.600006&lt;/td&gt;
       &lt;td&gt;...&lt;/td&gt;
-      &lt;td&gt;7.300000&lt;/td&gt;
-      &lt;td&gt;7.900000&lt;/td&gt;
+      &lt;td&gt;7.400000&lt;/td&gt;
+      &lt;td&gt;9.800000&lt;/td&gt;
       &lt;td&gt;0.070000&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
       &lt;td&gt;0.000000&lt;/td&gt;
@@ -1406,22 +1422,22 @@ dtype: object
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;25%&lt;/th&gt;
-      &lt;td&gt;3.743001e+07&lt;/td&gt;
-      &lt;td&gt;76.000000&lt;/td&gt;
+      &lt;td&gt;3.744541e+07&lt;/td&gt;
+      &lt;td&gt;75.000000&lt;/td&gt;
       &lt;td&gt;1.000000&lt;/td&gt;
-      &lt;td&gt;41.000000&lt;/td&gt;
-      &lt;td&gt;4.685000&lt;/td&gt;
-      &lt;td&gt;6.200000&lt;/td&gt;
-      &lt;td&gt;68.950001&lt;/td&gt;
-      &lt;td&gt;4.405000&lt;/td&gt;
-      &lt;td&gt;0.895000&lt;/td&gt;
-      &lt;td&gt;231.600006&lt;/td&gt;
+      &lt;td&gt;36.900002&lt;/td&gt;
+      &lt;td&gt;4.360000&lt;/td&gt;
+      &lt;td&gt;4.660000&lt;/td&gt;
+      &lt;td&gt;64.500000&lt;/td&gt;
+      &lt;td&gt;3.940000&lt;/td&gt;
+      &lt;td&gt;0.800000&lt;/td&gt;
+      &lt;td&gt;226.800003&lt;/td&gt;
       &lt;td&gt;...&lt;/td&gt;
-      &lt;td&gt;8.700000&lt;/td&gt;
-      &lt;td&gt;15.350000&lt;/td&gt;
-      &lt;td&gt;0.150000&lt;/td&gt;
+      &lt;td&gt;8.800000&lt;/td&gt;
+      &lt;td&gt;15.100000&lt;/td&gt;
+      &lt;td&gt;0.160000&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
-      &lt;td&gt;33.500000&lt;/td&gt;
+      &lt;td&gt;33.000000&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
       &lt;td&gt;0.000000&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
@@ -1430,46 +1446,46 @@ dtype: object
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;50%&lt;/th&gt;
-      &lt;td&gt;3.745411e+07&lt;/td&gt;
-      &lt;td&gt;83.000000&lt;/td&gt;
+      &lt;td&gt;4.222571e+07&lt;/td&gt;
+      &lt;td&gt;85.000000&lt;/td&gt;
       &lt;td&gt;2.000000&lt;/td&gt;
-      &lt;td&gt;43.700001&lt;/td&gt;
-      &lt;td&gt;5.230000&lt;/td&gt;
-      &lt;td&gt;7.510000&lt;/td&gt;
-      &lt;td&gt;79.300003&lt;/td&gt;
-      &lt;td&gt;5.260000&lt;/td&gt;
-      &lt;td&gt;1.180000&lt;/td&gt;
-      &lt;td&gt;250.699997&lt;/td&gt;
+      &lt;td&gt;42.700001&lt;/td&gt;
+      &lt;td&gt;4.750000&lt;/td&gt;
+      &lt;td&gt;6.310000&lt;/td&gt;
+      &lt;td&gt;78.900002&lt;/td&gt;
+      &lt;td&gt;4.730000&lt;/td&gt;
+      &lt;td&gt;1.150000&lt;/td&gt;
+      &lt;td&gt;235.399994&lt;/td&gt;
       &lt;td&gt;...&lt;/td&gt;
-      &lt;td&gt;9.300000&lt;/td&gt;
-      &lt;td&gt;15.800000&lt;/td&gt;
+      &lt;td&gt;9.600000&lt;/td&gt;
+      &lt;td&gt;15.700000&lt;/td&gt;
       &lt;td&gt;0.180000&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
-      &lt;td&gt;51.000000&lt;/td&gt;
+      &lt;td&gt;55.000000&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
-      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;75%&lt;/th&gt;
-      &lt;td&gt;4.460921e+07&lt;/td&gt;
-      &lt;td&gt;90.000000&lt;/td&gt;
+      &lt;td&gt;4.460501e+07&lt;/td&gt;
+      &lt;td&gt;94.000000&lt;/td&gt;
       &lt;td&gt;2.000000&lt;/td&gt;
-      &lt;td&gt;45.199999&lt;/td&gt;
-      &lt;td&gt;5.920000&lt;/td&gt;
-      &lt;td&gt;8.360000&lt;/td&gt;
-      &lt;td&gt;96.349998&lt;/td&gt;
-      &lt;td&gt;5.940000&lt;/td&gt;
-      &lt;td&gt;2.035000&lt;/td&gt;
-      &lt;td&gt;272.299988&lt;/td&gt;
+      &lt;td&gt;46.200001&lt;/td&gt;
+      &lt;td&gt;5.210000&lt;/td&gt;
+      &lt;td&gt;7.250000&lt;/td&gt;
+      &lt;td&gt;100.199997&lt;/td&gt;
+      &lt;td&gt;5.800000&lt;/td&gt;
+      &lt;td&gt;1.410000&lt;/td&gt;
+      &lt;td&gt;273.600006&lt;/td&gt;
       &lt;td&gt;...&lt;/td&gt;
-      &lt;td&gt;10.350000&lt;/td&gt;
-      &lt;td&gt;16.299999&lt;/td&gt;
-      &lt;td&gt;0.225000&lt;/td&gt;
+      &lt;td&gt;10.600000&lt;/td&gt;
+      &lt;td&gt;16.100000&lt;/td&gt;
+      &lt;td&gt;0.240000&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
-      &lt;td&gt;82.500000&lt;/td&gt;
+      &lt;td&gt;69.000000&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
       &lt;td&gt;1.000000&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
@@ -1478,22 +1494,22 @@ dtype: object
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;max&lt;/th&gt;
-      &lt;td&gt;4.581601e+07&lt;/td&gt;
-      &lt;td&gt;103.000000&lt;/td&gt;
+      &lt;td&gt;4.581561e+07&lt;/td&gt;
+      &lt;td&gt;102.000000&lt;/td&gt;
       &lt;td&gt;2.000000&lt;/td&gt;
-      &lt;td&gt;50.599998&lt;/td&gt;
-      &lt;td&gt;11.500000&lt;/td&gt;
-      &lt;td&gt;15.510000&lt;/td&gt;
-      &lt;td&gt;197.500000&lt;/td&gt;
-      &lt;td&gt;8.180000&lt;/td&gt;
-      &lt;td&gt;7.180000&lt;/td&gt;
-      &lt;td&gt;337.600006&lt;/td&gt;
+      &lt;td&gt;50.299999&lt;/td&gt;
+      &lt;td&gt;11.350000&lt;/td&gt;
+      &lt;td&gt;10.000000&lt;/td&gt;
+      &lt;td&gt;151.699997&lt;/td&gt;
+      &lt;td&gt;7.220000&lt;/td&gt;
+      &lt;td&gt;2.770000&lt;/td&gt;
+      &lt;td&gt;310.899994&lt;/td&gt;
       &lt;td&gt;...&lt;/td&gt;
-      &lt;td&gt;13.000000&lt;/td&gt;
+      &lt;td&gt;14.300000&lt;/td&gt;
       &lt;td&gt;16.799999&lt;/td&gt;
-      &lt;td&gt;0.770000&lt;/td&gt;
+      &lt;td&gt;0.440000&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
-      &lt;td&gt;99.000000&lt;/td&gt;
+      &lt;td&gt;91.000000&lt;/td&gt;
       &lt;td&gt;0.0&lt;/td&gt;
       &lt;td&gt;1.000000&lt;/td&gt;
       &lt;td&gt;1.0&lt;/td&gt;
@@ -1505,10 +1521,10 @@ dtype: object
 &lt;p&gt;8 rows × 40 columns&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filtered_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#only 43 left following the filter. &lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;43
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#only 33 left following the filter. &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;33
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Following the filter only 43 data are left in the set.  A workflow similiar to this could be used to identify possible survey recruits from aggregated chart data.&lt;/p&gt;
+&lt;p&gt;Following the filter only 35 data are left in the set.  A workflow similiar to this could be used to identify possible survey recruits from aggregated chart data.&lt;/p&gt;
 &lt;h2 id=&#34;logistic-regression-sample&#34; &gt;Logistic Regression Sample
 &lt;span&gt;
     &lt;a href=&#34;#logistic-regression-sample&#34;&gt;
@@ -1516,7 +1532,7 @@ dtype: object
     &lt;/a&gt;
 &lt;/span&gt;
 &lt;/h2&gt;&lt;p&gt;I am surpirsed by the low level of samples left following the filter.  To avoid a small n, I will use the initial dataset.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Users/jnapolitano/Projects/nih/ICPSR_37226/DS0003/pmc-submission/jupyter-book/notebooks/37226-0003-Data.tsv&amp;#34;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Users/jnapolitano/Projects/biostatistics/data/37226-0003-Data.tsv&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read_csv(filename, sep&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# replace empty space with na&lt;/span&gt;
@@ -1871,7 +1887,7 @@ dtype: object
         &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
     &lt;/a&gt;
 &lt;/span&gt;
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;test_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; master_table&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sample(n&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;,replace&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;test_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; master_table&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sample(n&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;20000&lt;/span&gt;,replace&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;targets &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; test_sample&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;pop(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;PROP_DISPOSITION&amp;#34;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;seperate-train-and-test-sets&#34; &gt;Seperate Train and Test Sets
 &lt;span&gt;
@@ -1920,10 +1936,10 @@ Divide the obtained difference by the corresponding standard deviation.&lt;/p&gt
 &lt;/span&gt;
 &lt;/h3&gt;&lt;p&gt;With completely randomized values the score should be about 50%. If it is significantly greater than there is probably a problem with the model.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;score(x_train, y_train)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;0.537125
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;0.5676875
 &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;score(x_test, y_test)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;0.5125
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;0.55825
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Results are expected&lt;/p&gt;
 &lt;h3 id=&#34;confusion-matrix&#34; &gt;Confusion matrix
@@ -1947,7 +1963,7 @@ Divide the obtained difference by the corresponding standard deviation.&lt;/p&gt
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(cm)):
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ax&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text(j, i, cm[i, j], ha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;center&amp;#39;&lt;/span&gt;, va&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;center&amp;#39;&lt;/span&gt;, color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;purple&amp;#39;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;show()
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;logistic_regression_files/logistic_regression_66_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;logistic_regression_files/logistic_regression_71_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Because the data is randomized it makes the model is accurate about 50% of the time.&lt;/p&gt;
 &lt;h3 id=&#34;printing-the-classification-report&#34; &gt;Printing the Classification Report
 &lt;span&gt;
@@ -1958,12 +1974,12 @@ Divide the obtained difference by the corresponding standard deviation.&lt;/p&gt
 &lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(classification_report(y_test, y_pred))
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;              precision    recall  f1-score   support
 
-           0       0.52      0.40      0.45       999
-           1       0.51      0.63      0.56      1001
+           0       0.55      0.47      0.51      1927
+           1       0.56      0.64      0.60      2073
 
-    accuracy                           0.51      2000
-   macro avg       0.51      0.51      0.51      2000
-weighted avg       0.51      0.51      0.51      2000
+    accuracy                           0.56      4000
+   macro avg       0.56      0.56      0.55      4000
+weighted avg       0.56      0.56      0.55      4000
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

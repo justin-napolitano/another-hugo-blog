@@ -36,8 +36,9 @@ from sklearn.preprocessing import StandardScaler
 
 ```
 
-## Data Import
+## Data
 
+include a raw html here  to include the project description data file in the final markdown document
 
 ### Data  Description
 
@@ -46,7 +47,7 @@ Principal Investigator(s): Yi Zeng, Duke University, and Peking University; Jame
 
 
 ```python
-filename = "/Users/jnapolitano/Projects/nih/ICPSR_37226/DS0003/pmc-submission/jupyter-book/notebooks/37226-0003-Data.tsv"
+filename = "/Users/jnapolitano/Projects/biostatistics/data/37226-0003-Data.tsv"
 df = pd.read_csv(filename, sep='\t')
 ```
 
@@ -299,6 +300,8 @@ df.describe()
 
 
 
+The float collumns were not interpretted correctly by pandas. I'll fix that
+
 
 ```python
 df.columns
@@ -360,10 +363,18 @@ df.dtypes
     dtype: object
 
 
+
+Everything was read an object.  I'll cast everything to numeric... Thank you numpy
+
+
+
+
 ```python
 # replace empty space with na
 df = df.replace(" ", np.nan)
 ```
+
+just to be safe, I'll replace all blank spaces with np.nan.
 
 
 ```python
@@ -925,9 +936,11 @@ df.describe()
 
 
 
-We remove about 4/5 of our data, but the counts are not equivalent.
+We remove about 4/5 of our data.  The counts are now equivalent. Everything is in the correct data type.
 
-## Age Histogram
+#### Visualizing Age Distribution
+
+I am curious what the age spread looks like. An even spread could be used to determine health outcomes.
 
 
 ```python
@@ -939,9 +952,15 @@ plt.title('Histogram');
 
 
     
-![png](logistic_regression_files/logistic_regression_22_0.png)
+![png](logistic_regression_files/logistic_regression_24_0.png)
     
 
+
+Unfortunately, the spread is not evenly distributed. 
+
+#### Visualizing Age to Triglyceride Levels
+
+A predictive model relating health factors to longevity is probably possible.   Certain factors must be met, but I'll assume they are for the sake of this mockup.  
 
 
 ```python
@@ -956,11 +975,13 @@ plt.show()
 
 
     
-![png](logistic_regression_files/logistic_regression_23_0.png)
+![png](logistic_regression_files/logistic_regression_26_0.png)
     
 
 
 ## Filter Examples
+
+The data above doesn't really need to be filtered.  To demonstrate how it could be, I include some randomized columns that are then filtered according to specific conditions.
 
 To fit the specificities of the conditions in the training video I'll add some randomized columns.  
 
@@ -1104,12 +1125,12 @@ df
       <td>9.1</td>
       <td>15.000000</td>
       <td>0.13</td>
-      <td>0</td>
-      <td>10</td>
+      <td>1</td>
+      <td>20</td>
+      <td>2</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
     </tr>
     <tr>
@@ -1128,10 +1149,10 @@ df
       <td>8.3</td>
       <td>12.000000</td>
       <td>0.16</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
       <td>0</td>
-      <td>14</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1153,11 +1174,11 @@ df
       <td>16.799999</td>
       <td>0.14</td>
       <td>0</td>
-      <td>94</td>
+      <td>36</td>
+      <td>2</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
     </tr>
     <tr>
@@ -1177,11 +1198,11 @@ df
       <td>12.300000</td>
       <td>0.12</td>
       <td>1</td>
-      <td>75</td>
+      <td>84</td>
       <td>1</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
@@ -1201,10 +1222,10 @@ df
       <td>16.400000</td>
       <td>0.20</td>
       <td>1</td>
-      <td>58</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
+      <td>1</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -1248,12 +1269,12 @@ df
       <td>9.9</td>
       <td>16.200001</td>
       <td>0.26</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
       <td>1</td>
-      <td>93</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
     </tr>
     <tr>
@@ -1273,9 +1294,9 @@ df
       <td>16.000000</td>
       <td>0.23</td>
       <td>1</td>
-      <td>25</td>
-      <td>1</td>
-      <td>1</td>
+      <td>31</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -1297,10 +1318,10 @@ df
       <td>16.299999</td>
       <td>0.14</td>
       <td>1</td>
-      <td>66</td>
+      <td>39</td>
       <td>1</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -1320,10 +1341,10 @@ df
       <td>10.0</td>
       <td>15.900000</td>
       <td>0.20</td>
-      <td>0</td>
-      <td>77</td>
-      <td>2</td>
-      <td>0</td>
+      <td>1</td>
+      <td>57</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
@@ -1345,12 +1366,12 @@ df
       <td>16.299999</td>
       <td>0.21</td>
       <td>1</td>
-      <td>11</td>
+      <td>32</td>
       <td>2</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>1</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -1383,11 +1404,15 @@ idx_english = (df.TRUEAGE > 18) & (df.CANCER_TYPE != 5) & (df.EMERGENCY == 1) & 
 
 ```
 
+I created spanish and english dataframes for the sake of data manipulation.  It is not realy necessary, but it would permit modifying and recoding the data if it were formatted differently.
+
 
 ```python
 
 filtered_df = pd.concat([df[idx_english], df[idx_spanish]], ignore_index=True)
 ```
+
+the filtered df is a concattenation of the english and spanish filtered data.
 
 
 ```python
@@ -1441,91 +1466,91 @@ filtered_df.describe()
   <tbody>
     <tr>
       <th>count</th>
-      <td>4.300000e+01</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
+      <td>3.300000e+01</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
       <td>...</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>43.000000</td>
-      <td>43.0</td>
-      <td>43.000000</td>
-      <td>43.0</td>
-      <td>43.000000</td>
-      <td>43.0</td>
-      <td>43.0</td>
-      <td>43.0</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
+      <td>33.000000</td>
+      <td>33.0</td>
+      <td>33.000000</td>
+      <td>33.0</td>
+      <td>33.000000</td>
+      <td>33.0</td>
+      <td>33.0</td>
+      <td>33.0</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>4.016529e+07</td>
-      <td>83.534884</td>
-      <td>1.604651</td>
-      <td>43.174419</td>
-      <td>5.397674</td>
-      <td>7.680698</td>
-      <td>87.769768</td>
-      <td>5.216744</td>
-      <td>1.609302</td>
-      <td>253.172094</td>
+      <td>4.023138e+07</td>
+      <td>85.000000</td>
+      <td>1.636364</td>
+      <td>41.563636</td>
+      <td>5.139697</td>
+      <td>6.289394</td>
+      <td>83.718182</td>
+      <td>4.893030</td>
+      <td>1.168788</td>
+      <td>244.539395</td>
       <td>...</td>
-      <td>9.613953</td>
-      <td>15.353488</td>
-      <td>0.202093</td>
+      <td>9.715151</td>
+      <td>14.945455</td>
+      <td>0.202424</td>
       <td>1.0</td>
-      <td>53.604651</td>
+      <td>49.969697</td>
       <td>0.0</td>
-      <td>0.465116</td>
+      <td>0.575758</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>4.398812e+06</td>
-      <td>10.443382</td>
-      <td>0.494712</td>
-      <td>3.597029</td>
-      <td>1.360812</td>
-      <td>2.461784</td>
-      <td>30.562509</td>
-      <td>1.068372</td>
-      <td>1.144799</td>
-      <td>32.250908</td>
+      <td>4.523359e+06</td>
+      <td>12.080459</td>
+      <td>0.488504</td>
+      <td>5.748577</td>
+      <td>1.516953</td>
+      <td>1.695724</td>
+      <td>28.692055</td>
+      <td>1.158084</td>
+      <td>0.510090</td>
+      <td>30.776044</td>
       <td>...</td>
-      <td>1.306865</td>
-      <td>1.739779</td>
-      <td>0.105640</td>
+      <td>1.466953</td>
+      <td>1.866161</td>
+      <td>0.080856</td>
       <td>0.0</td>
-      <td>30.090451</td>
+      <td>26.886898</td>
       <td>0.0</td>
-      <td>0.504685</td>
+      <td>0.501890</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>3.216841e+07</td>
-      <td>61.000000</td>
+      <td>3.244411e+07</td>
+      <td>64.000000</td>
       <td>1.000000</td>
-      <td>35.599998</td>
-      <td>2.550000</td>
-      <td>3.690000</td>
-      <td>53.900002</td>
-      <td>3.560000</td>
-      <td>0.580000</td>
-      <td>195.300003</td>
+      <td>29.600000</td>
+      <td>3.350000</td>
+      <td>3.550000</td>
+      <td>43.700001</td>
+      <td>3.160000</td>
+      <td>0.410000</td>
+      <td>196.600006</td>
       <td>...</td>
-      <td>7.300000</td>
-      <td>7.900000</td>
+      <td>7.400000</td>
+      <td>9.800000</td>
       <td>0.070000</td>
       <td>1.0</td>
       <td>0.000000</td>
@@ -1537,22 +1562,22 @@ filtered_df.describe()
     </tr>
     <tr>
       <th>25%</th>
-      <td>3.743001e+07</td>
-      <td>76.000000</td>
+      <td>3.744541e+07</td>
+      <td>75.000000</td>
       <td>1.000000</td>
-      <td>41.000000</td>
-      <td>4.685000</td>
-      <td>6.200000</td>
-      <td>68.950001</td>
-      <td>4.405000</td>
-      <td>0.895000</td>
-      <td>231.600006</td>
+      <td>36.900002</td>
+      <td>4.360000</td>
+      <td>4.660000</td>
+      <td>64.500000</td>
+      <td>3.940000</td>
+      <td>0.800000</td>
+      <td>226.800003</td>
       <td>...</td>
-      <td>8.700000</td>
-      <td>15.350000</td>
-      <td>0.150000</td>
+      <td>8.800000</td>
+      <td>15.100000</td>
+      <td>0.160000</td>
       <td>1.0</td>
-      <td>33.500000</td>
+      <td>33.000000</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>1.0</td>
@@ -1561,46 +1586,46 @@ filtered_df.describe()
     </tr>
     <tr>
       <th>50%</th>
-      <td>3.745411e+07</td>
-      <td>83.000000</td>
+      <td>4.222571e+07</td>
+      <td>85.000000</td>
       <td>2.000000</td>
-      <td>43.700001</td>
-      <td>5.230000</td>
-      <td>7.510000</td>
-      <td>79.300003</td>
-      <td>5.260000</td>
-      <td>1.180000</td>
-      <td>250.699997</td>
+      <td>42.700001</td>
+      <td>4.750000</td>
+      <td>6.310000</td>
+      <td>78.900002</td>
+      <td>4.730000</td>
+      <td>1.150000</td>
+      <td>235.399994</td>
       <td>...</td>
-      <td>9.300000</td>
-      <td>15.800000</td>
+      <td>9.600000</td>
+      <td>15.700000</td>
       <td>0.180000</td>
       <td>1.0</td>
-      <td>51.000000</td>
+      <td>55.000000</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>1.000000</td>
       <td>1.0</td>
       <td>1.0</td>
       <td>0.0</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>4.460921e+07</td>
-      <td>90.000000</td>
+      <td>4.460501e+07</td>
+      <td>94.000000</td>
       <td>2.000000</td>
-      <td>45.199999</td>
-      <td>5.920000</td>
-      <td>8.360000</td>
-      <td>96.349998</td>
-      <td>5.940000</td>
-      <td>2.035000</td>
-      <td>272.299988</td>
+      <td>46.200001</td>
+      <td>5.210000</td>
+      <td>7.250000</td>
+      <td>100.199997</td>
+      <td>5.800000</td>
+      <td>1.410000</td>
+      <td>273.600006</td>
       <td>...</td>
-      <td>10.350000</td>
-      <td>16.299999</td>
-      <td>0.225000</td>
+      <td>10.600000</td>
+      <td>16.100000</td>
+      <td>0.240000</td>
       <td>1.0</td>
-      <td>82.500000</td>
+      <td>69.000000</td>
       <td>0.0</td>
       <td>1.000000</td>
       <td>1.0</td>
@@ -1609,22 +1634,22 @@ filtered_df.describe()
     </tr>
     <tr>
       <th>max</th>
-      <td>4.581601e+07</td>
-      <td>103.000000</td>
+      <td>4.581561e+07</td>
+      <td>102.000000</td>
       <td>2.000000</td>
-      <td>50.599998</td>
-      <td>11.500000</td>
-      <td>15.510000</td>
-      <td>197.500000</td>
-      <td>8.180000</td>
-      <td>7.180000</td>
-      <td>337.600006</td>
+      <td>50.299999</td>
+      <td>11.350000</td>
+      <td>10.000000</td>
+      <td>151.699997</td>
+      <td>7.220000</td>
+      <td>2.770000</td>
+      <td>310.899994</td>
       <td>...</td>
-      <td>13.000000</td>
+      <td>14.300000</td>
       <td>16.799999</td>
-      <td>0.770000</td>
+      <td>0.440000</td>
       <td>1.0</td>
-      <td>99.000000</td>
+      <td>91.000000</td>
       <td>0.0</td>
       <td>1.000000</td>
       <td>1.0</td>
@@ -1641,17 +1666,17 @@ filtered_df.describe()
 
 ```python
 filtered_df.shape[0]
-#only 43 left following the filter. 
+#only 33 left following the filter. 
 ```
 
 
 
 
-    43
+    33
 
 
 
-Following the filter only 43 data are left in the set.  A workflow similiar to this could be used to identify possible survey recruits from aggregated chart data.  
+Following the filter only 35 data are left in the set.  A workflow similiar to this could be used to identify possible survey recruits from aggregated chart data.  
 
 ## Logistic Regression Sample
 
@@ -1660,7 +1685,7 @@ I am surpirsed by the low level of samples left following the filter.  To avoid 
 
 
 ```python
-filename = "/Users/jnapolitano/Projects/nih/ICPSR_37226/DS0003/pmc-submission/jupyter-book/notebooks/37226-0003-Data.tsv"
+filename = "/Users/jnapolitano/Projects/biostatistics/data/37226-0003-Data.tsv"
 df = pd.read_csv(filename, sep='\t')
 
 # replace empty space with na
@@ -2023,7 +2048,7 @@ master_table = df.copy()
 
 
 ```python
-test_sample = master_table.sample(n=10000,replace=True)
+test_sample = master_table.sample(n=20000,replace=True)
 
 ```
 
@@ -2096,7 +2121,7 @@ model.score(x_train, y_train)
 
 
 
-    0.537125
+    0.5676875
 
 
 
@@ -2108,7 +2133,7 @@ model.score(x_test, y_test)
 
 
 
-    0.5125
+    0.55825
 
 
 
@@ -2137,7 +2162,7 @@ plt.show()
 
 
     
-![png](logistic_regression_files/logistic_regression_66_0.png)
+![png](logistic_regression_files/logistic_regression_71_0.png)
     
 
 
@@ -2152,11 +2177,11 @@ print(classification_report(y_test, y_pred))
 
                   precision    recall  f1-score   support
     
-               0       0.52      0.40      0.45       999
-               1       0.51      0.63      0.56      1001
+               0       0.55      0.47      0.51      1927
+               1       0.56      0.64      0.60      2073
     
-        accuracy                           0.51      2000
-       macro avg       0.51      0.51      0.51      2000
-    weighted avg       0.51      0.51      0.51      2000
+        accuracy                           0.56      4000
+       macro avg       0.56      0.56      0.55      4000
+    weighted avg       0.56      0.56      0.55      4000
     
 
