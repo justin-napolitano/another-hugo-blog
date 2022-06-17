@@ -1,0 +1,2511 @@
+<!DOCTYPE html>
+
+
+<html lang="en-us" data-theme="">
+<head>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>Model Design and Logistic Regression in Python - Justin&#39;s Data Blog</title>
+
+<meta name="description" content="Designing a logistic regression model of from randomized bioinformatics data.">
+
+
+
+
+
+<link rel="icon" type="image/x-icon" href="/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="https://blog.jnapolitano.io/favicon.png">
+
+
+<style>
+  body {
+    visibility: hidden;
+    opacity: 0;
+  }
+</style>
+
+<noscript>
+  <style>
+    body {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</noscript>
+
+
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <link rel="stylesheet" href="https://blog.jnapolitano.io/css/style.min.aadd6dd80ebf123717dcfe3d847163090d744aafb3d09e967f728dc0ef68bc1b.css" integrity="sha256-qt1t2A6/EjcX3P49hHFjCQ10Sq&#43;z0J6Wf3KNwO9ovBs=">
+    
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+    
+    
+        
+    
+    
+
+    
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
+    
+
+
+
+
+
+
+
+<meta property="og:title" content="Model Design and Logistic Regression in Python" />
+<meta property="og:description" content="Designing a logistic regression model of from randomized bioinformatics data." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.jnapolitano.io/posts/logistic_regression_mockup/" /><meta property="og:image" content="https://blog.jnapolitano.io/featured-julia.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-17T13:20:32+00:00" />
+<meta property="article:modified_time" content="2022-06-17T13:20:32+00:00" />
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.jnapolitano.io/featured-julia.png"/>
+
+<meta name="twitter:title" content="Model Design and Logistic Regression in Python"/>
+<meta name="twitter:description" content="Designing a logistic regression model of from randomized bioinformatics data."/>
+
+
+
+    
+        <link rel="webmention" href="https://webmention.io/hugo-theme-anubis/webmention" />
+        
+            <link rel="pingback" href="https://webmention.io/hugo-theme-anubis/xmlrpc" />
+        
+    
+    
+        <link rel="webmention" href="https://hugo-test-blog.jnapolitano.io/webmentions/receive" />
+    
+
+
+
+
+
+
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5H9YLZK4GH"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-5H9YLZK4GH', { 'anonymize_ip': false });
+}
+</script>
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main">Skip to main content</a>
+    <div class="container">
+        <header class="common-header"> 
+            
+                <div class="header-top">
+    <h1 class="site-title">
+    <a href="/">Justin&#39;s Data Blog</a>
+</h1>
+    <ul class="social-icons">
+
+
+    
+        
+        
+        <li>
+            <a href="https://github.com/justin-napolitano" title="Github" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="mailto:justin@jnapolitano.io" title="Email" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="https://www.linkedin.com/in/justin-napolitano" title="Linkedin" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+    
+        
+        
+        <li>
+            <a href="https://twitter.com/just_napolitano" title="Twitter" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+
+
+    <li>
+            <a href="https://blog.jnapolitano.io/index.xml" title="RSS" rel="me">
+            <span class="inline-svg" >
+
+
+
+
+    
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"/></svg>
+
+</span>
+
+            </a>
+        </li>
+    
+
+</ul>
+</div>
+
+    <nav>
+        
+        
+        <a class="" href="https://blog.jnapolitano.io" title="Feed">Feed</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/series/" title="">Series</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/categories/" title="">Categories</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/tags/" title="">Tags</a>
+        
+        <a class="" href="https://blog.jnapolitano.io/posts/" title="Archive">Archive</a>
+        
+    </nav>
+
+
+
+
+            
+        </header>
+        <main id="main" tabindex="-1"> 
+            
+    
+
+    <article class="post h-entry">
+        <div class="post-header">
+            <header>
+                <h1 class="p-name post-title">Model Design and Logistic Regression in Python</h1>
+                            
+
+
+                
+                
+                
+
+                
+                    <p>Justin Napolitano</p>
+                
+
+                
+                <p>2022-06-17 13:20:32.169 &#43;0000 UTC</p>
+                    
+                
+
+                <hr/>
+            </header>
+        </div>
+        <div class="content e-content">
+            <h1>Table of Contents</h1>
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#imports">Imports</a></li>
+    <li><a href="#data-import">Data Import</a>
+      <ul>
+        <li><a href="#data--description">Data  Description</a></li>
+      </ul>
+    </li>
+    <li><a href="#age-histogram">Age Histogram</a></li>
+    <li><a href="#filter-examples">Filter Examples</a>
+      <ul>
+        <li><a href="#writing-the-filter">Writing the Filter</a></li>
+      </ul>
+    </li>
+    <li><a href="#logistic-regression-sample">Logistic Regression Sample</a>
+      <ul>
+        <li><a href="#the-model">The Model</a></li>
+        <li><a href="#create-test-and-train-set">Create Test and Train Set</a></li>
+        <li><a href="#test-sample-set-with-10000-randomly-selected-from-the-master-with-replacement">Test Sample Set with 10,000 Randomly Selected from the Master with Replacement</a></li>
+        <li><a href="#create-the-model">Create the Model</a></li>
+        <li><a href="#evaluate-model">Evaluate Model</a></li>
+        <li><a href="#model-scoring">Model Scoring</a></li>
+        <li><a href="#confusion-matrix">Confusion matrix</a></li>
+        <li><a href="#printing-the-classification-report">Printing the Classification Report</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+            <hr/>
+            
+            <hr/>
+            <h1 id="model-design-and-logistic-regression-in-python" >Model Design and Logistic Regression in Python
+<span>
+    <a href="#model-design-and-logistic-regression-in-python">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h1><p>I recently modeled customer churn in Julia with logistic regression model.  It was interesting to be sure, but I want to extend my analysis skillset by modeling biostatistics data.  In this post, I design a logistic regression model of health predictors.</p>
+<h2 id="imports" >Imports
+<span>
+    <a href="#imports">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># load some default Python modules</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>style<span style="color:#f92672">.</span>use(<span style="color:#e6db74">&#39;seaborn-whitegrid&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> google.cloud <span style="color:#f92672">import</span> bigquery
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pprint <span style="color:#f92672">import</span> pprint
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> date, datetime
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> contextily <span style="color:#66d9ef">as</span> cx
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_digits
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.linear_model <span style="color:#f92672">import</span> LogisticRegression
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> classification_report, confusion_matrix
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.preprocessing <span style="color:#f92672">import</span> StandardScaler
+</span></span></code></pre></div><h2 id="data-import" >Data Import
+<span>
+    <a href="#data-import">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>include a raw html here  to include the project description data file in the final markdown document</p>
+<h3 id="data--description" >Data  Description
+<span>
+    <a href="#data--description">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Chinese Longitudinal Healthy Longevity Survey (CLHLS), Biomarkers Datasets, 2009, 2012, 2014 (ICPSR 37226)
+Principal Investigator(s): Yi Zeng, Duke University, and Peking University; James W. Vaupel, Max Planck Institutes, and Duke University</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>filename <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/Users/jnapolitano/Projects/nih/ICPSR_37226/DS0003/pmc-submission/jupyter-book/notebooks/37226-0003-Data.tsv&#34;</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(filename, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># read data in pandas dataframe</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># list first few rows (datapoints)</span>
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>head()
+</span></span></code></pre></div><div style="overflow-x:auto;">
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>TRUEAGE</th>
+      <th>A1</th>
+      <th>ALB</th>
+      <th>GLU</th>
+      <th>BUN</th>
+      <th>CREA</th>
+      <th>CHO</th>
+      <th>TG</th>
+      <th>GSP</th>
+      <th>...</th>
+      <th>RBC</th>
+      <th>HGB</th>
+      <th>HCT</th>
+      <th>MCV</th>
+      <th>MCH</th>
+      <th>MCHC</th>
+      <th>PLT</th>
+      <th>MPV</th>
+      <th>PDW</th>
+      <th>PCT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32160008</td>
+      <td>95</td>
+      <td>2</td>
+      <td>30.60000038147</td>
+      <td>4.230000019073</td>
+      <td>6.860000133514</td>
+      <td>64.90000152588</td>
+      <td>3.5</td>
+      <td>.8799999952316</td>
+      <td>232.89999389649</td>
+      <td>...</td>
+      <td>3.5</td>
+      <td>104</td>
+      <td>29.14999961853</td>
+      <td>82.69999694825</td>
+      <td>29.5</td>
+      <td>357</td>
+      <td>394</td>
+      <td>8.60000038147</td>
+      <td>14.30000019074</td>
+      <td>.33000001311</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32161008</td>
+      <td>95</td>
+      <td>2</td>
+      <td>39.09999847413</td>
+      <td>6.94000005722</td>
+      <td>16.190000534058</td>
+      <td>152.39999389649</td>
+      <td>4.619999885559</td>
+      <td>1.2799999713898</td>
+      <td>264.20001220704</td>
+      <td>...</td>
+      <td>3.2999999523163</td>
+      <td>101.3000030518</td>
+      <td>28.930000305176</td>
+      <td>88.90000152588</td>
+      <td>31.10000038147</td>
+      <td>350</td>
+      <td>149</td>
+      <td>9.10000038147</td>
+      <td>15</td>
+      <td>.12999999523</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32162608</td>
+      <td>87</td>
+      <td>2</td>
+      <td>44.79999923707</td>
+      <td>5.550000190735</td>
+      <td>5.679999828339</td>
+      <td>78.5</td>
+      <td>5.199999809265</td>
+      <td>2.3900001049042</td>
+      <td>276.20001220704</td>
+      <td>...</td>
+      <td>3.5999999046326</td>
+      <td>111.3000030518</td>
+      <td>31.159999847412</td>
+      <td>87.59999847413</td>
+      <td>31.29999923707</td>
+      <td>357</td>
+      <td>201</td>
+      <td>8.30000019074</td>
+      <td>12</td>
+      <td>.15999999642</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>32163008</td>
+      <td>90</td>
+      <td>2</td>
+      <td>41.29999923707</td>
+      <td>5.269999980927</td>
+      <td>5.949999809265</td>
+      <td>75.80000305176</td>
+      <td>4.25</td>
+      <td>1.5499999523163</td>
+      <td>264.20001220704</td>
+      <td>...</td>
+      <td>3.7000000476837</td>
+      <td>113.9000015259</td>
+      <td>32.900001525879</td>
+      <td>89.69999694825</td>
+      <td>31.10000038147</td>
+      <td>346</td>
+      <td>150</td>
+      <td>9.89999961854</td>
+      <td>16.79999923707</td>
+      <td>.1400000006</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>32164908</td>
+      <td>94</td>
+      <td>2</td>
+      <td>39.90000152588</td>
+      <td>7.05999994278</td>
+      <td>6.039999961853</td>
+      <td>90.80000305176</td>
+      <td>7.139999866486</td>
+      <td>2.3399999141693</td>
+      <td>237.69999694825</td>
+      <td>...</td>
+      <td>4.1999998092651</td>
+      <td>131.1999969483</td>
+      <td>36.689998626709</td>
+      <td>88.5</td>
+      <td>31.60000038147</td>
+      <td>358</td>
+      <td>163</td>
+      <td>9.69999980927</td>
+      <td>17.79999923707</td>
+      <td>.15000000596</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 33 columns</p>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df<span style="color:#f92672">.</span>describe()
+</span></span></code></pre></div><div style="overflow-x:auto;">
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>2.546000e+03</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>4.069177e+07</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>4.367164e+06</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>3.216001e+07</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>3.743344e+07</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>4.135976e+07</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>4.430106e+07</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>4.611231e+07</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df<span style="color:#f92672">.</span>columns
+</span></span></code></pre></div><pre><code>Index(['ID', 'TRUEAGE', 'A1', 'ALB', 'GLU', 'BUN', 'CREA', 'CHO', 'TG', 'GSP',
+       'CRPHS', 'UA', 'HDLC', 'SOD', 'MDA', 'VD3', 'VITB12', 'UALB', 'UCR',
+       'UALBBYUCR', 'WBC', 'LYMPH', 'LYMPH_A', 'RBC', 'HGB', 'HCT', 'MCV',
+       'MCH', 'MCHC', 'PLT', 'MPV', 'PDW', 'PCT'],
+      dtype='object')
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># check datatypesdf</span>
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>dtypes
+</span></span></code></pre></div><pre><code>ID            int64
+TRUEAGE      object
+A1           object
+ALB          object
+GLU          object
+BUN          object
+CREA         object
+CHO          object
+TG           object
+GSP          object
+CRPHS        object
+UA           object
+HDLC         object
+SOD          object
+MDA          object
+VD3          object
+VITB12       object
+UALB         object
+UCR          object
+UALBBYUCR    object
+WBC          object
+LYMPH        object
+LYMPH_A      object
+RBC          object
+HGB          object
+HCT          object
+MCV          object
+MCH          object
+MCHC         object
+PLT          object
+MPV          object
+PDW          object
+PCT          object
+dtype: object
+</code></pre>
+<p>Everything was read an object.  Blah. I&rsquo;ll cast everything to numeric&hellip; Thank you numpy</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># replace empty space with na</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34; &#34;</span>, np<span style="color:#f92672">.</span>nan)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># convert numeric objects to numeric data types.  I checked in the code book there will not be any false positives</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>apply(pd<span style="color:#f92672">.</span>to_numeric, errors<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;raise&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Recheck dictypes</span>
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>dtypes
+</span></span></code></pre></div><pre><code>ID             int64
+TRUEAGE      float64
+A1           float64
+ALB          float64
+GLU          float64
+BUN          float64
+CREA         float64
+CHO          float64
+TG           float64
+GSP          float64
+CRPHS        float64
+UA           float64
+HDLC         float64
+SOD          float64
+MDA          float64
+VD3          float64
+VITB12       float64
+UALB         float64
+UCR          float64
+UALBBYUCR    float64
+WBC          float64
+LYMPH        float64
+LYMPH_A      float64
+RBC          float64
+HGB          float64
+HCT          float64
+MCV          float64
+MCH          float64
+MCHC         float64
+PLT          float64
+MPV          float64
+PDW          float64
+PCT          float64
+dtype: object
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># check statistics of the features</span>
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>describe()
+</span></span></code></pre></div><div style="overflow-x:auto;">
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>TRUEAGE</th>
+      <th>A1</th>
+      <th>ALB</th>
+      <th>GLU</th>
+      <th>BUN</th>
+      <th>CREA</th>
+      <th>CHO</th>
+      <th>TG</th>
+      <th>GSP</th>
+      <th>...</th>
+      <th>RBC</th>
+      <th>HGB</th>
+      <th>HCT</th>
+      <th>MCV</th>
+      <th>MCH</th>
+      <th>MCHC</th>
+      <th>PLT</th>
+      <th>MPV</th>
+      <th>PDW</th>
+      <th>PCT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>2.546000e+03</td>
+      <td>2542.000000</td>
+      <td>2542.000000</td>
+      <td>2499.000000</td>
+      <td>2499.000000</td>
+      <td>2499.000000</td>
+      <td>2499.000000</td>
+      <td>2499.000000</td>
+      <td>2499.000000</td>
+      <td>2499.000000</td>
+      <td>...</td>
+      <td>2497.000000</td>
+      <td>2497.000000</td>
+      <td>2497.000000</td>
+      <td>2497.000000</td>
+      <td>2497.000000</td>
+      <td>2497.000000</td>
+      <td>2497.000000</td>
+      <td>2487.000000</td>
+      <td>2483.000000</td>
+      <td>1711.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>4.069177e+07</td>
+      <td>85.584972</td>
+      <td>1.543273</td>
+      <td>42.363345</td>
+      <td>5.364794</td>
+      <td>6.661321</td>
+      <td>82.805642</td>
+      <td>4.770340</td>
+      <td>1.251369</td>
+      <td>253.726811</td>
+      <td>...</td>
+      <td>4.165012</td>
+      <td>127.684902</td>
+      <td>38.664654</td>
+      <td>94.532295</td>
+      <td>31.033849</td>
+      <td>323.221826</td>
+      <td>195.033440</td>
+      <td>9.322951</td>
+      <td>16.114692</td>
+      <td>0.244237</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>4.367164e+06</td>
+      <td>12.061941</td>
+      <td>0.498222</td>
+      <td>4.367372</td>
+      <td>1.802363</td>
+      <td>2.355459</td>
+      <td>29.246926</td>
+      <td>1.010844</td>
+      <td>0.757557</td>
+      <td>38.658243</td>
+      <td>...</td>
+      <td>0.602123</td>
+      <td>33.852642</td>
+      <td>7.163306</td>
+      <td>7.624568</td>
+      <td>11.041158</td>
+      <td>20.995983</td>
+      <td>76.322382</td>
+      <td>4.468129</td>
+      <td>4.264532</td>
+      <td>2.679986</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>3.216001e+07</td>
+      <td>47.000000</td>
+      <td>1.000000</td>
+      <td>21.900000</td>
+      <td>1.960000</td>
+      <td>2.090000</td>
+      <td>30.500000</td>
+      <td>0.070000</td>
+      <td>0.030000</td>
+      <td>139.899994</td>
+      <td>...</td>
+      <td>1.910000</td>
+      <td>13.000000</td>
+      <td>0.280000</td>
+      <td>54.799999</td>
+      <td>15.900000</td>
+      <td>3.900000</td>
+      <td>9.000000</td>
+      <td>0.000000</td>
+      <td>5.500000</td>
+      <td>0.020000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>3.743344e+07</td>
+      <td>76.000000</td>
+      <td>1.000000</td>
+      <td>40.000000</td>
+      <td>4.400000</td>
+      <td>5.150000</td>
+      <td>66.599998</td>
+      <td>4.090000</td>
+      <td>0.800000</td>
+      <td>232.600006</td>
+      <td>...</td>
+      <td>3.780000</td>
+      <td>115.000000</td>
+      <td>35.400002</td>
+      <td>91.300003</td>
+      <td>29.500000</td>
+      <td>317.000000</td>
+      <td>150.000000</td>
+      <td>8.200000</td>
+      <td>15.300000</td>
+      <td>0.140000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>4.135976e+07</td>
+      <td>86.000000</td>
+      <td>2.000000</td>
+      <td>42.799999</td>
+      <td>5.020000</td>
+      <td>6.380000</td>
+      <td>77.000000</td>
+      <td>4.690000</td>
+      <td>1.050000</td>
+      <td>248.800003</td>
+      <td>...</td>
+      <td>4.160000</td>
+      <td>127.000000</td>
+      <td>39.000000</td>
+      <td>95.400002</td>
+      <td>31.200001</td>
+      <td>325.000000</td>
+      <td>189.000000</td>
+      <td>9.300000</td>
+      <td>16.000000</td>
+      <td>0.170000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>4.430106e+07</td>
+      <td>95.000000</td>
+      <td>2.000000</td>
+      <td>45.000000</td>
+      <td>5.790000</td>
+      <td>7.695000</td>
+      <td>92.099998</td>
+      <td>5.370000</td>
+      <td>1.470000</td>
+      <td>266.899994</td>
+      <td>...</td>
+      <td>4.540000</td>
+      <td>140.000000</td>
+      <td>42.700001</td>
+      <td>98.900002</td>
+      <td>32.500000</td>
+      <td>333.000000</td>
+      <td>229.000000</td>
+      <td>10.300000</td>
+      <td>16.799999</td>
+      <td>0.210000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>4.611231e+07</td>
+      <td>113.000000</td>
+      <td>2.000000</td>
+      <td>130.000000</td>
+      <td>22.000000</td>
+      <td>39.860001</td>
+      <td>585.099976</td>
+      <td>13.070000</td>
+      <td>8.150000</td>
+      <td>778.000000</td>
+      <td>...</td>
+      <td>7.210000</td>
+      <td>1116.000000</td>
+      <td>70.199997</td>
+      <td>125.800003</td>
+      <td>371.000000</td>
+      <td>429.000000</td>
+      <td>1514.000000</td>
+      <td>107.000000</td>
+      <td>153.000000</td>
+      <td>111.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>8 rows × 33 columns</p>
+</div>
+<p>It is kind of odd that there are greater counts for some rows. I&rsquo;ll remove all na.</p>
+<p>Checking for negative values and anything else I missed from the initial sql clean:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>dropna()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df<span style="color:#f92672">.</span>describe()
+</span></span></code></pre></div><div style="overflow-x:auto;">
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>TRUEAGE</th>
+      <th>A1</th>
+      <th>ALB</th>
+      <th>GLU</th>
+      <th>BUN</th>
+      <th>CREA</th>
+      <th>CHO</th>
+      <th>TG</th>
+      <th>GSP</th>
+      <th>...</th>
+      <th>RBC</th>
+      <th>HGB</th>
+      <th>HCT</th>
+      <th>MCV</th>
+      <th>MCH</th>
+      <th>MCHC</th>
+      <th>PLT</th>
+      <th>MPV</th>
+      <th>PDW</th>
+      <th>PCT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1.561000e+03</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>...</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+      <td>1561.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>3.951369e+07</td>
+      <td>84.782191</td>
+      <td>1.534914</td>
+      <td>42.445292</td>
+      <td>5.334414</td>
+      <td>6.898834</td>
+      <td>84.107880</td>
+      <td>4.806336</td>
+      <td>1.243748</td>
+      <td>254.537604</td>
+      <td>...</td>
+      <td>4.060587</td>
+      <td>126.936387</td>
+      <td>38.154004</td>
+      <td>94.416284</td>
+      <td>31.500461</td>
+      <td>329.142217</td>
+      <td>190.152082</td>
+      <td>10.006560</td>
+      <td>15.777220</td>
+      <td>0.251365</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>4.702774e+06</td>
+      <td>12.056596</td>
+      <td>0.498939</td>
+      <td>4.659920</td>
+      <td>1.707653</td>
+      <td>2.292577</td>
+      <td>29.500260</td>
+      <td>0.999193</td>
+      <td>0.775910</td>
+      <td>39.858537</td>
+      <td>...</td>
+      <td>0.589037</td>
+      <td>39.956758</td>
+      <td>5.261258</td>
+      <td>7.701819</td>
+      <td>11.723908</td>
+      <td>16.978577</td>
+      <td>71.839722</td>
+      <td>4.453105</td>
+      <td>5.142069</td>
+      <td>2.805686</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>3.216101e+07</td>
+      <td>48.000000</td>
+      <td>1.000000</td>
+      <td>21.900000</td>
+      <td>1.960000</td>
+      <td>2.140000</td>
+      <td>30.500000</td>
+      <td>0.340000</td>
+      <td>0.070000</td>
+      <td>139.899994</td>
+      <td>...</td>
+      <td>2.100000</td>
+      <td>13.000000</td>
+      <td>13.200000</td>
+      <td>56.000000</td>
+      <td>17.500000</td>
+      <td>35.000000</td>
+      <td>25.000000</td>
+      <td>0.200000</td>
+      <td>5.500000</td>
+      <td>0.020000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>3.736671e+07</td>
+      <td>76.000000</td>
+      <td>1.000000</td>
+      <td>39.900002</td>
+      <td>4.400000</td>
+      <td>5.370000</td>
+      <td>67.000000</td>
+      <td>4.120000</td>
+      <td>0.780000</td>
+      <td>231.600006</td>
+      <td>...</td>
+      <td>3.680000</td>
+      <td>114.000000</td>
+      <td>34.799999</td>
+      <td>91.199997</td>
+      <td>30.100000</td>
+      <td>320.000000</td>
+      <td>147.000000</td>
+      <td>8.800000</td>
+      <td>15.400000</td>
+      <td>0.140000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>3.745741e+07</td>
+      <td>85.000000</td>
+      <td>2.000000</td>
+      <td>42.900002</td>
+      <td>4.990000</td>
+      <td>6.610000</td>
+      <td>77.599998</td>
+      <td>4.730000</td>
+      <td>1.040000</td>
+      <td>249.800003</td>
+      <td>...</td>
+      <td>4.060000</td>
+      <td>126.000000</td>
+      <td>38.200001</td>
+      <td>95.400002</td>
+      <td>31.400000</td>
+      <td>328.000000</td>
+      <td>185.000000</td>
+      <td>9.600000</td>
+      <td>15.900000</td>
+      <td>0.170000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>4.332561e+07</td>
+      <td>94.000000</td>
+      <td>2.000000</td>
+      <td>45.099998</td>
+      <td>5.780000</td>
+      <td>7.960000</td>
+      <td>93.199997</td>
+      <td>5.420000</td>
+      <td>1.460000</td>
+      <td>268.899994</td>
+      <td>...</td>
+      <td>4.400000</td>
+      <td>137.000000</td>
+      <td>41.599998</td>
+      <td>98.900002</td>
+      <td>32.700001</td>
+      <td>337.000000</td>
+      <td>227.000000</td>
+      <td>10.600000</td>
+      <td>16.299999</td>
+      <td>0.210000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>4.581641e+07</td>
+      <td>113.000000</td>
+      <td>2.000000</td>
+      <td>130.000000</td>
+      <td>20.760000</td>
+      <td>23.549999</td>
+      <td>392.000000</td>
+      <td>8.490000</td>
+      <td>8.150000</td>
+      <td>778.000000</td>
+      <td>...</td>
+      <td>7.210000</td>
+      <td>1116.000000</td>
+      <td>70.199997</td>
+      <td>125.800003</td>
+      <td>371.000000</td>
+      <td>408.000000</td>
+      <td>1302.000000</td>
+      <td>107.000000</td>
+      <td>153.000000</td>
+      <td>111.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>8 rows × 33 columns</p>
+</div>
+<p>We remove about 4/5 of our data, but the counts are not equivalent.</p>
+<h2 id="age-histogram" >Age Histogram
+<span>
+    <a href="#age-histogram">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># plot histogram of fare</span>
+</span></span><span style="display:flex;"><span>df<span style="color:#f92672">.</span>TRUEAGE<span style="color:#f92672">.</span>hist(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">14</span>,<span style="color:#ae81ff">3</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Age&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Histogram&#39;</span>);
+</span></span></code></pre></div><p><img src="logistic_regression_files/logistic_regression_22_0.png" alt="png"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#idx = (df.trip_distance &lt; 3) &amp; (gdf.fare_amount &lt; 100)</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(df<span style="color:#f92672">.</span>TRUEAGE, df<span style="color:#f92672">.</span>TG)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;True Age&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Triglyceride, mmol/L&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># theta here is estimated by hand</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img src="logistic_regression_files/logistic_regression_23_0.png" alt="png"></p>
+<h2 id="filter-examples" >Filter Examples
+<span>
+    <a href="#filter-examples">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>To fit the specificities of the conditions in the training video I&rsquo;ll add some randomized columns.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">#inclusive</span>
+</span></span><span style="display:flex;"><span>upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># exclusive</span>
+</span></span><span style="display:flex;"><span>emergency_department <span style="color:#f92672">=</span>  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(low<span style="color:#f92672">=</span>lower_bound , high <span style="color:#f92672">=</span> upper_bound, size <span style="color:#f92672">=</span> n)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#34;EMERGENCY&#34;</span>] <span style="color:#f92672">=</span> emergency_department
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">#inclusive</span>
+</span></span><span style="display:flex;"><span>upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span> <span style="color:#75715e"># exclusive</span>
+</span></span><span style="display:flex;"><span>cancer_care <span style="color:#f92672">=</span>  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(low<span style="color:#f92672">=</span>lower_bound , high <span style="color:#f92672">=</span> upper_bound, size <span style="color:#f92672">=</span> n)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#34;CANCER_TYPE&#34;</span>] <span style="color:#f92672">=</span> cancer_care
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">#inclusive </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#0 = no</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#1 = ICPI</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2 MONO </span>
+</span></span><span style="display:flex;"><span>upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#75715e"># exclusive</span>
+</span></span><span style="display:flex;"><span>icpi_history <span style="color:#f92672">=</span>  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(low<span style="color:#f92672">=</span>lower_bound , high <span style="color:#f92672">=</span> upper_bound, size <span style="color:#f92672">=</span> n)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#34;ICPI_HIST&#34;</span>] <span style="color:#f92672">=</span> icpi_history
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">#inclusive</span>
+</span></span><span style="display:flex;"><span>upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#75715e"># exclusive</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Spanish = 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># English = 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Arbitrarily chosen. </span>
+</span></span><span style="display:flex;"><span>language <span style="color:#f92672">=</span>  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(low<span style="color:#f92672">=</span>lower_bound , high <span style="color:#f92672">=</span> upper_bound, size <span style="color:#f92672">=</span> n)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#34;LANG&#34;</span>] <span style="color:#f92672">=</span> language
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">#inclusive</span>
+</span></span><span style="display:flex;"><span>upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># exclusive</span>
+</span></span><span style="display:flex;"><span>follow_up <span style="color:#f92672">=</span>  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(low<span style="color:#f92672">=</span>lower_bound , high <span style="color:#f92672">=</span> upper_bound, size <span style="color:#f92672">=</span> n)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#34;FOLLOW_UP&#34;</span>] <span style="color:#f92672">=</span> follow_up
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">#inclusive</span>
+</span></span><span style="display:flex;"><span>upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># exclusive</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 0 = no</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1 = Yes</span>
+</span></span><span style="display:flex;"><span>cons <span style="color:#f92672">=</span>  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(low<span style="color:#f92672">=</span>lower_bound , high <span style="color:#f92672">=</span> upper_bound, size <span style="color:#f92672">=</span> n)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#34;CONSENT&#34;</span>] <span style="color:#f92672">=</span> cons
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">#inclusive</span>
+</span></span><span style="display:flex;"><span>upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># exclusive</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 0 = no</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1 = Yes</span>
+</span></span><span style="display:flex;"><span>prego <span style="color:#f92672">=</span>  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(low<span style="color:#f92672">=</span>lower_bound , high <span style="color:#f92672">=</span> upper_bound, size <span style="color:#f92672">=</span> n)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#34;PREGNANT&#34;</span>] <span style="color:#f92672">=</span> prego
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df
+</span></span></code></pre></div><div style="overflow-x:auto;">
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>TRUEAGE</th>
+      <th>A1</th>
+      <th>ALB</th>
+      <th>GLU</th>
+      <th>BUN</th>
+      <th>CREA</th>
+      <th>CHO</th>
+      <th>TG</th>
+      <th>GSP</th>
+      <th>...</th>
+      <th>MPV</th>
+      <th>PDW</th>
+      <th>PCT</th>
+      <th>EMERGENCY</th>
+      <th>CANCER_TYPE</th>
+      <th>ICPI_HIST</th>
+      <th>LANG</th>
+      <th>FOLLOW_UP</th>
+      <th>CONSENT</th>
+      <th>PREGNANT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>32161008</td>
+      <td>95.0</td>
+      <td>2.0</td>
+      <td>39.099998</td>
+      <td>6.94</td>
+      <td>16.190001</td>
+      <td>152.399994</td>
+      <td>4.62</td>
+      <td>1.28</td>
+      <td>264.200012</td>
+      <td>...</td>
+      <td>9.1</td>
+      <td>15.000000</td>
+      <td>0.13</td>
+      <td>0</td>
+      <td>10</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32162608</td>
+      <td>87.0</td>
+      <td>2.0</td>
+      <td>44.799999</td>
+      <td>5.55</td>
+      <td>5.680000</td>
+      <td>78.500000</td>
+      <td>5.20</td>
+      <td>2.39</td>
+      <td>276.200012</td>
+      <td>...</td>
+      <td>8.3</td>
+      <td>12.000000</td>
+      <td>0.16</td>
+      <td>0</td>
+      <td>14</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>32163008</td>
+      <td>90.0</td>
+      <td>2.0</td>
+      <td>41.299999</td>
+      <td>5.27</td>
+      <td>5.950000</td>
+      <td>75.800003</td>
+      <td>4.25</td>
+      <td>1.55</td>
+      <td>264.200012</td>
+      <td>...</td>
+      <td>9.9</td>
+      <td>16.799999</td>
+      <td>0.14</td>
+      <td>0</td>
+      <td>94</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>32166108</td>
+      <td>89.0</td>
+      <td>2.0</td>
+      <td>45.000000</td>
+      <td>8.80</td>
+      <td>13.170000</td>
+      <td>147.000000</td>
+      <td>3.19</td>
+      <td>1.72</td>
+      <td>336.399994</td>
+      <td>...</td>
+      <td>8.2</td>
+      <td>12.300000</td>
+      <td>0.12</td>
+      <td>1</td>
+      <td>75</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>32167608</td>
+      <td>100.0</td>
+      <td>2.0</td>
+      <td>40.099998</td>
+      <td>4.34</td>
+      <td>5.950000</td>
+      <td>76.000000</td>
+      <td>5.67</td>
+      <td>1.44</td>
+      <td>223.300003</td>
+      <td>...</td>
+      <td>10.8</td>
+      <td>16.400000</td>
+      <td>0.20</td>
+      <td>1</td>
+      <td>58</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2265</th>
+      <td>45816014</td>
+      <td>98.0</td>
+      <td>2.0</td>
+      <td>37.000000</td>
+      <td>6.04</td>
+      <td>5.010000</td>
+      <td>59.299999</td>
+      <td>3.84</td>
+      <td>0.95</td>
+      <td>195.300003</td>
+      <td>...</td>
+      <td>9.9</td>
+      <td>16.200001</td>
+      <td>0.26</td>
+      <td>1</td>
+      <td>93</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2266</th>
+      <td>45816114</td>
+      <td>69.0</td>
+      <td>1.0</td>
+      <td>46.299999</td>
+      <td>5.99</td>
+      <td>5.030000</td>
+      <td>85.500000</td>
+      <td>4.43</td>
+      <td>1.44</td>
+      <td>224.000000</td>
+      <td>...</td>
+      <td>10.4</td>
+      <td>16.000000</td>
+      <td>0.23</td>
+      <td>1</td>
+      <td>25</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2267</th>
+      <td>45816214</td>
+      <td>93.0</td>
+      <td>2.0</td>
+      <td>42.599998</td>
+      <td>5.53</td>
+      <td>6.320000</td>
+      <td>85.500000</td>
+      <td>4.03</td>
+      <td>0.92</td>
+      <td>249.800003</td>
+      <td>...</td>
+      <td>11.1</td>
+      <td>16.299999</td>
+      <td>0.14</td>
+      <td>1</td>
+      <td>66</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2268</th>
+      <td>45816314</td>
+      <td>91.0</td>
+      <td>2.0</td>
+      <td>43.400002</td>
+      <td>5.82</td>
+      <td>7.770000</td>
+      <td>72.099998</td>
+      <td>4.29</td>
+      <td>1.08</td>
+      <td>259.299988</td>
+      <td>...</td>
+      <td>10.0</td>
+      <td>15.900000</td>
+      <td>0.20</td>
+      <td>0</td>
+      <td>77</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2269</th>
+      <td>45816414</td>
+      <td>93.0</td>
+      <td>2.0</td>
+      <td>42.900002</td>
+      <td>5.10</td>
+      <td>5.010000</td>
+      <td>59.799999</td>
+      <td>4.94</td>
+      <td>1.82</td>
+      <td>236.399994</td>
+      <td>...</td>
+      <td>8.7</td>
+      <td>16.299999</td>
+      <td>0.21</td>
+      <td>1</td>
+      <td>11</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>1561 rows × 40 columns</p>
+</div>
+<h3 id="writing-the-filter" >Writing the Filter
+<span>
+    <a href="#writing-the-filter">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>Writing a quick filter to ensure eligibiity.  This could, and probably should be written functionally, but so it goes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Greater than 18</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CANCER TYPE IS NOT equal to a non-malanoma skin cancer ie 5 arbitrarily chosen </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Patient Seeking care in emergency department is true</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># History is not equal to 0. Ie not recieving either.  IDK how it would be provided.  It could also possibly be written as equal to 1 or 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Lang is either english or spanish</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Patient Agrees to Follow Up</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Patient Consents</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Patient is Not Pregnant</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>idx_spanish <span style="color:#f92672">=</span> (df<span style="color:#f92672">.</span>TRUEAGE <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">18</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>CANCER_TYPE <span style="color:#f92672">!=</span> <span style="color:#ae81ff">5</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>EMERGENCY <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> \
+</span></span><span style="display:flex;"><span>        (df<span style="color:#f92672">.</span>ICPI_HIST <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>LANG <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>FOLLOW_UP <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>CONSENT <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>PREGNANT <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Ideally the english and spanish speakers would have been filtered prior to this, but for the sake of exploration this will work. </span>
+</span></span><span style="display:flex;"><span>idx_english <span style="color:#f92672">=</span> (df<span style="color:#f92672">.</span>TRUEAGE <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">18</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>CANCER_TYPE <span style="color:#f92672">!=</span> <span style="color:#ae81ff">5</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>EMERGENCY <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> \
+</span></span><span style="display:flex;"><span>        (df<span style="color:#f92672">.</span>ICPI_HIST <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>LANG <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>FOLLOW_UP <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>CONSENT <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> (df<span style="color:#f92672">.</span>PREGNANT <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>filtered_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([df[idx_english], df[idx_spanish]], ignore_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>filtered_df<span style="color:#f92672">.</span>describe()
+</span></span></code></pre></div><div style="overflow-x:auto;">
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>TRUEAGE</th>
+      <th>A1</th>
+      <th>ALB</th>
+      <th>GLU</th>
+      <th>BUN</th>
+      <th>CREA</th>
+      <th>CHO</th>
+      <th>TG</th>
+      <th>GSP</th>
+      <th>...</th>
+      <th>MPV</th>
+      <th>PDW</th>
+      <th>PCT</th>
+      <th>EMERGENCY</th>
+      <th>CANCER_TYPE</th>
+      <th>ICPI_HIST</th>
+      <th>LANG</th>
+      <th>FOLLOW_UP</th>
+      <th>CONSENT</th>
+      <th>PREGNANT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>4.300000e+01</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>...</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>43.000000</td>
+      <td>43.0</td>
+      <td>43.000000</td>
+      <td>43.0</td>
+      <td>43.000000</td>
+      <td>43.0</td>
+      <td>43.0</td>
+      <td>43.0</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>4.016529e+07</td>
+      <td>83.534884</td>
+      <td>1.604651</td>
+      <td>43.174419</td>
+      <td>5.397674</td>
+      <td>7.680698</td>
+      <td>87.769768</td>
+      <td>5.216744</td>
+      <td>1.609302</td>
+      <td>253.172094</td>
+      <td>...</td>
+      <td>9.613953</td>
+      <td>15.353488</td>
+      <td>0.202093</td>
+      <td>1.0</td>
+      <td>53.604651</td>
+      <td>0.0</td>
+      <td>0.465116</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>4.398812e+06</td>
+      <td>10.443382</td>
+      <td>0.494712</td>
+      <td>3.597029</td>
+      <td>1.360812</td>
+      <td>2.461784</td>
+      <td>30.562509</td>
+      <td>1.068372</td>
+      <td>1.144799</td>
+      <td>32.250908</td>
+      <td>...</td>
+      <td>1.306865</td>
+      <td>1.739779</td>
+      <td>0.105640</td>
+      <td>0.0</td>
+      <td>30.090451</td>
+      <td>0.0</td>
+      <td>0.504685</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>3.216841e+07</td>
+      <td>61.000000</td>
+      <td>1.000000</td>
+      <td>35.599998</td>
+      <td>2.550000</td>
+      <td>3.690000</td>
+      <td>53.900002</td>
+      <td>3.560000</td>
+      <td>0.580000</td>
+      <td>195.300003</td>
+      <td>...</td>
+      <td>7.300000</td>
+      <td>7.900000</td>
+      <td>0.070000</td>
+      <td>1.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>3.743001e+07</td>
+      <td>76.000000</td>
+      <td>1.000000</td>
+      <td>41.000000</td>
+      <td>4.685000</td>
+      <td>6.200000</td>
+      <td>68.950001</td>
+      <td>4.405000</td>
+      <td>0.895000</td>
+      <td>231.600006</td>
+      <td>...</td>
+      <td>8.700000</td>
+      <td>15.350000</td>
+      <td>0.150000</td>
+      <td>1.0</td>
+      <td>33.500000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>3.745411e+07</td>
+      <td>83.000000</td>
+      <td>2.000000</td>
+      <td>43.700001</td>
+      <td>5.230000</td>
+      <td>7.510000</td>
+      <td>79.300003</td>
+      <td>5.260000</td>
+      <td>1.180000</td>
+      <td>250.699997</td>
+      <td>...</td>
+      <td>9.300000</td>
+      <td>15.800000</td>
+      <td>0.180000</td>
+      <td>1.0</td>
+      <td>51.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>4.460921e+07</td>
+      <td>90.000000</td>
+      <td>2.000000</td>
+      <td>45.199999</td>
+      <td>5.920000</td>
+      <td>8.360000</td>
+      <td>96.349998</td>
+      <td>5.940000</td>
+      <td>2.035000</td>
+      <td>272.299988</td>
+      <td>...</td>
+      <td>10.350000</td>
+      <td>16.299999</td>
+      <td>0.225000</td>
+      <td>1.0</td>
+      <td>82.500000</td>
+      <td>0.0</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>4.581601e+07</td>
+      <td>103.000000</td>
+      <td>2.000000</td>
+      <td>50.599998</td>
+      <td>11.500000</td>
+      <td>15.510000</td>
+      <td>197.500000</td>
+      <td>8.180000</td>
+      <td>7.180000</td>
+      <td>337.600006</td>
+      <td>...</td>
+      <td>13.000000</td>
+      <td>16.799999</td>
+      <td>0.770000</td>
+      <td>1.0</td>
+      <td>99.000000</td>
+      <td>0.0</td>
+      <td>1.000000</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>8 rows × 40 columns</p>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>filtered_df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#only 43 left following the filter. </span>
+</span></span></code></pre></div><pre><code>43
+</code></pre>
+<p>Following the filter only 43 data are left in the set.  A workflow similiar to this could be used to identify possible survey recruits from aggregated chart data.</p>
+<h2 id="logistic-regression-sample" >Logistic Regression Sample
+<span>
+    <a href="#logistic-regression-sample">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h2><p>I am surpirsed by the low level of samples left following the filter.  To avoid a small n, I will use the initial dataset.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>filename <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/Users/jnapolitano/Projects/nih/ICPSR_37226/DS0003/pmc-submission/jupyter-book/notebooks/37226-0003-Data.tsv&#34;</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(filename, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># replace empty space with na</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34; &#34;</span>, np<span style="color:#f92672">.</span>nan)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># convert numeric objects to numeric data types.  I checked in the code book there will not be any false positives</span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>apply(pd<span style="color:#f92672">.</span>to_numeric, errors<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;raise&#39;</span>)
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>dropna()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df
+</span></span></code></pre></div><div style="overflow-x:auto;">
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>TRUEAGE</th>
+      <th>A1</th>
+      <th>ALB</th>
+      <th>GLU</th>
+      <th>BUN</th>
+      <th>CREA</th>
+      <th>CHO</th>
+      <th>TG</th>
+      <th>GSP</th>
+      <th>...</th>
+      <th>RBC</th>
+      <th>HGB</th>
+      <th>HCT</th>
+      <th>MCV</th>
+      <th>MCH</th>
+      <th>MCHC</th>
+      <th>PLT</th>
+      <th>MPV</th>
+      <th>PDW</th>
+      <th>PCT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>32161008</td>
+      <td>95.0</td>
+      <td>2.0</td>
+      <td>39.099998</td>
+      <td>6.94</td>
+      <td>16.190001</td>
+      <td>152.399994</td>
+      <td>4.62</td>
+      <td>1.28</td>
+      <td>264.200012</td>
+      <td>...</td>
+      <td>3.30</td>
+      <td>101.300003</td>
+      <td>28.930000</td>
+      <td>88.900002</td>
+      <td>31.100000</td>
+      <td>350.0</td>
+      <td>149.0</td>
+      <td>9.1</td>
+      <td>15.000000</td>
+      <td>0.13</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32162608</td>
+      <td>87.0</td>
+      <td>2.0</td>
+      <td>44.799999</td>
+      <td>5.55</td>
+      <td>5.680000</td>
+      <td>78.500000</td>
+      <td>5.20</td>
+      <td>2.39</td>
+      <td>276.200012</td>
+      <td>...</td>
+      <td>3.60</td>
+      <td>111.300003</td>
+      <td>31.160000</td>
+      <td>87.599998</td>
+      <td>31.299999</td>
+      <td>357.0</td>
+      <td>201.0</td>
+      <td>8.3</td>
+      <td>12.000000</td>
+      <td>0.16</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>32163008</td>
+      <td>90.0</td>
+      <td>2.0</td>
+      <td>41.299999</td>
+      <td>5.27</td>
+      <td>5.950000</td>
+      <td>75.800003</td>
+      <td>4.25</td>
+      <td>1.55</td>
+      <td>264.200012</td>
+      <td>...</td>
+      <td>3.70</td>
+      <td>113.900002</td>
+      <td>32.900002</td>
+      <td>89.699997</td>
+      <td>31.100000</td>
+      <td>346.0</td>
+      <td>150.0</td>
+      <td>9.9</td>
+      <td>16.799999</td>
+      <td>0.14</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>32166108</td>
+      <td>89.0</td>
+      <td>2.0</td>
+      <td>45.000000</td>
+      <td>8.80</td>
+      <td>13.170000</td>
+      <td>147.000000</td>
+      <td>3.19</td>
+      <td>1.72</td>
+      <td>336.399994</td>
+      <td>...</td>
+      <td>3.00</td>
+      <td>92.599998</td>
+      <td>26.340000</td>
+      <td>88.500000</td>
+      <td>31.100000</td>
+      <td>352.0</td>
+      <td>157.0</td>
+      <td>8.2</td>
+      <td>12.300000</td>
+      <td>0.12</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>32167608</td>
+      <td>100.0</td>
+      <td>2.0</td>
+      <td>40.099998</td>
+      <td>4.34</td>
+      <td>5.950000</td>
+      <td>76.000000</td>
+      <td>5.67</td>
+      <td>1.44</td>
+      <td>223.300003</td>
+      <td>...</td>
+      <td>3.76</td>
+      <td>114.000000</td>
+      <td>35.400002</td>
+      <td>94.099998</td>
+      <td>30.299999</td>
+      <td>322.0</td>
+      <td>193.0</td>
+      <td>10.8</td>
+      <td>16.400000</td>
+      <td>0.20</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2265</th>
+      <td>45816014</td>
+      <td>98.0</td>
+      <td>2.0</td>
+      <td>37.000000</td>
+      <td>6.04</td>
+      <td>5.010000</td>
+      <td>59.299999</td>
+      <td>3.84</td>
+      <td>0.95</td>
+      <td>195.300003</td>
+      <td>...</td>
+      <td>4.31</td>
+      <td>122.000000</td>
+      <td>38.900002</td>
+      <td>90.300003</td>
+      <td>28.299999</td>
+      <td>313.0</td>
+      <td>267.0</td>
+      <td>9.9</td>
+      <td>16.200001</td>
+      <td>0.26</td>
+    </tr>
+    <tr>
+      <th>2266</th>
+      <td>45816114</td>
+      <td>69.0</td>
+      <td>1.0</td>
+      <td>46.299999</td>
+      <td>5.99</td>
+      <td>5.030000</td>
+      <td>85.500000</td>
+      <td>4.43</td>
+      <td>1.44</td>
+      <td>224.000000</td>
+      <td>...</td>
+      <td>4.46</td>
+      <td>133.000000</td>
+      <td>42.200001</td>
+      <td>94.599998</td>
+      <td>29.799999</td>
+      <td>315.0</td>
+      <td>230.0</td>
+      <td>10.4</td>
+      <td>16.000000</td>
+      <td>0.23</td>
+    </tr>
+    <tr>
+      <th>2267</th>
+      <td>45816214</td>
+      <td>93.0</td>
+      <td>2.0</td>
+      <td>42.599998</td>
+      <td>5.53</td>
+      <td>6.320000</td>
+      <td>85.500000</td>
+      <td>4.03</td>
+      <td>0.92</td>
+      <td>249.800003</td>
+      <td>...</td>
+      <td>4.60</td>
+      <td>137.000000</td>
+      <td>43.799999</td>
+      <td>95.199997</td>
+      <td>29.799999</td>
+      <td>313.0</td>
+      <td>129.0</td>
+      <td>11.1</td>
+      <td>16.299999</td>
+      <td>0.14</td>
+    </tr>
+    <tr>
+      <th>2268</th>
+      <td>45816314</td>
+      <td>91.0</td>
+      <td>2.0</td>
+      <td>43.400002</td>
+      <td>5.82</td>
+      <td>7.770000</td>
+      <td>72.099998</td>
+      <td>4.29</td>
+      <td>1.08</td>
+      <td>259.299988</td>
+      <td>...</td>
+      <td>4.14</td>
+      <td>122.000000</td>
+      <td>39.000000</td>
+      <td>94.300003</td>
+      <td>29.500000</td>
+      <td>312.0</td>
+      <td>200.0</td>
+      <td>10.0</td>
+      <td>15.900000</td>
+      <td>0.20</td>
+    </tr>
+    <tr>
+      <th>2269</th>
+      <td>45816414</td>
+      <td>93.0</td>
+      <td>2.0</td>
+      <td>42.900002</td>
+      <td>5.10</td>
+      <td>5.010000</td>
+      <td>59.799999</td>
+      <td>4.94</td>
+      <td>1.82</td>
+      <td>236.399994</td>
+      <td>...</td>
+      <td>4.50</td>
+      <td>128.000000</td>
+      <td>40.900002</td>
+      <td>90.800003</td>
+      <td>28.400000</td>
+      <td>313.0</td>
+      <td>240.0</td>
+      <td>8.7</td>
+      <td>16.299999</td>
+      <td>0.21</td>
+    </tr>
+  </tbody>
+</table>
+<p>1561 rows × 33 columns</p>
+</div>
+<h3 id="the-model" >The Model
+<span>
+    <a href="#the-model">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>There is strong suspicion that biomarkers can determine whether a patient should be admitted for emergency care.  In this simplified model, I will randomly distribute proper disposition across the dataset.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e">#inclusive</span>
+</span></span><span style="display:flex;"><span>upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># exclusive</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 0 = no</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1 = Yes</span>
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">=</span>  np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(low<span style="color:#f92672">=</span>lower_bound , high <span style="color:#f92672">=</span> upper_bound, size <span style="color:#f92672">=</span> n)
+</span></span><span style="display:flex;"><span>df[<span style="color:#e6db74">&#34;PROP_DISPOSITION&#34;</span>] <span style="color:#f92672">=</span> tmp
+</span></span></code></pre></div><h3 id="create-test-and-train-set" >Create Test and Train Set
+<span>
+    <a href="#create-test-and-train-set">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>This could be randomly sampled as well&hellip;</p>
+<h4 id="random-sample" >Random Sample
+<span>
+    <a href="#random-sample">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># copy in memory to avoid errors.  This could be done from files or in other ways if memory is limited.  </span>
+</span></span><span style="display:flex;"><span>master_table <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>copy()
+</span></span></code></pre></div><h3 id="test-sample-set-with-10000-randomly-selected-from-the-master-with-replacement" >Test Sample Set with 10,000 Randomly Selected from the Master with Replacement
+<span>
+    <a href="#test-sample-set-with-10000-randomly-selected-from-the-master-with-replacement">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>test_sample <span style="color:#f92672">=</span> master_table<span style="color:#f92672">.</span>sample(n<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>,replace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>targets <span style="color:#f92672">=</span> test_sample<span style="color:#f92672">.</span>pop(<span style="color:#e6db74">&#34;PROP_DISPOSITION&#34;</span>)
+</span></span></code></pre></div><h4 id="seperate-train-and-test-sets" >Seperate Train and Test Sets
+<span>
+    <a href="#seperate-train-and-test-sets">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x_train, x_test, y_train, y_test <span style="color:#f92672">=</span> train_test_split(test_sample, targets, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><h4 id="data-standardization" >Data Standardization
+<span>
+    <a href="#data-standardization">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h4><p>Calculate the mean and standard deviation for each column.
+Subtract the corresponding mean from each element.
+Divide the obtained difference by the corresponding standard deviation.</p>
+<p>Thankfully this is built into SKLearn.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>scaler <span style="color:#f92672">=</span> StandardScaler()
+</span></span><span style="display:flex;"><span>x_train <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>fit_transform(x_train)
+</span></span></code></pre></div><h3 id="create-the-model" >Create the Model
+<span>
+    <a href="#create-the-model">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> LogisticRegression(solver<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;liblinear&#39;</span>, C<span style="color:#f92672">=</span><span style="color:#ae81ff">0.05</span>, multi_class<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ovr&#39;</span>,
+</span></span><span style="display:flex;"><span>                           random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>model<span style="color:#f92672">.</span>fit(x_train, y_train)
+</span></span></code></pre></div><pre><code>LogisticRegression(C=0.05, multi_class='ovr', random_state=0,
+                   solver='liblinear')
+</code></pre>
+<h3 id="evaluate-model" >Evaluate Model
+<span>
+    <a href="#evaluate-model">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x_test <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>transform(x_test)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>y_pred <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>predict(x_test)
+</span></span></code></pre></div><h3 id="model-scoring" >Model Scoring
+<span>
+    <a href="#model-scoring">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><p>With completely randomized values the score should be about 50%. If it is significantly greater than there is probably a problem with the model.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model<span style="color:#f92672">.</span>score(x_train, y_train)
+</span></span></code></pre></div><pre><code>0.537125
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model<span style="color:#f92672">.</span>score(x_test, y_test)
+</span></span></code></pre></div><pre><code>0.5125
+</code></pre>
+<p>Results are expected</p>
+<h3 id="confusion-matrix" >Confusion matrix
+<span>
+    <a href="#confusion-matrix">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>cm <span style="color:#f92672">=</span> confusion_matrix(y_test, y_pred)
+</span></span><span style="display:flex;"><span>font_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>))
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>imshow(cm)
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>grid(<span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#39;Predicted outputs&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;purple&#39;</span>)
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#39;Actual outputs&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;purple&#39;</span>)
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>xaxis<span style="color:#f92672">.</span>set(ticks<span style="color:#f92672">=</span>range(len(cm)))
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>yaxis<span style="color:#f92672">.</span>set(ticks<span style="color:#f92672">=</span>range(len(cm)))
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ax.set_ylim(0, 1)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(cm)):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(cm)):
+</span></span><span style="display:flex;"><span>        ax<span style="color:#f92672">.</span>text(j, i, cm[i, j], ha<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;center&#39;</span>, va<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;center&#39;</span>, color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;purple&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img src="logistic_regression_files/logistic_regression_66_0.png" alt="png"></p>
+<p>Because the data is randomized it makes the model is accurate about 50% of the time.</p>
+<h3 id="printing-the-classification-report" >Printing the Classification Report
+<span>
+    <a href="#printing-the-classification-report">
+        <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
+    </a>
+</span>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(classification_report(y_test, y_pred))
+</span></span></code></pre></div><pre><code>              precision    recall  f1-score   support
+
+           0       0.52      0.40      0.45       999
+           1       0.51      0.63      0.56      1001
+
+    accuracy                           0.51      2000
+   macro avg       0.51      0.51      0.51      2000
+weighted avg       0.51      0.51      0.51      2000
+</code></pre>
+
+        </div>
+        
+
+    
+
+
+<div class="post-info">
+
+    
+        <div class="post-date dt-published">2022-06-17</div>
+    
+
+    <a class="post-hidden-url u-url" href="https://blog.jnapolitano.io/posts/logistic_regression_mockup/">https://blog.jnapolitano.io/posts/logistic_regression_mockup/</a>
+    <a href="https://blog.jnapolitano.io" class="p-name p-author post-hidden-author h-card" rel="me">Justin Napolitano</a>
+
+
+    <div class="post-taxonomies">
+        
+        
+        
+            <ul class="post-categories">
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/categories/python/">Python</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/categories/tutorials/">Tutorials</a></li>
+                
+                    
+                    <li><a href="">Quantitative Analysis</a></li>
+                
+            </ul>
+        
+        
+            <ul class="post-tags">
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/julia/">#julia</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/numerical-computing/">#numerical-computing</a></li>
+                
+                    
+                    <li><a href="">#Logistic Regression</a></li>
+                
+                    
+                    <li><a href="https://blog.jnapolitano.io/tags/statistics/">#statistics</a></li>
+                
+            </ul>
+        
+    </div>
+</div>
+
+        <hr/>
+        
+        <hr/>
+    </article>
+
+
+
+    
+        
+        
+            <h3 class="read-next-title">Read next</h3>
+            <ul class="read-next-posts">
+                
+                <li><a href="/posts/spearman_rank_julia/">Spearman Rank in Standard Julia</a></li>
+                
+                <li><a href="/posts/cost-of-living-projections/">Annual Cost of Living Monte Carlo Models</a></li>
+                
+                <li><a href="/posts/propensity_scoring/">Churn Modelling Marketing Data with Julia</a></li>
+                
+                <li><a href="/posts/markov-models-julia/">Markov Chains in Julia</a></li>
+                
+                <li><a href="/posts/pi-with-julia/">Quantitative Julia Problems</a></li>
+                
+            </ul>
+        
+    
+
+    
+
+    
+        
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jnapolitano-io" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+
+
+
+
+
+    
+
+        </main>
+        
+            <footer class="common-footer">
+    
+    
+
+    <div class="common-footer-bottom">
+        
+        <div class="copyright">
+            <p>© Justin Napolitano, 2022<br>
+            Maintained by Justin Napolitano.<br>
+            
+            </p>  
+        </div> 
+
+        
+
+    
+
+
+
+    <button class="theme-switcher">
+        Dark theme
+    </button>
+
+
+<script>
+const STORAGE_KEY = 'user-color-scheme'
+const defaultTheme = "auto"
+
+let currentTheme
+let switchButton
+let autoDefinedScheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+const autoChangeScheme = e => {
+    currentTheme = e.matches ? 'dark' : 'light'
+    document.documentElement.setAttribute('data-theme', currentTheme)
+    changeButtonText()
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    switchButton = document.querySelector('.theme-switcher')
+    currentTheme = detectCurrentScheme()
+    if (currentTheme == 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark')
+    }
+    if (currentTheme == 'auto') {
+        autoChangeScheme(autoDefinedScheme);
+        autoDefinedScheme.addListener(autoChangeScheme);
+    }
+
+    if (switchButton) {
+        changeButtonText()
+        switchButton.addEventListener('click', switchTheme, false)
+    }
+  
+    showContent()
+})
+
+function detectCurrentScheme() {
+    if (localStorage.getItem(STORAGE_KEY)) {
+        return localStorage.getItem(STORAGE_KEY)
+    } 
+    if (defaultTheme) {
+        return defaultTheme
+    } 
+    if (!window.matchMedia) {
+        return 'light'
+    } 
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark'
+    }
+    return 'light'
+}
+
+function changeButtonText()
+{   
+    if (switchButton) {
+        switchButton.textContent = currentTheme == 'dark' ?  "Light theme" : "Dark theme"
+    }
+}
+
+function switchTheme(e) {
+    if (currentTheme == 'dark') {
+        localStorage.setItem(STORAGE_KEY, 'light')
+        document.documentElement.setAttribute('data-theme', 'light')
+        currentTheme = 'light'
+    } else {
+        localStorage.setItem(STORAGE_KEY, 'dark')
+        document.documentElement.setAttribute('data-theme', 'dark')
+        currentTheme = 'dark'
+    }
+    changeButtonText()
+}
+
+function showContent() {
+    document.body.style.visibility = 'visible';
+    document.body.style.opacity = 1;
+}
+</script>   
+    </div>
+
+    <p class="h-card vcard">
+
+    <a href=https://blog.jnapolitano.io class="p-name u-url url fn" rel="me">Justin Napolitano</a> 
+
+     
+        /
+        <a class="p-email u-email email" rel="me" href="mailto:justin@jnapolitano.io">justin@jnapolitano.io</a>
+    
+
+     
+        <img class="u-photo" src="/images/me.png" />
+    
+</p> 
+</footer>
+
+        
+    </div>
+</body>
+</html>

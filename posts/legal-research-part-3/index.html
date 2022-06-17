@@ -75,7 +75,7 @@
     
 
     
-        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
     
 
 
@@ -503,505 +503,505 @@ if (!doNotTrack) {
     </a>
 </span>
 </h3><p>I&rsquo;ve included the entire model below.  Review my <a href="https://docs.jnapolitano.io/parts/ml-ai/tensorflow/project-supcourt-tensorflow/docs/SupremeCourtPredictionsCase/index.html">documentation site</a> for more detail.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e">#supremeCourtPrediction.py</span>
-<span style="color:#75715e">#a program that uses the segal and spaeth dataset to predict the outcomes of cases</span>
-
-
-<span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-
-<span style="color:#f92672">import</span> tensorflow <span style="color:#66d9ef">as</span> tf
-
-<span style="color:#f92672">import</span> math
-
-<span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-
-<span style="color:#f92672">import</span> shap
-shap<span style="color:#f92672">.</span>initjs()
-
-<span style="color:#f92672">import</span> os 
-<span style="color:#f92672">import</span> csv
-<span style="color:#f92672">import</span> datetime
-
-<span style="color:#f92672">from</span> tensorflow <span style="color:#f92672">import</span> feature_column
-<span style="color:#f92672">from</span> tensorflow.keras <span style="color:#f92672">import</span> layers
-<span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split
-
-<span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> permutations 
-
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_environmental_variables</span>():
-    cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
-    log_dir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#34;logs/fit/&#34;</span>) <span style="color:#f92672">+</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">-%H%M%S&#34;</span>)
-    <span style="color:#66d9ef">return</span> cwd, log_dir
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_data</span>(cwd):
-    data_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;citation.csv&#39;</span>) 
-    drop_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;drop&#39;</span>,<span style="color:#e6db74">&#39;drop.txt&#39;</span>)
-    <span style="color:#75715e">#print(path)</span>
-    dataframe <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(data_path,encoding<span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;unicode_escape&#39;</span>)
-    <span style="color:#75715e">#print(dataframe.head())</span>
-    
-    <span style="color:#66d9ef">with</span> open(drop_path) <span style="color:#66d9ef">as</span> fp:
-        <span style="color:#66d9ef">for</span> cnt, line <span style="color:#f92672">in</span> enumerate(fp):
-            <span style="color:#75715e">#print(&#34;Dropping {} from dataframe&#34;.format(line))</span>
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#34;&#39;&#34;</span>)
-
-            dataframe<span style="color:#f92672">.</span>drop(line,axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    dataframe<span style="color:#f92672">.</span>fillna(<span style="color:#ae81ff">0</span>, inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    print(dataframe)
-    <span style="color:#75715e">#dataframe.issue = dataframe.astype({&#39;issue&#39;: &#39;str&#39;})</span>
-    <span style="color:#75715e">#dataframe[issue] = dataframe[issue].astype(str)</span>
-    <span style="color:#75715e">#print(dataframe)</span>
-    <span style="color:#75715e">#print(dataframe.head())</span>
-    <span style="color:#66d9ef">return</span> dataframe
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">split_datframe</span>(dataframe):
-    train, test <span style="color:#f92672">=</span> train_test_split(dataframe, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
-    train, val <span style="color:#f92672">=</span> train_test_split(train, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
-    print(len(train), <span style="color:#e6db74">&#39;train examples&#39;</span>)
-    print(len(val), <span style="color:#e6db74">&#39;validation examples&#39;</span>)
-    print(len(test), <span style="color:#e6db74">&#39;test examples&#39;</span>)
-    <span style="color:#66d9ef">return</span> train, test, val
-
-
-    <span style="color:#75715e"># A utility method to create a tf.data dataset from a Pandas Dataframe</span>
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">df_to_dataset</span>(dataframe, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>):
-    dataframe <span style="color:#f92672">=</span> dataframe<span style="color:#f92672">.</span>copy()
-    labels <span style="color:#f92672">=</span> dataframe<span style="color:#f92672">.</span>pop(<span style="color:#e6db74">&#39;declarationUncon&#39;</span>)
-    ds <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>Dataset<span style="color:#f92672">.</span>from_tensor_slices((dict(dataframe), labels))
-    <span style="color:#66d9ef">if</span> shuffle:
-        ds <span style="color:#f92672">=</span> ds<span style="color:#f92672">.</span>shuffle(buffer_size<span style="color:#f92672">=</span>len(dataframe))
-    ds <span style="color:#f92672">=</span> ds<span style="color:#f92672">.</span>batch(batch_size)
-    print(ds)
-    <span style="color:#66d9ef">return</span> ds
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_input_pipeline</span>(train, test, val, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
-    train_ds <span style="color:#f92672">=</span> df_to_dataset(train, batch_size<span style="color:#f92672">=</span>batch_size)
-    val_ds <span style="color:#f92672">=</span> df_to_dataset(val, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, batch_size<span style="color:#f92672">=</span>batch_size)
-    test_ds <span style="color:#f92672">=</span> df_to_dataset(test, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, batch_size<span style="color:#f92672">=</span>batch_size)
-    <span style="color:#66d9ef">return</span> train_ds, val_ds, test_ds
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_feature_layer</span>(cwd): <span style="color:#75715e">#select the columns for analysis from dataset</span>
-    feature_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;use&#39;</span>,<span style="color:#e6db74">&#39;features.txt&#39;</span>)
-    dict_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;use&#39;</span>)
-    feature_columns <span style="color:#f92672">=</span> []
-    
-    <span style="color:#75715e">#embedded columns</span>
-    <span style="color:#66d9ef">with</span> open(feature_path) <span style="color:#66d9ef">as</span> fp:
-        <span style="color:#66d9ef">for</span> cnt, line <span style="color:#f92672">in</span> enumerate(fp):
-            <span style="color:#75715e">#print(&#34;Adding {} to features&#34;.format(line))</span>
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#34;&#39;&#34;</span>)
-
-            print(cnt)   
-            print(line)
-
-            indicator <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>numeric_column(line)
-            
-            <span style="color:#75715e">#feature_column.categorical_column_with_vocabulary_file(</span>
-            <span style="color:#75715e">#            key = line, vocabulary_file = os.path.join(dict_path,&#34;{}.txt&#34;.format(line)), default_value=0)</span>
-
-            print(indicator)
-            feature_columns<span style="color:#f92672">.</span>append(indicator)
-
-
-            <span style="color:#75715e">#feature_columns.append(feature_column.embedding_column(indicator, dimension=8))</span>
-
-    
-    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>crossed_column([<span style="color:#e6db74">&#39;issue&#39;</span>, <span style="color:#e6db74">&#39;issueArea&#39;</span>, <span style="color:#e6db74">&#39;naturalCourt&#39;</span>], hash_bucket_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
-    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>indicator_column(crossed_feature)
-    feature_columns<span style="color:#f92672">.</span>append(crossed_feature)
-
-
-    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>crossed_column([<span style="color:#e6db74">&#39;issue&#39;</span>, <span style="color:#e6db74">&#39;naturalCourt&#39;</span>], hash_bucket_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
-    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>indicator_column(crossed_feature)
-    feature_columns<span style="color:#f92672">.</span>append(crossed_feature)
-
-    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>crossed_column([<span style="color:#e6db74">&#39;issueArea&#39;</span>, <span style="color:#e6db74">&#39;naturalCourt&#39;</span>],hash_bucket_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
-    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>indicator_column(crossed_feature)
-    feature_columns<span style="color:#f92672">.</span>append(crossed_feature)
-    
-   <span style="color:#75715e"># court_buckets = feature_column.bucketized_column(naturalCourt, boundaries=[18, 25, 30, 35, 40, 45, 50, 55, 60, 65])</span>
-
-    <span style="color:#75715e">#print(feature_columns)</span>
-    feature_layer <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>DenseFeatures(feature_columns)
-    <span style="color:#75715e">#for item in feature_columns:</span>
-    <span style="color:#75715e">#    print(item)</span>
-    <span style="color:#75715e">#    print(&#34;\n&#34;)</span>
-
-    <span style="color:#66d9ef">return</span> feature_layer
-
-     
-    <span style="color:#75715e">#crossed cols</span>
-
-
-    <span style="color:#75715e">#categorical_columns </span>
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">understand_input_pipeline</span>(train_ds):
-    <span style="color:#66d9ef">for</span> feature_batch, label_batch <span style="color:#f92672">in</span> train_ds<span style="color:#f92672">.</span>take(<span style="color:#ae81ff">1</span>):
-        print(<span style="color:#e6db74">&#39;Every feature:&#39;</span>, list(feature_batch<span style="color:#f92672">.</span>keys()))
-        <span style="color:#75715e">#print(&#39;A batch of ages:&#39;, feature_batch[&#39;age&#39;])</span>
-        print(<span style="color:#e6db74">&#39;A batch of targets:&#39;</span>, label_batch )
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_model</span>(log_dir,feature_layer, train_ds, val_ds, epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>):
-    
-    model <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>Sequential([
-        feature_layer,
-        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">128</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
-        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">128</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
-        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">1</span>)
-    ])
-
-    model<span style="color:#f92672">.</span>compile(optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;adam&#39;</span>,
-            loss<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>losses<span style="color:#f92672">.</span>BinaryCrossentropy(from_logits<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-            metrics<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;accuracy&#39;</span>, <span style="color:#e6db74">&#39;mae&#39;</span>])
-
-    history <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit(train_ds,
-            validation_data<span style="color:#f92672">=</span>val_ds,
-            epochs<span style="color:#f92672">=</span>epochs)
-
-    loss, accuracy,mae <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>evaluate(test_ds)
-    print(<span style="color:#e6db74">&#34;Accuracy&#34;</span>, accuracy)
-    print(model<span style="color:#f92672">.</span>summary())
-    <span style="color:#66d9ef">return</span> model,history
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_history</span>(history):
-
-    hist <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(history<span style="color:#f92672">.</span>history)
-    print(hist)
-    hist[<span style="color:#e6db74">&#39;epoch&#39;</span>] <span style="color:#f92672">=</span> history<span style="color:#f92672">.</span>epoch
-
-    plt<span style="color:#f92672">.</span>figure()
-    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Epoch&#39;</span>)
-    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Mean Absolute Error&#39;</span>)
-    plt<span style="color:#f92672">.</span>plot(hist[<span style="color:#e6db74">&#39;epoch&#39;</span>], hist[<span style="color:#e6db74">&#39;mae&#39;</span>],
-            label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Train Error&#39;</span>)
-    plt<span style="color:#f92672">.</span>plot(hist[<span style="color:#e6db74">&#39;epoch&#39;</span>], hist[<span style="color:#e6db74">&#39;val_mae&#39;</span>],
-            label <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Val Error&#39;</span>)
-    plt<span style="color:#f92672">.</span>legend()
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">explain_kernal</span>(df_train,model,train_ds):
-    
-    <span style="color:#75715e"># KernelExplainer is a general approach that can work with any ML framework</span>
-    <span style="color:#75715e"># Its inputs are the predictions and training data</span>
-
-    <span style="color:#75715e"># Summarize the training set to accelerate analysis</span>
-    df_train_summary <span style="color:#f92672">=</span> shap<span style="color:#f92672">.</span>kmeans(df_train<span style="color:#f92672">.</span>values, <span style="color:#ae81ff">25</span>)
-
-    <span style="color:#75715e"># Instantiate an explainer with the model predictions and training data summary</span>
-    explainer <span style="color:#f92672">=</span> shap<span style="color:#f92672">.</span>KernelExplainer(model<span style="color:#f92672">.</span>predict, df_train)
-
-
-<span style="color:#75715e"># Extract Shapley values from the explainer</span>
-    <span style="color:#75715e">#shap_values = explainer.shap_values(df_train.values)</span>
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-    cwd, log_dir <span style="color:#f92672">=</span> get_environmental_variables()
-    <span style="color:#75715e">#print(cwd)</span>
-
-    df <span style="color:#f92672">=</span> load_data(cwd)
-
-    train,test,val <span style="color:#f92672">=</span> split_datframe(df)
-    dataset <span style="color:#f92672">=</span> df_to_dataset(df)
-    train_ds, val_ds, test_ds <span style="color:#f92672">=</span> get_input_pipeline(train,test,val,<span style="color:#ae81ff">32</span>)
-    understand_input_pipeline(train_ds)
-    feature_layer <span style="color:#f92672">=</span> get_feature_layer(cwd)
-    model, model_history <span style="color:#f92672">=</span> create_model(log_dir,feature_layer, train_ds, val_ds)
-    plot_history(model_history)
-    <span style="color:#75715e">#print(model.predict(train_ds))</span>
-    <span style="color:#75715e">#print(model.predict)</span>
-    explain_kernal(df,model,train_ds)
-</code></pre></div><h3 id="the-justice-centric-training-pipeline" >The Justice Centric Training Pipeline
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#75715e">#supremeCourtPrediction.py</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#a program that uses the segal and spaeth dataset to predict the outcomes of cases</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> tensorflow <span style="color:#66d9ef">as</span> tf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> shap
+</span></span><span style="display:flex;"><span>shap<span style="color:#f92672">.</span>initjs()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> csv
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> datetime
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tensorflow <span style="color:#f92672">import</span> feature_column
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tensorflow.keras <span style="color:#f92672">import</span> layers
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> permutations 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_environmental_variables</span>():
+</span></span><span style="display:flex;"><span>    cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
+</span></span><span style="display:flex;"><span>    log_dir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#34;logs/fit/&#34;</span>) <span style="color:#f92672">+</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">-%H%M%S&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> cwd, log_dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_data</span>(cwd):
+</span></span><span style="display:flex;"><span>    data_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;citation.csv&#39;</span>) 
+</span></span><span style="display:flex;"><span>    drop_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;drop&#39;</span>,<span style="color:#e6db74">&#39;drop.txt&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(path)</span>
+</span></span><span style="display:flex;"><span>    dataframe <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(data_path,encoding<span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;unicode_escape&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(dataframe.head())</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(drop_path) <span style="color:#66d9ef">as</span> fp:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> cnt, line <span style="color:#f92672">in</span> enumerate(fp):
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#print(&#34;Dropping {} from dataframe&#34;.format(line))</span>
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#34;&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            dataframe<span style="color:#f92672">.</span>drop(line,axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    dataframe<span style="color:#f92672">.</span>fillna(<span style="color:#ae81ff">0</span>, inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    print(dataframe)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#dataframe.issue = dataframe.astype({&#39;issue&#39;: &#39;str&#39;})</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#dataframe[issue] = dataframe[issue].astype(str)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(dataframe)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(dataframe.head())</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dataframe
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">split_datframe</span>(dataframe):
+</span></span><span style="display:flex;"><span>    train, test <span style="color:#f92672">=</span> train_test_split(dataframe, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
+</span></span><span style="display:flex;"><span>    train, val <span style="color:#f92672">=</span> train_test_split(train, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
+</span></span><span style="display:flex;"><span>    print(len(train), <span style="color:#e6db74">&#39;train examples&#39;</span>)
+</span></span><span style="display:flex;"><span>    print(len(val), <span style="color:#e6db74">&#39;validation examples&#39;</span>)
+</span></span><span style="display:flex;"><span>    print(len(test), <span style="color:#e6db74">&#39;test examples&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> train, test, val
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># A utility method to create a tf.data dataset from a Pandas Dataframe</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">df_to_dataset</span>(dataframe, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>):
+</span></span><span style="display:flex;"><span>    dataframe <span style="color:#f92672">=</span> dataframe<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>    labels <span style="color:#f92672">=</span> dataframe<span style="color:#f92672">.</span>pop(<span style="color:#e6db74">&#39;declarationUncon&#39;</span>)
+</span></span><span style="display:flex;"><span>    ds <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>Dataset<span style="color:#f92672">.</span>from_tensor_slices((dict(dataframe), labels))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> shuffle:
+</span></span><span style="display:flex;"><span>        ds <span style="color:#f92672">=</span> ds<span style="color:#f92672">.</span>shuffle(buffer_size<span style="color:#f92672">=</span>len(dataframe))
+</span></span><span style="display:flex;"><span>    ds <span style="color:#f92672">=</span> ds<span style="color:#f92672">.</span>batch(batch_size)
+</span></span><span style="display:flex;"><span>    print(ds)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_input_pipeline</span>(train, test, val, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
+</span></span><span style="display:flex;"><span>    train_ds <span style="color:#f92672">=</span> df_to_dataset(train, batch_size<span style="color:#f92672">=</span>batch_size)
+</span></span><span style="display:flex;"><span>    val_ds <span style="color:#f92672">=</span> df_to_dataset(val, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, batch_size<span style="color:#f92672">=</span>batch_size)
+</span></span><span style="display:flex;"><span>    test_ds <span style="color:#f92672">=</span> df_to_dataset(test, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, batch_size<span style="color:#f92672">=</span>batch_size)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> train_ds, val_ds, test_ds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_feature_layer</span>(cwd): <span style="color:#75715e">#select the columns for analysis from dataset</span>
+</span></span><span style="display:flex;"><span>    feature_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;use&#39;</span>,<span style="color:#e6db74">&#39;features.txt&#39;</span>)
+</span></span><span style="display:flex;"><span>    dict_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;use&#39;</span>)
+</span></span><span style="display:flex;"><span>    feature_columns <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#embedded columns</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(feature_path) <span style="color:#66d9ef">as</span> fp:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> cnt, line <span style="color:#f92672">in</span> enumerate(fp):
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#print(&#34;Adding {} to features&#34;.format(line))</span>
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#34;&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            print(cnt)   
+</span></span><span style="display:flex;"><span>            print(line)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            indicator <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>numeric_column(line)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#feature_column.categorical_column_with_vocabulary_file(</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#            key = line, vocabulary_file = os.path.join(dict_path,&#34;{}.txt&#34;.format(line)), default_value=0)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            print(indicator)
+</span></span><span style="display:flex;"><span>            feature_columns<span style="color:#f92672">.</span>append(indicator)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#feature_columns.append(feature_column.embedding_column(indicator, dimension=8))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>crossed_column([<span style="color:#e6db74">&#39;issue&#39;</span>, <span style="color:#e6db74">&#39;issueArea&#39;</span>, <span style="color:#e6db74">&#39;naturalCourt&#39;</span>], hash_bucket_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>indicator_column(crossed_feature)
+</span></span><span style="display:flex;"><span>    feature_columns<span style="color:#f92672">.</span>append(crossed_feature)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>crossed_column([<span style="color:#e6db74">&#39;issue&#39;</span>, <span style="color:#e6db74">&#39;naturalCourt&#39;</span>], hash_bucket_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>indicator_column(crossed_feature)
+</span></span><span style="display:flex;"><span>    feature_columns<span style="color:#f92672">.</span>append(crossed_feature)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>crossed_column([<span style="color:#e6db74">&#39;issueArea&#39;</span>, <span style="color:#e6db74">&#39;naturalCourt&#39;</span>],hash_bucket_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>    crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>indicator_column(crossed_feature)
+</span></span><span style="display:flex;"><span>    feature_columns<span style="color:#f92672">.</span>append(crossed_feature)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e"># court_buckets = feature_column.bucketized_column(naturalCourt, boundaries=[18, 25, 30, 35, 40, 45, 50, 55, 60, 65])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(feature_columns)</span>
+</span></span><span style="display:flex;"><span>    feature_layer <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>DenseFeatures(feature_columns)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#for item in feature_columns:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#    print(item)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#    print(&#34;\n&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> feature_layer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#crossed cols</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#categorical_columns </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">understand_input_pipeline</span>(train_ds):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> feature_batch, label_batch <span style="color:#f92672">in</span> train_ds<span style="color:#f92672">.</span>take(<span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;Every feature:&#39;</span>, list(feature_batch<span style="color:#f92672">.</span>keys()))
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#print(&#39;A batch of ages:&#39;, feature_batch[&#39;age&#39;])</span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;A batch of targets:&#39;</span>, label_batch )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_model</span>(log_dir,feature_layer, train_ds, val_ds, epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>Sequential([
+</span></span><span style="display:flex;"><span>        feature_layer,
+</span></span><span style="display:flex;"><span>        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">128</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
+</span></span><span style="display:flex;"><span>        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">128</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
+</span></span><span style="display:flex;"><span>        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    ])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>compile(optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;adam&#39;</span>,
+</span></span><span style="display:flex;"><span>            loss<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>losses<span style="color:#f92672">.</span>BinaryCrossentropy(from_logits<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>            metrics<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;accuracy&#39;</span>, <span style="color:#e6db74">&#39;mae&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    history <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit(train_ds,
+</span></span><span style="display:flex;"><span>            validation_data<span style="color:#f92672">=</span>val_ds,
+</span></span><span style="display:flex;"><span>            epochs<span style="color:#f92672">=</span>epochs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    loss, accuracy,mae <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>evaluate(test_ds)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Accuracy&#34;</span>, accuracy)
+</span></span><span style="display:flex;"><span>    print(model<span style="color:#f92672">.</span>summary())
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> model,history
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_history</span>(history):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    hist <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(history<span style="color:#f92672">.</span>history)
+</span></span><span style="display:flex;"><span>    print(hist)
+</span></span><span style="display:flex;"><span>    hist[<span style="color:#e6db74">&#39;epoch&#39;</span>] <span style="color:#f92672">=</span> history<span style="color:#f92672">.</span>epoch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>figure()
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Epoch&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Mean Absolute Error&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(hist[<span style="color:#e6db74">&#39;epoch&#39;</span>], hist[<span style="color:#e6db74">&#39;mae&#39;</span>],
+</span></span><span style="display:flex;"><span>            label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Train Error&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(hist[<span style="color:#e6db74">&#39;epoch&#39;</span>], hist[<span style="color:#e6db74">&#39;val_mae&#39;</span>],
+</span></span><span style="display:flex;"><span>            label <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Val Error&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>legend()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">explain_kernal</span>(df_train,model,train_ds):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># KernelExplainer is a general approach that can work with any ML framework</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Its inputs are the predictions and training data</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Summarize the training set to accelerate analysis</span>
+</span></span><span style="display:flex;"><span>    df_train_summary <span style="color:#f92672">=</span> shap<span style="color:#f92672">.</span>kmeans(df_train<span style="color:#f92672">.</span>values, <span style="color:#ae81ff">25</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Instantiate an explainer with the model predictions and training data summary</span>
+</span></span><span style="display:flex;"><span>    explainer <span style="color:#f92672">=</span> shap<span style="color:#f92672">.</span>KernelExplainer(model<span style="color:#f92672">.</span>predict, df_train)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Extract Shapley values from the explainer</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#shap_values = explainer.shap_values(df_train.values)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    cwd, log_dir <span style="color:#f92672">=</span> get_environmental_variables()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(cwd)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> load_data(cwd)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    train,test,val <span style="color:#f92672">=</span> split_datframe(df)
+</span></span><span style="display:flex;"><span>    dataset <span style="color:#f92672">=</span> df_to_dataset(df)
+</span></span><span style="display:flex;"><span>    train_ds, val_ds, test_ds <span style="color:#f92672">=</span> get_input_pipeline(train,test,val,<span style="color:#ae81ff">32</span>)
+</span></span><span style="display:flex;"><span>    understand_input_pipeline(train_ds)
+</span></span><span style="display:flex;"><span>    feature_layer <span style="color:#f92672">=</span> get_feature_layer(cwd)
+</span></span><span style="display:flex;"><span>    model, model_history <span style="color:#f92672">=</span> create_model(log_dir,feature_layer, train_ds, val_ds)
+</span></span><span style="display:flex;"><span>    plot_history(model_history)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(model.predict(train_ds))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(model.predict)</span>
+</span></span><span style="display:flex;"><span>    explain_kernal(df,model,train_ds)
+</span></span></code></pre></div><h3 id="the-justice-centric-training-pipeline" >The Justice Centric Training Pipeline
 <span>
     <a href="#the-justice-centric-training-pipeline">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
 </h3><p>The entire pipeline is included below.  Review the <a href="https://docs.jnapolitano.io/parts/ml-ai/tensorflow/project-supcourt-tensorflow/docs/SupremeCourtPredictionsJustice/index.html">documentation</a> for greater detail.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#supremeCourtPrediction.py</span>
-<span style="color:#75715e">#a program that uses the segal and spaeth dataset to predict the outcomes of cases</span>
-
-
-<span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-
-<span style="color:#f92672">import</span> tensorflow <span style="color:#66d9ef">as</span> tf
-
-<span style="color:#f92672">import</span> math
-
-<span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-
-<span style="color:#f92672">import</span> shap
-shap<span style="color:#f92672">.</span>initjs()
-
-<span style="color:#f92672">import</span> os 
-<span style="color:#f92672">import</span> csv
-<span style="color:#f92672">import</span> datetime
-
-<span style="color:#f92672">from</span> tensorflow <span style="color:#f92672">import</span> feature_column
-<span style="color:#f92672">from</span> tensorflow.keras <span style="color:#f92672">import</span> layers
-<span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split
-
-<span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> permutations
-<span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> combinations_with_replacement
-
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_environmental_variables</span>():
-    cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
-    log_dir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#34;logs/fit/&#34;</span>) <span style="color:#f92672">+</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">-%H%M%S&#34;</span>)
-    <span style="color:#66d9ef">return</span> cwd, log_dir
-
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_data</span>(cwd):
-    data_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;justice.csv&#39;</span>) 
-    drop_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;drop&#39;</span>,<span style="color:#e6db74">&#39;drop.txt&#39;</span>)
-    target_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;targets.txt&#39;</span>)
-    print(data_path)
-    dataframe <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(data_path,encoding<span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;unicode_escape&#39;</span>)
-    <span style="color:#75715e">#print(dataframe.head())</span>
-    
-    <span style="color:#66d9ef">with</span> open(drop_path) <span style="color:#66d9ef">as</span> fp:
-        <span style="color:#66d9ef">for</span> cnt, line <span style="color:#f92672">in</span> enumerate(fp):
-            <span style="color:#75715e">#print(&#34;Dropping {} from dataframe&#34;.format(line))</span>
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#34;&#39;&#34;</span>)
-
-            dataframe<span style="color:#f92672">.</span>drop(line,axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    dataframe<span style="color:#f92672">.</span>fillna(<span style="color:#ae81ff">0</span>, inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    print(dataframe)
-    <span style="color:#75715e">#dataframe.issue = dataframe.astype({&#39;issue&#39;: &#39;str&#39;})</span>
-    <span style="color:#75715e">#dataframe[issue] = dataframe[issue].astype(str)</span>
-    <span style="color:#75715e">#print(dataframe)</span>
-    <span style="color:#75715e">#print(dataframe.head())</span>
-    <span style="color:#66d9ef">return</span> dataframe
-
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">split_datframe</span>(dataframe):
-    train, test <span style="color:#f92672">=</span> train_test_split(dataframe, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
-    train, val <span style="color:#f92672">=</span> train_test_split(train, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
-    print(len(train), <span style="color:#e6db74">&#39;train examples&#39;</span>)
-    print(len(val), <span style="color:#e6db74">&#39;validation examples&#39;</span>)
-    print(len(test), <span style="color:#e6db74">&#39;test examples&#39;</span>)
-    <span style="color:#66d9ef">return</span> train, test, val
-
-
-    <span style="color:#75715e"># A utility method to create a tf.data dataset from a Pandas Dataframe</span>
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">df_to_dataset</span>(dataframe, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>):
-    dataframe <span style="color:#f92672">=</span> dataframe<span style="color:#f92672">.</span>copy()
-    labels <span style="color:#f92672">=</span> dataframe<span style="color:#f92672">.</span>pop(<span style="color:#e6db74">&#39;vote&#39;</span>)
-    ds <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>Dataset<span style="color:#f92672">.</span>from_tensor_slices((dict(dataframe), labels))
-    <span style="color:#66d9ef">if</span> shuffle:
-        ds <span style="color:#f92672">=</span> ds<span style="color:#f92672">.</span>shuffle(buffer_size<span style="color:#f92672">=</span>len(dataframe))
-    ds <span style="color:#f92672">=</span> ds<span style="color:#f92672">.</span>batch(batch_size)
-    print(ds)
-    <span style="color:#66d9ef">return</span> ds
-
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_input_pipeline</span>(train, test, val, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
-    train_ds <span style="color:#f92672">=</span> df_to_dataset(train, batch_size<span style="color:#f92672">=</span>batch_size)
-    val_ds <span style="color:#f92672">=</span> df_to_dataset(val, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, batch_size<span style="color:#f92672">=</span>batch_size)
-    test_ds <span style="color:#f92672">=</span> df_to_dataset(test, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, batch_size<span style="color:#f92672">=</span>batch_size)
-    <span style="color:#66d9ef">return</span> train_ds, val_ds, test_ds
-
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_feature_layer</span>(cwd): <span style="color:#75715e">#select the columns for analysis from dataset</span>
-    feature_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;use&#39;</span>,<span style="color:#e6db74">&#39;features.txt&#39;</span>)
-    dict_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;use&#39;</span>)
-    feature_columns <span style="color:#f92672">=</span> []
-    feature_list <span style="color:#f92672">=</span> []
-    <span style="color:#75715e">#embedded columns</span>
-    <span style="color:#66d9ef">with</span> open(feature_path) <span style="color:#66d9ef">as</span> fp:
-        <span style="color:#66d9ef">for</span> cnt, line <span style="color:#f92672">in</span> enumerate(fp):
-            <span style="color:#75715e">#print(&#34;Adding {} to features&#34;.format(line))</span>
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
-            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#34;&#39;&#34;</span>)
-
-            print(cnt)   
-            print(line)
-            feature_list<span style="color:#f92672">.</span>append(line)
-
-            indicator <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>numeric_column(line)
-            
-            <span style="color:#75715e">#feature_column.categorical_column_with_vocabulary_file(</span>
-            <span style="color:#75715e">#            key = line, vocabulary_file = os.path.join(dict_path,&#34;{}.txt&#34;.format(line)), default_value=0)</span>
-
-            print(indicator)
-            feature_columns<span style="color:#f92672">.</span>append(indicator)
-
-
-            <span style="color:#75715e">#feature_columns.append(feature_column.embedding_column(indicator, dimension=8))</span>
-
-    feature_comb <span style="color:#f92672">=</span> combinations_with_replacement(feature_list, <span style="color:#ae81ff">2</span>) 
-    lst <span style="color:#f92672">=</span> list(feature_comb)
-    limit <span style="color:#f92672">=</span> len(feature_list)
-    print(limit)
-    j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    k <span style="color:#f92672">=</span> limit <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
-    lookup <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(limit):
-        lookup<span style="color:#f92672">.</span>append(i<span style="color:#f92672">+</span>j)
-        j <span style="color:#f92672">=</span> j <span style="color:#f92672">+</span> k
-        k <span style="color:#f92672">=</span> k <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> 
-
-
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(lst)):
-        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">in</span> lookup:
-            <span style="color:#66d9ef">continue</span>
-        <span style="color:#66d9ef">else</span>:
-            one, two <span style="color:#f92672">=</span> lst[i]
-            crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>crossed_column([one, two], hash_bucket_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
-            crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>indicator_column(crossed_feature)
-            feature_columns<span style="color:#f92672">.</span>append(crossed_feature)
-
-    <span style="color:#e6db74">&#34;&#34;&#34;
-</span><span style="color:#e6db74">    crossed_feature = feature_column.crossed_column([&#39;issue&#39;, &#39;naturalCourt&#39;], hash_bucket_size=1000)
-</span><span style="color:#e6db74">    crossed_feature = feature_column.indicator_column(crossed_feature)
-</span><span style="color:#e6db74">    feature_columns.append(crossed_feature)
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">    crossed_feature = feature_column.crossed_column([&#39;issueArea&#39;, &#39;naturalCourt&#39;],hash_bucket_size=1000)
-</span><span style="color:#e6db74">    crossed_feature = feature_column.indicator_column(crossed_feature)
-</span><span style="color:#e6db74">    feature_columns.append(crossed_feature)
-</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-   <span style="color:#75715e"># court_buckets = feature_column.bucketized_column(naturalCourt, boundaries=[18, 25, 30, 35, 40, 45, 50, 55, 60, 65])</span>
-
-    <span style="color:#75715e">#print(feature_columns)</span>
-    feature_layer <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>DenseFeatures(feature_columns)
-    <span style="color:#75715e">#for item in feature_columns:</span>
-    <span style="color:#75715e">#    print(item)</span>
-    <span style="color:#75715e">#    print(&#34;\n&#34;)</span>
-
-    <span style="color:#66d9ef">return</span> feature_layer
-
-     
-    <span style="color:#75715e">#crossed cols</span>
-
-
-    <span style="color:#75715e">#categorical_columns </span>
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">understand_input_pipeline</span>(train_ds):
-    <span style="color:#66d9ef">for</span> feature_batch, label_batch <span style="color:#f92672">in</span> train_ds<span style="color:#f92672">.</span>take(<span style="color:#ae81ff">1</span>):
-        print(<span style="color:#e6db74">&#39;Every feature:&#39;</span>, list(feature_batch<span style="color:#f92672">.</span>keys()))
-        <span style="color:#75715e">#print(&#39;A batch of ages:&#39;, feature_batch[&#39;age&#39;])</span>
-        print(<span style="color:#e6db74">&#39;A batch of targets:&#39;</span>, label_batch )
-
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_model</span>(log_dir,feature_layer, train_ds, val_ds, epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>):
-    
-    model <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>Sequential([
-        feature_layer,
-        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">128</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
-        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">128</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
-        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">1</span>)
-    ])
-
-    model<span style="color:#f92672">.</span>compile(optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;adam&#39;</span>,
-            loss<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>losses<span style="color:#f92672">.</span>BinaryCrossentropy(from_logits<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
-            metrics<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;accuracy&#39;</span>, <span style="color:#e6db74">&#39;mae&#39;</span>])
-
-    history <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit(train_ds,
-            validation_data<span style="color:#f92672">=</span>val_ds,
-            epochs<span style="color:#f92672">=</span>epochs)
-
-    loss, accuracy,mae <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>evaluate(test_ds)
-    print(<span style="color:#e6db74">&#34;Accuracy&#34;</span>, accuracy)
-    print(model<span style="color:#f92672">.</span>summary())
-    <span style="color:#66d9ef">return</span> model,history
-
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_history</span>(history):
-
-    hist <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(history<span style="color:#f92672">.</span>history)
-    print(hist)
-    hist[<span style="color:#e6db74">&#39;epoch&#39;</span>] <span style="color:#f92672">=</span> history<span style="color:#f92672">.</span>epoch
-
-    plt<span style="color:#f92672">.</span>figure()
-    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Epoch&#39;</span>)
-    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Mean Absolute Error&#39;</span>)
-    plt<span style="color:#f92672">.</span>plot(hist[<span style="color:#e6db74">&#39;epoch&#39;</span>], hist[<span style="color:#e6db74">&#39;mae&#39;</span>],
-            label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Train Error&#39;</span>)
-    plt<span style="color:#f92672">.</span>plot(hist[<span style="color:#e6db74">&#39;epoch&#39;</span>], hist[<span style="color:#e6db74">&#39;val_mae&#39;</span>],
-            label <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Val Error&#39;</span>)
-    plt<span style="color:#f92672">.</span>legend()
-
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">explain_kernal</span>(model,train_ds):
-    model<span style="color:#f92672">.</span>predict(train_ds)
-    <span style="color:#75715e"># KernelExplainer is a general approach that can work with any ML framework</span>
-    <span style="color:#75715e"># Its inputs are the predictions and training data</span>
-
-    <span style="color:#75715e"># Summarize the training set to accelerate analysis</span>
-    df_train_summary <span style="color:#f92672">=</span> shap<span style="color:#f92672">.</span>kmeans(train_ds<span style="color:#f92672">.</span>values, <span style="color:#ae81ff">25</span>)
-    <span style="color:#75715e">#print(df_train_summary)</span>
-    <span style="color:#75715e">#model.predict(df_train_summary)</span>
-    <span style="color:#75715e"># Instantiate an explainer with the model predictions and training data summary</span>
-    explainer <span style="color:#f92672">=</span> shap<span style="color:#f92672">.</span>KernelExplainer(model<span style="color:#f92672">.</span>predict, train_ds)
-
-
-<span style="color:#75715e"># Extract Shapley values from the explainer</span>
-    <span style="color:#75715e">#shap_values = explainer.shap_values(df_train.values)</span>
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-    cwd, log_dir <span style="color:#f92672">=</span> get_environmental_variables()
-    print(cwd)
-
-
-    df <span style="color:#f92672">=</span> load_data(cwd)
-
-    train,test,val <span style="color:#f92672">=</span> split_datframe(df)
-    dataset <span style="color:#f92672">=</span> df_to_dataset(df)
-    train_ds, val_ds, test_ds <span style="color:#f92672">=</span> get_input_pipeline(train,test,val,<span style="color:#ae81ff">32</span>)
-    understand_input_pipeline(train_ds)
-    feature_layer <span style="color:#f92672">=</span> get_feature_layer(cwd)
-    model, model_history <span style="color:#f92672">=</span> create_model(log_dir,feature_layer, train_ds, val_ds)
-    <span style="color:#75715e">#plot_history(model_history)</span>
-    <span style="color:#75715e">#print(model.predict(train_ds))</span>
-    <span style="color:#75715e">#print(model.predict)</span>
-    <span style="color:#75715e">#explain_kernal(model,train_ds)</span>
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#supremeCourtPrediction.py</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#a program that uses the segal and spaeth dataset to predict the outcomes of cases</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> tensorflow <span style="color:#66d9ef">as</span> tf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> math
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> seaborn <span style="color:#66d9ef">as</span> sns
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> shap
+</span></span><span style="display:flex;"><span>shap<span style="color:#f92672">.</span>initjs()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> csv
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> datetime
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tensorflow <span style="color:#f92672">import</span> feature_column
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tensorflow.keras <span style="color:#f92672">import</span> layers
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> permutations
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> combinations_with_replacement
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_environmental_variables</span>():
+</span></span><span style="display:flex;"><span>    cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
+</span></span><span style="display:flex;"><span>    log_dir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#34;logs/fit/&#34;</span>) <span style="color:#f92672">+</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">-%H%M%S&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> cwd, log_dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_data</span>(cwd):
+</span></span><span style="display:flex;"><span>    data_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;justice.csv&#39;</span>) 
+</span></span><span style="display:flex;"><span>    drop_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;drop&#39;</span>,<span style="color:#e6db74">&#39;drop.txt&#39;</span>)
+</span></span><span style="display:flex;"><span>    target_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;targets.txt&#39;</span>)
+</span></span><span style="display:flex;"><span>    print(data_path)
+</span></span><span style="display:flex;"><span>    dataframe <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(data_path,encoding<span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;unicode_escape&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(dataframe.head())</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(drop_path) <span style="color:#66d9ef">as</span> fp:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> cnt, line <span style="color:#f92672">in</span> enumerate(fp):
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#print(&#34;Dropping {} from dataframe&#34;.format(line))</span>
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#34;&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            dataframe<span style="color:#f92672">.</span>drop(line,axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    dataframe<span style="color:#f92672">.</span>fillna(<span style="color:#ae81ff">0</span>, inplace<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    print(dataframe)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#dataframe.issue = dataframe.astype({&#39;issue&#39;: &#39;str&#39;})</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#dataframe[issue] = dataframe[issue].astype(str)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(dataframe)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(dataframe.head())</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dataframe
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">split_datframe</span>(dataframe):
+</span></span><span style="display:flex;"><span>    train, test <span style="color:#f92672">=</span> train_test_split(dataframe, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
+</span></span><span style="display:flex;"><span>    train, val <span style="color:#f92672">=</span> train_test_split(train, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
+</span></span><span style="display:flex;"><span>    print(len(train), <span style="color:#e6db74">&#39;train examples&#39;</span>)
+</span></span><span style="display:flex;"><span>    print(len(val), <span style="color:#e6db74">&#39;validation examples&#39;</span>)
+</span></span><span style="display:flex;"><span>    print(len(test), <span style="color:#e6db74">&#39;test examples&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> train, test, val
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># A utility method to create a tf.data dataset from a Pandas Dataframe</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">df_to_dataset</span>(dataframe, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>):
+</span></span><span style="display:flex;"><span>    dataframe <span style="color:#f92672">=</span> dataframe<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>    labels <span style="color:#f92672">=</span> dataframe<span style="color:#f92672">.</span>pop(<span style="color:#e6db74">&#39;vote&#39;</span>)
+</span></span><span style="display:flex;"><span>    ds <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>Dataset<span style="color:#f92672">.</span>from_tensor_slices((dict(dataframe), labels))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> shuffle:
+</span></span><span style="display:flex;"><span>        ds <span style="color:#f92672">=</span> ds<span style="color:#f92672">.</span>shuffle(buffer_size<span style="color:#f92672">=</span>len(dataframe))
+</span></span><span style="display:flex;"><span>    ds <span style="color:#f92672">=</span> ds<span style="color:#f92672">.</span>batch(batch_size)
+</span></span><span style="display:flex;"><span>    print(ds)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_input_pipeline</span>(train, test, val, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>):
+</span></span><span style="display:flex;"><span>    train_ds <span style="color:#f92672">=</span> df_to_dataset(train, batch_size<span style="color:#f92672">=</span>batch_size)
+</span></span><span style="display:flex;"><span>    val_ds <span style="color:#f92672">=</span> df_to_dataset(val, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, batch_size<span style="color:#f92672">=</span>batch_size)
+</span></span><span style="display:flex;"><span>    test_ds <span style="color:#f92672">=</span> df_to_dataset(test, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, batch_size<span style="color:#f92672">=</span>batch_size)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> train_ds, val_ds, test_ds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_feature_layer</span>(cwd): <span style="color:#75715e">#select the columns for analysis from dataset</span>
+</span></span><span style="display:flex;"><span>    feature_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;use&#39;</span>,<span style="color:#e6db74">&#39;features.txt&#39;</span>)
+</span></span><span style="display:flex;"><span>    dict_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(cwd,<span style="color:#e6db74">&#39;data&#39;</span>,<span style="color:#e6db74">&#39;features&#39;</span>,<span style="color:#e6db74">&#39;use&#39;</span>)
+</span></span><span style="display:flex;"><span>    feature_columns <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    feature_list <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#embedded columns</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(feature_path) <span style="color:#66d9ef">as</span> fp:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> cnt, line <span style="color:#f92672">in</span> enumerate(fp):
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#print(&#34;Adding {} to features&#34;.format(line))</span>
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>            line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>strip(<span style="color:#e6db74">&#34;&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            print(cnt)   
+</span></span><span style="display:flex;"><span>            print(line)
+</span></span><span style="display:flex;"><span>            feature_list<span style="color:#f92672">.</span>append(line)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            indicator <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>numeric_column(line)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#feature_column.categorical_column_with_vocabulary_file(</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#            key = line, vocabulary_file = os.path.join(dict_path,&#34;{}.txt&#34;.format(line)), default_value=0)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            print(indicator)
+</span></span><span style="display:flex;"><span>            feature_columns<span style="color:#f92672">.</span>append(indicator)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#feature_columns.append(feature_column.embedding_column(indicator, dimension=8))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    feature_comb <span style="color:#f92672">=</span> combinations_with_replacement(feature_list, <span style="color:#ae81ff">2</span>) 
+</span></span><span style="display:flex;"><span>    lst <span style="color:#f92672">=</span> list(feature_comb)
+</span></span><span style="display:flex;"><span>    limit <span style="color:#f92672">=</span> len(feature_list)
+</span></span><span style="display:flex;"><span>    print(limit)
+</span></span><span style="display:flex;"><span>    j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    k <span style="color:#f92672">=</span> limit <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    lookup <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(limit):
+</span></span><span style="display:flex;"><span>        lookup<span style="color:#f92672">.</span>append(i<span style="color:#f92672">+</span>j)
+</span></span><span style="display:flex;"><span>        j <span style="color:#f92672">=</span> j <span style="color:#f92672">+</span> k
+</span></span><span style="display:flex;"><span>        k <span style="color:#f92672">=</span> k <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(lst)):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">in</span> lookup:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            one, two <span style="color:#f92672">=</span> lst[i]
+</span></span><span style="display:flex;"><span>            crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>crossed_column([one, two], hash_bucket_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>            crossed_feature <span style="color:#f92672">=</span> feature_column<span style="color:#f92672">.</span>indicator_column(crossed_feature)
+</span></span><span style="display:flex;"><span>            feature_columns<span style="color:#f92672">.</span>append(crossed_feature)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    crossed_feature = feature_column.crossed_column([&#39;issue&#39;, &#39;naturalCourt&#39;], hash_bucket_size=1000)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    crossed_feature = feature_column.indicator_column(crossed_feature)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    feature_columns.append(crossed_feature)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    crossed_feature = feature_column.crossed_column([&#39;issueArea&#39;, &#39;naturalCourt&#39;],hash_bucket_size=1000)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    crossed_feature = feature_column.indicator_column(crossed_feature)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    feature_columns.append(crossed_feature)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e"># court_buckets = feature_column.bucketized_column(naturalCourt, boundaries=[18, 25, 30, 35, 40, 45, 50, 55, 60, 65])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(feature_columns)</span>
+</span></span><span style="display:flex;"><span>    feature_layer <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>DenseFeatures(feature_columns)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#for item in feature_columns:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#    print(item)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#    print(&#34;\n&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> feature_layer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#crossed cols</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#categorical_columns </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">understand_input_pipeline</span>(train_ds):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> feature_batch, label_batch <span style="color:#f92672">in</span> train_ds<span style="color:#f92672">.</span>take(<span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;Every feature:&#39;</span>, list(feature_batch<span style="color:#f92672">.</span>keys()))
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#print(&#39;A batch of ages:&#39;, feature_batch[&#39;age&#39;])</span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;A batch of targets:&#39;</span>, label_batch )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_model</span>(log_dir,feature_layer, train_ds, val_ds, epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>Sequential([
+</span></span><span style="display:flex;"><span>        feature_layer,
+</span></span><span style="display:flex;"><span>        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">128</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
+</span></span><span style="display:flex;"><span>        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">128</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
+</span></span><span style="display:flex;"><span>        layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    ])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>compile(optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;adam&#39;</span>,
+</span></span><span style="display:flex;"><span>            loss<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>losses<span style="color:#f92672">.</span>BinaryCrossentropy(from_logits<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>),
+</span></span><span style="display:flex;"><span>            metrics<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;accuracy&#39;</span>, <span style="color:#e6db74">&#39;mae&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    history <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit(train_ds,
+</span></span><span style="display:flex;"><span>            validation_data<span style="color:#f92672">=</span>val_ds,
+</span></span><span style="display:flex;"><span>            epochs<span style="color:#f92672">=</span>epochs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    loss, accuracy,mae <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>evaluate(test_ds)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Accuracy&#34;</span>, accuracy)
+</span></span><span style="display:flex;"><span>    print(model<span style="color:#f92672">.</span>summary())
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> model,history
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">plot_history</span>(history):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    hist <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(history<span style="color:#f92672">.</span>history)
+</span></span><span style="display:flex;"><span>    print(hist)
+</span></span><span style="display:flex;"><span>    hist[<span style="color:#e6db74">&#39;epoch&#39;</span>] <span style="color:#f92672">=</span> history<span style="color:#f92672">.</span>epoch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>figure()
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Epoch&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Mean Absolute Error&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(hist[<span style="color:#e6db74">&#39;epoch&#39;</span>], hist[<span style="color:#e6db74">&#39;mae&#39;</span>],
+</span></span><span style="display:flex;"><span>            label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Train Error&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>plot(hist[<span style="color:#e6db74">&#39;epoch&#39;</span>], hist[<span style="color:#e6db74">&#39;val_mae&#39;</span>],
+</span></span><span style="display:flex;"><span>            label <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Val Error&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>legend()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">explain_kernal</span>(model,train_ds):
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">.</span>predict(train_ds)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># KernelExplainer is a general approach that can work with any ML framework</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Its inputs are the predictions and training data</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Summarize the training set to accelerate analysis</span>
+</span></span><span style="display:flex;"><span>    df_train_summary <span style="color:#f92672">=</span> shap<span style="color:#f92672">.</span>kmeans(train_ds<span style="color:#f92672">.</span>values, <span style="color:#ae81ff">25</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(df_train_summary)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#model.predict(df_train_summary)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Instantiate an explainer with the model predictions and training data summary</span>
+</span></span><span style="display:flex;"><span>    explainer <span style="color:#f92672">=</span> shap<span style="color:#f92672">.</span>KernelExplainer(model<span style="color:#f92672">.</span>predict, train_ds)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Extract Shapley values from the explainer</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#shap_values = explainer.shap_values(df_train.values)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    cwd, log_dir <span style="color:#f92672">=</span> get_environmental_variables()
+</span></span><span style="display:flex;"><span>    print(cwd)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> load_data(cwd)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    train,test,val <span style="color:#f92672">=</span> split_datframe(df)
+</span></span><span style="display:flex;"><span>    dataset <span style="color:#f92672">=</span> df_to_dataset(df)
+</span></span><span style="display:flex;"><span>    train_ds, val_ds, test_ds <span style="color:#f92672">=</span> get_input_pipeline(train,test,val,<span style="color:#ae81ff">32</span>)
+</span></span><span style="display:flex;"><span>    understand_input_pipeline(train_ds)
+</span></span><span style="display:flex;"><span>    feature_layer <span style="color:#f92672">=</span> get_feature_layer(cwd)
+</span></span><span style="display:flex;"><span>    model, model_history <span style="color:#f92672">=</span> create_model(log_dir,feature_layer, train_ds, val_ds)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#plot_history(model_history)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(model.predict(train_ds))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#print(model.predict)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#explain_kernal(model,train_ds)</span>
+</span></span></code></pre></div>
         </div>
         
 
@@ -1152,7 +1152,7 @@ shap<span style="color:#f92672">.</span>initjs()
         
     <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

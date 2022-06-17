@@ -75,7 +75,7 @@
     
 
     
-        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
     
 
 
@@ -394,179 +394,174 @@ if (!doNotTrack) {
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Article</span>(StructuredNode):
-    uuid <span style="color:#f92672">=</span> UniqueIdProperty()
-    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    topic <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    citation <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#34;IS_ARTICLE_OF&#34;</span>)
-    sub_clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subclause&#34;</span>, <span style="color:#e6db74">&#34;IS_ARTICLE_OF&#34;</span>)
-    case <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_ARTICLE_OF&#39;</span>)
-
-</code></pre></div><h3 id="section-class" >Section Class
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Article</span>(StructuredNode):
+</span></span><span style="display:flex;"><span>    uuid <span style="color:#f92672">=</span> UniqueIdProperty()
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    topic <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    citation <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#34;IS_ARTICLE_OF&#34;</span>)
+</span></span><span style="display:flex;"><span>    sub_clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subclause&#34;</span>, <span style="color:#e6db74">&#34;IS_ARTICLE_OF&#34;</span>)
+</span></span><span style="display:flex;"><span>    case <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_ARTICLE_OF&#39;</span>)
+</span></span></code></pre></div><h3 id="section-class" >Section Class
 <span>
     <a href="#section-class">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Section</span>(StructuredNode):
-    uuid <span style="color:#f92672">=</span> UniqueIdProperty()
-    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    topic <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    article <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Article&#34;</span>, <span style="color:#e6db74">&#34;IS_SECTION_OF&#34;</span>)
-    citation <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#34;IS_SECTION_OF&#34;</span>)
-    sub_clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subclause&#34;</span>, <span style="color:#e6db74">&#34;IS_SECTION_OF&#34;</span>)
-    case <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_SECTION_OF&#39;</span>)
-
-</code></pre></div><h3 id="clause-class" >Clause Class
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Section</span>(StructuredNode):
+</span></span><span style="display:flex;"><span>    uuid <span style="color:#f92672">=</span> UniqueIdProperty()
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    topic <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    article <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Article&#34;</span>, <span style="color:#e6db74">&#34;IS_SECTION_OF&#34;</span>)
+</span></span><span style="display:flex;"><span>    citation <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#34;IS_SECTION_OF&#34;</span>)
+</span></span><span style="display:flex;"><span>    sub_clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subclause&#34;</span>, <span style="color:#e6db74">&#34;IS_SECTION_OF&#34;</span>)
+</span></span><span style="display:flex;"><span>    case <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_SECTION_OF&#39;</span>)
+</span></span></code></pre></div><h3 id="clause-class" >Clause Class
 <span>
     <a href="#clause-class">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Clause</span>(StructuredNode):
-    uuid <span style="color:#f92672">=</span> UniqueIdProperty()
-    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    topic <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    citation <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    article <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Article&#34;</span>, <span style="color:#e6db74">&#34;IS_CLAUSE_OF&#34;</span>)
-    sibling_clause<span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#34;IS_CLAUSE_OF&#34;</span>)
-    sub_clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subclause&#34;</span>, <span style="color:#e6db74">&#34;IS_CLAUSE_OF&#34;</span>)
-    case <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_CLAUSE_OF&#39;</span>)
-
-</code></pre></div><h3 id="subclause-class" >Subclause Class
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Clause</span>(StructuredNode):
+</span></span><span style="display:flex;"><span>    uuid <span style="color:#f92672">=</span> UniqueIdProperty()
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    topic <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    citation <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    article <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Article&#34;</span>, <span style="color:#e6db74">&#34;IS_CLAUSE_OF&#34;</span>)
+</span></span><span style="display:flex;"><span>    sibling_clause<span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#34;IS_CLAUSE_OF&#34;</span>)
+</span></span><span style="display:flex;"><span>    sub_clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subclause&#34;</span>, <span style="color:#e6db74">&#34;IS_CLAUSE_OF&#34;</span>)
+</span></span><span style="display:flex;"><span>    case <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_CLAUSE_OF&#39;</span>)
+</span></span></code></pre></div><h3 id="subclause-class" >Subclause Class
 <span>
     <a href="#subclause-class">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Subclause</span>(StructuredNode):
-    uuid <span style="color:#f92672">=</span> UniqueIdProperty()
-    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    topic <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    citation <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    article <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Article&#34;</span>, <span style="color:#e6db74">&#34;&#39;IS_SUBCLAUSE_OF&#39;&#34;</span>)
-    clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Article&#34;</span>, <span style="color:#e6db74">&#34;&#39;IS_SUBCLAUSE_OF&#39;&#34;</span>)
-    sibling_clause<span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#34;&#39;IS_SUBCLAUSE_OF&#39;&#34;</span>)
-    case <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_SUBCLAUSE_OF&#39;</span>)
-    <span style="color:#75715e">#sub_clause = Relationship(&#34;Subclause&#34;, &#34;IS_SUBCLAUSE_OF&#34;)</span>
-
-</code></pre></div><h2 id="sample-application" >Sample Application
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Subclause</span>(StructuredNode):
+</span></span><span style="display:flex;"><span>    uuid <span style="color:#f92672">=</span> UniqueIdProperty()
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    topic <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    citation <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    article <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Article&#34;</span>, <span style="color:#e6db74">&#34;&#39;IS_SUBCLAUSE_OF&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>    clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Article&#34;</span>, <span style="color:#e6db74">&#34;&#39;IS_SUBCLAUSE_OF&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>    sibling_clause<span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#34;&#39;IS_SUBCLAUSE_OF&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>    case <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_SUBCLAUSE_OF&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#sub_clause = Relationship(&#34;Subclause&#34;, &#34;IS_SUBCLAUSE_OF&#34;)</span>
+</span></span></code></pre></div><h2 id="sample-application" >Sample Application
 <span>
     <a href="#sample-application">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
 </h2><p>The application below creates a dataframe with node objects that will be uploaded to the neo4j database.  In order to accomplish an upload the .save() function must be called on the object.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#f92672">from</span> platform <span style="color:#f92672">import</span> node
-<span style="color:#f92672">from</span> pprint <span style="color:#f92672">import</span> pprint
-<span style="color:#75715e">#from neomodel import (config, StructuredNode, StringProperty, IntegerProperty,</span>
-<span style="color:#75715e">#    UniqueIdProperty, RelationshipTo, BooleanProperty, EmailProperty, Relationship,db)</span>
-<span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-<span style="color:#75715e">#import NeoNodes as nn</span>
-<span style="color:#75715e">#import GoogleServices</span>
-<span style="color:#75715e">#import sparkAPI as spark</span>
-<span style="color:#f92672">import</span> neoModelAPI <span style="color:#66d9ef">as</span> neo
-<span style="color:#f92672">import</span> glob
-<span style="color:#f92672">import</span> os
-<span style="color:#f92672">import</span> json
-<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-<span style="color:#f92672">import</span> shutil
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">instantiate_neo_model_api</span>():
-    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;7a92f171.databases.neo4j.io&#34;</span>
-    user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;neo4j&#34;</span>
-    psw <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;RF4Gr2IJTNhHlW6HOrLDqz_I2E2Upyh7o8paTwfnCxg&#39;</span>
-    <span style="color:#66d9ef">return</span> neo<span style="color:#f92672">.</span>neoAPI<span style="color:#f92672">.</span>instantiate_neo_model_session(uri<span style="color:#f92672">=</span>uri,user<span style="color:#f92672">=</span>user,psw<span style="color:#f92672">=</span>psw)
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_cwd</span>():
-    cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
-    <span style="color:#66d9ef">return</span> cwd
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_files</span>(cwd <span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getcwd(), input_directory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;article_data&#39;</span>):
-    
-    path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([cwd,input_directory])
-    <span style="color:#75715e">#pprint(path)</span>
-    file_list<span style="color:#f92672">=</span> [f <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> glob<span style="color:#f92672">.</span>glob(path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;**/*.csv&#34;</span>, recursive<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)]
-  
-    <span style="color:#66d9ef">return</span> file_list
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_df</span>(file_list <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>):
-    <span style="color:#66d9ef">try</span>:
-        <span style="color:#66d9ef">for</span> a_file <span style="color:#f92672">in</span> file_list:
-            df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(a_file )
-            <span style="color:#66d9ef">return</span> df
-    <span style="color:#66d9ef">except</span>:
-        <span style="color:#66d9ef">raise</span>
-       
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_transaction_df</span>(df <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>):  
-    <span style="color:#75715e">#pprint(justice_df)</span>
-    <span style="color:#66d9ef">try</span>:
-        <span style="color:#75715e">#pprint(df.columns)</span>
-        <span style="color:#75715e">#   df.apply(lambda x: print(x), axis =1)</span>
-        df[<span style="color:#e6db74">&#39;transaction&#39;</span>] <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: neo<span style="color:#f92672">.</span>neoAPI<span style="color:#f92672">.</span>create_section_node(name<span style="color:#f92672">=</span> x[<span style="color:#e6db74">&#39;section&#39;</span>],  
-        topic <span style="color:#f92672">=</span> x[<span style="color:#e6db74">&#39;topic&#39;</span>], 
-        citation <span style="color:#f92672">=</span> x[<span style="color:#e6db74">&#39;citation&#39;</span>]),
-        axis <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-        )
-        <span style="color:#66d9ef">return</span>(df)
-    <span style="color:#66d9ef">except</span>:
-    
-        <span style="color:#66d9ef">raise</span>
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write_transaction_to_file</span>(df, cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd(),import_directory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;merge_articles&#39;</span>, file_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;article_transaction_df&#39;</span>):
-    <span style="color:#66d9ef">try</span>:
-        outfile <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([cwd,import_directory,file_name])
-        <span style="color:#75715e">#pprint(outfile)</span>
-        df<span style="color:#f92672">.</span>to_csv(outfile)
-        <span style="color:#66d9ef">return</span> outfile
-    <span style="color:#66d9ef">except</span>:
-        <span style="color:#66d9ef">raise</span>
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_closing_message</span>(df <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, outfile<span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>):
-    size <span style="color:#f92672">=</span> shutil<span style="color:#f92672">.</span>get_terminal_size((<span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">20</span>))
-    columns <span style="color:#f92672">=</span> size[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>
-
-
-    seperator <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#f92672">*</span> columns
-    df_message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Your Final df looks like: &#34;</span>
-    outfile_message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;You will find the data at: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(outfile)
-    pprint(seperator)
-    pprint(df_message)
-    pprint(df)
-    pprint(seperator)
-    pprint(outfile_message)
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
-    
-
-
-    
-
-
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-    <span style="color:#75715e">#neo_applified = instantiate_neo_model_api()</span>
-    cwd <span style="color:#f92672">=</span> get_cwd()
-    file_list <span style="color:#f92672">=</span> get_files(cwd <span style="color:#f92672">=</span> cwd, input_directory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;sections_data&#39;</span>)
-    <span style="color:#75715e">#pprint(file_list)</span>
-    <span style="color:#75715e">#master_subject_table = create_master_subject_table()</span>
-    <span style="color:#75715e">#json_pipeline(file_list=file_list, master_subject_table=master_subject_table)</span>
-    df <span style="color:#f92672">=</span> get_df(file_list <span style="color:#f92672">=</span> file_list)
-    df <span style="color:#f92672">=</span> get_transaction_df(df <span style="color:#f92672">=</span> df)
-    outfile <span style="color:#f92672">=</span> write_transaction_to_file(df <span style="color:#f92672">=</span> df , cwd <span style="color:#f92672">=</span> cwd, file_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;sections_transaction_df.csv&#39;</span>)
-    messaged <span style="color:#f92672">=</span> send_closing_message(df, outfile)
-
-
-    <span style="color:#75715e">#pprint(justice_df)</span>
-
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> platform <span style="color:#f92672">import</span> node
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pprint <span style="color:#f92672">import</span> pprint
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#from neomodel import (config, StructuredNode, StringProperty, IntegerProperty,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#    UniqueIdProperty, RelationshipTo, BooleanProperty, EmailProperty, Relationship,db)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#import NeoNodes as nn</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#import GoogleServices</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#import sparkAPI as spark</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> neoModelAPI <span style="color:#66d9ef">as</span> neo
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> glob
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> shutil
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">instantiate_neo_model_api</span>():
+</span></span><span style="display:flex;"><span>    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;7a92f171.databases.neo4j.io&#34;</span>
+</span></span><span style="display:flex;"><span>    user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;neo4j&#34;</span>
+</span></span><span style="display:flex;"><span>    psw <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;RF4Gr2IJTNhHlW6HOrLDqz_I2E2Upyh7o8paTwfnCxg&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> neo<span style="color:#f92672">.</span>neoAPI<span style="color:#f92672">.</span>instantiate_neo_model_session(uri<span style="color:#f92672">=</span>uri,user<span style="color:#f92672">=</span>user,psw<span style="color:#f92672">=</span>psw)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_cwd</span>():
+</span></span><span style="display:flex;"><span>    cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> cwd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_files</span>(cwd <span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getcwd(), input_directory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;article_data&#39;</span>):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([cwd,input_directory])
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#pprint(path)</span>
+</span></span><span style="display:flex;"><span>    file_list<span style="color:#f92672">=</span> [f <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> glob<span style="color:#f92672">.</span>glob(path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;**/*.csv&#34;</span>, recursive<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)]
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> file_list
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_df</span>(file_list <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> a_file <span style="color:#f92672">in</span> file_list:
+</span></span><span style="display:flex;"><span>            df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(a_file )
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> df
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span>
+</span></span><span style="display:flex;"><span>       
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_transaction_df</span>(df <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>):  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#pprint(justice_df)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#pprint(df.columns)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#   df.apply(lambda x: print(x), axis =1)</span>
+</span></span><span style="display:flex;"><span>        df[<span style="color:#e6db74">&#39;transaction&#39;</span>] <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: neo<span style="color:#f92672">.</span>neoAPI<span style="color:#f92672">.</span>create_section_node(name<span style="color:#f92672">=</span> x[<span style="color:#e6db74">&#39;section&#39;</span>],  
+</span></span><span style="display:flex;"><span>        topic <span style="color:#f92672">=</span> x[<span style="color:#e6db74">&#39;topic&#39;</span>], 
+</span></span><span style="display:flex;"><span>        citation <span style="color:#f92672">=</span> x[<span style="color:#e6db74">&#39;citation&#39;</span>]),
+</span></span><span style="display:flex;"><span>        axis <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>(df)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write_transaction_to_file</span>(df, cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd(),import_directory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;merge_articles&#39;</span>, file_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;article_transaction_df&#39;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        outfile <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([cwd,import_directory,file_name])
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#pprint(outfile)</span>
+</span></span><span style="display:flex;"><span>        df<span style="color:#f92672">.</span>to_csv(outfile)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> outfile
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_closing_message</span>(df <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, outfile<span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>    size <span style="color:#f92672">=</span> shutil<span style="color:#f92672">.</span>get_terminal_size((<span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">20</span>))
+</span></span><span style="display:flex;"><span>    columns <span style="color:#f92672">=</span> size[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    seperator <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;*&#34;</span> <span style="color:#f92672">*</span> columns
+</span></span><span style="display:flex;"><span>    df_message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Your Final df looks like: &#34;</span>
+</span></span><span style="display:flex;"><span>    outfile_message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;You will find the data at: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(outfile)
+</span></span><span style="display:flex;"><span>    pprint(seperator)
+</span></span><span style="display:flex;"><span>    pprint(df_message)
+</span></span><span style="display:flex;"><span>    pprint(df)
+</span></span><span style="display:flex;"><span>    pprint(seperator)
+</span></span><span style="display:flex;"><span>    pprint(outfile_message)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#neo_applified = instantiate_neo_model_api()</span>
+</span></span><span style="display:flex;"><span>    cwd <span style="color:#f92672">=</span> get_cwd()
+</span></span><span style="display:flex;"><span>    file_list <span style="color:#f92672">=</span> get_files(cwd <span style="color:#f92672">=</span> cwd, input_directory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;sections_data&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#pprint(file_list)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#master_subject_table = create_master_subject_table()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#json_pipeline(file_list=file_list, master_subject_table=master_subject_table)</span>
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> get_df(file_list <span style="color:#f92672">=</span> file_list)
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> get_transaction_df(df <span style="color:#f92672">=</span> df)
+</span></span><span style="display:flex;"><span>    outfile <span style="color:#f92672">=</span> write_transaction_to_file(df <span style="color:#f92672">=</span> df , cwd <span style="color:#f92672">=</span> cwd, file_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;sections_transaction_df.csv&#39;</span>)
+</span></span><span style="display:flex;"><span>    messaged <span style="color:#f92672">=</span> send_closing_message(df, outfile)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#pprint(justice_df)</span>
+</span></span></code></pre></div>
         </div>
         
 
@@ -705,7 +700,7 @@ if (!doNotTrack) {
         
     <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

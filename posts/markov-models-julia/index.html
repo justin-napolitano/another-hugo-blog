@@ -75,7 +75,7 @@
     
 
     
-        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
     
 
 
@@ -375,32 +375,32 @@ if (!doNotTrack) {
 <p>The alogorithm takes a stochastic probability matrix(square in this case) and create a random distribution according to those probabilities.</p>
 <p>The simulation then randomly selects values from the random distibution.  That discrete value is stored in the output.  As I understand it currently, the output is the Markov Chain.</p>
 <p>The comments in the code are mine.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Julia" data-lang="Julia">
-<span style="color:#66d9ef">using</span> LinearAlgebra, Statistics
-<span style="color:#66d9ef">using</span> Distributions, Plots, Printf, QuantEcon, Random
-
-<span style="color:#66d9ef">function</span> mc_sample_path(P; init <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, sample_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span>)
-
-
-    <span style="color:#a6e22e">@assert</span> size(P)[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> size(P)[<span style="color:#ae81ff">2</span>] <span style="color:#75715e"># square required</span>
-    N <span style="color:#f92672">=</span> size(P)[<span style="color:#ae81ff">1</span>] <span style="color:#75715e"># should be square # well it&#39;s been asserted</span>
-
-    <span style="color:#75715e"># create vector of discrete RVs for each row</span>
-    <span style="color:#75715e"># In human terminology. Create a Categorical distribution of length = the size of the row of the matrix.  </span>
-    <span style="color:#75715e">#IF that makes sense</span>
-    dists <span style="color:#f92672">=</span> [Categorical(P[i, <span style="color:#f92672">:</span>]) <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>N]
-
-    <span style="color:#75715e"># setup the simulation</span>
-    X <span style="color:#f92672">=</span> fill(<span style="color:#ae81ff">0</span>, sample_size) <span style="color:#75715e"># allocate memory, or zeros(Int64, sample_size) # I love Julia.  Readable syntax and low level contro</span>
-    X[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> init <span style="color:#75715e"># set the initial state Equal to 1 in this case.  </span>
-
-    <span style="color:#66d9ef">for</span> t <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">:</span>sample_size <span style="color:#75715e"># start at position 2.  Work from t-1# This is a common technique.  Couldn&#39;t figure this out once in a technical interview.  I wrote an if else for the zero condition.... Not so smart</span>
-        dist <span style="color:#f92672">=</span> dists[X[t<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]] <span style="color:#75715e"># get discrete RV from last state&#39;s transition distribution</span>
-        X[t] <span style="color:#f92672">=</span> rand(dist) <span style="color:#75715e"># draw new value</span>
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">return</span> X
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h2 id="markov-simulation-the-easier-way" >Markov Simulation the Easier Way
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Julia" data-lang="Julia"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> LinearAlgebra, Statistics
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Distributions, Plots, Printf, QuantEcon, Random
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> mc_sample_path(P; init <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, sample_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@assert</span> size(P)[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> size(P)[<span style="color:#ae81ff">2</span>] <span style="color:#75715e"># square required</span>
+</span></span><span style="display:flex;"><span>    N <span style="color:#f92672">=</span> size(P)[<span style="color:#ae81ff">1</span>] <span style="color:#75715e"># should be square # well it&#39;s been asserted</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># create vector of discrete RVs for each row</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># In human terminology. Create a Categorical distribution of length = the size of the row of the matrix.  </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#IF that makes sense</span>
+</span></span><span style="display:flex;"><span>    dists <span style="color:#f92672">=</span> [Categorical(P[i, <span style="color:#f92672">:</span>]) <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>N]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># setup the simulation</span>
+</span></span><span style="display:flex;"><span>    X <span style="color:#f92672">=</span> fill(<span style="color:#ae81ff">0</span>, sample_size) <span style="color:#75715e"># allocate memory, or zeros(Int64, sample_size) # I love Julia.  Readable syntax and low level contro</span>
+</span></span><span style="display:flex;"><span>    X[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> init <span style="color:#75715e"># set the initial state Equal to 1 in this case.  </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> t <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">:</span>sample_size <span style="color:#75715e"># start at position 2.  Work from t-1# This is a common technique.  Couldn&#39;t figure this out once in a technical interview.  I wrote an if else for the zero condition.... Not so smart</span>
+</span></span><span style="display:flex;"><span>        dist <span style="color:#f92672">=</span> dists[X[t<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]] <span style="color:#75715e"># get discrete RV from last state&#39;s transition distribution</span>
+</span></span><span style="display:flex;"><span>        X[t] <span style="color:#f92672">=</span> rand(dist) <span style="color:#75715e"># draw new value</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> X
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="markov-simulation-the-easier-way" >Markov Simulation the Easier Way
 <span>
     <a href="#markov-simulation-the-easier-way">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
@@ -409,18 +409,19 @@ if (!doNotTrack) {
 </h2><p>Given a stochastic probability matrix, the Markov Chain function will produce a chain.</p>
 <p>The simulate method will then simulate the chain across a n steps.</p>
 <p>We can then take the mean of the output to determine the average amount of time spent in a state.  In this case the average amount of time spent in state 1 which should correlate to unemployment.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Julia" data-lang="Julia"><span style="color:#66d9ef">using</span> LinearAlgebra, Statistics
-<span style="color:#66d9ef">using</span> Distributions, Plots, Printf, QuantEcon, Random
-
-
-<span style="color:#66d9ef">function</span> easy_way()
-    P <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0.4</span> <span style="color:#ae81ff">0.6</span>; <span style="color:#ae81ff">0.2</span> <span style="color:#ae81ff">0.8</span>];
-    mc <span style="color:#f92672">=</span> MarkovChain(P)
-    X <span style="color:#f92672">=</span> simulate(mc, <span style="color:#ae81ff">100_000</span>);
-    μ_2 <span style="color:#f92672">=</span> count(X <span style="color:#f92672">.==</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span>length(X) <span style="color:#75715e"># or mean(x -&gt; x == 1, X)</span>
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#e6db74">```julia</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Julia" data-lang="Julia"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> LinearAlgebra, Statistics
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Distributions, Plots, Printf, QuantEcon, Random
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> easy_way()
+</span></span><span style="display:flex;"><span>    P <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0.4</span> <span style="color:#ae81ff">0.6</span>; <span style="color:#ae81ff">0.2</span> <span style="color:#ae81ff">0.8</span>];
+</span></span><span style="display:flex;"><span>    mc <span style="color:#f92672">=</span> MarkovChain(P)
+</span></span><span style="display:flex;"><span>    X <span style="color:#f92672">=</span> simulate(mc, <span style="color:#ae81ff">100_000</span>);
+</span></span><span style="display:flex;"><span>    μ_2 <span style="color:#f92672">=</span> count(X <span style="color:#f92672">.==</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span>length(X) <span style="color:#75715e"># or mean(x -&gt; x == 1, X)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">```julia
+</span></span></span></code></pre></div>
         </div>
         
 
@@ -539,7 +540,7 @@ if (!doNotTrack) {
         
     <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

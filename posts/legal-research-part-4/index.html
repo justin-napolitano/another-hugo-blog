@@ -75,7 +75,7 @@
     
 
     
-        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
     
 
 
@@ -389,164 +389,164 @@ if (!doNotTrack) {
 </h2><p>In this post, I publish only the Case schema that will be used to relate cases to other objects for a machine learning algorithm to predict the outcomes, subjects, and legal provisions of court cases.</p>
 <p>A detailed report documenting each variable will be produced in the future when I publish the database.  For the time being, the Case class below should suitably demonstrate the foundation of the database.</p>
 <p>I will continue to publish the remaining classes as they are completed.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Case</span>(StructuredNode):
-    <span style="color:#75715e">#####Media########</span>
-    pdf <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) 
-
-    <span style="color:#75715e">#### Identification Variables####</span>
-    uid <span style="color:#f92672">=</span> UniqueIdProperty()
-
-    group <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-
-    loc_title <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-
-    url <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    shelf_id <span style="color:#f92672">=</span> StringProperty()
-
-    usCite <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    
-    caseId <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-   
-    caseName <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    scdb_docket_id <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    scdb_vote_id <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    scdb_issues_id <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    supCite <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    lawEdCite <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    lexisCite <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    dockNumb <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-
-    <span style="color:#75715e">######background Variables########</span>
-    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    petitioner <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Petitioner&#39;</span>, <span style="color:#e6db74">&#39;IS_PETITIONER&#39;</span>)
-    petitionState <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;State&#39;</span>, <span style="color:#e6db74">&#39;IS_PETITIONER&#39;</span>)
-
-    respondent <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Respondent&#39;</span>, <span style="color:#e6db74">&#39;IS_RESPONDENT&#39;</span>)
-    respondentState <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;State&#39;</span>, <span style="color:#e6db74">&#39;IS_RESPONDENT&#39;</span>)
-
-    jurisdiction <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Jurisdiction&#39;</span>, <span style="color:#e6db74">&#39;JURISDICTION&#39;</span>)
-    
-    adminAction <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Admin&#39;</span>, <span style="color:#e6db74">&#39;ACTION&#39;</span>)
-
-    threeJudgeFdc <span style="color:#f92672">=</span> BooleanProperty()
-
-    origin <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;USCOURT&#39;</span>, <span style="color:#e6db74">&#39;ORIGIN&#39;</span>)
-
-    origin_state <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;State&#39;</span>, <span style="color:#e6db74">&#39;ORIGIN&#39;</span>)
-
-    source <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Source&#39;</span>, <span style="color:#e6db74">&#39;SOURCE&#39;</span>)
-
-    source_state <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;State&#39;</span>, <span style="color:#e6db74">&#39;SOURCE&#39;</span>)
-
-    lc_disagreement <span style="color:#f92672">=</span> BooleanProperty()
-
-    certReason <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;CertReason&#39;</span>, <span style="color:#e6db74">&#39;REASON&#39;</span>)
-
-    lc_disposition <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Disposition&#39;</span>, <span style="color:#e6db74">&#39;LC_DISPOSITION&#39;</span>)
-
-    lc_direction <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Direction&#39;</span>, <span style="color:#e6db74">&#39;LC_DIRECTION&#39;</span>)
-
-    <span style="color:#75715e">#####3 Chronological #####</span>
-
-    <span style="color:#75715e"># From Spaethe</span>
-    dateArgument <span style="color:#f92672">=</span> DateProperty()
-    dateDecision <span style="color:#f92672">=</span> DateProperty()
-    dateReargue <span style="color:#f92672">=</span> DateProperty()
-
-    <span style="color:#75715e"># From LOC</span>
-    date <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    dates <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-    
-    term <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Term&#39;</span>, <span style="color:#e6db74">&#39;TERM_OF&#39;</span>)
-    natCourt <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Natcourt&#39;</span>,<span style="color:#e6db74">&#39;NAT_COURT&#39;</span>)
-
-    chief <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;IS_CHIEF&#39;</span>)
-
-    <span style="color:#75715e">######Substantive#####</span>
-
-    subject <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-
-    decisionDirection <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Direction&#39;</span>, <span style="color:#e6db74">&#39;SUP_COURT_MAJORITY_DIRECTION&#39;</span>)
-    
-    decisionDirectionDissent <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Direction&#39;</span>, <span style="color:#e6db74">&#39;SUP_COURT_DISSENT_DIRECTION&#39;</span>)
-    
-    spaethIssue <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;SpaethIssue&#39;</span>, <span style="color:#e6db74">&#39;IS_SPAETH_ISSUE&#39;</span>)
-    
-    spaethIssueArea <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;SpaethIssueArea&#39;</span>, <span style="color:#e6db74">&#39;IS_SPAETH_ISSUE_AREA&#39;</span>)
-
-    subject_relationship <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subject&#34;</span>, <span style="color:#e6db74">&#34;IS_CASE_OF&#34;</span>)
-    
-    article <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_ARTICLE_OF&#39;</span>)
-    
-    clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#39;IS_CLAUSE_OF&#39;</span>)
-    
-    section <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Section&#34;</span>, <span style="color:#e6db74">&#39;IS_SECTION_OF&#39;</span>)
-    
-    sub_clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subclause&#34;</span>, <span style="color:#e6db74">&#39;IS_SUB_CLAUSE_OF&#39;</span>)
-    
-    major_case_topic <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Subject&#39;</span>, <span style="color:#e6db74">&#39;IS_MAJOR_TOPIC&#39;</span>)
-
-    authority <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Authority&#39;</span>, <span style="color:#e6db74">&#39;IS_AUTHORITY&#39;</span>)
-
-    legalProvision <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;legalProvision&#39;</span>, <span style="color:#e6db74">&#39;IS_PROVISION&#39;</span>)
-    
-    lawType <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;lawType&#39;</span>, <span style="color:#e6db74">&#39;lawType&#39;</span>)
-
-    law <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Law&#39;</span>, <span style="color:#e6db74">&#39;SUPPORTING_LAW&#39;</span>)
-
-   
-    <span style="color:#75715e">######Outcome Variables#####</span>
-
-    decisionType <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;DecisionType&#39;</span>, <span style="color:#e6db74">&#39;IS_DECISION_TYPE&#39;</span>)
-
-    declarationUnconstitutional <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Constitutional&#39;</span>,<span style="color:#e6db74">&#39;UNCONSTITUTIONAL&#39;</span>)
-    
-    delcarationConstitutional <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Constitutional&#39;</span>, <span style="color:#e6db74">&#34;CONSTITUTIONAL&#34;</span>)
-
-    disposition <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Disposition&#39;</span>, <span style="color:#e6db74">&#39;IS_DISPOSITION&#39;</span>)
-
-    winningParty <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Party&#39;</span>, <span style="color:#e6db74">&#39;IS_WINNER&#39;</span>)
-    FormalAlterationOfPrecedent <span style="color:#f92672">=</span> BooleanProperty()
-    
-    alteredPrecedent <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;Altered_Precedent&#39;</span>)
-    
-
-    <span style="color:#75715e">## Voting and Opinion Variables</span>
-    <span style="color:#75715e"># will account for all types of votes a node for each outcome</span>
-    vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Vote&#39;</span>, <span style="color:#e6db74">&#39;OUTCOME&#39;</span>)
-    
-    majOpinWriter <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;WROTE_MAJORITY_OPINION&#39;</span>)
-    
-    majOpinWriter <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;ASSIGNED_MAJORITY_OPINION&#34;</span>)
-
-    affirmative_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;AFFIRMATE_VOTE&#34;</span>)
-    
-    negative_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;NEGATIVE_VOTE&#34;</span>)
-
-    conservative_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;CONSERVATIVE&#39;</span>)
-    liberal_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;LIBERAL&#34;</span>)
-
-    majority_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;MAJORITY_VOTE&#39;</span>)
-
-    miniority_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>,<span style="color:#e6db74">&#39;MINORITY_VOTE&#39;</span>)
-
-    wrote_an_opinion <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;WROTE_AN_OPINION&#39;</span>)
-
-    co_authored_opinion <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;COAUTHORED_OPINION&#34;</span>)
-
-    agreed_with_concurrence <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;AGREED_WITH_CONCURRENCE&#39;</span>)
-
-    agreed_with_dissent <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;AGREED_WITH_CONCURRENCE&#39;</span>)
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Case</span>(StructuredNode):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#####Media########</span>
+</span></span><span style="display:flex;"><span>    pdf <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#### Identification Variables####</span>
+</span></span><span style="display:flex;"><span>    uid <span style="color:#f92672">=</span> UniqueIdProperty()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    group <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    loc_title <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    shelf_id <span style="color:#f92672">=</span> StringProperty()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    usCite <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    caseId <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>    caseName <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    scdb_docket_id <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    scdb_vote_id <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    scdb_issues_id <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    supCite <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    lawEdCite <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    lexisCite <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    dockNumb <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">######background Variables########</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    petitioner <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Petitioner&#39;</span>, <span style="color:#e6db74">&#39;IS_PETITIONER&#39;</span>)
+</span></span><span style="display:flex;"><span>    petitionState <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;State&#39;</span>, <span style="color:#e6db74">&#39;IS_PETITIONER&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    respondent <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Respondent&#39;</span>, <span style="color:#e6db74">&#39;IS_RESPONDENT&#39;</span>)
+</span></span><span style="display:flex;"><span>    respondentState <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;State&#39;</span>, <span style="color:#e6db74">&#39;IS_RESPONDENT&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    jurisdiction <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Jurisdiction&#39;</span>, <span style="color:#e6db74">&#39;JURISDICTION&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    adminAction <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Admin&#39;</span>, <span style="color:#e6db74">&#39;ACTION&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    threeJudgeFdc <span style="color:#f92672">=</span> BooleanProperty()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    origin <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;USCOURT&#39;</span>, <span style="color:#e6db74">&#39;ORIGIN&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    origin_state <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;State&#39;</span>, <span style="color:#e6db74">&#39;ORIGIN&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    source <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Source&#39;</span>, <span style="color:#e6db74">&#39;SOURCE&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    source_state <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;State&#39;</span>, <span style="color:#e6db74">&#39;SOURCE&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    lc_disagreement <span style="color:#f92672">=</span> BooleanProperty()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    certReason <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;CertReason&#39;</span>, <span style="color:#e6db74">&#39;REASON&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    lc_disposition <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Disposition&#39;</span>, <span style="color:#e6db74">&#39;LC_DISPOSITION&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    lc_direction <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Direction&#39;</span>, <span style="color:#e6db74">&#39;LC_DIRECTION&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#####3 Chronological #####</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># From Spaethe</span>
+</span></span><span style="display:flex;"><span>    dateArgument <span style="color:#f92672">=</span> DateProperty()
+</span></span><span style="display:flex;"><span>    dateDecision <span style="color:#f92672">=</span> DateProperty()
+</span></span><span style="display:flex;"><span>    dateReargue <span style="color:#f92672">=</span> DateProperty()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># From LOC</span>
+</span></span><span style="display:flex;"><span>    date <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    dates <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    term <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Term&#39;</span>, <span style="color:#e6db74">&#39;TERM_OF&#39;</span>)
+</span></span><span style="display:flex;"><span>    natCourt <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Natcourt&#39;</span>,<span style="color:#e6db74">&#39;NAT_COURT&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    chief <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;IS_CHIEF&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">######Substantive#####</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    subject <span style="color:#f92672">=</span> StringProperty(unique_index<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    decisionDirection <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Direction&#39;</span>, <span style="color:#e6db74">&#39;SUP_COURT_MAJORITY_DIRECTION&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    decisionDirectionDissent <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Direction&#39;</span>, <span style="color:#e6db74">&#39;SUP_COURT_DISSENT_DIRECTION&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    spaethIssue <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;SpaethIssue&#39;</span>, <span style="color:#e6db74">&#39;IS_SPAETH_ISSUE&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    spaethIssueArea <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;SpaethIssueArea&#39;</span>, <span style="color:#e6db74">&#39;IS_SPAETH_ISSUE_AREA&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    subject_relationship <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subject&#34;</span>, <span style="color:#e6db74">&#34;IS_CASE_OF&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    article <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;IS_ARTICLE_OF&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Clause&#34;</span>, <span style="color:#e6db74">&#39;IS_CLAUSE_OF&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    section <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Section&#34;</span>, <span style="color:#e6db74">&#39;IS_SECTION_OF&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    sub_clause <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Subclause&#34;</span>, <span style="color:#e6db74">&#39;IS_SUB_CLAUSE_OF&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    major_case_topic <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Subject&#39;</span>, <span style="color:#e6db74">&#39;IS_MAJOR_TOPIC&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    authority <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Authority&#39;</span>, <span style="color:#e6db74">&#39;IS_AUTHORITY&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    legalProvision <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;legalProvision&#39;</span>, <span style="color:#e6db74">&#39;IS_PROVISION&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    lawType <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;lawType&#39;</span>, <span style="color:#e6db74">&#39;lawType&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    law <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Law&#39;</span>, <span style="color:#e6db74">&#39;SUPPORTING_LAW&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">######Outcome Variables#####</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    decisionType <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;DecisionType&#39;</span>, <span style="color:#e6db74">&#39;IS_DECISION_TYPE&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    declarationUnconstitutional <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Constitutional&#39;</span>,<span style="color:#e6db74">&#39;UNCONSTITUTIONAL&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    delcarationConstitutional <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Constitutional&#39;</span>, <span style="color:#e6db74">&#34;CONSTITUTIONAL&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    disposition <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Disposition&#39;</span>, <span style="color:#e6db74">&#39;IS_DISPOSITION&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    winningParty <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Party&#39;</span>, <span style="color:#e6db74">&#39;IS_WINNER&#39;</span>)
+</span></span><span style="display:flex;"><span>    FormalAlterationOfPrecedent <span style="color:#f92672">=</span> BooleanProperty()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    alteredPrecedent <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#34;Case&#34;</span>, <span style="color:#e6db74">&#39;Altered_Precedent&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">## Voting and Opinion Variables</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># will account for all types of votes a node for each outcome</span>
+</span></span><span style="display:flex;"><span>    vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Vote&#39;</span>, <span style="color:#e6db74">&#39;OUTCOME&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    majOpinWriter <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;WROTE_MAJORITY_OPINION&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    majOpinWriter <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;ASSIGNED_MAJORITY_OPINION&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    affirmative_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;AFFIRMATE_VOTE&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    negative_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;NEGATIVE_VOTE&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    conservative_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;CONSERVATIVE&#39;</span>)
+</span></span><span style="display:flex;"><span>    liberal_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;LIBERAL&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    majority_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;MAJORITY_VOTE&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    miniority_vote <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>,<span style="color:#e6db74">&#39;MINORITY_VOTE&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    wrote_an_opinion <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;WROTE_AN_OPINION&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    co_authored_opinion <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#34;COAUTHORED_OPINION&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    agreed_with_concurrence <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;AGREED_WITH_CONCURRENCE&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    agreed_with_dissent <span style="color:#f92672">=</span> Relationship(<span style="color:#e6db74">&#39;Justice&#39;</span>, <span style="color:#e6db74">&#39;AGREED_WITH_CONCURRENCE&#39;</span>)
+</span></span></code></pre></div>
         </div>
         
 
@@ -682,7 +682,7 @@ if (!doNotTrack) {
         
     <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

@@ -2,13 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.jnapolitano.io/posts/cost-of-living-projections/</loc>
-    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/categories/</loc>
-    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/julia/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/logistic-regression/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/logistic_regression_mockup/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/numerical-computing/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/python/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/quantitative-analysis/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/statistics/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/tags/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/categories/tutorials/</loc>
+    <lastmod>2022-06-17T13:20:32+00:00</lastmod>
+  </url><url>
+    <loc>https://blog.jnapolitano.io/posts/cost-of-living-projections/</loc>
     <lastmod>2022-06-01T15:24:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/tags/monte-carlo/</loc>
@@ -17,34 +47,10 @@
     <loc>https://blog.jnapolitano.io/categories/numerical-computing/</loc>
     <lastmod>2022-06-01T15:24:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/tags/numerical-computing/</loc>
-    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/posts/</loc>
-    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/python/</loc>
-    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/tags/python/</loc>
     <lastmod>2022-06-01T15:24:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/quantitative-analysis/</loc>
-    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/statistics/</loc>
-    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/</loc>
-    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/categories/tutorials/</loc>
-    <lastmod>2022-06-01T15:24:32+00:00</lastmod>
-  </url><url>
     <loc>https://blog.jnapolitano.io/categories/julia/</loc>
-    <lastmod>2022-05-30T20:20:32+00:00</lastmod>
-  </url><url>
-    <loc>https://blog.jnapolitano.io/tags/julia/</loc>
     <lastmod>2022-05-30T20:20:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/series/quantitative-analysis-in-julia/</loc>
@@ -122,10 +128,10 @@
     <loc>https://blog.jnapolitano.io/tags/university-of-malaysia/</loc>
     <lastmod>2022-05-23T19:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/automation/</loc>
+    <loc>https://blog.jnapolitano.io/tags/automation/</loc>
     <lastmod>2022-05-23T16:30:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/tags/automation/</loc>
+    <loc>https://blog.jnapolitano.io/categories/automation/</loc>
     <lastmod>2022-05-23T16:30:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/legal-research-part-8/</loc>
@@ -161,10 +167,10 @@
     <loc>https://blog.jnapolitano.io/categories/scotus/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/spss/</loc>
+    <loc>https://blog.jnapolitano.io/tags/spss/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/tags/spss/</loc>
+    <loc>https://blog.jnapolitano.io/categories/spss/</loc>
     <lastmod>2022-05-21T19:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/legal-research-part-5/</loc>
@@ -326,10 +332,10 @@
     <loc>https://blog.jnapolitano.io/tags/legal-research/</loc>
     <lastmod>2022-05-04T14:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/categories/ngos/</loc>
+    <loc>https://blog.jnapolitano.io/tags/ngos/</loc>
     <lastmod>2022-05-04T14:40:32+00:00</lastmod>
   </url><url>
-    <loc>https://blog.jnapolitano.io/tags/ngos/</loc>
+    <loc>https://blog.jnapolitano.io/categories/ngos/</loc>
     <lastmod>2022-05-04T14:40:32+00:00</lastmod>
   </url><url>
     <loc>https://blog.jnapolitano.io/posts/project-evolution-of-ngos/</loc>

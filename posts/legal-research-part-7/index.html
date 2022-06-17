@@ -75,7 +75,7 @@
     
 
     
-        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
     
 
 
@@ -403,21 +403,18 @@ if (!doNotTrack) {
     </a>
 </span>
 </h3><p>Coming from Python, I typically import libraries/packages with an <code>import</code> call.  Something like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#f92672">import</span> numpy
-
-</code></pre></div><p>In Julia, we use the <code>using</code> call to import the package. Like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">
-<span style="color:#66d9ef">using</span> DataFrames
-<span style="color:#66d9ef">using</span> CSV
-
-</code></pre></div><p>A package can also be imported, but this does not instantiate the methods and functions within it (As far as I understand it).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy
+</span></span></code></pre></div><p>In Julia, we use the <code>using</code> call to import the package. Like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> DataFrames
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> CSV
+</span></span></code></pre></div><p>A package can also be imported, but this does not instantiate the methods and functions within it (As far as I understand it).</p>
 <p>For instance <code>import CSV</code> would only load the package but I would have to call CSV.method to actually do something.  Something like <code>from pandas import to_csv</code> in Python.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">
-<span style="color:#66d9ef">import</span> DataFrames
-<span style="color:#66d9ef">import</span> CSV
-
-</code></pre></div><h2 id="the-main-function" >The Main Function
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> DataFrames
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> CSV
+</span></span></code></pre></div><h2 id="the-main-function" >The Main Function
 <span>
     <a href="#the-main-function">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
@@ -426,34 +423,32 @@ if (!doNotTrack) {
 </h2><p>Just like in C -and like we should in Python-, I declared a main function to run the program.  I call it with main().  I do not know if there is a similar convention to Python&rsquo;s <code>if __name__ == &quot;__main__&quot;</code>.  I will find out soon.</p>
 <p>The main difference in function declaration between Python and Julia is the inclusion of the <code>end</code> keyword and the end of the function.</p>
 <p>For instance review the main function below :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> main()
-    
-    <span style="color:#75715e"># outpath fo the current file</span>
-    outpath <span style="color:#f92672">=</span> joinpath(pwd(),<span style="color:#e6db74">&#34;case_files.csv&#34;</span>)
-
-    <span style="color:#75715e">#Glob files from directory</span>
-    oyez_dataframe <span style="color:#f92672">=</span> get_files(<span style="color:#e6db74">&#34;oyez_cited&#34;</span>)
-    
-    <span style="color:#75715e">#Glob files from directory</span>
-    loc_dataframe <span style="color:#f92672">=</span> get_files(<span style="color:#e6db74">&#34;loc_cited&#34;</span>)
-
-    
-    <span style="color:#75715e"># Join on File excluding extraneous data not in the oyez dataset</span>
-    master_df <span style="color:#f92672">=</span> innerjoin(oyez_dataframe, loc_dataframe, on <span style="color:#f92672">=</span> <span style="color:#e6db74">:File</span>, validate<span style="color:#f92672">=</span>(true, true), makeunique <span style="color:#f92672">=</span> true)
-
-    <span style="color:#75715e">#Select every file but the .DS_Store from the dataframe.  </span>
-    master_df <span style="color:#f92672">=</span> filter(row <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">!</span>(row<span style="color:#f92672">.</span>File <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;.DS_Store&#34;</span>), master_df)
-
-    <span style="color:#75715e">#Write to file</span>
-    outpath <span style="color:#f92672">=</span> df_to_file(master_df,outpath)
-    
-
-<span style="color:#66d9ef">end</span>
-
-main()
-
-
-</code></pre></div><h3 id="creating-an-outpath" >Creating an outpath
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> main()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># outpath fo the current file</span>
+</span></span><span style="display:flex;"><span>    outpath <span style="color:#f92672">=</span> joinpath(pwd(),<span style="color:#e6db74">&#34;case_files.csv&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Glob files from directory</span>
+</span></span><span style="display:flex;"><span>    oyez_dataframe <span style="color:#f92672">=</span> get_files(<span style="color:#e6db74">&#34;oyez_cited&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Glob files from directory</span>
+</span></span><span style="display:flex;"><span>    loc_dataframe <span style="color:#f92672">=</span> get_files(<span style="color:#e6db74">&#34;loc_cited&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Join on File excluding extraneous data not in the oyez dataset</span>
+</span></span><span style="display:flex;"><span>    master_df <span style="color:#f92672">=</span> innerjoin(oyez_dataframe, loc_dataframe, on <span style="color:#f92672">=</span> <span style="color:#e6db74">:File</span>, validate<span style="color:#f92672">=</span>(true, true), makeunique <span style="color:#f92672">=</span> true)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Select every file but the .DS_Store from the dataframe.  </span>
+</span></span><span style="display:flex;"><span>    master_df <span style="color:#f92672">=</span> filter(row <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">!</span>(row<span style="color:#f92672">.</span>File <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;.DS_Store&#34;</span>), master_df)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Write to file</span>
+</span></span><span style="display:flex;"><span>    outpath <span style="color:#f92672">=</span> df_to_file(master_df,outpath)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>main()
+</span></span></code></pre></div><h3 id="creating-an-outpath" >Creating an outpath
 <span>
     <a href="#creating-an-outpath">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
@@ -503,12 +498,12 @@ main()
     </a>
 </span>
 </h4><p>Arrays are soreted by call <code>sort_array(&lt;array&gt;)</code>.  It returns a sorted array using the merge sort alogorithm.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> sort_array(array)
-    
-    <span style="color:#66d9ef">return</span> sort(array; alg<span style="color:#f92672">=</span>MergeSort)
-
-<span style="color:#66d9ef">end</span>
-</code></pre></div><h4 id="crating-a-dataframe-with-the-arrays" >Crating a Dataframe with the Arrays
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> sort_array(array)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sort(array; alg<span style="color:#f92672">=</span>MergeSort)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h4 id="crating-a-dataframe-with-the-arrays" >Crating a Dataframe with the Arrays
 <span>
     <a href="#crating-a-dataframe-with-the-arrays">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
@@ -522,144 +517,139 @@ main()
     </a>
 </span>
 </h4><p>This function should be refactored into seperate ones, but it works well enough with this workflow that I am going to leave it.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> get_files(directory)
-    file_name <span style="color:#f92672">=</span> <span style="color:#66d9ef">String</span>[]
-    file_path <span style="color:#f92672">=</span> <span style="color:#66d9ef">String</span>[]
-
-    working_path <span style="color:#f92672">=</span> joinpath(pwd(), directory)
-    <span style="color:#75715e"># context management.  Cd and then go back to the orignal pwd</span>
-    cd(working_path) <span style="color:#66d9ef">do</span> 
-        <span style="color:#75715e">#print(&#34;Current directory: &#34;, working_path)</span>
-        foreach(readdir()) <span style="color:#66d9ef">do</span> f
-            path <span style="color:#f92672">=</span> joinpath(working_path, f)
-            push!(file_name,f)
-            push!(file_path, path)
-            <span style="color:#75715e">#dump(stat(f.desc)) # you can customize what you want to print</span>
-        <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#75715e">#println(&#39;\n&#39;, pwd())</span>
-    <span style="color:#75715e">#display(file_paths)</span>
-    file_name <span style="color:#f92672">=</span> sort_array(file_name)
-    file_path <span style="color:#f92672">=</span> sort_array(file_path)
-    df <span style="color:#f92672">=</span> DataFrame(File <span style="color:#f92672">=</span> file_name, Path <span style="color:#f92672">=</span> file_path)
-    <span style="color:#66d9ef">return</span> df
-
-<span style="color:#66d9ef">end</span>
-
-
-</code></pre></div><h3 id="joining-data-frames-by-citation" >Joining Data Frames by Citation
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> get_files(directory)
+</span></span><span style="display:flex;"><span>    file_name <span style="color:#f92672">=</span> <span style="color:#66d9ef">String</span>[]
+</span></span><span style="display:flex;"><span>    file_path <span style="color:#f92672">=</span> <span style="color:#66d9ef">String</span>[]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    working_path <span style="color:#f92672">=</span> joinpath(pwd(), directory)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># context management.  Cd and then go back to the orignal pwd</span>
+</span></span><span style="display:flex;"><span>    cd(working_path) <span style="color:#66d9ef">do</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#print(&#34;Current directory: &#34;, working_path)</span>
+</span></span><span style="display:flex;"><span>        foreach(readdir()) <span style="color:#66d9ef">do</span> f
+</span></span><span style="display:flex;"><span>            path <span style="color:#f92672">=</span> joinpath(working_path, f)
+</span></span><span style="display:flex;"><span>            push!(file_name,f)
+</span></span><span style="display:flex;"><span>            push!(file_path, path)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#dump(stat(f.desc)) # you can customize what you want to print</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#println(&#39;\n&#39;, pwd())</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#display(file_paths)</span>
+</span></span><span style="display:flex;"><span>    file_name <span style="color:#f92672">=</span> sort_array(file_name)
+</span></span><span style="display:flex;"><span>    file_path <span style="color:#f92672">=</span> sort_array(file_path)
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> DataFrame(File <span style="color:#f92672">=</span> file_name, Path <span style="color:#f92672">=</span> file_path)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> df
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h3 id="joining-data-frames-by-citation" >Joining Data Frames by Citation
 <span>
     <a href="#joining-data-frames-by-citation">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
 </h3><p>Julia&rsquo;s DataFrames package can easily join dataframes on a column.  In this workflow the file which is titled after a case citation is used.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Join on File excluding extraneous data not in the oyez dataset</span>
-master_df <span style="color:#f92672">=</span> innerjoin(oyez_dataframe, loc_dataframe, on <span style="color:#f92672">=</span> <span style="color:#e6db74">:File</span>, validate<span style="color:#f92672">=</span>(true, true), makeunique <span style="color:#f92672">=</span> true)
-
-</code></pre></div><h3 id="filtering-the-df-for-extraneous-files" >Filtering the DF for Extraneous Files
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Join on File excluding extraneous data not in the oyez dataset</span>
+</span></span><span style="display:flex;"><span>master_df <span style="color:#f92672">=</span> innerjoin(oyez_dataframe, loc_dataframe, on <span style="color:#f92672">=</span> <span style="color:#e6db74">:File</span>, validate<span style="color:#f92672">=</span>(true, true), makeunique <span style="color:#f92672">=</span> true)
+</span></span></code></pre></div><h3 id="filtering-the-df-for-extraneous-files" >Filtering the DF for Extraneous Files
 <span>
     <a href="#filtering-the-df-for-extraneous-files">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
 </h3><p>The master_df  is filtered to remove <code>.DS_Store</code> from the list of files to be processed.  Below notice the <code>!</code> in this case it will return all a data frame of values that are not equal to .DS_Store in the File column.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e">#Select every file but the .DS_Store from the dataframe.  </span>
-master_df <span style="color:#f92672">=</span> filter(row <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">!</span>(row<span style="color:#f92672">.</span>File <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;.DS_Store&#34;</span>), master_df)
-</code></pre></div><h3 id="the-df_to_file-function" >The df_to_file Function
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e">#Select every file but the .DS_Store from the dataframe.  </span>
+</span></span><span style="display:flex;"><span>master_df <span style="color:#f92672">=</span> filter(row <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">!</span>(row<span style="color:#f92672">.</span>File <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;.DS_Store&#34;</span>), master_df)
+</span></span></code></pre></div><h3 id="the-df_to_file-function" >The df_to_file Function
 <span>
     <a href="#the-df_to_file-function">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
 </h3><p>Finally the df is written to file.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e">#Write to file</span>
-outpath <span style="color:#f92672">=</span> df_to_file(master_df,outpath)
-
-
-<span style="color:#66d9ef">function</span> df_to_file(df,outpath)
-    CSV<span style="color:#f92672">.</span>write(outpath, df)
-    <span style="color:#66d9ef">return</span> outpath
-
-<span style="color:#66d9ef">end</span>
-
-</code></pre></div><h2 id="the-complete-program" >The Complete Program
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e">#Write to file</span>
+</span></span><span style="display:flex;"><span>outpath <span style="color:#f92672">=</span> df_to_file(master_df,outpath)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> df_to_file(df,outpath)
+</span></span><span style="display:flex;"><span>    CSV<span style="color:#f92672">.</span>write(outpath, df)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> outpath
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="the-complete-program" >The Complete Program
 <span>
     <a href="#the-complete-program">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> DataFrames
-<span style="color:#66d9ef">using</span> CSV
-
-<span style="color:#66d9ef">function</span> get_files(directory)
-    file_name <span style="color:#f92672">=</span> <span style="color:#66d9ef">String</span>[]
-    file_path <span style="color:#f92672">=</span> <span style="color:#66d9ef">String</span>[]
-
-    working_path <span style="color:#f92672">=</span> joinpath(pwd(), directory)
-    <span style="color:#75715e"># context management.  Cd and then go back to the orignal pwd</span>
-    cd(working_path) <span style="color:#66d9ef">do</span> 
-        <span style="color:#75715e">#print(&#34;Current directory: &#34;, working_path)</span>
-        foreach(readdir()) <span style="color:#66d9ef">do</span> f
-            path <span style="color:#f92672">=</span> joinpath(working_path, f)
-            push!(file_name,f)
-            push!(file_path, path)
-            <span style="color:#75715e">#dump(stat(f.desc)) # you can customize what you want to print</span>
-        <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#75715e">#println(&#39;\n&#39;, pwd())</span>
-    <span style="color:#75715e">#display(file_paths)</span>
-    file_name <span style="color:#f92672">=</span> sort_array(file_name)
-    file_path <span style="color:#f92672">=</span> sort_array(file_path)
-    df <span style="color:#f92672">=</span> DataFrame(File <span style="color:#f92672">=</span> file_name, Path <span style="color:#f92672">=</span> file_path)
-    <span style="color:#66d9ef">return</span> df
-
-<span style="color:#66d9ef">end</span>
-
-
-
-<span style="color:#66d9ef">function</span> sort_array(array)
-    
-    <span style="color:#66d9ef">return</span> sort(array; alg<span style="color:#f92672">=</span>MergeSort)
-
-<span style="color:#66d9ef">end</span>
-
-
-
-<span style="color:#66d9ef">function</span> df_to_file(df,outpath)
-    CSV<span style="color:#f92672">.</span>write(outpath, df)
-    <span style="color:#66d9ef">return</span> outpath
-
-<span style="color:#66d9ef">end</span>
-
-
-<span style="color:#66d9ef">function</span> main()
-    
-    <span style="color:#75715e"># outpath fo the current file</span>
-    outpath <span style="color:#f92672">=</span> joinpath(pwd(),<span style="color:#e6db74">&#34;case_files.csv&#34;</span>)
-
-    <span style="color:#75715e">#Glob files from directory</span>
-    oyez_dataframe <span style="color:#f92672">=</span> get_files(<span style="color:#e6db74">&#34;oyez_cited&#34;</span>)
-    
-    <span style="color:#75715e">#Glob files from directory</span>
-    loc_dataframe <span style="color:#f92672">=</span> get_files(<span style="color:#e6db74">&#34;loc_cited&#34;</span>)
-
-    
-    <span style="color:#75715e"># Join on File excluding extraneous data not in the oyez dataset</span>
-    master_df <span style="color:#f92672">=</span> innerjoin(oyez_dataframe, loc_dataframe, on <span style="color:#f92672">=</span> <span style="color:#e6db74">:File</span>, validate<span style="color:#f92672">=</span>(true, true), makeunique <span style="color:#f92672">=</span> true)
-
-    <span style="color:#75715e">#Select every file but the .DS_Store from the dataframe.  </span>
-    master_df <span style="color:#f92672">=</span> filter(row <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">!</span>(row<span style="color:#f92672">.</span>File <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;.DS_Store&#34;</span>), master_df)
-
-    <span style="color:#75715e">#Write to file</span>
-    outpath <span style="color:#f92672">=</span> df_to_file(master_df,outpath)
-    
-
-<span style="color:#66d9ef">end</span>
-
-main()
-
-</code></pre></div>
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> DataFrames
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> CSV
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> get_files(directory)
+</span></span><span style="display:flex;"><span>    file_name <span style="color:#f92672">=</span> <span style="color:#66d9ef">String</span>[]
+</span></span><span style="display:flex;"><span>    file_path <span style="color:#f92672">=</span> <span style="color:#66d9ef">String</span>[]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    working_path <span style="color:#f92672">=</span> joinpath(pwd(), directory)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># context management.  Cd and then go back to the orignal pwd</span>
+</span></span><span style="display:flex;"><span>    cd(working_path) <span style="color:#66d9ef">do</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#print(&#34;Current directory: &#34;, working_path)</span>
+</span></span><span style="display:flex;"><span>        foreach(readdir()) <span style="color:#66d9ef">do</span> f
+</span></span><span style="display:flex;"><span>            path <span style="color:#f92672">=</span> joinpath(working_path, f)
+</span></span><span style="display:flex;"><span>            push!(file_name,f)
+</span></span><span style="display:flex;"><span>            push!(file_path, path)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#dump(stat(f.desc)) # you can customize what you want to print</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#println(&#39;\n&#39;, pwd())</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#display(file_paths)</span>
+</span></span><span style="display:flex;"><span>    file_name <span style="color:#f92672">=</span> sort_array(file_name)
+</span></span><span style="display:flex;"><span>    file_path <span style="color:#f92672">=</span> sort_array(file_path)
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> DataFrame(File <span style="color:#f92672">=</span> file_name, Path <span style="color:#f92672">=</span> file_path)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> df
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> sort_array(array)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sort(array; alg<span style="color:#f92672">=</span>MergeSort)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> df_to_file(df,outpath)
+</span></span><span style="display:flex;"><span>    CSV<span style="color:#f92672">.</span>write(outpath, df)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> outpath
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> main()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># outpath fo the current file</span>
+</span></span><span style="display:flex;"><span>    outpath <span style="color:#f92672">=</span> joinpath(pwd(),<span style="color:#e6db74">&#34;case_files.csv&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Glob files from directory</span>
+</span></span><span style="display:flex;"><span>    oyez_dataframe <span style="color:#f92672">=</span> get_files(<span style="color:#e6db74">&#34;oyez_cited&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Glob files from directory</span>
+</span></span><span style="display:flex;"><span>    loc_dataframe <span style="color:#f92672">=</span> get_files(<span style="color:#e6db74">&#34;loc_cited&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Join on File excluding extraneous data not in the oyez dataset</span>
+</span></span><span style="display:flex;"><span>    master_df <span style="color:#f92672">=</span> innerjoin(oyez_dataframe, loc_dataframe, on <span style="color:#f92672">=</span> <span style="color:#e6db74">:File</span>, validate<span style="color:#f92672">=</span>(true, true), makeunique <span style="color:#f92672">=</span> true)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Select every file but the .DS_Store from the dataframe.  </span>
+</span></span><span style="display:flex;"><span>    master_df <span style="color:#f92672">=</span> filter(row <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">!</span>(row<span style="color:#f92672">.</span>File <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;.DS_Store&#34;</span>), master_df)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Write to file</span>
+</span></span><span style="display:flex;"><span>    outpath <span style="color:#f92672">=</span> df_to_file(master_df,outpath)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>main()
+</span></span></code></pre></div>
         </div>
         
 
@@ -777,7 +767,7 @@ main()
         
     <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
