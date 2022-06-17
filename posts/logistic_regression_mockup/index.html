@@ -653,7 +653,6 @@ PDW          object
 PCT          object
 dtype: object
 </code></pre>
-<p>Everything was read an object.  Blah. I&rsquo;ll cast everything to numeric&hellip; Thank you numpy</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># replace empty space with na</span>
 </span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34; &#34;</span>, np<span style="color:#f92672">.</span>nan)
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># convert numeric objects to numeric data types.  I checked in the code book there will not be any false positives</span>
