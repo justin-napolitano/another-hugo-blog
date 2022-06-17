@@ -360,12 +360,6 @@ df.dtypes
     dtype: object
 
 
-
-Everything was read an object.  Blah. I'll cast everything to numeric... Thank you numpy
-
-
-
-
 ```python
 # replace empty space with na
 df = df.replace(" ", np.nan)
