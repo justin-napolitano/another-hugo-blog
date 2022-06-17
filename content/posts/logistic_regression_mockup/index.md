@@ -5,7 +5,7 @@ description = "Designing a logistic regression model from randomized bioinformat
 author = "Justin Napolitano"
 categories = ['Python','Tutorials', 'Quantitative Analysis']
 tags = ['julia','numerical-computing','Logistic Regression','statistics']
-images = ['feature-bio.jpeg']
+images = ['feature-image.png']
 series = ["Quantitative Analysis in Python"]
 +++
 
