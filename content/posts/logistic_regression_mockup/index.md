@@ -1,7 +1,7 @@
 +++
 title =  "Model Design and Logistic Regression in Python"
 date = "2022-06-17T13:20:32.169Z"
-description = "Designing a logistic regression model of from randomized bioinformatics data."
+description = "Designing a logistic regression model from randomized bioinformatics data."
 author = "Justin Napolitano"
 categories = ['Python','Tutorials', 'Quantitative Analysis']
 tags = ['julia','numerical-computing','Logistic Regression','statistics']
