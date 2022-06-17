@@ -38,7 +38,6 @@ from sklearn.preprocessing import StandardScaler
 
 ## Data
 
-include a raw html here  to include the project description data file in the final markdown document
 
 ### Data  Description
 
