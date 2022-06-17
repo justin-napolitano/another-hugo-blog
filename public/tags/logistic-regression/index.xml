@@ -1,0 +1,1974 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Logistic Regression on Justin&#39;s Data Blog</title>
+    <link>https://blog.jnapolitano.io/tags/logistic-regression/</link>
+    <description>Justin&#39;s Data Blog (Logistic Regression)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 17 Jun 2022 13:20:32 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.jnapolitano.io/tags/logistic-regression/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Model Design and Logistic Regression in Python</title>
+      <link>https://blog.jnapolitano.io/posts/logistic_regression_mockup/</link>
+      <pubDate>Fri, 17 Jun 2022 13:20:32 +0000</pubDate>
+      
+      <guid>https://blog.jnapolitano.io/posts/logistic_regression_mockup/</guid>
+      <description>&lt;h1 id=&#34;model-design-and-logistic-regression-in-python&#34; &gt;Model Design and Logistic Regression in Python
+&lt;span&gt;
+    &lt;a href=&#34;#model-design-and-logistic-regression-in-python&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;p&gt;I recently modeled customer churn in Julia with logistic regression model.  It was interesting to be sure, but I want to extend my analysis skillset by modeling biostatistics data.  In this post, I design a logistic regression model of health predictors.&lt;/p&gt;
+&lt;h2 id=&#34;imports&#34; &gt;Imports
+&lt;span&gt;
+    &lt;a href=&#34;#imports&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# load some default Python modules&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; numpy &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; np
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pandas &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; pd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; plt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; seaborn &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; sns
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;style&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;use(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;seaborn-whitegrid&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; google.cloud &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; bigquery
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; pprint &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; pprint
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; datetime &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; date, datetime
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; contextily &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; cx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; plt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; sklearn.datasets &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; load_digits
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; sklearn.linear_model &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; LogisticRegression
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; sklearn.metrics &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; classification_report, confusion_matrix
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; sklearn.model_selection &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; train_test_split
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; sklearn.preprocessing &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; StandardScaler
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;data-import&#34; &gt;Data Import
+&lt;span&gt;
+    &lt;a href=&#34;#data-import&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;include a raw html here  to include the project description data file in the final markdown document&lt;/p&gt;
+&lt;h3 id=&#34;data--description&#34; &gt;Data  Description
+&lt;span&gt;
+    &lt;a href=&#34;#data--description&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;Chinese Longitudinal Healthy Longevity Survey (CLHLS), Biomarkers Datasets, 2009, 2012, 2014 (ICPSR 37226)
+Principal Investigator(s): Yi Zeng, Duke University, and Peking University; James W. Vaupel, Max Planck Institutes, and Duke University&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Users/jnapolitano/Projects/nih/ICPSR_37226/DS0003/pmc-submission/jupyter-book/notebooks/37226-0003-Data.tsv&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read_csv(filename, sep&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# read data in pandas dataframe&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# list first few rows (datapoints)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;head()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ID&lt;/th&gt;
+      &lt;th&gt;TRUEAGE&lt;/th&gt;
+      &lt;th&gt;A1&lt;/th&gt;
+      &lt;th&gt;ALB&lt;/th&gt;
+      &lt;th&gt;GLU&lt;/th&gt;
+      &lt;th&gt;BUN&lt;/th&gt;
+      &lt;th&gt;CREA&lt;/th&gt;
+      &lt;th&gt;CHO&lt;/th&gt;
+      &lt;th&gt;TG&lt;/th&gt;
+      &lt;th&gt;GSP&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;RBC&lt;/th&gt;
+      &lt;th&gt;HGB&lt;/th&gt;
+      &lt;th&gt;HCT&lt;/th&gt;
+      &lt;th&gt;MCV&lt;/th&gt;
+      &lt;th&gt;MCH&lt;/th&gt;
+      &lt;th&gt;MCHC&lt;/th&gt;
+      &lt;th&gt;PLT&lt;/th&gt;
+      &lt;th&gt;MPV&lt;/th&gt;
+      &lt;th&gt;PDW&lt;/th&gt;
+      &lt;th&gt;PCT&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;32160008&lt;/td&gt;
+      &lt;td&gt;95&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;30.60000038147&lt;/td&gt;
+      &lt;td&gt;4.230000019073&lt;/td&gt;
+      &lt;td&gt;6.860000133514&lt;/td&gt;
+      &lt;td&gt;64.90000152588&lt;/td&gt;
+      &lt;td&gt;3.5&lt;/td&gt;
+      &lt;td&gt;.8799999952316&lt;/td&gt;
+      &lt;td&gt;232.89999389649&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.5&lt;/td&gt;
+      &lt;td&gt;104&lt;/td&gt;
+      &lt;td&gt;29.14999961853&lt;/td&gt;
+      &lt;td&gt;82.69999694825&lt;/td&gt;
+      &lt;td&gt;29.5&lt;/td&gt;
+      &lt;td&gt;357&lt;/td&gt;
+      &lt;td&gt;394&lt;/td&gt;
+      &lt;td&gt;8.60000038147&lt;/td&gt;
+      &lt;td&gt;14.30000019074&lt;/td&gt;
+      &lt;td&gt;.33000001311&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;32161008&lt;/td&gt;
+      &lt;td&gt;95&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;39.09999847413&lt;/td&gt;
+      &lt;td&gt;6.94000005722&lt;/td&gt;
+      &lt;td&gt;16.190000534058&lt;/td&gt;
+      &lt;td&gt;152.39999389649&lt;/td&gt;
+      &lt;td&gt;4.619999885559&lt;/td&gt;
+      &lt;td&gt;1.2799999713898&lt;/td&gt;
+      &lt;td&gt;264.20001220704&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.2999999523163&lt;/td&gt;
+      &lt;td&gt;101.3000030518&lt;/td&gt;
+      &lt;td&gt;28.930000305176&lt;/td&gt;
+      &lt;td&gt;88.90000152588&lt;/td&gt;
+      &lt;td&gt;31.10000038147&lt;/td&gt;
+      &lt;td&gt;350&lt;/td&gt;
+      &lt;td&gt;149&lt;/td&gt;
+      &lt;td&gt;9.10000038147&lt;/td&gt;
+      &lt;td&gt;15&lt;/td&gt;
+      &lt;td&gt;.12999999523&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;32162608&lt;/td&gt;
+      &lt;td&gt;87&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;44.79999923707&lt;/td&gt;
+      &lt;td&gt;5.550000190735&lt;/td&gt;
+      &lt;td&gt;5.679999828339&lt;/td&gt;
+      &lt;td&gt;78.5&lt;/td&gt;
+      &lt;td&gt;5.199999809265&lt;/td&gt;
+      &lt;td&gt;2.3900001049042&lt;/td&gt;
+      &lt;td&gt;276.20001220704&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.5999999046326&lt;/td&gt;
+      &lt;td&gt;111.3000030518&lt;/td&gt;
+      &lt;td&gt;31.159999847412&lt;/td&gt;
+      &lt;td&gt;87.59999847413&lt;/td&gt;
+      &lt;td&gt;31.29999923707&lt;/td&gt;
+      &lt;td&gt;357&lt;/td&gt;
+      &lt;td&gt;201&lt;/td&gt;
+      &lt;td&gt;8.30000019074&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;.15999999642&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;32163008&lt;/td&gt;
+      &lt;td&gt;90&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;41.29999923707&lt;/td&gt;
+      &lt;td&gt;5.269999980927&lt;/td&gt;
+      &lt;td&gt;5.949999809265&lt;/td&gt;
+      &lt;td&gt;75.80000305176&lt;/td&gt;
+      &lt;td&gt;4.25&lt;/td&gt;
+      &lt;td&gt;1.5499999523163&lt;/td&gt;
+      &lt;td&gt;264.20001220704&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.7000000476837&lt;/td&gt;
+      &lt;td&gt;113.9000015259&lt;/td&gt;
+      &lt;td&gt;32.900001525879&lt;/td&gt;
+      &lt;td&gt;89.69999694825&lt;/td&gt;
+      &lt;td&gt;31.10000038147&lt;/td&gt;
+      &lt;td&gt;346&lt;/td&gt;
+      &lt;td&gt;150&lt;/td&gt;
+      &lt;td&gt;9.89999961854&lt;/td&gt;
+      &lt;td&gt;16.79999923707&lt;/td&gt;
+      &lt;td&gt;.1400000006&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;32164908&lt;/td&gt;
+      &lt;td&gt;94&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;39.90000152588&lt;/td&gt;
+      &lt;td&gt;7.05999994278&lt;/td&gt;
+      &lt;td&gt;6.039999961853&lt;/td&gt;
+      &lt;td&gt;90.80000305176&lt;/td&gt;
+      &lt;td&gt;7.139999866486&lt;/td&gt;
+      &lt;td&gt;2.3399999141693&lt;/td&gt;
+      &lt;td&gt;237.69999694825&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.1999998092651&lt;/td&gt;
+      &lt;td&gt;131.1999969483&lt;/td&gt;
+      &lt;td&gt;36.689998626709&lt;/td&gt;
+      &lt;td&gt;88.5&lt;/td&gt;
+      &lt;td&gt;31.60000038147&lt;/td&gt;
+      &lt;td&gt;358&lt;/td&gt;
+      &lt;td&gt;163&lt;/td&gt;
+      &lt;td&gt;9.69999980927&lt;/td&gt;
+      &lt;td&gt;17.79999923707&lt;/td&gt;
+      &lt;td&gt;.15000000596&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;5 rows × 33 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ID&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;2.546000e+03&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;4.069177e+07&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;4.367164e+06&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;3.216001e+07&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;3.743344e+07&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;4.135976e+07&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;4.430106e+07&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;4.611231e+07&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;columns
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Index([&#39;ID&#39;, &#39;TRUEAGE&#39;, &#39;A1&#39;, &#39;ALB&#39;, &#39;GLU&#39;, &#39;BUN&#39;, &#39;CREA&#39;, &#39;CHO&#39;, &#39;TG&#39;, &#39;GSP&#39;,
+       &#39;CRPHS&#39;, &#39;UA&#39;, &#39;HDLC&#39;, &#39;SOD&#39;, &#39;MDA&#39;, &#39;VD3&#39;, &#39;VITB12&#39;, &#39;UALB&#39;, &#39;UCR&#39;,
+       &#39;UALBBYUCR&#39;, &#39;WBC&#39;, &#39;LYMPH&#39;, &#39;LYMPH_A&#39;, &#39;RBC&#39;, &#39;HGB&#39;, &#39;HCT&#39;, &#39;MCV&#39;,
+       &#39;MCH&#39;, &#39;MCHC&#39;, &#39;PLT&#39;, &#39;MPV&#39;, &#39;PDW&#39;, &#39;PCT&#39;],
+      dtype=&#39;object&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# check datatypesdf&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dtypes
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;ID            int64
+TRUEAGE      object
+A1           object
+ALB          object
+GLU          object
+BUN          object
+CREA         object
+CHO          object
+TG           object
+GSP          object
+CRPHS        object
+UA           object
+HDLC         object
+SOD          object
+MDA          object
+VD3          object
+VITB12       object
+UALB         object
+UCR          object
+UALBBYUCR    object
+WBC          object
+LYMPH        object
+LYMPH_A      object
+RBC          object
+HGB          object
+HCT          object
+MCV          object
+MCH          object
+MCHC         object
+PLT          object
+MPV          object
+PDW          object
+PCT          object
+dtype: object
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Everything was read an object.  Blah. I&amp;rsquo;ll cast everything to numeric&amp;hellip; Thank you numpy&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# replace empty space with na&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;replace(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;, np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;nan)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# convert numeric objects to numeric data types.  I checked in the code book there will not be any false positives&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;apply(pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to_numeric, errors&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;raise&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Recheck dictypes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dtypes
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;ID             int64
+TRUEAGE      float64
+A1           float64
+ALB          float64
+GLU          float64
+BUN          float64
+CREA         float64
+CHO          float64
+TG           float64
+GSP          float64
+CRPHS        float64
+UA           float64
+HDLC         float64
+SOD          float64
+MDA          float64
+VD3          float64
+VITB12       float64
+UALB         float64
+UCR          float64
+UALBBYUCR    float64
+WBC          float64
+LYMPH        float64
+LYMPH_A      float64
+RBC          float64
+HGB          float64
+HCT          float64
+MCV          float64
+MCH          float64
+MCHC         float64
+PLT          float64
+MPV          float64
+PDW          float64
+PCT          float64
+dtype: object
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# check statistics of the features&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ID&lt;/th&gt;
+      &lt;th&gt;TRUEAGE&lt;/th&gt;
+      &lt;th&gt;A1&lt;/th&gt;
+      &lt;th&gt;ALB&lt;/th&gt;
+      &lt;th&gt;GLU&lt;/th&gt;
+      &lt;th&gt;BUN&lt;/th&gt;
+      &lt;th&gt;CREA&lt;/th&gt;
+      &lt;th&gt;CHO&lt;/th&gt;
+      &lt;th&gt;TG&lt;/th&gt;
+      &lt;th&gt;GSP&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;RBC&lt;/th&gt;
+      &lt;th&gt;HGB&lt;/th&gt;
+      &lt;th&gt;HCT&lt;/th&gt;
+      &lt;th&gt;MCV&lt;/th&gt;
+      &lt;th&gt;MCH&lt;/th&gt;
+      &lt;th&gt;MCHC&lt;/th&gt;
+      &lt;th&gt;PLT&lt;/th&gt;
+      &lt;th&gt;MPV&lt;/th&gt;
+      &lt;th&gt;PDW&lt;/th&gt;
+      &lt;th&gt;PCT&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;2.546000e+03&lt;/td&gt;
+      &lt;td&gt;2542.000000&lt;/td&gt;
+      &lt;td&gt;2542.000000&lt;/td&gt;
+      &lt;td&gt;2499.000000&lt;/td&gt;
+      &lt;td&gt;2499.000000&lt;/td&gt;
+      &lt;td&gt;2499.000000&lt;/td&gt;
+      &lt;td&gt;2499.000000&lt;/td&gt;
+      &lt;td&gt;2499.000000&lt;/td&gt;
+      &lt;td&gt;2499.000000&lt;/td&gt;
+      &lt;td&gt;2499.000000&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;2497.000000&lt;/td&gt;
+      &lt;td&gt;2497.000000&lt;/td&gt;
+      &lt;td&gt;2497.000000&lt;/td&gt;
+      &lt;td&gt;2497.000000&lt;/td&gt;
+      &lt;td&gt;2497.000000&lt;/td&gt;
+      &lt;td&gt;2497.000000&lt;/td&gt;
+      &lt;td&gt;2497.000000&lt;/td&gt;
+      &lt;td&gt;2487.000000&lt;/td&gt;
+      &lt;td&gt;2483.000000&lt;/td&gt;
+      &lt;td&gt;1711.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;4.069177e+07&lt;/td&gt;
+      &lt;td&gt;85.584972&lt;/td&gt;
+      &lt;td&gt;1.543273&lt;/td&gt;
+      &lt;td&gt;42.363345&lt;/td&gt;
+      &lt;td&gt;5.364794&lt;/td&gt;
+      &lt;td&gt;6.661321&lt;/td&gt;
+      &lt;td&gt;82.805642&lt;/td&gt;
+      &lt;td&gt;4.770340&lt;/td&gt;
+      &lt;td&gt;1.251369&lt;/td&gt;
+      &lt;td&gt;253.726811&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.165012&lt;/td&gt;
+      &lt;td&gt;127.684902&lt;/td&gt;
+      &lt;td&gt;38.664654&lt;/td&gt;
+      &lt;td&gt;94.532295&lt;/td&gt;
+      &lt;td&gt;31.033849&lt;/td&gt;
+      &lt;td&gt;323.221826&lt;/td&gt;
+      &lt;td&gt;195.033440&lt;/td&gt;
+      &lt;td&gt;9.322951&lt;/td&gt;
+      &lt;td&gt;16.114692&lt;/td&gt;
+      &lt;td&gt;0.244237&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;4.367164e+06&lt;/td&gt;
+      &lt;td&gt;12.061941&lt;/td&gt;
+      &lt;td&gt;0.498222&lt;/td&gt;
+      &lt;td&gt;4.367372&lt;/td&gt;
+      &lt;td&gt;1.802363&lt;/td&gt;
+      &lt;td&gt;2.355459&lt;/td&gt;
+      &lt;td&gt;29.246926&lt;/td&gt;
+      &lt;td&gt;1.010844&lt;/td&gt;
+      &lt;td&gt;0.757557&lt;/td&gt;
+      &lt;td&gt;38.658243&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;0.602123&lt;/td&gt;
+      &lt;td&gt;33.852642&lt;/td&gt;
+      &lt;td&gt;7.163306&lt;/td&gt;
+      &lt;td&gt;7.624568&lt;/td&gt;
+      &lt;td&gt;11.041158&lt;/td&gt;
+      &lt;td&gt;20.995983&lt;/td&gt;
+      &lt;td&gt;76.322382&lt;/td&gt;
+      &lt;td&gt;4.468129&lt;/td&gt;
+      &lt;td&gt;4.264532&lt;/td&gt;
+      &lt;td&gt;2.679986&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;3.216001e+07&lt;/td&gt;
+      &lt;td&gt;47.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;21.900000&lt;/td&gt;
+      &lt;td&gt;1.960000&lt;/td&gt;
+      &lt;td&gt;2.090000&lt;/td&gt;
+      &lt;td&gt;30.500000&lt;/td&gt;
+      &lt;td&gt;0.070000&lt;/td&gt;
+      &lt;td&gt;0.030000&lt;/td&gt;
+      &lt;td&gt;139.899994&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;1.910000&lt;/td&gt;
+      &lt;td&gt;13.000000&lt;/td&gt;
+      &lt;td&gt;0.280000&lt;/td&gt;
+      &lt;td&gt;54.799999&lt;/td&gt;
+      &lt;td&gt;15.900000&lt;/td&gt;
+      &lt;td&gt;3.900000&lt;/td&gt;
+      &lt;td&gt;9.000000&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;5.500000&lt;/td&gt;
+      &lt;td&gt;0.020000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;3.743344e+07&lt;/td&gt;
+      &lt;td&gt;76.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;40.000000&lt;/td&gt;
+      &lt;td&gt;4.400000&lt;/td&gt;
+      &lt;td&gt;5.150000&lt;/td&gt;
+      &lt;td&gt;66.599998&lt;/td&gt;
+      &lt;td&gt;4.090000&lt;/td&gt;
+      &lt;td&gt;0.800000&lt;/td&gt;
+      &lt;td&gt;232.600006&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.780000&lt;/td&gt;
+      &lt;td&gt;115.000000&lt;/td&gt;
+      &lt;td&gt;35.400002&lt;/td&gt;
+      &lt;td&gt;91.300003&lt;/td&gt;
+      &lt;td&gt;29.500000&lt;/td&gt;
+      &lt;td&gt;317.000000&lt;/td&gt;
+      &lt;td&gt;150.000000&lt;/td&gt;
+      &lt;td&gt;8.200000&lt;/td&gt;
+      &lt;td&gt;15.300000&lt;/td&gt;
+      &lt;td&gt;0.140000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;4.135976e+07&lt;/td&gt;
+      &lt;td&gt;86.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;42.799999&lt;/td&gt;
+      &lt;td&gt;5.020000&lt;/td&gt;
+      &lt;td&gt;6.380000&lt;/td&gt;
+      &lt;td&gt;77.000000&lt;/td&gt;
+      &lt;td&gt;4.690000&lt;/td&gt;
+      &lt;td&gt;1.050000&lt;/td&gt;
+      &lt;td&gt;248.800003&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.160000&lt;/td&gt;
+      &lt;td&gt;127.000000&lt;/td&gt;
+      &lt;td&gt;39.000000&lt;/td&gt;
+      &lt;td&gt;95.400002&lt;/td&gt;
+      &lt;td&gt;31.200001&lt;/td&gt;
+      &lt;td&gt;325.000000&lt;/td&gt;
+      &lt;td&gt;189.000000&lt;/td&gt;
+      &lt;td&gt;9.300000&lt;/td&gt;
+      &lt;td&gt;16.000000&lt;/td&gt;
+      &lt;td&gt;0.170000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;4.430106e+07&lt;/td&gt;
+      &lt;td&gt;95.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;45.000000&lt;/td&gt;
+      &lt;td&gt;5.790000&lt;/td&gt;
+      &lt;td&gt;7.695000&lt;/td&gt;
+      &lt;td&gt;92.099998&lt;/td&gt;
+      &lt;td&gt;5.370000&lt;/td&gt;
+      &lt;td&gt;1.470000&lt;/td&gt;
+      &lt;td&gt;266.899994&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.540000&lt;/td&gt;
+      &lt;td&gt;140.000000&lt;/td&gt;
+      &lt;td&gt;42.700001&lt;/td&gt;
+      &lt;td&gt;98.900002&lt;/td&gt;
+      &lt;td&gt;32.500000&lt;/td&gt;
+      &lt;td&gt;333.000000&lt;/td&gt;
+      &lt;td&gt;229.000000&lt;/td&gt;
+      &lt;td&gt;10.300000&lt;/td&gt;
+      &lt;td&gt;16.799999&lt;/td&gt;
+      &lt;td&gt;0.210000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;4.611231e+07&lt;/td&gt;
+      &lt;td&gt;113.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;130.000000&lt;/td&gt;
+      &lt;td&gt;22.000000&lt;/td&gt;
+      &lt;td&gt;39.860001&lt;/td&gt;
+      &lt;td&gt;585.099976&lt;/td&gt;
+      &lt;td&gt;13.070000&lt;/td&gt;
+      &lt;td&gt;8.150000&lt;/td&gt;
+      &lt;td&gt;778.000000&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;7.210000&lt;/td&gt;
+      &lt;td&gt;1116.000000&lt;/td&gt;
+      &lt;td&gt;70.199997&lt;/td&gt;
+      &lt;td&gt;125.800003&lt;/td&gt;
+      &lt;td&gt;371.000000&lt;/td&gt;
+      &lt;td&gt;429.000000&lt;/td&gt;
+      &lt;td&gt;1514.000000&lt;/td&gt;
+      &lt;td&gt;107.000000&lt;/td&gt;
+      &lt;td&gt;153.000000&lt;/td&gt;
+      &lt;td&gt;111.000000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;8 rows × 33 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;It is kind of odd that there are greater counts for some rows. I&amp;rsquo;ll remove all na.&lt;/p&gt;
+&lt;p&gt;Checking for negative values and anything else I missed from the initial sql clean:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dropna()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ID&lt;/th&gt;
+      &lt;th&gt;TRUEAGE&lt;/th&gt;
+      &lt;th&gt;A1&lt;/th&gt;
+      &lt;th&gt;ALB&lt;/th&gt;
+      &lt;th&gt;GLU&lt;/th&gt;
+      &lt;th&gt;BUN&lt;/th&gt;
+      &lt;th&gt;CREA&lt;/th&gt;
+      &lt;th&gt;CHO&lt;/th&gt;
+      &lt;th&gt;TG&lt;/th&gt;
+      &lt;th&gt;GSP&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;RBC&lt;/th&gt;
+      &lt;th&gt;HGB&lt;/th&gt;
+      &lt;th&gt;HCT&lt;/th&gt;
+      &lt;th&gt;MCV&lt;/th&gt;
+      &lt;th&gt;MCH&lt;/th&gt;
+      &lt;th&gt;MCHC&lt;/th&gt;
+      &lt;th&gt;PLT&lt;/th&gt;
+      &lt;th&gt;MPV&lt;/th&gt;
+      &lt;th&gt;PDW&lt;/th&gt;
+      &lt;th&gt;PCT&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;1.561000e+03&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+      &lt;td&gt;1561.000000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;3.951369e+07&lt;/td&gt;
+      &lt;td&gt;84.782191&lt;/td&gt;
+      &lt;td&gt;1.534914&lt;/td&gt;
+      &lt;td&gt;42.445292&lt;/td&gt;
+      &lt;td&gt;5.334414&lt;/td&gt;
+      &lt;td&gt;6.898834&lt;/td&gt;
+      &lt;td&gt;84.107880&lt;/td&gt;
+      &lt;td&gt;4.806336&lt;/td&gt;
+      &lt;td&gt;1.243748&lt;/td&gt;
+      &lt;td&gt;254.537604&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.060587&lt;/td&gt;
+      &lt;td&gt;126.936387&lt;/td&gt;
+      &lt;td&gt;38.154004&lt;/td&gt;
+      &lt;td&gt;94.416284&lt;/td&gt;
+      &lt;td&gt;31.500461&lt;/td&gt;
+      &lt;td&gt;329.142217&lt;/td&gt;
+      &lt;td&gt;190.152082&lt;/td&gt;
+      &lt;td&gt;10.006560&lt;/td&gt;
+      &lt;td&gt;15.777220&lt;/td&gt;
+      &lt;td&gt;0.251365&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;4.702774e+06&lt;/td&gt;
+      &lt;td&gt;12.056596&lt;/td&gt;
+      &lt;td&gt;0.498939&lt;/td&gt;
+      &lt;td&gt;4.659920&lt;/td&gt;
+      &lt;td&gt;1.707653&lt;/td&gt;
+      &lt;td&gt;2.292577&lt;/td&gt;
+      &lt;td&gt;29.500260&lt;/td&gt;
+      &lt;td&gt;0.999193&lt;/td&gt;
+      &lt;td&gt;0.775910&lt;/td&gt;
+      &lt;td&gt;39.858537&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;0.589037&lt;/td&gt;
+      &lt;td&gt;39.956758&lt;/td&gt;
+      &lt;td&gt;5.261258&lt;/td&gt;
+      &lt;td&gt;7.701819&lt;/td&gt;
+      &lt;td&gt;11.723908&lt;/td&gt;
+      &lt;td&gt;16.978577&lt;/td&gt;
+      &lt;td&gt;71.839722&lt;/td&gt;
+      &lt;td&gt;4.453105&lt;/td&gt;
+      &lt;td&gt;5.142069&lt;/td&gt;
+      &lt;td&gt;2.805686&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;3.216101e+07&lt;/td&gt;
+      &lt;td&gt;48.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;21.900000&lt;/td&gt;
+      &lt;td&gt;1.960000&lt;/td&gt;
+      &lt;td&gt;2.140000&lt;/td&gt;
+      &lt;td&gt;30.500000&lt;/td&gt;
+      &lt;td&gt;0.340000&lt;/td&gt;
+      &lt;td&gt;0.070000&lt;/td&gt;
+      &lt;td&gt;139.899994&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;2.100000&lt;/td&gt;
+      &lt;td&gt;13.000000&lt;/td&gt;
+      &lt;td&gt;13.200000&lt;/td&gt;
+      &lt;td&gt;56.000000&lt;/td&gt;
+      &lt;td&gt;17.500000&lt;/td&gt;
+      &lt;td&gt;35.000000&lt;/td&gt;
+      &lt;td&gt;25.000000&lt;/td&gt;
+      &lt;td&gt;0.200000&lt;/td&gt;
+      &lt;td&gt;5.500000&lt;/td&gt;
+      &lt;td&gt;0.020000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;3.736671e+07&lt;/td&gt;
+      &lt;td&gt;76.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;39.900002&lt;/td&gt;
+      &lt;td&gt;4.400000&lt;/td&gt;
+      &lt;td&gt;5.370000&lt;/td&gt;
+      &lt;td&gt;67.000000&lt;/td&gt;
+      &lt;td&gt;4.120000&lt;/td&gt;
+      &lt;td&gt;0.780000&lt;/td&gt;
+      &lt;td&gt;231.600006&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.680000&lt;/td&gt;
+      &lt;td&gt;114.000000&lt;/td&gt;
+      &lt;td&gt;34.799999&lt;/td&gt;
+      &lt;td&gt;91.199997&lt;/td&gt;
+      &lt;td&gt;30.100000&lt;/td&gt;
+      &lt;td&gt;320.000000&lt;/td&gt;
+      &lt;td&gt;147.000000&lt;/td&gt;
+      &lt;td&gt;8.800000&lt;/td&gt;
+      &lt;td&gt;15.400000&lt;/td&gt;
+      &lt;td&gt;0.140000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;3.745741e+07&lt;/td&gt;
+      &lt;td&gt;85.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;42.900002&lt;/td&gt;
+      &lt;td&gt;4.990000&lt;/td&gt;
+      &lt;td&gt;6.610000&lt;/td&gt;
+      &lt;td&gt;77.599998&lt;/td&gt;
+      &lt;td&gt;4.730000&lt;/td&gt;
+      &lt;td&gt;1.040000&lt;/td&gt;
+      &lt;td&gt;249.800003&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.060000&lt;/td&gt;
+      &lt;td&gt;126.000000&lt;/td&gt;
+      &lt;td&gt;38.200001&lt;/td&gt;
+      &lt;td&gt;95.400002&lt;/td&gt;
+      &lt;td&gt;31.400000&lt;/td&gt;
+      &lt;td&gt;328.000000&lt;/td&gt;
+      &lt;td&gt;185.000000&lt;/td&gt;
+      &lt;td&gt;9.600000&lt;/td&gt;
+      &lt;td&gt;15.900000&lt;/td&gt;
+      &lt;td&gt;0.170000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;4.332561e+07&lt;/td&gt;
+      &lt;td&gt;94.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;45.099998&lt;/td&gt;
+      &lt;td&gt;5.780000&lt;/td&gt;
+      &lt;td&gt;7.960000&lt;/td&gt;
+      &lt;td&gt;93.199997&lt;/td&gt;
+      &lt;td&gt;5.420000&lt;/td&gt;
+      &lt;td&gt;1.460000&lt;/td&gt;
+      &lt;td&gt;268.899994&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.400000&lt;/td&gt;
+      &lt;td&gt;137.000000&lt;/td&gt;
+      &lt;td&gt;41.599998&lt;/td&gt;
+      &lt;td&gt;98.900002&lt;/td&gt;
+      &lt;td&gt;32.700001&lt;/td&gt;
+      &lt;td&gt;337.000000&lt;/td&gt;
+      &lt;td&gt;227.000000&lt;/td&gt;
+      &lt;td&gt;10.600000&lt;/td&gt;
+      &lt;td&gt;16.299999&lt;/td&gt;
+      &lt;td&gt;0.210000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;4.581641e+07&lt;/td&gt;
+      &lt;td&gt;113.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;130.000000&lt;/td&gt;
+      &lt;td&gt;20.760000&lt;/td&gt;
+      &lt;td&gt;23.549999&lt;/td&gt;
+      &lt;td&gt;392.000000&lt;/td&gt;
+      &lt;td&gt;8.490000&lt;/td&gt;
+      &lt;td&gt;8.150000&lt;/td&gt;
+      &lt;td&gt;778.000000&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;7.210000&lt;/td&gt;
+      &lt;td&gt;1116.000000&lt;/td&gt;
+      &lt;td&gt;70.199997&lt;/td&gt;
+      &lt;td&gt;125.800003&lt;/td&gt;
+      &lt;td&gt;371.000000&lt;/td&gt;
+      &lt;td&gt;408.000000&lt;/td&gt;
+      &lt;td&gt;1302.000000&lt;/td&gt;
+      &lt;td&gt;107.000000&lt;/td&gt;
+      &lt;td&gt;153.000000&lt;/td&gt;
+      &lt;td&gt;111.000000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;8 rows × 33 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;We remove about 4/5 of our data, but the counts are not equivalent.&lt;/p&gt;
+&lt;h2 id=&#34;age-histogram&#34; &gt;Age Histogram
+&lt;span&gt;
+    &lt;a href=&#34;#age-histogram&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# plot histogram of fare&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TRUEAGE&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hist(figsize&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;14&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Age&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Histogram&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;logistic_regression_files/logistic_regression_22_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#idx = (df.trip_distance &amp;lt; 3) &amp;amp; (gdf.fare_amount &amp;lt; 100)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;scatter(df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TRUEAGE, df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TG)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;True Age&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Triglyceride, mmol/L&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# theta here is estimated by hand&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;show()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;logistic_regression_files/logistic_regression_23_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;filter-examples&#34; &gt;Filter Examples
+&lt;span&gt;
+    &lt;a href=&#34;#filter-examples&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;To fit the specificities of the conditions in the training video I&amp;rsquo;ll add some randomized columns.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#inclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# exclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;emergency_department &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;lower_bound , high &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; upper_bound, size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;EMERGENCY&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; emergency_department
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#inclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# exclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cancer_care &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;lower_bound , high &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; upper_bound, size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;CANCER_TYPE&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cancer_care
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#inclusive &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#0 = no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#1 = ICPI&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 2 MONO &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# exclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;icpi_history &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;lower_bound , high &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; upper_bound, size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ICPI_HIST&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; icpi_history
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#inclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# exclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Spanish = 0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# English = 1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Arbitrarily chosen. &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;language &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;lower_bound , high &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; upper_bound, size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;LANG&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; language
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#inclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# exclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;follow_up &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;lower_bound , high &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; upper_bound, size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;FOLLOW_UP&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; follow_up
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#inclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# exclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 0 = no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 1 = Yes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cons &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;lower_bound , high &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; upper_bound, size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;CONSENT&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cons
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#inclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# exclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 0 = no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 1 = Yes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;prego &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;lower_bound , high &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; upper_bound, size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;PREGNANT&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; prego
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ID&lt;/th&gt;
+      &lt;th&gt;TRUEAGE&lt;/th&gt;
+      &lt;th&gt;A1&lt;/th&gt;
+      &lt;th&gt;ALB&lt;/th&gt;
+      &lt;th&gt;GLU&lt;/th&gt;
+      &lt;th&gt;BUN&lt;/th&gt;
+      &lt;th&gt;CREA&lt;/th&gt;
+      &lt;th&gt;CHO&lt;/th&gt;
+      &lt;th&gt;TG&lt;/th&gt;
+      &lt;th&gt;GSP&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;MPV&lt;/th&gt;
+      &lt;th&gt;PDW&lt;/th&gt;
+      &lt;th&gt;PCT&lt;/th&gt;
+      &lt;th&gt;EMERGENCY&lt;/th&gt;
+      &lt;th&gt;CANCER_TYPE&lt;/th&gt;
+      &lt;th&gt;ICPI_HIST&lt;/th&gt;
+      &lt;th&gt;LANG&lt;/th&gt;
+      &lt;th&gt;FOLLOW_UP&lt;/th&gt;
+      &lt;th&gt;CONSENT&lt;/th&gt;
+      &lt;th&gt;PREGNANT&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;32161008&lt;/td&gt;
+      &lt;td&gt;95.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;39.099998&lt;/td&gt;
+      &lt;td&gt;6.94&lt;/td&gt;
+      &lt;td&gt;16.190001&lt;/td&gt;
+      &lt;td&gt;152.399994&lt;/td&gt;
+      &lt;td&gt;4.62&lt;/td&gt;
+      &lt;td&gt;1.28&lt;/td&gt;
+      &lt;td&gt;264.200012&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;9.1&lt;/td&gt;
+      &lt;td&gt;15.000000&lt;/td&gt;
+      &lt;td&gt;0.13&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;32162608&lt;/td&gt;
+      &lt;td&gt;87.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;44.799999&lt;/td&gt;
+      &lt;td&gt;5.55&lt;/td&gt;
+      &lt;td&gt;5.680000&lt;/td&gt;
+      &lt;td&gt;78.500000&lt;/td&gt;
+      &lt;td&gt;5.20&lt;/td&gt;
+      &lt;td&gt;2.39&lt;/td&gt;
+      &lt;td&gt;276.200012&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;8.3&lt;/td&gt;
+      &lt;td&gt;12.000000&lt;/td&gt;
+      &lt;td&gt;0.16&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;14&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;32163008&lt;/td&gt;
+      &lt;td&gt;90.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;41.299999&lt;/td&gt;
+      &lt;td&gt;5.27&lt;/td&gt;
+      &lt;td&gt;5.950000&lt;/td&gt;
+      &lt;td&gt;75.800003&lt;/td&gt;
+      &lt;td&gt;4.25&lt;/td&gt;
+      &lt;td&gt;1.55&lt;/td&gt;
+      &lt;td&gt;264.200012&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;9.9&lt;/td&gt;
+      &lt;td&gt;16.799999&lt;/td&gt;
+      &lt;td&gt;0.14&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;94&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;32166108&lt;/td&gt;
+      &lt;td&gt;89.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;45.000000&lt;/td&gt;
+      &lt;td&gt;8.80&lt;/td&gt;
+      &lt;td&gt;13.170000&lt;/td&gt;
+      &lt;td&gt;147.000000&lt;/td&gt;
+      &lt;td&gt;3.19&lt;/td&gt;
+      &lt;td&gt;1.72&lt;/td&gt;
+      &lt;td&gt;336.399994&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;8.2&lt;/td&gt;
+      &lt;td&gt;12.300000&lt;/td&gt;
+      &lt;td&gt;0.12&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;75&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;32167608&lt;/td&gt;
+      &lt;td&gt;100.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;40.099998&lt;/td&gt;
+      &lt;td&gt;4.34&lt;/td&gt;
+      &lt;td&gt;5.950000&lt;/td&gt;
+      &lt;td&gt;76.000000&lt;/td&gt;
+      &lt;td&gt;5.67&lt;/td&gt;
+      &lt;td&gt;1.44&lt;/td&gt;
+      &lt;td&gt;223.300003&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;10.8&lt;/td&gt;
+      &lt;td&gt;16.400000&lt;/td&gt;
+      &lt;td&gt;0.20&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;58&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2265&lt;/th&gt;
+      &lt;td&gt;45816014&lt;/td&gt;
+      &lt;td&gt;98.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;37.000000&lt;/td&gt;
+      &lt;td&gt;6.04&lt;/td&gt;
+      &lt;td&gt;5.010000&lt;/td&gt;
+      &lt;td&gt;59.299999&lt;/td&gt;
+      &lt;td&gt;3.84&lt;/td&gt;
+      &lt;td&gt;0.95&lt;/td&gt;
+      &lt;td&gt;195.300003&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;9.9&lt;/td&gt;
+      &lt;td&gt;16.200001&lt;/td&gt;
+      &lt;td&gt;0.26&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;93&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2266&lt;/th&gt;
+      &lt;td&gt;45816114&lt;/td&gt;
+      &lt;td&gt;69.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;46.299999&lt;/td&gt;
+      &lt;td&gt;5.99&lt;/td&gt;
+      &lt;td&gt;5.030000&lt;/td&gt;
+      &lt;td&gt;85.500000&lt;/td&gt;
+      &lt;td&gt;4.43&lt;/td&gt;
+      &lt;td&gt;1.44&lt;/td&gt;
+      &lt;td&gt;224.000000&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;10.4&lt;/td&gt;
+      &lt;td&gt;16.000000&lt;/td&gt;
+      &lt;td&gt;0.23&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;25&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2267&lt;/th&gt;
+      &lt;td&gt;45816214&lt;/td&gt;
+      &lt;td&gt;93.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;42.599998&lt;/td&gt;
+      &lt;td&gt;5.53&lt;/td&gt;
+      &lt;td&gt;6.320000&lt;/td&gt;
+      &lt;td&gt;85.500000&lt;/td&gt;
+      &lt;td&gt;4.03&lt;/td&gt;
+      &lt;td&gt;0.92&lt;/td&gt;
+      &lt;td&gt;249.800003&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;11.1&lt;/td&gt;
+      &lt;td&gt;16.299999&lt;/td&gt;
+      &lt;td&gt;0.14&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;66&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2268&lt;/th&gt;
+      &lt;td&gt;45816314&lt;/td&gt;
+      &lt;td&gt;91.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;43.400002&lt;/td&gt;
+      &lt;td&gt;5.82&lt;/td&gt;
+      &lt;td&gt;7.770000&lt;/td&gt;
+      &lt;td&gt;72.099998&lt;/td&gt;
+      &lt;td&gt;4.29&lt;/td&gt;
+      &lt;td&gt;1.08&lt;/td&gt;
+      &lt;td&gt;259.299988&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;10.0&lt;/td&gt;
+      &lt;td&gt;15.900000&lt;/td&gt;
+      &lt;td&gt;0.20&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;77&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2269&lt;/th&gt;
+      &lt;td&gt;45816414&lt;/td&gt;
+      &lt;td&gt;93.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;42.900002&lt;/td&gt;
+      &lt;td&gt;5.10&lt;/td&gt;
+      &lt;td&gt;5.010000&lt;/td&gt;
+      &lt;td&gt;59.799999&lt;/td&gt;
+      &lt;td&gt;4.94&lt;/td&gt;
+      &lt;td&gt;1.82&lt;/td&gt;
+      &lt;td&gt;236.399994&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;8.7&lt;/td&gt;
+      &lt;td&gt;16.299999&lt;/td&gt;
+      &lt;td&gt;0.21&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;11&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;1561 rows × 40 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;writing-the-filter&#34; &gt;Writing the Filter
+&lt;span&gt;
+    &lt;a href=&#34;#writing-the-filter&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;Writing a quick filter to ensure eligibiity.  This could, and probably should be written functionally, but so it goes.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Greater than 18&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# CANCER TYPE IS NOT equal to a non-malanoma skin cancer ie 5 arbitrarily chosen &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Patient Seeking care in emergency department is true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# History is not equal to 0. Ie not recieving either.  IDK how it would be provided.  It could also possibly be written as equal to 1 or 2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Lang is either english or spanish&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Patient Agrees to Follow Up&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Patient Consents&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Patient is Not Pregnant&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;idx_spanish &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TRUEAGE &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CANCER_TYPE &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;EMERGENCY &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; \
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ICPI_HIST &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;LANG &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;FOLLOW_UP &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CONSENT &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;PREGNANT &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Ideally the english and spanish speakers would have been filtered prior to this, but for the sake of exploration this will work. &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;idx_english &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TRUEAGE &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CANCER_TYPE &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;EMERGENCY &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; \
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;ICPI_HIST &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;LANG &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;FOLLOW_UP &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;CONSENT &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; (df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;PREGNANT &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filtered_df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;concat([df[idx_english], df[idx_spanish]], ignore_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filtered_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;describe()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ID&lt;/th&gt;
+      &lt;th&gt;TRUEAGE&lt;/th&gt;
+      &lt;th&gt;A1&lt;/th&gt;
+      &lt;th&gt;ALB&lt;/th&gt;
+      &lt;th&gt;GLU&lt;/th&gt;
+      &lt;th&gt;BUN&lt;/th&gt;
+      &lt;th&gt;CREA&lt;/th&gt;
+      &lt;th&gt;CHO&lt;/th&gt;
+      &lt;th&gt;TG&lt;/th&gt;
+      &lt;th&gt;GSP&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;MPV&lt;/th&gt;
+      &lt;th&gt;PDW&lt;/th&gt;
+      &lt;th&gt;PCT&lt;/th&gt;
+      &lt;th&gt;EMERGENCY&lt;/th&gt;
+      &lt;th&gt;CANCER_TYPE&lt;/th&gt;
+      &lt;th&gt;ICPI_HIST&lt;/th&gt;
+      &lt;th&gt;LANG&lt;/th&gt;
+      &lt;th&gt;FOLLOW_UP&lt;/th&gt;
+      &lt;th&gt;CONSENT&lt;/th&gt;
+      &lt;th&gt;PREGNANT&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;count&lt;/th&gt;
+      &lt;td&gt;4.300000e+01&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.0&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.0&lt;/td&gt;
+      &lt;td&gt;43.000000&lt;/td&gt;
+      &lt;td&gt;43.0&lt;/td&gt;
+      &lt;td&gt;43.0&lt;/td&gt;
+      &lt;td&gt;43.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;mean&lt;/th&gt;
+      &lt;td&gt;4.016529e+07&lt;/td&gt;
+      &lt;td&gt;83.534884&lt;/td&gt;
+      &lt;td&gt;1.604651&lt;/td&gt;
+      &lt;td&gt;43.174419&lt;/td&gt;
+      &lt;td&gt;5.397674&lt;/td&gt;
+      &lt;td&gt;7.680698&lt;/td&gt;
+      &lt;td&gt;87.769768&lt;/td&gt;
+      &lt;td&gt;5.216744&lt;/td&gt;
+      &lt;td&gt;1.609302&lt;/td&gt;
+      &lt;td&gt;253.172094&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;9.613953&lt;/td&gt;
+      &lt;td&gt;15.353488&lt;/td&gt;
+      &lt;td&gt;0.202093&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;53.604651&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;0.465116&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;std&lt;/th&gt;
+      &lt;td&gt;4.398812e+06&lt;/td&gt;
+      &lt;td&gt;10.443382&lt;/td&gt;
+      &lt;td&gt;0.494712&lt;/td&gt;
+      &lt;td&gt;3.597029&lt;/td&gt;
+      &lt;td&gt;1.360812&lt;/td&gt;
+      &lt;td&gt;2.461784&lt;/td&gt;
+      &lt;td&gt;30.562509&lt;/td&gt;
+      &lt;td&gt;1.068372&lt;/td&gt;
+      &lt;td&gt;1.144799&lt;/td&gt;
+      &lt;td&gt;32.250908&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;1.306865&lt;/td&gt;
+      &lt;td&gt;1.739779&lt;/td&gt;
+      &lt;td&gt;0.105640&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;30.090451&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;0.504685&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;min&lt;/th&gt;
+      &lt;td&gt;3.216841e+07&lt;/td&gt;
+      &lt;td&gt;61.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;35.599998&lt;/td&gt;
+      &lt;td&gt;2.550000&lt;/td&gt;
+      &lt;td&gt;3.690000&lt;/td&gt;
+      &lt;td&gt;53.900002&lt;/td&gt;
+      &lt;td&gt;3.560000&lt;/td&gt;
+      &lt;td&gt;0.580000&lt;/td&gt;
+      &lt;td&gt;195.300003&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;7.300000&lt;/td&gt;
+      &lt;td&gt;7.900000&lt;/td&gt;
+      &lt;td&gt;0.070000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;25%&lt;/th&gt;
+      &lt;td&gt;3.743001e+07&lt;/td&gt;
+      &lt;td&gt;76.000000&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;41.000000&lt;/td&gt;
+      &lt;td&gt;4.685000&lt;/td&gt;
+      &lt;td&gt;6.200000&lt;/td&gt;
+      &lt;td&gt;68.950001&lt;/td&gt;
+      &lt;td&gt;4.405000&lt;/td&gt;
+      &lt;td&gt;0.895000&lt;/td&gt;
+      &lt;td&gt;231.600006&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;8.700000&lt;/td&gt;
+      &lt;td&gt;15.350000&lt;/td&gt;
+      &lt;td&gt;0.150000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;33.500000&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;50%&lt;/th&gt;
+      &lt;td&gt;3.745411e+07&lt;/td&gt;
+      &lt;td&gt;83.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;43.700001&lt;/td&gt;
+      &lt;td&gt;5.230000&lt;/td&gt;
+      &lt;td&gt;7.510000&lt;/td&gt;
+      &lt;td&gt;79.300003&lt;/td&gt;
+      &lt;td&gt;5.260000&lt;/td&gt;
+      &lt;td&gt;1.180000&lt;/td&gt;
+      &lt;td&gt;250.699997&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;9.300000&lt;/td&gt;
+      &lt;td&gt;15.800000&lt;/td&gt;
+      &lt;td&gt;0.180000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;51.000000&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;0.000000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;75%&lt;/th&gt;
+      &lt;td&gt;4.460921e+07&lt;/td&gt;
+      &lt;td&gt;90.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;45.199999&lt;/td&gt;
+      &lt;td&gt;5.920000&lt;/td&gt;
+      &lt;td&gt;8.360000&lt;/td&gt;
+      &lt;td&gt;96.349998&lt;/td&gt;
+      &lt;td&gt;5.940000&lt;/td&gt;
+      &lt;td&gt;2.035000&lt;/td&gt;
+      &lt;td&gt;272.299988&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;10.350000&lt;/td&gt;
+      &lt;td&gt;16.299999&lt;/td&gt;
+      &lt;td&gt;0.225000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;82.500000&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;max&lt;/th&gt;
+      &lt;td&gt;4.581601e+07&lt;/td&gt;
+      &lt;td&gt;103.000000&lt;/td&gt;
+      &lt;td&gt;2.000000&lt;/td&gt;
+      &lt;td&gt;50.599998&lt;/td&gt;
+      &lt;td&gt;11.500000&lt;/td&gt;
+      &lt;td&gt;15.510000&lt;/td&gt;
+      &lt;td&gt;197.500000&lt;/td&gt;
+      &lt;td&gt;8.180000&lt;/td&gt;
+      &lt;td&gt;7.180000&lt;/td&gt;
+      &lt;td&gt;337.600006&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;13.000000&lt;/td&gt;
+      &lt;td&gt;16.799999&lt;/td&gt;
+      &lt;td&gt;0.770000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;99.000000&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;0.0&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;8 rows × 40 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filtered_df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#only 43 left following the filter. &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;43
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Following the filter only 43 data are left in the set.  A workflow similiar to this could be used to identify possible survey recruits from aggregated chart data.&lt;/p&gt;
+&lt;h2 id=&#34;logistic-regression-sample&#34; &gt;Logistic Regression Sample
+&lt;span&gt;
+    &lt;a href=&#34;#logistic-regression-sample&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;I am surpirsed by the low level of samples left following the filter.  To avoid a small n, I will use the initial dataset.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Users/jnapolitano/Projects/nih/ICPSR_37226/DS0003/pmc-submission/jupyter-book/notebooks/37226-0003-Data.tsv&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read_csv(filename, sep&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\t&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# replace empty space with na&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;replace(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;, np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;nan)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# convert numeric objects to numeric data types.  I checked in the code book there will not be any false positives&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;apply(pd&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;to_numeric, errors&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;raise&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dropna()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+&lt;pre&gt;&lt;code&gt;.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;/style&gt;&lt;/p&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ID&lt;/th&gt;
+      &lt;th&gt;TRUEAGE&lt;/th&gt;
+      &lt;th&gt;A1&lt;/th&gt;
+      &lt;th&gt;ALB&lt;/th&gt;
+      &lt;th&gt;GLU&lt;/th&gt;
+      &lt;th&gt;BUN&lt;/th&gt;
+      &lt;th&gt;CREA&lt;/th&gt;
+      &lt;th&gt;CHO&lt;/th&gt;
+      &lt;th&gt;TG&lt;/th&gt;
+      &lt;th&gt;GSP&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;RBC&lt;/th&gt;
+      &lt;th&gt;HGB&lt;/th&gt;
+      &lt;th&gt;HCT&lt;/th&gt;
+      &lt;th&gt;MCV&lt;/th&gt;
+      &lt;th&gt;MCH&lt;/th&gt;
+      &lt;th&gt;MCHC&lt;/th&gt;
+      &lt;th&gt;PLT&lt;/th&gt;
+      &lt;th&gt;MPV&lt;/th&gt;
+      &lt;th&gt;PDW&lt;/th&gt;
+      &lt;th&gt;PCT&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;32161008&lt;/td&gt;
+      &lt;td&gt;95.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;39.099998&lt;/td&gt;
+      &lt;td&gt;6.94&lt;/td&gt;
+      &lt;td&gt;16.190001&lt;/td&gt;
+      &lt;td&gt;152.399994&lt;/td&gt;
+      &lt;td&gt;4.62&lt;/td&gt;
+      &lt;td&gt;1.28&lt;/td&gt;
+      &lt;td&gt;264.200012&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.30&lt;/td&gt;
+      &lt;td&gt;101.300003&lt;/td&gt;
+      &lt;td&gt;28.930000&lt;/td&gt;
+      &lt;td&gt;88.900002&lt;/td&gt;
+      &lt;td&gt;31.100000&lt;/td&gt;
+      &lt;td&gt;350.0&lt;/td&gt;
+      &lt;td&gt;149.0&lt;/td&gt;
+      &lt;td&gt;9.1&lt;/td&gt;
+      &lt;td&gt;15.000000&lt;/td&gt;
+      &lt;td&gt;0.13&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;32162608&lt;/td&gt;
+      &lt;td&gt;87.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;44.799999&lt;/td&gt;
+      &lt;td&gt;5.55&lt;/td&gt;
+      &lt;td&gt;5.680000&lt;/td&gt;
+      &lt;td&gt;78.500000&lt;/td&gt;
+      &lt;td&gt;5.20&lt;/td&gt;
+      &lt;td&gt;2.39&lt;/td&gt;
+      &lt;td&gt;276.200012&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.60&lt;/td&gt;
+      &lt;td&gt;111.300003&lt;/td&gt;
+      &lt;td&gt;31.160000&lt;/td&gt;
+      &lt;td&gt;87.599998&lt;/td&gt;
+      &lt;td&gt;31.299999&lt;/td&gt;
+      &lt;td&gt;357.0&lt;/td&gt;
+      &lt;td&gt;201.0&lt;/td&gt;
+      &lt;td&gt;8.3&lt;/td&gt;
+      &lt;td&gt;12.000000&lt;/td&gt;
+      &lt;td&gt;0.16&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;32163008&lt;/td&gt;
+      &lt;td&gt;90.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;41.299999&lt;/td&gt;
+      &lt;td&gt;5.27&lt;/td&gt;
+      &lt;td&gt;5.950000&lt;/td&gt;
+      &lt;td&gt;75.800003&lt;/td&gt;
+      &lt;td&gt;4.25&lt;/td&gt;
+      &lt;td&gt;1.55&lt;/td&gt;
+      &lt;td&gt;264.200012&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.70&lt;/td&gt;
+      &lt;td&gt;113.900002&lt;/td&gt;
+      &lt;td&gt;32.900002&lt;/td&gt;
+      &lt;td&gt;89.699997&lt;/td&gt;
+      &lt;td&gt;31.100000&lt;/td&gt;
+      &lt;td&gt;346.0&lt;/td&gt;
+      &lt;td&gt;150.0&lt;/td&gt;
+      &lt;td&gt;9.9&lt;/td&gt;
+      &lt;td&gt;16.799999&lt;/td&gt;
+      &lt;td&gt;0.14&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;td&gt;32166108&lt;/td&gt;
+      &lt;td&gt;89.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;45.000000&lt;/td&gt;
+      &lt;td&gt;8.80&lt;/td&gt;
+      &lt;td&gt;13.170000&lt;/td&gt;
+      &lt;td&gt;147.000000&lt;/td&gt;
+      &lt;td&gt;3.19&lt;/td&gt;
+      &lt;td&gt;1.72&lt;/td&gt;
+      &lt;td&gt;336.399994&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.00&lt;/td&gt;
+      &lt;td&gt;92.599998&lt;/td&gt;
+      &lt;td&gt;26.340000&lt;/td&gt;
+      &lt;td&gt;88.500000&lt;/td&gt;
+      &lt;td&gt;31.100000&lt;/td&gt;
+      &lt;td&gt;352.0&lt;/td&gt;
+      &lt;td&gt;157.0&lt;/td&gt;
+      &lt;td&gt;8.2&lt;/td&gt;
+      &lt;td&gt;12.300000&lt;/td&gt;
+      &lt;td&gt;0.12&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;32167608&lt;/td&gt;
+      &lt;td&gt;100.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;40.099998&lt;/td&gt;
+      &lt;td&gt;4.34&lt;/td&gt;
+      &lt;td&gt;5.950000&lt;/td&gt;
+      &lt;td&gt;76.000000&lt;/td&gt;
+      &lt;td&gt;5.67&lt;/td&gt;
+      &lt;td&gt;1.44&lt;/td&gt;
+      &lt;td&gt;223.300003&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;3.76&lt;/td&gt;
+      &lt;td&gt;114.000000&lt;/td&gt;
+      &lt;td&gt;35.400002&lt;/td&gt;
+      &lt;td&gt;94.099998&lt;/td&gt;
+      &lt;td&gt;30.299999&lt;/td&gt;
+      &lt;td&gt;322.0&lt;/td&gt;
+      &lt;td&gt;193.0&lt;/td&gt;
+      &lt;td&gt;10.8&lt;/td&gt;
+      &lt;td&gt;16.400000&lt;/td&gt;
+      &lt;td&gt;0.20&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2265&lt;/th&gt;
+      &lt;td&gt;45816014&lt;/td&gt;
+      &lt;td&gt;98.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;37.000000&lt;/td&gt;
+      &lt;td&gt;6.04&lt;/td&gt;
+      &lt;td&gt;5.010000&lt;/td&gt;
+      &lt;td&gt;59.299999&lt;/td&gt;
+      &lt;td&gt;3.84&lt;/td&gt;
+      &lt;td&gt;0.95&lt;/td&gt;
+      &lt;td&gt;195.300003&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.31&lt;/td&gt;
+      &lt;td&gt;122.000000&lt;/td&gt;
+      &lt;td&gt;38.900002&lt;/td&gt;
+      &lt;td&gt;90.300003&lt;/td&gt;
+      &lt;td&gt;28.299999&lt;/td&gt;
+      &lt;td&gt;313.0&lt;/td&gt;
+      &lt;td&gt;267.0&lt;/td&gt;
+      &lt;td&gt;9.9&lt;/td&gt;
+      &lt;td&gt;16.200001&lt;/td&gt;
+      &lt;td&gt;0.26&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2266&lt;/th&gt;
+      &lt;td&gt;45816114&lt;/td&gt;
+      &lt;td&gt;69.0&lt;/td&gt;
+      &lt;td&gt;1.0&lt;/td&gt;
+      &lt;td&gt;46.299999&lt;/td&gt;
+      &lt;td&gt;5.99&lt;/td&gt;
+      &lt;td&gt;5.030000&lt;/td&gt;
+      &lt;td&gt;85.500000&lt;/td&gt;
+      &lt;td&gt;4.43&lt;/td&gt;
+      &lt;td&gt;1.44&lt;/td&gt;
+      &lt;td&gt;224.000000&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.46&lt;/td&gt;
+      &lt;td&gt;133.000000&lt;/td&gt;
+      &lt;td&gt;42.200001&lt;/td&gt;
+      &lt;td&gt;94.599998&lt;/td&gt;
+      &lt;td&gt;29.799999&lt;/td&gt;
+      &lt;td&gt;315.0&lt;/td&gt;
+      &lt;td&gt;230.0&lt;/td&gt;
+      &lt;td&gt;10.4&lt;/td&gt;
+      &lt;td&gt;16.000000&lt;/td&gt;
+      &lt;td&gt;0.23&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2267&lt;/th&gt;
+      &lt;td&gt;45816214&lt;/td&gt;
+      &lt;td&gt;93.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;42.599998&lt;/td&gt;
+      &lt;td&gt;5.53&lt;/td&gt;
+      &lt;td&gt;6.320000&lt;/td&gt;
+      &lt;td&gt;85.500000&lt;/td&gt;
+      &lt;td&gt;4.03&lt;/td&gt;
+      &lt;td&gt;0.92&lt;/td&gt;
+      &lt;td&gt;249.800003&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.60&lt;/td&gt;
+      &lt;td&gt;137.000000&lt;/td&gt;
+      &lt;td&gt;43.799999&lt;/td&gt;
+      &lt;td&gt;95.199997&lt;/td&gt;
+      &lt;td&gt;29.799999&lt;/td&gt;
+      &lt;td&gt;313.0&lt;/td&gt;
+      &lt;td&gt;129.0&lt;/td&gt;
+      &lt;td&gt;11.1&lt;/td&gt;
+      &lt;td&gt;16.299999&lt;/td&gt;
+      &lt;td&gt;0.14&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2268&lt;/th&gt;
+      &lt;td&gt;45816314&lt;/td&gt;
+      &lt;td&gt;91.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;43.400002&lt;/td&gt;
+      &lt;td&gt;5.82&lt;/td&gt;
+      &lt;td&gt;7.770000&lt;/td&gt;
+      &lt;td&gt;72.099998&lt;/td&gt;
+      &lt;td&gt;4.29&lt;/td&gt;
+      &lt;td&gt;1.08&lt;/td&gt;
+      &lt;td&gt;259.299988&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.14&lt;/td&gt;
+      &lt;td&gt;122.000000&lt;/td&gt;
+      &lt;td&gt;39.000000&lt;/td&gt;
+      &lt;td&gt;94.300003&lt;/td&gt;
+      &lt;td&gt;29.500000&lt;/td&gt;
+      &lt;td&gt;312.0&lt;/td&gt;
+      &lt;td&gt;200.0&lt;/td&gt;
+      &lt;td&gt;10.0&lt;/td&gt;
+      &lt;td&gt;15.900000&lt;/td&gt;
+      &lt;td&gt;0.20&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2269&lt;/th&gt;
+      &lt;td&gt;45816414&lt;/td&gt;
+      &lt;td&gt;93.0&lt;/td&gt;
+      &lt;td&gt;2.0&lt;/td&gt;
+      &lt;td&gt;42.900002&lt;/td&gt;
+      &lt;td&gt;5.10&lt;/td&gt;
+      &lt;td&gt;5.010000&lt;/td&gt;
+      &lt;td&gt;59.799999&lt;/td&gt;
+      &lt;td&gt;4.94&lt;/td&gt;
+      &lt;td&gt;1.82&lt;/td&gt;
+      &lt;td&gt;236.399994&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;4.50&lt;/td&gt;
+      &lt;td&gt;128.000000&lt;/td&gt;
+      &lt;td&gt;40.900002&lt;/td&gt;
+      &lt;td&gt;90.800003&lt;/td&gt;
+      &lt;td&gt;28.400000&lt;/td&gt;
+      &lt;td&gt;313.0&lt;/td&gt;
+      &lt;td&gt;240.0&lt;/td&gt;
+      &lt;td&gt;8.7&lt;/td&gt;
+      &lt;td&gt;16.299999&lt;/td&gt;
+      &lt;td&gt;0.21&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;1561 rows × 33 columns&lt;/p&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;the-model&#34; &gt;The Model
+&lt;span&gt;
+    &lt;a href=&#34;#the-model&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;There is strong suspicion that biomarkers can determine whether a patient should be admitted for emergency care.  In this simplified model, I will randomly distribute proper disposition across the dataset.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lower_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#inclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;upper_bound &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;# exclusive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 0 = no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 1 = Yes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tmp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;lower_bound , high &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; upper_bound, size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;PROP_DISPOSITION&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tmp
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;create-test-and-train-set&#34; &gt;Create Test and Train Set
+&lt;span&gt;
+    &lt;a href=&#34;#create-test-and-train-set&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;This could be randomly sampled as well&amp;hellip;&lt;/p&gt;
+&lt;h4 id=&#34;random-sample&#34; &gt;Random Sample
+&lt;span&gt;
+    &lt;a href=&#34;#random-sample&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# copy in memory to avoid errors.  This could be done from files or in other ways if memory is limited.  &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;master_table &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; df&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;copy()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;test-sample-set-with-10000-randomly-selected-from-the-master-with-replacement&#34; &gt;Test Sample Set with 10,000 Randomly Selected from the Master with Replacement
+&lt;span&gt;
+    &lt;a href=&#34;#test-sample-set-with-10000-randomly-selected-from-the-master-with-replacement&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;test_sample &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; master_table&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sample(n&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10000&lt;/span&gt;,replace&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;targets &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; test_sample&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;pop(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;PROP_DISPOSITION&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;seperate-train-and-test-sets&#34; &gt;Seperate Train and Test Sets
+&lt;span&gt;
+    &lt;a href=&#34;#seperate-train-and-test-sets&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x_train, x_test, y_train, y_test &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; train_test_split(test_sample, targets, test_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.2&lt;/span&gt;, random_state&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;data-standardization&#34; &gt;Data Standardization
+&lt;span&gt;
+    &lt;a href=&#34;#data-standardization&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h4&gt;&lt;p&gt;Calculate the mean and standard deviation for each column.
+Subtract the corresponding mean from each element.
+Divide the obtained difference by the corresponding standard deviation.&lt;/p&gt;
+&lt;p&gt;Thankfully this is built into SKLearn.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;scaler &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; StandardScaler()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x_train &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; scaler&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;fit_transform(x_train)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;create-the-model&#34; &gt;Create the Model
+&lt;span&gt;
+    &lt;a href=&#34;#create-the-model&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; LogisticRegression(solver&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;liblinear&amp;#39;&lt;/span&gt;, C&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.05&lt;/span&gt;, multi_class&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ovr&amp;#39;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                           random_state&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;fit(x_train, y_train)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;LogisticRegression(C=0.05, multi_class=&#39;ovr&#39;, random_state=0,
+                   solver=&#39;liblinear&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;evaluate-model&#34; &gt;Evaluate Model
+&lt;span&gt;
+    &lt;a href=&#34;#evaluate-model&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x_test &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; scaler&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;transform(x_test)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;y_pred &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;predict(x_test)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;model-scoring&#34; &gt;Model Scoring
+&lt;span&gt;
+    &lt;a href=&#34;#model-scoring&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;With completely randomized values the score should be about 50%. If it is significantly greater than there is probably a problem with the model.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;score(x_train, y_train)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;0.537125
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;score(x_test, y_test)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;0.5125
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Results are expected&lt;/p&gt;
+&lt;h3 id=&#34;confusion-matrix&#34; &gt;Confusion matrix
+&lt;span&gt;
+    &lt;a href=&#34;#confusion-matrix&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; confusion_matrix(y_test, y_pred)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;font_size &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fig, ax &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;subplots(figsize&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;8&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ax&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;imshow(cm)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ax&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;grid(&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ax&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set_xlabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Predicted outputs&amp;#39;&lt;/span&gt;, color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;purple&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ax&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set_ylabel(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Actual outputs&amp;#39;&lt;/span&gt;, color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;purple&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ax&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;xaxis&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set(ticks&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;range(len(cm)))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ax&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;yaxis&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set(ticks&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;range(len(cm)))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#ax.set_ylim(0, 1)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(cm)):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; j &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(cm)):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ax&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text(j, i, cm[i, j], ha&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;center&amp;#39;&lt;/span&gt;, va&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;center&amp;#39;&lt;/span&gt;, color&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;purple&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;show()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;logistic_regression_files/logistic_regression_66_0.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Because the data is randomized it makes the model is accurate about 50% of the time.&lt;/p&gt;
+&lt;h3 id=&#34;printing-the-classification-report&#34; &gt;Printing the Classification Report
+&lt;span&gt;
+    &lt;a href=&#34;#printing-the-classification-report&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(classification_report(y_test, y_pred))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;              precision    recall  f1-score   support
+
+           0       0.52      0.40      0.45       999
+           1       0.51      0.63      0.56      1001
+
+    accuracy                           0.51      2000
+   macro avg       0.51      0.51      0.51      2000
+weighted avg       0.51      0.51      0.51      2000
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

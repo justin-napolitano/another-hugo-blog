@@ -75,7 +75,7 @@
     
 
     
-        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
     
 
 
@@ -405,67 +405,66 @@ if (!doNotTrack) {
     </a>
 </span>
 </h3><p>Finally, it writes the new case dictionary to file.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-<span style="color:#f92672">import</span> glob
-<span style="color:#f92672">import</span> os
-<span style="color:#f92672">import</span> json
-<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-<span style="color:#f92672">from</span> pprint <span style="color:#f92672">import</span> pprint
-<span style="color:#f92672">import</span> re
-<span style="color:#75715e">#from neoModelAPI import NeoNodes as nn</span>
-
-
-
-
-    
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_cwd</span>():
-    cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
-    <span style="color:#66d9ef">return</span> cwd
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_files</span>(cwd <span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getcwd(), input_directory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;loc_cases&#39;</span>):
-    
-    path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([cwd,input_directory])
-    file_list<span style="color:#f92672">=</span> [f <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> glob<span style="color:#f92672">.</span>glob(path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;**/*.json&#34;</span>, recursive<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)]
-  
-    <span style="color:#66d9ef">return</span> file_list
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_json_data</span>(file):
-    f <span style="color:#f92672">=</span> open (file, <span style="color:#e6db74">&#34;r&#34;</span>)
-  
-    <span style="color:#75715e"># Reading from file</span>
-    data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(f<span style="color:#f92672">.</span>read())
-    <span style="color:#66d9ef">return</span> data
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">citation_output</span>(file_list,cwd):
-    outpath <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([cwd,<span style="color:#e6db74">&#39;loc_cited&#39;</span>])
-    <span style="color:#66d9ef">for</span> file <span style="color:#f92672">in</span> file_list:
-        
-        data <span style="color:#f92672">=</span> load_json_data(file<span style="color:#f92672">=</span>file)
-        data <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#39;results&#39;</span>]
-        <span style="color:#75715e">#data = create_citation(data)</span>
-        <span style="color:#66d9ef">for</span> result <span style="color:#f92672">in</span> data:
-            split <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;id&#39;</span>]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;/&#39;</span>)
-            result[<span style="color:#e6db74">&#39;loc_id&#39;</span>] <span style="color:#f92672">=</span> split[<span style="color:#ae81ff">4</span>]
-            outfile <span style="color:#f92672">=</span> split[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;.json&#39;</span>
-            outfile <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([outpath,outfile])
-            
-            pprint(outfile)
-            <span style="color:#66d9ef">with</span> open(outfile, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> f:
-                json<span style="color:#f92672">.</span>dump(result, f)
-
-
-
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
-    <span style="color:#75715e">#neo_applified = instantiate_neo_model_api()</span>
-    cwd <span style="color:#f92672">=</span> get_cwd()
-    file_list <span style="color:#f92672">=</span> get_files(cwd <span style="color:#f92672">=</span> cwd)
-    output_files <span style="color:#f92672">=</span> citation_output(file_list,cwd)
-
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> glob
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pprint <span style="color:#f92672">import</span> pprint
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#from neoModelAPI import NeoNodes as nn</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_cwd</span>():
+</span></span><span style="display:flex;"><span>    cwd <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> cwd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_files</span>(cwd <span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getcwd(), input_directory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;loc_cases&#39;</span>):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([cwd,input_directory])
+</span></span><span style="display:flex;"><span>    file_list<span style="color:#f92672">=</span> [f <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> glob<span style="color:#f92672">.</span>glob(path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;**/*.json&#34;</span>, recursive<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)]
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> file_list
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_json_data</span>(file):
+</span></span><span style="display:flex;"><span>    f <span style="color:#f92672">=</span> open (file, <span style="color:#e6db74">&#34;r&#34;</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Reading from file</span>
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(f<span style="color:#f92672">.</span>read())
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">citation_output</span>(file_list,cwd):
+</span></span><span style="display:flex;"><span>    outpath <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([cwd,<span style="color:#e6db74">&#39;loc_cited&#39;</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> file <span style="color:#f92672">in</span> file_list:
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        data <span style="color:#f92672">=</span> load_json_data(file<span style="color:#f92672">=</span>file)
+</span></span><span style="display:flex;"><span>        data <span style="color:#f92672">=</span> data[<span style="color:#e6db74">&#39;results&#39;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#data = create_citation(data)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> result <span style="color:#f92672">in</span> data:
+</span></span><span style="display:flex;"><span>            split <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;id&#39;</span>]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span>            result[<span style="color:#e6db74">&#39;loc_id&#39;</span>] <span style="color:#f92672">=</span> split[<span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span>            outfile <span style="color:#f92672">=</span> split[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;.json&#39;</span>
+</span></span><span style="display:flex;"><span>            outfile <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>sep<span style="color:#f92672">.</span>join([outpath,outfile])
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            pprint(outfile)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">with</span> open(outfile, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>                json<span style="color:#f92672">.</span>dump(result, f)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#neo_applified = instantiate_neo_model_api()</span>
+</span></span><span style="display:flex;"><span>    cwd <span style="color:#f92672">=</span> get_cwd()
+</span></span><span style="display:flex;"><span>    file_list <span style="color:#f92672">=</span> get_files(cwd <span style="color:#f92672">=</span> cwd)
+</span></span><span style="display:flex;"><span>    output_files <span style="color:#f92672">=</span> citation_output(file_list,cwd)
+</span></span></code></pre></div>
         </div>
         
 
@@ -601,7 +600,7 @@ if (!doNotTrack) {
         
     <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

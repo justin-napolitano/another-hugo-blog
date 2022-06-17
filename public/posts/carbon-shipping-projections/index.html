@@ -75,7 +75,7 @@
     
 
     
-        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
     
 
 
@@ -495,8 +495,8 @@ Università Bocconi, Milan, Italy</p>
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">annual_price_samples_df<span style="color:#f92672">.</span>describe()
-</code></pre></div><div style="overflow-x:auto;">
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>annual_price_samples_df<span style="color:#f92672">.</span>describe()
+</span></span></code></pre></div><div style="overflow-x:auto;">
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -569,9 +569,9 @@ Università Bocconi, Milan, Italy</p>
     </a>
 </span>
 </h2><p>The data is nearly normal.  I could test for normality, but that would be beyond the scope of this analysis.  Also, by design the Monte Carlo model should produce a normal distribution with sufficient samples.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-st<span style="color:#f92672">.</span>norm<span style="color:#f92672">.</span>interval(alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.90</span>, loc<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>mean(annual_price_samples_df[<span style="color:#e6db74">&#39;cost_in_usd&#39;</span>]), scale<span style="color:#f92672">=</span>st<span style="color:#f92672">.</span>sem(annual_price_samples_df[<span style="color:#e6db74">&#39;cost_in_usd&#39;</span>]))
-</code></pre></div><pre><code>(57355794.336350285, 57531108.50357006)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>st<span style="color:#f92672">.</span>norm<span style="color:#f92672">.</span>interval(alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.90</span>, loc<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>mean(annual_price_samples_df[<span style="color:#e6db74">&#39;cost_in_usd&#39;</span>]), scale<span style="color:#f92672">=</span>st<span style="color:#f92672">.</span>sem(annual_price_samples_df[<span style="color:#e6db74">&#39;cost_in_usd&#39;</span>]))
+</span></span></code></pre></div><pre><code>(57355794.336350285, 57531108.50357006)
 </code></pre>
 <p>It is safe to assume that 90 percent of the time we would see an annual cost of $57,355,794 to $57,531,109 USD with the assumptions of the model taken into account.</p>
 <h3 id="monte-carlo-histogram" >Monte Carlo Histogram
@@ -580,13 +580,13 @@ st<span style="color:#f92672">.</span>norm<span style="color:#f92672">.</span>in
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">annual_price_samples_df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>hist(grid<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, rwidth<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>,
-                   color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;#607c8e&#39;</span>)
-plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Annual Price Distribution for Shipping Carbon&#39;</span>)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Annual Price in Billions USD&#39;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Frequency&#39;</span>)
-plt<span style="color:#f92672">.</span>grid(axis<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;y&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.75</span>)
-</code></pre></div><p><img src="shipping_projections_files/shipping_projections_10_0.png" alt="png"></p>
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>annual_price_samples_df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>hist(grid<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, rwidth<span style="color:#f92672">=</span><span style="color:#ae81ff">0.9</span>,
+</span></span><span style="display:flex;"><span>                   color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;#607c8e&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Annual Price Distribution for Shipping Carbon&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Annual Price in Billions USD&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#39;Frequency&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>grid(axis<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;y&#39;</span>, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.75</span>)
+</span></span></code></pre></div><p><img src="shipping_projections_files/shipping_projections_10_0.png" alt="png"></p>
 <h2 id="data-imports-and-manipulation" >Data Imports and Manipulation
 <span>
     <a href="#data-imports-and-manipulation">
@@ -606,54 +606,52 @@ plt<span style="color:#f92672">.</span>grid(axis<span style="color:#f92672">=</s
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Capacity range</span>
-<span style="color:#75715e"># 40,000 m3 71,500 to 210,000</span>
-
-<span style="color:#75715e">#Susanna Dorigoni, Luigi Mazzei, Federico Pontoni, and Antonio Sileo</span>
-<span style="color:#75715e">#IEFE – Centre for Research on Energy and Environmental Economics and Policy,</span>
-<span style="color:#75715e">#Università Bocconi, Milan, Italy</span>
-
-<span style="color:#75715e"># I&#39;m sure a better report is available but this is a start</span>
-<span style="color:#75715e"># cubic meters unit</span>
-
-<span style="color:#75715e">### a rough estimate of global suplly dedicated to co2 shipping</span>
-
-<span style="color:#75715e"># I will probably need a better metric but this is a good start that can be modified later when necessary</span>
-
-ships <span style="color:#f92672">=</span> int(<span style="color:#ae81ff">63</span><span style="color:#f92672">*</span><span style="color:#ae81ff">.25</span>)
-ships
-
-
-conversion_factor <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.21</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2.65</span>
-conversion_factor
-
-lower_bound <span style="color:#f92672">=</span> int(<span style="color:#ae81ff">40000</span> <span style="color:#f92672">*</span> conversion_factor)
-upper_bound <span style="color:#f92672">=</span> int(<span style="color:#ae81ff">210000</span> <span style="color:#f92672">*</span> conversion_factor)
-
-median <span style="color:#f92672">=</span> <span style="color:#ae81ff">137564</span> <span style="color:#f92672">*</span> conversion_factor
-standard_dev <span style="color:#f92672">=</span> <span style="color:#ae81ff">6.63</span> <span style="color:#f92672">*</span> conversion_factor  <span style="color:#75715e">#file:///Users/jnapolitano/Downloads/LNG_Shipping_a_Descriptive_Analysis.pdf</span>
-
-cap_range <span style="color:#f92672">=</span> range(lower_bound, upper_bound)
-
-cap_distribution <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(loc<span style="color:#f92672">=</span>median , scale<span style="color:#f92672">=</span>standard_dev, size<span style="color:#f92672">=</span>ships)
-
-
-</code></pre></div><h4 id="the-shipping-df" >The Shipping Df
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Capacity range</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 40,000 m3 71,500 to 210,000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Susanna Dorigoni, Luigi Mazzei, Federico Pontoni, and Antonio Sileo</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#IEFE – Centre for Research on Energy and Environmental Economics and Policy,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Università Bocconi, Milan, Italy</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I&#39;m sure a better report is available but this is a start</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># cubic meters unit</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### a rough estimate of global suplly dedicated to co2 shipping</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># I will probably need a better metric but this is a good start that can be modified later when necessary</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ships <span style="color:#f92672">=</span> int(<span style="color:#ae81ff">63</span><span style="color:#f92672">*</span><span style="color:#ae81ff">.25</span>)
+</span></span><span style="display:flex;"><span>ships
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>conversion_factor <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.21</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2.65</span>
+</span></span><span style="display:flex;"><span>conversion_factor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>lower_bound <span style="color:#f92672">=</span> int(<span style="color:#ae81ff">40000</span> <span style="color:#f92672">*</span> conversion_factor)
+</span></span><span style="display:flex;"><span>upper_bound <span style="color:#f92672">=</span> int(<span style="color:#ae81ff">210000</span> <span style="color:#f92672">*</span> conversion_factor)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>median <span style="color:#f92672">=</span> <span style="color:#ae81ff">137564</span> <span style="color:#f92672">*</span> conversion_factor
+</span></span><span style="display:flex;"><span>standard_dev <span style="color:#f92672">=</span> <span style="color:#ae81ff">6.63</span> <span style="color:#f92672">*</span> conversion_factor  <span style="color:#75715e">#file:///Users/jnapolitano/Downloads/LNG_Shipping_a_Descriptive_Analysis.pdf</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cap_range <span style="color:#f92672">=</span> range(lower_bound, upper_bound)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cap_distribution <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(loc<span style="color:#f92672">=</span>median , scale<span style="color:#f92672">=</span>standard_dev, size<span style="color:#f92672">=</span>ships)
+</span></span></code></pre></div><h4 id="the-shipping-df" >The Shipping Df
 <span>
     <a href="#the-shipping-df">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">shipping_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(cap_distribution, columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;co2_capacity_cubic_meters&#39;</span>])
-shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-shipping_df[<span style="color:#e6db74">&#39;europe_port&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-shipping_df[<span style="color:#e6db74">&#34;us_port&#34;</span>] <span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>
-shipping_df[<span style="color:#e6db74">&#39;distance&#39;</span>] <span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>
-shipping_df[<span style="color:#e6db74">&#39;price&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-shipping_df[<span style="color:#e6db74">&#39;cost_per_day&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-shipping_df[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;co2_capacity_cubic_meters&#39;</span>]<span style="color:#f92672">/</span><span style="color:#ae81ff">544.66</span> <span style="color:#75715e">## Verify this factor.  It seems to high</span>
-shipping_df
-</code></pre></div><div style="overflow-x:auto;">
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>shipping_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(cap_distribution, columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;co2_capacity_cubic_meters&#39;</span>])
+</span></span><span style="display:flex;"><span>shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>shipping_df[<span style="color:#e6db74">&#39;europe_port&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>shipping_df[<span style="color:#e6db74">&#34;us_port&#34;</span>] <span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>shipping_df[<span style="color:#e6db74">&#39;distance&#39;</span>] <span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>shipping_df[<span style="color:#e6db74">&#39;price&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>shipping_df[<span style="color:#e6db74">&#39;cost_per_day&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>shipping_df[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;co2_capacity_cubic_meters&#39;</span>]<span style="color:#f92672">/</span><span style="color:#ae81ff">544.66</span> <span style="color:#75715e">## Verify this factor.  It seems to high</span>
+</span></span><span style="display:flex;"><span>shipping_df
+</span></span></code></pre></div><div style="overflow-x:auto;">
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -856,61 +854,56 @@ shipping_df
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-gisfilepath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/Users/jnapolitano/Projects/data/energy/PORT_2013_SH/Data/PORT_PT_2013.shp&#34;</span>
-
-
-ports_df <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(gisfilepath)
-
-ports_df <span style="color:#f92672">=</span> ports_df<span style="color:#f92672">.</span>to_crs(epsg<span style="color:#f92672">=</span><span style="color:#ae81ff">3857</span>)
-</code></pre></div><h3 id="filtered-wells-dataframe" >Filtered Wells DataFrame
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>gisfilepath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/Users/jnapolitano/Projects/data/energy/PORT_2013_SH/Data/PORT_PT_2013.shp&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ports_df <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(gisfilepath)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ports_df <span style="color:#f92672">=</span> ports_df<span style="color:#f92672">.</span>to_crs(epsg<span style="color:#f92672">=</span><span style="color:#ae81ff">3857</span>)
+</span></span></code></pre></div><h3 id="filtered-wells-dataframe" >Filtered Wells DataFrame
 <span>
     <a href="#filtered-wells-dataframe">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">## Importing our DataFrames</span>
-
-gisfilepath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/Users/jnapolitano/Projects/data/energy/filtered-wells.geojson&#34;</span>
-
-
-filtered_df <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(gisfilepath)
-
-filtered_df <span style="color:#f92672">=</span> filtered_df<span style="color:#f92672">.</span>to_crs(epsg<span style="color:#f92672">=</span><span style="color:#ae81ff">3857</span>)
-
-
-</code></pre></div><h4 id="getting-map-conditions-for-us-port-filtering" >Getting Map Conditions for Us Port Filtering
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Importing our DataFrames</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>gisfilepath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/Users/jnapolitano/Projects/data/energy/filtered-wells.geojson&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>filtered_df <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(gisfilepath)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>filtered_df <span style="color:#f92672">=</span> filtered_df<span style="color:#f92672">.</span>to_crs(epsg<span style="color:#f92672">=</span><span style="color:#ae81ff">3857</span>)
+</span></span></code></pre></div><h4 id="getting-map-conditions-for-us-port-filtering" >Getting Map Conditions for Us Port Filtering
 <span>
     <a href="#getting-map-conditions-for-us-port-filtering">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map_conditions <span style="color:#f92672">=</span> filtered_df<span style="color:#f92672">.</span>TERMID<span style="color:#f92672">.</span>unique()<span style="color:#f92672">.</span>tolist()
-</code></pre></div><h3 id="us-ports-dataframes" >US Ports Dataframes
+</h4><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>map_conditions <span style="color:#f92672">=</span> filtered_df<span style="color:#f92672">.</span>TERMID<span style="color:#f92672">.</span>unique()<span style="color:#f92672">.</span>tolist()
+</span></span></code></pre></div><h3 id="us-ports-dataframes" >US Ports Dataframes
 <span>
     <a href="#us-ports-dataframes">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">## Importing our DataFrames</span>
-
-gisfilepath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/Users/jnapolitano/Projects/data/energy/Liquified_Natural_Gas_Import_Exports_and_Terminals.geojson&#34;</span>
-
-
-terminal_df <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(gisfilepath)
-
-terminal_df <span style="color:#f92672">=</span> terminal_df<span style="color:#f92672">.</span>to_crs(epsg<span style="color:#f92672">=</span><span style="color:#ae81ff">3857</span>)
-
-
-</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">terminal_df<span style="color:#f92672">.</span>drop(terminal_df[terminal_df[<span style="color:#e6db74">&#39;STATUS&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;SUSPENDED&#39;</span>]<span style="color:#f92672">.</span>index, inplace <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
-terminal_df<span style="color:#f92672">.</span>rename(columns<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;NAME&#34;</span>: <span style="color:#e6db74">&#34;TERMINAL_NAME&#34;</span>})
-terminal_df[<span style="color:#e6db74">&#39;TERMINAL_GEO&#39;</span>] <span style="color:#f92672">=</span> terminal_df[<span style="color:#e6db74">&#39;geometry&#39;</span>]<span style="color:#f92672">.</span>copy()
-
-</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">port_terminals_df <span style="color:#f92672">=</span> terminal_df<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;TERMID in @map_conditions&#39;</span>)<span style="color:#f92672">.</span>copy()
-port_terminals_df[<span style="color:#e6db74">&#39;co2_capacity_mmta&#39;</span>] <span style="color:#f92672">=</span> port_terminals_df[<span style="color:#e6db74">&#39;CURRENTCAP&#39;</span>] <span style="color:#f92672">*</span> conversion_factor
-port_terminals_df[<span style="color:#e6db74">&#39;co2_capacity_metric_tons&#39;</span>] <span style="color:#f92672">=</span> port_terminals_df[<span style="color:#e6db74">&#39;co2_capacity_mmta&#39;</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000000</span>
-port_terminals_df[<span style="color:#e6db74">&#39;available&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
-</code></pre></div><h2 id="random-distribution-distance-and-pricing-functions" >Random Distribution, Distance and Pricing Functions
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Importing our DataFrames</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>gisfilepath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/Users/jnapolitano/Projects/data/energy/Liquified_Natural_Gas_Import_Exports_and_Terminals.geojson&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>terminal_df <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(gisfilepath)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>terminal_df <span style="color:#f92672">=</span> terminal_df<span style="color:#f92672">.</span>to_crs(epsg<span style="color:#f92672">=</span><span style="color:#ae81ff">3857</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>terminal_df<span style="color:#f92672">.</span>drop(terminal_df[terminal_df[<span style="color:#e6db74">&#39;STATUS&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;SUSPENDED&#39;</span>]<span style="color:#f92672">.</span>index, inplace <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>terminal_df<span style="color:#f92672">.</span>rename(columns<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;NAME&#34;</span>: <span style="color:#e6db74">&#34;TERMINAL_NAME&#34;</span>})
+</span></span><span style="display:flex;"><span>terminal_df[<span style="color:#e6db74">&#39;TERMINAL_GEO&#39;</span>] <span style="color:#f92672">=</span> terminal_df[<span style="color:#e6db74">&#39;geometry&#39;</span>]<span style="color:#f92672">.</span>copy()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>port_terminals_df <span style="color:#f92672">=</span> terminal_df<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;TERMID in @map_conditions&#39;</span>)<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>port_terminals_df[<span style="color:#e6db74">&#39;co2_capacity_mmta&#39;</span>] <span style="color:#f92672">=</span> port_terminals_df[<span style="color:#e6db74">&#39;CURRENTCAP&#39;</span>] <span style="color:#f92672">*</span> conversion_factor
+</span></span><span style="display:flex;"><span>port_terminals_df[<span style="color:#e6db74">&#39;co2_capacity_metric_tons&#39;</span>] <span style="color:#f92672">=</span> port_terminals_df[<span style="color:#e6db74">&#39;co2_capacity_mmta&#39;</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000000</span>
+</span></span><span style="display:flex;"><span>port_terminals_df[<span style="color:#e6db74">&#39;available&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span></code></pre></div><h2 id="random-distribution-distance-and-pricing-functions" >Random Distribution, Distance and Pricing Functions
 <span>
     <a href="#random-distribution-distance-and-pricing-functions">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
@@ -923,68 +916,64 @@ port_terminals_df[<span style="color:#e6db74">&#39;available&#39;</span>] <span 
     </a>
 </span>
 </h3><p>As days at sea is variable I created a range between 20 and 40 days to account for a round trip to every major port in Europe.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_day</span>():
-    lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
-    upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">40</span>
-
-    median <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
-    standard_dev <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
-
-    days_range <span style="color:#f92672">=</span> range(lower_bound, upper_bound)
-
-    days_distribution <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(loc<span style="color:#f92672">=</span>median , scale<span style="color:#f92672">=</span>standard_dev, size<span style="color:#f92672">=</span>ships)
-
-
-    days_randomized <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(days_distribution, size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-
-
-    <span style="color:#66d9ef">return</span> (days_randomized[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>int64))
-
-</code></pre></div><h3 id="accounting-for-random-european-ports" >Accounting for Random European Ports
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_day</span>():
+</span></span><span style="display:flex;"><span>    lower_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>    upper_bound <span style="color:#f92672">=</span> <span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    median <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    standard_dev <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    days_range <span style="color:#f92672">=</span> range(lower_bound, upper_bound)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    days_distribution <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(loc<span style="color:#f92672">=</span>median , scale<span style="color:#f92672">=</span>standard_dev, size<span style="color:#f92672">=</span>ships)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    days_randomized <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(days_distribution, size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (days_randomized[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>int64))
+</span></span></code></pre></div><h3 id="accounting-for-random-european-ports" >Accounting for Random European Ports
 <span>
     <a href="#accounting-for-random-european-ports">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
 </h3><p>I randomized the port selection process with the following function.  The data provided by EuroStat did not filter according to type of port.  Nonetheless, the distance recorded should be very similiar to those of actual LNG ports.  A better data set could be substituded directly into the function.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_europe_port</span>():
-    <span style="color:#75715e">#select a random number along the index of the ports df.  Return the value of hte geometry at the index.  </span>
-    <span style="color:#75715e">#select indices from the dataframe that are valid.  ie capacity has not yet been met.  </span>
-    ports_randomized <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(ports_df<span style="color:#f92672">.</span>index, size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-    index_location <span style="color:#f92672">=</span> ports_randomized[<span style="color:#ae81ff">0</span>]
-    <span style="color:#66d9ef">return</span> ports_df<span style="color:#f92672">.</span>geometry[index_location]
-
-</code></pre></div><h3 id="accounting-for-random-us-ports" >Accounting for Random US Ports
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_europe_port</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#select a random number along the index of the ports df.  Return the value of hte geometry at the index.  </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#select indices from the dataframe that are valid.  ie capacity has not yet been met.  </span>
+</span></span><span style="display:flex;"><span>    ports_randomized <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(ports_df<span style="color:#f92672">.</span>index, size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    index_location <span style="color:#f92672">=</span> ports_randomized[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ports_df<span style="color:#f92672">.</span>geometry[index_location]
+</span></span></code></pre></div><h3 id="accounting-for-random-us-ports" >Accounting for Random US Ports
 <span>
     <a href="#accounting-for-random-us-ports">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
 </h3><p>I was able to filter import/export ports in the United States in to a dataset of about 15.  Like the European dataset, I randomized selection.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_us_port</span>():
-    <span style="color:#75715e">#select a random number along the index of the ports df.  Return the value of hte geometry at the index.  </span>
-
-    ports_randomized <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(port_terminals_df<span style="color:#f92672">.</span>index, size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-    index_location <span style="color:#f92672">=</span> ports_randomized[<span style="color:#ae81ff">0</span>]
-    <span style="color:#66d9ef">return</span> port_terminals_df<span style="color:#f92672">.</span>geometry[index_location]
-
-</code></pre></div><h3 id="calculating-distance-between-ports" >Calculating Distance Between Ports
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_us_port</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#select a random number along the index of the ports df.  Return the value of hte geometry at the index.  </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ports_randomized <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(port_terminals_df<span style="color:#f92672">.</span>index, size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    index_location <span style="color:#f92672">=</span> ports_randomized[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> port_terminals_df<span style="color:#f92672">.</span>geometry[index_location]
+</span></span></code></pre></div><h3 id="calculating-distance-between-ports" >Calculating Distance Between Ports
 <span>
     <a href="#calculating-distance-between-ports">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
 </h3><p>I calculated the shortest distance between ports based on their geographic locations with the shapley.distance function.  It returns distance in meters.  I divide by 1000 to convert into Km.   The algorithm could be improved by using official shipping data to randomize a distribution of distances between ports.  Unfortunately, I do not have that data available to me.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">geo_distance</span>(dist1,dist2):
-    <span style="color:#75715e"># return distance in km</span>
-    distance <span style="color:#f92672">=</span> dist1<span style="color:#f92672">.</span>distance(dist2)<span style="color:#f92672">/</span><span style="color:#ae81ff">1000</span>
-    <span style="color:#66d9ef">return</span>(distance)
-
-</code></pre></div><h4 id="calculating-price-of-transport" >Calculating Price of Transport
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">geo_distance</span>(dist1,dist2):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># return distance in km</span>
+</span></span><span style="display:flex;"><span>    distance <span style="color:#f92672">=</span> dist1<span style="color:#f92672">.</span>distance(dist2)<span style="color:#f92672">/</span><span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>(distance)
+</span></span></code></pre></div><h4 id="calculating-price-of-transport" >Calculating Price of Transport
 <span>
     <a href="#calculating-price-of-transport">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
@@ -992,20 +981,19 @@ port_terminals_df[<span style="color:#e6db74">&#39;available&#39;</span>] <span 
 </span>
 </h4><p>The cost of transport accounts for port fees, liquification, and transport.   Unfortunately, my data is from a paper published in 2004.  I would like to find a more recent paper.   I did not convert the value of 2004 USD to 2022 because I am not sure of the validity of the conversion factors available online.  I would need a better source to correctly model the true cost of transport.</p>
 <p><a href="https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf">source</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">price_to_transport</span>(distance,tonnes):
-    price <span style="color:#f92672">=</span> (distance<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">12</span> <span style="color:#f92672">*</span> tonnes
-    <span style="color:#66d9ef">return</span> price
-
-</code></pre></div><h3 id="calculating-cost-per-day" >Calculating Cost Per Day
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">price_to_transport</span>(distance,tonnes):
+</span></span><span style="display:flex;"><span>    price <span style="color:#f92672">=</span> (distance<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">12</span> <span style="color:#f92672">*</span> tonnes
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> price
+</span></span></code></pre></div><h3 id="calculating-cost-per-day" >Calculating Cost Per Day
 <span>
     <a href="#calculating-cost-per-day">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost_per_day</span>(price,distance):
-    <span style="color:#66d9ef">return</span> price<span style="color:#f92672">/</span>distance
-</code></pre></div><h2 id="costs-per-annum-algorithm" >Costs Per Annum Algorithm
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost_per_day</span>(price,distance):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> price<span style="color:#f92672">/</span>distance
+</span></span></code></pre></div><h2 id="costs-per-annum-algorithm" >Costs Per Annum Algorithm
 <span>
     <a href="#costs-per-annum-algorithm">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
@@ -1022,51 +1010,50 @@ port_terminals_df[<span style="color:#e6db74">&#39;available&#39;</span>] <span 
 <li>The total shipping price of that cycle is tabulated.</li>
 <li>The total tonnage of that cycle is tabulated.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-days <span style="color:#f92672">=</span> <span style="color:#ae81ff">365</span>
-day_counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
-carbon_total_millions_metric_tons <span style="color:#f92672">=</span> <span style="color:#ae81ff">300000000</span>
-total_tons_shipped <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-total_price <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-cycle_mean_price_samples <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(shape<span style="color:#f92672">=</span>days)
-
-<span style="color:#75715e">#deduction = capacity of empty ships</span>
-<span style="color:#66d9ef">for</span> day <span style="color:#f92672">in</span> range(days):
-    <span style="color:#66d9ef">if</span> carbon_total_millions_metric_tons <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>:
-        <span style="color:#75715e"># must use apply to account for multiple 0 conditions.  If i simply vectorized the function across the dataframe in a single call i would assign the the same values each day </span>
-        shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
-        shipping_df[<span style="color:#e6db74">&#39;us_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  random_us_port() <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;us_port&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-        shipping_df[<span style="color:#e6db74">&#39;europe_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  random_europe_port() <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;europe_port&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-        shipping_df[<span style="color:#e6db74">&#39;distance&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  geo_distance(x[<span style="color:#e6db74">&#39;us_port&#39;</span>], x[<span style="color:#e6db74">&#39;europe_port&#39;</span>]) <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;distance&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-        shipping_df[<span style="color:#e6db74">&#39;price&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  price_to_transport(x[<span style="color:#e6db74">&#39;distance&#39;</span>],x[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>]) <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;price&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-        <span style="color:#75715e">#calculate cost per day for fun...</span>
-        <span style="color:#75715e"># query all that are = o.  Summate the capacities deduct the total </span>
-        tmp_df<span style="color:#f92672">=</span>shipping_df<span style="color:#f92672">.</span>loc[shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>]
-        sum_of_capacity <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>]<span style="color:#f92672">.</span>sum()
-        sum_of_price <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;price&#39;</span>]<span style="color:#f92672">.</span>sum()
-        mean_of_price <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;price&#39;</span>]<span style="color:#f92672">.</span>mean()
-        cycle_mean_price_samples[day] <span style="color:#f92672">=</span> mean_of_price
-        shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: random_day() <span style="color:#66d9ef">if</span> x<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x)
-        total_tons_shipped <span style="color:#f92672">=</span> total_tons_shipped <span style="color:#f92672">+</span> sum_of_capacity
-        total_price <span style="color:#f92672">=</span> total_price <span style="color:#f92672">+</span> sum_of_price
-        carbon_total_millions_metric_tons <span style="color:#f92672">=</span> carbon_total_millions_metric_tons <span style="color:#f92672">-</span> sum_of_capacity
-        <span style="color:#75715e">#print(carbon_total_millions_metric_tons)</span>
-        day_counter <span style="color:#f92672">=</span> day_counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">else</span>: 
-        <span style="color:#66d9ef">break</span>
-
-    
-    
-print(day_counter)
-print(total_tons_shipped)
-print(total_price)
-<span style="color:#75715e">#Drop the nan, ie empty samples</span>
-cycle_mean_price <span style="color:#f92672">=</span> cycle_mean_price_samples[np<span style="color:#f92672">.</span>logical_not(np<span style="color:#f92672">.</span>isnan(cycle_mean_price_samples))]
-<span style="color:#75715e">#Calculate mean price of filling a ship (around a billion according to the data i have if filled to capacity.  Ridiculous.)</span>
-cycle_mean_price <span style="color:#f92672">=</span> cycle_mean_price<span style="color:#f92672">.</span>mean()
-print(cycle_mean_price)
-
-</code></pre></div><pre><code>365
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>days <span style="color:#f92672">=</span> <span style="color:#ae81ff">365</span>
+</span></span><span style="display:flex;"><span>day_counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
+</span></span><span style="display:flex;"><span>carbon_total_millions_metric_tons <span style="color:#f92672">=</span> <span style="color:#ae81ff">300000000</span>
+</span></span><span style="display:flex;"><span>total_tons_shipped <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>total_price <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>cycle_mean_price_samples <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(shape<span style="color:#f92672">=</span>days)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deduction = capacity of empty ships</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> day <span style="color:#f92672">in</span> range(days):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> carbon_total_millions_metric_tons <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># must use apply to account for multiple 0 conditions.  If i simply vectorized the function across the dataframe in a single call i would assign the the same values each day </span>
+</span></span><span style="display:flex;"><span>        shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        shipping_df[<span style="color:#e6db74">&#39;us_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  random_us_port() <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;us_port&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        shipping_df[<span style="color:#e6db74">&#39;europe_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  random_europe_port() <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;europe_port&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        shipping_df[<span style="color:#e6db74">&#39;distance&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  geo_distance(x[<span style="color:#e6db74">&#39;us_port&#39;</span>], x[<span style="color:#e6db74">&#39;europe_port&#39;</span>]) <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;distance&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        shipping_df[<span style="color:#e6db74">&#39;price&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  price_to_transport(x[<span style="color:#e6db74">&#39;distance&#39;</span>],x[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>]) <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;price&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#calculate cost per day for fun...</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># query all that are = o.  Summate the capacities deduct the total </span>
+</span></span><span style="display:flex;"><span>        tmp_df<span style="color:#f92672">=</span>shipping_df<span style="color:#f92672">.</span>loc[shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        sum_of_capacity <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>]<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>        sum_of_price <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;price&#39;</span>]<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>        mean_of_price <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;price&#39;</span>]<span style="color:#f92672">.</span>mean()
+</span></span><span style="display:flex;"><span>        cycle_mean_price_samples[day] <span style="color:#f92672">=</span> mean_of_price
+</span></span><span style="display:flex;"><span>        shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: random_day() <span style="color:#66d9ef">if</span> x<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x)
+</span></span><span style="display:flex;"><span>        total_tons_shipped <span style="color:#f92672">=</span> total_tons_shipped <span style="color:#f92672">+</span> sum_of_capacity
+</span></span><span style="display:flex;"><span>        total_price <span style="color:#f92672">=</span> total_price <span style="color:#f92672">+</span> sum_of_price
+</span></span><span style="display:flex;"><span>        carbon_total_millions_metric_tons <span style="color:#f92672">=</span> carbon_total_millions_metric_tons <span style="color:#f92672">-</span> sum_of_capacity
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#print(carbon_total_millions_metric_tons)</span>
+</span></span><span style="display:flex;"><span>        day_counter <span style="color:#f92672">=</span> day_counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>print(day_counter)
+</span></span><span style="display:flex;"><span>print(total_tons_shipped)
+</span></span><span style="display:flex;"><span>print(total_price)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Drop the nan, ie empty samples</span>
+</span></span><span style="display:flex;"><span>cycle_mean_price <span style="color:#f92672">=</span> cycle_mean_price_samples[np<span style="color:#f92672">.</span>logical_not(np<span style="color:#f92672">.</span>isnan(cycle_mean_price_samples))]
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Calculate mean price of filling a ship (around a billion according to the data i have if filled to capacity.  Ridiculous.)</span>
+</span></span><span style="display:flex;"><span>cycle_mean_price <span style="color:#f92672">=</span> cycle_mean_price<span style="color:#f92672">.</span>mean()
+</span></span><span style="display:flex;"><span>print(cycle_mean_price)
+</span></span></code></pre></div><pre><code>365
 41073.187985943456
 60039059.413350895
 308098.2720296601
@@ -1079,96 +1066,93 @@ print(cycle_mean_price)
 </span>
 </h2><p>The annual rate of shipping can be variable according to shifting dynamics. I account for that by modeling the per annum algorithm 500 times.  Modeling would improve as n increases, but for the sake of time I limited the computation to 500 iterations</p>
 <p>The only difference between this algorithm and the previous one is an extra for loop.  The algorithmic efficiency is surprisingly good as the I was able to vectorize tabulations with lambda functions across the dataframes.  On my laptop, I was able to complete the algorithm in about 16 minutes of run time.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-nsamples <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>
-price_samples <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(shape<span style="color:#f92672">=</span>nsamples)
-cycle_mean_price_annual_samples <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(shape<span style="color:#f92672">=</span>nsamples)
-
-<span style="color:#66d9ef">for</span> sample <span style="color:#f92672">in</span> range(nsamples):
-
-    days <span style="color:#f92672">=</span> <span style="color:#ae81ff">365</span>
-    day_counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
-    carbon_total_millions_metric_tons <span style="color:#f92672">=</span> <span style="color:#ae81ff">300000000</span> <span style="color:#75715e"># could randomize.  Need a probability distribution based on historial data. </span>
-    total_tons_shipped <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    total_price <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    cycle_mean_price_daily_samples <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(shape<span style="color:#f92672">=</span>days)
-
-
-    <span style="color:#75715e">#deduction = capacity of empty ships</span>
-    <span style="color:#66d9ef">for</span> day <span style="color:#f92672">in</span> range(days):
-        <span style="color:#66d9ef">if</span> carbon_total_millions_metric_tons <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>:
-            <span style="color:#75715e"># must use apply to account for multiple 0 conditions.  If i simply vectorized the function across the dataframe in a single call i would assign the the same values each day </span>
-            shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
-            shipping_df[<span style="color:#e6db74">&#39;us_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  random_us_port() <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;us_port&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-            shipping_df[<span style="color:#e6db74">&#39;europe_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  random_europe_port() <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;europe_port&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-            shipping_df[<span style="color:#e6db74">&#39;distance&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  geo_distance(x[<span style="color:#e6db74">&#39;us_port&#39;</span>], x[<span style="color:#e6db74">&#39;europe_port&#39;</span>]) <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;distance&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-            shipping_df[<span style="color:#e6db74">&#39;price&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  price_to_transport(x[<span style="color:#e6db74">&#39;distance&#39;</span>], x[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>]) <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;price&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-            <span style="color:#75715e"># query all that are = o.  Summate the capacities deduct the total </span>
-            tmp_df<span style="color:#f92672">=</span>shipping_df<span style="color:#f92672">.</span>loc[shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>]
-            sum_of_capacity <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>]<span style="color:#f92672">.</span>sum()
-            sum_of_price <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;price&#39;</span>]<span style="color:#f92672">.</span>sum()
-            mean_of_price <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;price&#39;</span>]<span style="color:#f92672">.</span>mean()
-            cycle_mean_price_daily_samples[day] <span style="color:#f92672">=</span> mean_of_price
-            shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: random_day() <span style="color:#66d9ef">if</span> x<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x)
-            total_tons_shipped <span style="color:#f92672">=</span> total_tons_shipped <span style="color:#f92672">+</span> sum_of_capacity
-            total_price <span style="color:#f92672">=</span> total_price <span style="color:#f92672">+</span> sum_of_price
-            carbon_total_millions_metric_tons <span style="color:#f92672">=</span> carbon_total_millions_metric_tons <span style="color:#f92672">-</span> sum_of_capacity
-            <span style="color:#75715e">#print(carbon_total_millions_metric_tons)</span>
-            day_counter <span style="color:#f92672">=</span> day_counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
-        <span style="color:#66d9ef">else</span>: 
-            <span style="color:#66d9ef">break</span>
-
-    <span style="color:#75715e">#Drop the nan, ie empty samples</span>
-    cycle_mean_price <span style="color:#f92672">=</span> cycle_mean_price_samples[np<span style="color:#f92672">.</span>logical_not(np<span style="color:#f92672">.</span>isnan(cycle_mean_price_samples))]
-    <span style="color:#75715e">#Calculate mean price of filling a ship (around a billion according to the data i have if filled to capacity.  Ridiculous.)</span>
-    cycle_mean_price <span style="color:#f92672">=</span> cycle_mean_price<span style="color:#f92672">.</span>mean()
-    cycle_mean_price_annual_samples[sample] <span style="color:#f92672">=</span>cycle_mean_price
-        
-    
-
-    price_samples[sample] <span style="color:#f92672">=</span> total_price
-
-        
-
-</code></pre></div><h3 id="creating-the-annual-price-samples-df" >Creating the Annual Price Samples DF
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nsamples <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>
+</span></span><span style="display:flex;"><span>price_samples <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(shape<span style="color:#f92672">=</span>nsamples)
+</span></span><span style="display:flex;"><span>cycle_mean_price_annual_samples <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(shape<span style="color:#f92672">=</span>nsamples)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> sample <span style="color:#f92672">in</span> range(nsamples):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    days <span style="color:#f92672">=</span> <span style="color:#ae81ff">365</span>
+</span></span><span style="display:flex;"><span>    day_counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
+</span></span><span style="display:flex;"><span>    carbon_total_millions_metric_tons <span style="color:#f92672">=</span> <span style="color:#ae81ff">300000000</span> <span style="color:#75715e"># could randomize.  Need a probability distribution based on historial data. </span>
+</span></span><span style="display:flex;"><span>    total_tons_shipped <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    total_price <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    cycle_mean_price_daily_samples <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(shape<span style="color:#f92672">=</span>days)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#deduction = capacity of empty ships</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> day <span style="color:#f92672">in</span> range(days):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> carbon_total_millions_metric_tons <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># must use apply to account for multiple 0 conditions.  If i simply vectorized the function across the dataframe in a single call i would assign the the same values each day </span>
+</span></span><span style="display:flex;"><span>            shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            shipping_df[<span style="color:#e6db74">&#39;us_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  random_us_port() <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;us_port&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            shipping_df[<span style="color:#e6db74">&#39;europe_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  random_europe_port() <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;europe_port&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            shipping_df[<span style="color:#e6db74">&#39;distance&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  geo_distance(x[<span style="color:#e6db74">&#39;us_port&#39;</span>], x[<span style="color:#e6db74">&#39;europe_port&#39;</span>]) <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;distance&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            shipping_df[<span style="color:#e6db74">&#39;price&#39;</span>] <span style="color:#f92672">=</span> shipping_df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x:  price_to_transport(x[<span style="color:#e6db74">&#39;distance&#39;</span>], x[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>]) <span style="color:#66d9ef">if</span> x[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x[<span style="color:#e6db74">&#39;price&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># query all that are = o.  Summate the capacities deduct the total </span>
+</span></span><span style="display:flex;"><span>            tmp_df<span style="color:#f92672">=</span>shipping_df<span style="color:#f92672">.</span>loc[shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>            sum_of_capacity <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;co2_capacity_tonnes&#39;</span>]<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>            sum_of_price <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;price&#39;</span>]<span style="color:#f92672">.</span>sum()
+</span></span><span style="display:flex;"><span>            mean_of_price <span style="color:#f92672">=</span> tmp_df[<span style="color:#e6db74">&#39;price&#39;</span>]<span style="color:#f92672">.</span>mean()
+</span></span><span style="display:flex;"><span>            cycle_mean_price_daily_samples[day] <span style="color:#f92672">=</span> mean_of_price
+</span></span><span style="display:flex;"><span>            shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>] <span style="color:#f92672">=</span> shipping_df[<span style="color:#e6db74">&#39;days_to_port&#39;</span>]<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: random_day() <span style="color:#66d9ef">if</span> x<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> x)
+</span></span><span style="display:flex;"><span>            total_tons_shipped <span style="color:#f92672">=</span> total_tons_shipped <span style="color:#f92672">+</span> sum_of_capacity
+</span></span><span style="display:flex;"><span>            total_price <span style="color:#f92672">=</span> total_price <span style="color:#f92672">+</span> sum_of_price
+</span></span><span style="display:flex;"><span>            carbon_total_millions_metric_tons <span style="color:#f92672">=</span> carbon_total_millions_metric_tons <span style="color:#f92672">-</span> sum_of_capacity
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#print(carbon_total_millions_metric_tons)</span>
+</span></span><span style="display:flex;"><span>            day_counter <span style="color:#f92672">=</span> day_counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>: 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Drop the nan, ie empty samples</span>
+</span></span><span style="display:flex;"><span>    cycle_mean_price <span style="color:#f92672">=</span> cycle_mean_price_samples[np<span style="color:#f92672">.</span>logical_not(np<span style="color:#f92672">.</span>isnan(cycle_mean_price_samples))]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#Calculate mean price of filling a ship (around a billion according to the data i have if filled to capacity.  Ridiculous.)</span>
+</span></span><span style="display:flex;"><span>    cycle_mean_price <span style="color:#f92672">=</span> cycle_mean_price<span style="color:#f92672">.</span>mean()
+</span></span><span style="display:flex;"><span>    cycle_mean_price_annual_samples[sample] <span style="color:#f92672">=</span>cycle_mean_price
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    price_samples[sample] <span style="color:#f92672">=</span> total_price
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        
+</span></span></code></pre></div><h3 id="creating-the-annual-price-samples-df" >Creating the Annual Price Samples DF
 <span>
     <a href="#creating-the-annual-price-samples-df">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">annual_price_samples_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(price_samples, columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;cost_in_usd&#39;</span>])
-</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">annual_price_samples_df[<span style="color:#e6db74">&#39;cost_in_usd_billions&#39;</span>] <span style="color:#f92672">=</span> annual_price_samples_df<span style="color:#f92672">.</span>cost_in_usd 
-</code></pre></div><h2 id="imports" >Imports
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>annual_price_samples_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(price_samples, columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;cost_in_usd&#39;</span>])
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>annual_price_samples_df[<span style="color:#e6db74">&#39;cost_in_usd_billions&#39;</span>] <span style="color:#f92672">=</span> annual_price_samples_df<span style="color:#f92672">.</span>cost_in_usd 
+</span></span></code></pre></div><h2 id="imports" >Imports
 <span>
     <a href="#imports">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-<span style="color:#f92672">import</span> geopandas <span style="color:#66d9ef">as</span> gpd
-<span style="color:#f92672">import</span> folium
-<span style="color:#f92672">import</span> contextily <span style="color:#66d9ef">as</span> cx
-<span style="color:#f92672">import</span> rtree
-<span style="color:#f92672">from</span> zlib <span style="color:#f92672">import</span> crc32
-<span style="color:#f92672">import</span> hashlib
-<span style="color:#f92672">from</span> shapely.geometry <span style="color:#f92672">import</span> Point, LineString, Polygon
-<span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-<span style="color:#f92672">from</span> scipy.spatial <span style="color:#f92672">import</span> cKDTree
-<span style="color:#f92672">import</span> scipy.stats <span style="color:#66d9ef">as</span> st
-<span style="color:#f92672">from</span> shapely.geometry <span style="color:#f92672">import</span> Point
-<span style="color:#f92672">from</span> haversine <span style="color:#f92672">import</span> Unit
-<span style="color:#f92672">from</span> geopy.distance <span style="color:#f92672">import</span> distance
-
-<span style="color:#f92672">import</span> warnings
-
-warnings<span style="color:#f92672">.</span>filterwarnings(<span style="color:#e6db74">&#39;ignore&#39;</span>)
-
-</code></pre></div><pre><code>/Users/jnapolitano/venvs/finance/lib/python3.9/site-packages/geopandas/_compat.py:111: UserWarning: The Shapely GEOS version (3.10.2-CAPI-1.16.0) is incompatible with the GEOS version PyGEOS was compiled with (3.10.1-CAPI-1.16.0). Conversions between both will be slow.
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> geopandas <span style="color:#66d9ef">as</span> gpd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> folium
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> contextily <span style="color:#66d9ef">as</span> cx
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> rtree
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> zlib <span style="color:#f92672">import</span> crc32
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> shapely.geometry <span style="color:#f92672">import</span> Point, LineString, Polygon
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.spatial <span style="color:#f92672">import</span> cKDTree
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> scipy.stats <span style="color:#66d9ef">as</span> st
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> shapely.geometry <span style="color:#f92672">import</span> Point
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> haversine <span style="color:#f92672">import</span> Unit
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> geopy.distance <span style="color:#f92672">import</span> distance
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> warnings
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>warnings<span style="color:#f92672">.</span>filterwarnings(<span style="color:#e6db74">&#39;ignore&#39;</span>)
+</span></span></code></pre></div><pre><code>/Users/jnapolitano/venvs/finance/lib/python3.9/site-packages/geopandas/_compat.py:111: UserWarning: The Shapely GEOS version (3.10.2-CAPI-1.16.0) is incompatible with the GEOS version PyGEOS was compiled with (3.10.1-CAPI-1.16.0). Conversions between both will be slow.
   warnings.warn(
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"></code></pre></div>
         </div>
         
 
@@ -1277,7 +1261,7 @@ warnings<span style="color:#f92672">.</span>filterwarnings(<span style="color:#e
         
     <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

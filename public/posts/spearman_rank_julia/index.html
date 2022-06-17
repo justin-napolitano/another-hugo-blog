@@ -75,7 +75,7 @@
     
 
     
-        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
     
 
 
@@ -373,9 +373,9 @@ if (!doNotTrack) {
     </a>
 </span>
 </h2><p>I had to import the complementary error function.  I wanted to use just the standard library, but I had to test the code below first.  I&rsquo;ll write the compelemntary error function in pure julia next.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">
-<span style="color:#66d9ef">using</span> SpecialFunctions<span style="color:#f92672">:</span>erfc
-</code></pre></div><h2 id="spearman-correlation-function" >Spearman Correlation Function.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> SpecialFunctions<span style="color:#f92672">:</span>erfc
+</span></span></code></pre></div><h2 id="spearman-correlation-function" >Spearman Correlation Function.
 <span>
     <a href="#spearman-correlation-function">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
@@ -387,44 +387,44 @@ if (!doNotTrack) {
 <li>the sample size</li>
 </ul>
 <p>It returns a t score  The original, used pointers to return multiple variables.  I&rsquo;ll probably rewrite the function to calculate the copmlimentary variables in seperate methods.  Might as well take advantage of the multiple dispatch capability of the language.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> spearman(data1,data2,n)
-
-    j <span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> 
-    
-    wksp1m<span style="color:#f92672">=</span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}(<span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>n)
-    wksp2m <span style="color:#f92672">=</span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}(<span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>n)
-    
-    <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(n)
-        wksp1m[j]<span style="color:#f92672">=</span>data1[j]
-        wksp2m[j]<span style="color:#f92672">=</span>data2[j]
-    <span style="color:#66d9ef">end</span>
-
-    sort!(wksp1m)
-    sort!(wksp2m)
-
-    sf <span style="color:#f92672">=</span> crank(n,wksp1m)
-    sg <span style="color:#f92672">=</span> crank(n,wksp2m)
-
-    d <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
-
-    <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n
-        d <span style="color:#f92672">+=</span> sqrt((<span style="color:#66d9ef">Complex</span>(wksp1m[j]<span style="color:#f92672">-</span>wksp2m[j])))
-    <span style="color:#66d9ef">end</span>
-    
-    en<span style="color:#f92672">=</span>n
-    en3n <span style="color:#f92672">=</span> (en<span style="color:#f92672">*</span>en<span style="color:#f92672">*</span>en)<span style="color:#f92672">-</span>en
-    aved<span style="color:#f92672">=</span>(en3n<span style="color:#f92672">/</span><span style="color:#ae81ff">6.0</span>)<span style="color:#f92672">-</span>((sf<span style="color:#f92672">+</span>sg)<span style="color:#f92672">/</span><span style="color:#ae81ff">12</span>)
-    fac<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1.0</span><span style="color:#f92672">-</span>sf<span style="color:#f92672">/</span>en3n)<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1.0</span><span style="color:#f92672">-</span>(sg<span style="color:#f92672">/</span>en3n))
-    vard <span style="color:#f92672">=</span>((en<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">*</span>en<span style="color:#f92672">*</span>en<span style="color:#f92672">*</span>sqrt(en<span style="color:#f92672">+</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">36.0</span>)<span style="color:#f92672">*</span>fac
-    zd <span style="color:#f92672">=</span> (d<span style="color:#f92672">-</span>aved<span style="color:#f92672">/</span>sqrt(vard))
-    probd<span style="color:#f92672">=</span>erfc((abs(zd)<span style="color:#f92672">/</span><span style="color:#ae81ff">1.4142136</span>))
-    rs <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1.0</span><span style="color:#f92672">-</span>(<span style="color:#ae81ff">6.0</span><span style="color:#f92672">/</span>en3n)<span style="color:#f92672">*</span>(d<span style="color:#f92672">+</span><span style="color:#ae81ff">0.5</span><span style="color:#f92672">*</span>(sf<span style="color:#f92672">+</span>sg)))<span style="color:#f92672">/</span>fac
-    t<span style="color:#f92672">=</span>(rs)<span style="color:#f92672">*</span>sqrt((en<span style="color:#f92672">-</span><span style="color:#ae81ff">2.0</span>)<span style="color:#f92672">/</span>((rs<span style="color:#f92672">+</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1.0</span><span style="color:#f92672">-</span>rs)))
-    <span style="color:#66d9ef">return</span> t
-    
-<span style="color:#66d9ef">end</span>
-    
-</code></pre></div><pre><code>spearman (generic function with 2 methods)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> spearman(data1,data2,n)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    j <span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> 
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    wksp1m<span style="color:#f92672">=</span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}(<span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>n)
+</span></span><span style="display:flex;"><span>    wksp2m <span style="color:#f92672">=</span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}(<span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>n)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(n)
+</span></span><span style="display:flex;"><span>        wksp1m[j]<span style="color:#f92672">=</span>data1[j]
+</span></span><span style="display:flex;"><span>        wksp2m[j]<span style="color:#f92672">=</span>data2[j]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    sort!(wksp1m)
+</span></span><span style="display:flex;"><span>    sort!(wksp2m)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    sf <span style="color:#f92672">=</span> crank(n,wksp1m)
+</span></span><span style="display:flex;"><span>    sg <span style="color:#f92672">=</span> crank(n,wksp2m)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    d <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n
+</span></span><span style="display:flex;"><span>        d <span style="color:#f92672">+=</span> sqrt((<span style="color:#66d9ef">Complex</span>(wksp1m[j]<span style="color:#f92672">-</span>wksp2m[j])))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    en<span style="color:#f92672">=</span>n
+</span></span><span style="display:flex;"><span>    en3n <span style="color:#f92672">=</span> (en<span style="color:#f92672">*</span>en<span style="color:#f92672">*</span>en)<span style="color:#f92672">-</span>en
+</span></span><span style="display:flex;"><span>    aved<span style="color:#f92672">=</span>(en3n<span style="color:#f92672">/</span><span style="color:#ae81ff">6.0</span>)<span style="color:#f92672">-</span>((sf<span style="color:#f92672">+</span>sg)<span style="color:#f92672">/</span><span style="color:#ae81ff">12</span>)
+</span></span><span style="display:flex;"><span>    fac<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1.0</span><span style="color:#f92672">-</span>sf<span style="color:#f92672">/</span>en3n)<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1.0</span><span style="color:#f92672">-</span>(sg<span style="color:#f92672">/</span>en3n))
+</span></span><span style="display:flex;"><span>    vard <span style="color:#f92672">=</span>((en<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">*</span>en<span style="color:#f92672">*</span>en<span style="color:#f92672">*</span>sqrt(en<span style="color:#f92672">+</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">36.0</span>)<span style="color:#f92672">*</span>fac
+</span></span><span style="display:flex;"><span>    zd <span style="color:#f92672">=</span> (d<span style="color:#f92672">-</span>aved<span style="color:#f92672">/</span>sqrt(vard))
+</span></span><span style="display:flex;"><span>    probd<span style="color:#f92672">=</span>erfc((abs(zd)<span style="color:#f92672">/</span><span style="color:#ae81ff">1.4142136</span>))
+</span></span><span style="display:flex;"><span>    rs <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1.0</span><span style="color:#f92672">-</span>(<span style="color:#ae81ff">6.0</span><span style="color:#f92672">/</span>en3n)<span style="color:#f92672">*</span>(d<span style="color:#f92672">+</span><span style="color:#ae81ff">0.5</span><span style="color:#f92672">*</span>(sf<span style="color:#f92672">+</span>sg)))<span style="color:#f92672">/</span>fac
+</span></span><span style="display:flex;"><span>    t<span style="color:#f92672">=</span>(rs)<span style="color:#f92672">*</span>sqrt((en<span style="color:#f92672">-</span><span style="color:#ae81ff">2.0</span>)<span style="color:#f92672">/</span>((rs<span style="color:#f92672">+</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1.0</span><span style="color:#f92672">-</span>rs)))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> t
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    
+</span></span></code></pre></div><pre><code>spearman (generic function with 2 methods)
 </code></pre>
 <h3 id="crank" >Crank
 <span>
@@ -433,37 +433,37 @@ if (!doNotTrack) {
     </a>
 </span>
 </h3><p>It ranks the distributions by modifying the original sorted array.  So very C.  I may play with this to return a new value, but I like that it modifies in place.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> crank(n,w)
-    
-    <span style="color:#75715e">#w= Vector{Float64}(1:n)</span>
-    c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    s <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">if</span> w[j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> w[j]
-            w[j] <span style="color:#f92672">=</span> j
-        <span style="color:#66d9ef">else</span>
-            <span style="color:#66d9ef">for</span> jt <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(n)
-                <span style="color:#66d9ef">if</span> (w[jt] <span style="color:#f92672">!=</span> w[j])
-                    <span style="color:#66d9ef">break</span>
-                <span style="color:#66d9ef">end</span>
-            <span style="color:#66d9ef">end</span>
-            rank <span style="color:#f92672">=</span> <span style="color:#ae81ff">.5</span><span style="color:#f92672">*</span>(j<span style="color:#f92672">+</span>jt<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-            <span style="color:#66d9ef">for</span> ji <span style="color:#66d9ef">in</span> j<span style="color:#f92672">:</span>(jt<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-                w[ji] <span style="color:#f92672">=</span> rank
-            <span style="color:#66d9ef">end</span>
-            t <span style="color:#f92672">=</span> jt<span style="color:#f92672">-</span>j
-            s <span style="color:#f92672">+=</span> t<span style="color:#f92672">*</span>t<span style="color:#f92672">*</span>t<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
-        <span style="color:#66d9ef">end</span>
-        c <span style="color:#f92672">=</span> j
-        j<span style="color:#f92672">=</span>j
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">if</span> c <span style="color:#f92672">==</span> n 
-        w[n]<span style="color:#f92672">=</span>n
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">return</span> s
-<span style="color:#66d9ef">end</span>
-</code></pre></div><pre><code>crank (generic function with 1 method)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> crank(n,w)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#w= Vector{Float64}(1:n)</span>
+</span></span><span style="display:flex;"><span>    c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    s <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> w[j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> w[j]
+</span></span><span style="display:flex;"><span>            w[j] <span style="color:#f92672">=</span> j
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> jt <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(n)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (w[jt] <span style="color:#f92672">!=</span> w[j])
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>            rank <span style="color:#f92672">=</span> <span style="color:#ae81ff">.5</span><span style="color:#f92672">*</span>(j<span style="color:#f92672">+</span>jt<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> ji <span style="color:#66d9ef">in</span> j<span style="color:#f92672">:</span>(jt<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>                w[ji] <span style="color:#f92672">=</span> rank
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>            t <span style="color:#f92672">=</span> jt<span style="color:#f92672">-</span>j
+</span></span><span style="display:flex;"><span>            s <span style="color:#f92672">+=</span> t<span style="color:#f92672">*</span>t<span style="color:#f92672">*</span>t<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>        c <span style="color:#f92672">=</span> j
+</span></span><span style="display:flex;"><span>        j<span style="color:#f92672">=</span>j
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> c <span style="color:#f92672">==</span> n 
+</span></span><span style="display:flex;"><span>        w[n]<span style="color:#f92672">=</span>n
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> s
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><pre><code>crank (generic function with 1 method)
 </code></pre>
 <h2 id="main" >Main()
 <span>
@@ -472,17 +472,17 @@ if (!doNotTrack) {
     </a>
 </span>
 </h2><p>Creates two random distributions and ranks tests them for correlation..</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> main()
-    d1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">5</span>rand()<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">for</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">50</span>]
-    d2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">3</span>rand()<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">for</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">50</span>]
-
-    t <span style="color:#f92672">=</span>spearman(d1,d2,<span style="color:#ae81ff">50</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>)
-    display(t)
-<span style="color:#66d9ef">end</span>
-</code></pre></div><pre><code>main (generic function with 1 method)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> main()
+</span></span><span style="display:flex;"><span>    d1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">5</span>rand()<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">for</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">50</span>]
+</span></span><span style="display:flex;"><span>    d2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">3</span>rand()<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">for</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">50</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span>spearman(d1,d2,<span style="color:#ae81ff">50</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    display(t)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><pre><code>main (generic function with 1 method)
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">main()
-</code></pre></div><pre><code>619.0719816953838 - 0.0im
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>main()
+</span></span></code></pre></div><pre><code>619.0719816953838 - 0.0im
 </code></pre>
 
         </div>
@@ -605,7 +605,7 @@ if (!doNotTrack) {
         
     <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

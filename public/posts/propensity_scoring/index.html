@@ -75,7 +75,7 @@
     
 
     
-        <script src="https://blog.jnapolitano.io/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="https://blog.jnapolitano.io/js/script.min.766e48fac645ce89febc4e3a78467b3c44aed2452453b409fa47401ebe483365.js" type="text/javascript" charset="utf-8" integrity="sha256-dm5I&#43;sZFzon&#43;vE46eEZ7PESu0kUkU7QJ&#43;kdAHr5IM2U="></script>
     
 
 
@@ -373,26 +373,26 @@ if (!doNotTrack) {
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> Pkg
-<span style="color:#66d9ef">using</span> DataFrames
-<span style="color:#66d9ef">using</span> CSV
-<span style="color:#66d9ef">using</span> Plots
-<span style="color:#66d9ef">using</span> GLM
-<span style="color:#66d9ef">using</span> StatsBase
-<span style="color:#66d9ef">using</span> Lathe
-<span style="color:#66d9ef">using</span> MLBase
-<span style="color:#66d9ef">using</span> ClassImbalance
-<span style="color:#66d9ef">using</span> ROCAnalysis
-<span style="color:#66d9ef">using</span> PyCall
-sklearn <span style="color:#f92672">=</span> pyimport(<span style="color:#e6db74">&#34;sklearn.metrics&#34;</span>)
-</code></pre></div><pre><code>PyObject &lt;module 'sklearn.metrics' from '/Users/jnapolitano/venvs/finance/lib/python3.9/site-packages/sklearn/metrics/__init__.py'&gt;
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Pkg
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> DataFrames
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> CSV
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Plots
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> GLM
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> StatsBase
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Lathe
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> MLBase
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> ClassImbalance
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> ROCAnalysis
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> PyCall
+</span></span><span style="display:flex;"><span>sklearn <span style="color:#f92672">=</span> pyimport(<span style="color:#e6db74">&#34;sklearn.metrics&#34;</span>)
+</span></span></code></pre></div><pre><code>PyObject &lt;module 'sklearn.metrics' from '/Users/jnapolitano/venvs/finance/lib/python3.9/site-packages/sklearn/metrics/__init__.py'&gt;
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> load_csv() 
-
-    df <span style="color:#f92672">=</span> DataFrame(CSV<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#34;./Churn_Modelling.csv&#34;</span>)) 
-    <span style="color:#66d9ef">return</span> df 
-<span style="color:#66d9ef">end</span>
-</code></pre></div><pre><code>load_csv (generic function with 1 method)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> load_csv() 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> DataFrame(CSV<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#34;./Churn_Modelling.csv&#34;</span>)) 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> df 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><pre><code>load_csv (generic function with 1 method)
 </code></pre>
 <h2 id="loading-data" >Loading Data
 <span>
@@ -400,21 +400,21 @@ sklearn <span style="color:#f92672">=</span> pyimport(<span style="color:#e6db74
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">marketing_df <span style="color:#f92672">=</span> load_csv()
-first(marketing_df,<span style="color:#ae81ff">5</span>)
-</code></pre></div><div style="overflow-x:auto;">
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>marketing_df <span style="color:#f92672">=</span> load_csv()
+</span></span><span style="display:flex;"><span>first(marketing_df,<span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><div style="overflow-x:auto;">
 <table class="data-frame"><thead><tr><th></th><th>RowNumber</th><th>CustomerId</th><th>Surname</th><th>CreditScore</th><th>Geography</th><th>Gender</th><th>Age</th><th>Tenure</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String31</th><th>Int64</th><th>String7</th><th>String7</th><th>Int64</th><th>Int64</th></tr></thead><tbody><p>5 rows × 14 columns (omitted printing of 6 columns)</p><tr><th>1</th><td>1</td><td>15634602</td><td>Hargrave</td><td>619</td><td>France</td><td>Female</td><td>42</td><td>2</td></tr><tr><th>2</th><td>2</td><td>15647311</td><td>Hill</td><td>608</td><td>Spain</td><td>Female</td><td>41</td><td>1</td></tr><tr><th>3</th><td>3</td><td>15619304</td><td>Onio</td><td>502</td><td>France</td><td>Female</td><td>42</td><td>8</td></tr><tr><th>4</th><td>4</td><td>15701354</td><td>Boni</td><td>699</td><td>France</td><td>Female</td><td>39</td><td>1</td></tr><tr><th>5</th><td>5</td><td>15737888</td><td>Mitchell</td><td>850</td><td>Spain</td><td>Female</td><td>43</td><td>2</td></tr></tbody></table>
 </div>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">println(size(marketing_df))
-describe(marketing_df)
-</code></pre></div><pre><code>(10000, 14)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>println(size(marketing_df))
+</span></span><span style="display:flex;"><span>describe(marketing_df)
+</span></span></code></pre></div><pre><code>(10000, 14)
 </code></pre>
 <div style="overflow-x:auto;">
 <table class="data-frame"><thead><tr><th></th><th>variable</th><th>mean</th><th>min</th><th>median</th><th>max</th><th>nunique</th><th>nmissing</th><th>eltype</th></tr><tr><th></th><th>Symbol</th><th>Union…</th><th>Any</th><th>Union…</th><th>Any</th><th>Union…</th><th>Nothing</th><th>DataType</th></tr></thead><tbody><p>14 rows × 8 columns</p><tr><th>1</th><td>RowNumber</td><td>5000.5</td><td>1</td><td>5000.5</td><td>10000</td><td></td><td></td><td>Int64</td></tr><tr><th>2</th><td>CustomerId</td><td>1.56909e7</td><td>15565701</td><td>1.56907e7</td><td>15815690</td><td></td><td></td><td>Int64</td></tr><tr><th>3</th><td>Surname</td><td></td><td>Abazu</td><td></td><td>Zuyeva</td><td>2932</td><td></td><td>String31</td></tr><tr><th>4</th><td>CreditScore</td><td>650.529</td><td>350</td><td>652.0</td><td>850</td><td></td><td></td><td>Int64</td></tr><tr><th>5</th><td>Geography</td><td></td><td>France</td><td></td><td>Spain</td><td>3</td><td></td><td>String7</td></tr><tr><th>6</th><td>Gender</td><td></td><td>Female</td><td></td><td>Male</td><td>2</td><td></td><td>String7</td></tr><tr><th>7</th><td>Age</td><td>38.9218</td><td>18</td><td>37.0</td><td>92</td><td></td><td></td><td>Int64</td></tr><tr><th>8</th><td>Tenure</td><td>5.0128</td><td>0</td><td>5.0</td><td>10</td><td></td><td></td><td>Int64</td></tr><tr><th>9</th><td>Balance</td><td>76485.9</td><td>0.0</td><td>97198.5</td><td>2.50898e5</td><td></td><td></td><td>Float64</td></tr><tr><th>10</th><td>NumOfProducts</td><td>1.5302</td><td>1</td><td>1.0</td><td>4</td><td></td><td></td><td>Int64</td></tr><tr><th>11</th><td>HasCrCard</td><td>0.7055</td><td>0</td><td>1.0</td><td>1</td><td></td><td></td><td>Int64</td></tr><tr><th>12</th><td>IsActiveMember</td><td>0.5151</td><td>0</td><td>1.0</td><td>1</td><td></td><td></td><td>Int64</td></tr><tr><th>13</th><td>EstimatedSalary</td><td>1.0009e5</td><td>11.58</td><td>1.00194e5</td><td>1.99992e5</td><td></td><td></td><td>Float64</td></tr><tr><th>14</th><td>Exited</td><td>0.2037</td><td>0</td><td>0.0</td><td>1</td><td></td><td></td><td>Int64</td></tr></tbody></table>
 </div>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Check column names</span>
-names(marketing_df)
-</code></pre></div><pre><code>14-element Vector{Symbol}:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Check column names</span>
+</span></span><span style="display:flex;"><span>names(marketing_df)
+</span></span></code></pre></div><pre><code>14-element Vector{Symbol}:
  :RowNumber
  :CustomerId
  :Surname
@@ -436,9 +436,9 @@ names(marketing_df)
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Count the classes</span>
-countmap(marketing_df<span style="color:#f92672">.</span>Exited)
-</code></pre></div><pre><code>Dict{Int64, Int64} with 2 entries:
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Count the classes</span>
+</span></span><span style="display:flex;"><span>countmap(marketing_df<span style="color:#f92672">.</span>Exited)
+</span></span></code></pre></div><pre><code>Dict{Int64, Int64} with 2 entries:
   0 =&gt; 7963
   1 =&gt; 2037
 </code></pre>
@@ -454,12 +454,11 @@ countmap(marketing_df<span style="color:#f92672">.</span>Exited)
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># One hot encoding</span>
-Lathe<span style="color:#f92672">.</span>preprocess<span style="color:#f92672">.</span>OneHotEncode(marketing_df,<span style="color:#e6db74">:Geography</span>)
-Lathe<span style="color:#f92672">.</span>preprocess<span style="color:#f92672">.</span>OneHotEncode(marketing_df,<span style="color:#e6db74">:Gender</span>)
-select!(marketing_df, Not([<span style="color:#e6db74">:RowNumber</span>, <span style="color:#e6db74">:CustomerId</span>,<span style="color:#e6db74">:Surname</span>,<span style="color:#e6db74">:Geography</span>,<span style="color:#e6db74">:Gender</span>,<span style="color:#e6db74">:Male</span>]))
-
-</code></pre></div><div style="overflow-x:auto;">
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># One hot encoding</span>
+</span></span><span style="display:flex;"><span>Lathe<span style="color:#f92672">.</span>preprocess<span style="color:#f92672">.</span>OneHotEncode(marketing_df,<span style="color:#e6db74">:Geography</span>)
+</span></span><span style="display:flex;"><span>Lathe<span style="color:#f92672">.</span>preprocess<span style="color:#f92672">.</span>OneHotEncode(marketing_df,<span style="color:#e6db74">:Gender</span>)
+</span></span><span style="display:flex;"><span>select!(marketing_df, Not([<span style="color:#e6db74">:RowNumber</span>, <span style="color:#e6db74">:CustomerId</span>,<span style="color:#e6db74">:Surname</span>,<span style="color:#e6db74">:Geography</span>,<span style="color:#e6db74">:Gender</span>,<span style="color:#e6db74">:Male</span>]))
+</span></span></code></pre></div><div style="overflow-x:auto;">
 <table class="data-frame"><thead><tr><th></th><th>CreditScore</th><th>Age</th><th>Tenure</th><th>Balance</th><th>NumOfProducts</th><th>HasCrCard</th><th>IsActiveMember</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>Int64</th><th>Float64</th><th>Int64</th><th>Int64</th><th>Int64</th></tr></thead><tbody><p>10,000 rows × 13 columns (omitted printing of 6 columns)</p><tr><th>1</th><td>619</td><td>42</td><td>2</td><td>0.0</td><td>1</td><td>1</td><td>1</td></tr><tr><th>2</th><td>608</td><td>41</td><td>1</td><td>83807.9</td><td>1</td><td>0</td><td>1</td></tr><tr><th>3</th><td>502</td><td>42</td><td>8</td><td>1.59661e5</td><td>3</td><td>1</td><td>0</td></tr><tr><th>4</th><td>699</td><td>39</td><td>1</td><td>0.0</td><td>2</td><td>0</td><td>0</td></tr><tr><th>5</th><td>850</td><td>43</td><td>2</td><td>1.25511e5</td><td>1</td><td>1</td><td>1</td></tr><tr><th>6</th><td>645</td><td>44</td><td>8</td><td>1.13756e5</td><td>2</td><td>1</td><td>0</td></tr><tr><th>7</th><td>822</td><td>50</td><td>7</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>8</th><td>376</td><td>29</td><td>4</td><td>1.15047e5</td><td>4</td><td>1</td><td>0</td></tr><tr><th>9</th><td>501</td><td>44</td><td>4</td><td>1.42051e5</td><td>2</td><td>0</td><td>1</td></tr><tr><th>10</th><td>684</td><td>27</td><td>2</td><td>1.34604e5</td><td>1</td><td>1</td><td>1</td></tr><tr><th>11</th><td>528</td><td>31</td><td>6</td><td>1.02017e5</td><td>2</td><td>0</td><td>0</td></tr><tr><th>12</th><td>497</td><td>24</td><td>3</td><td>0.0</td><td>2</td><td>1</td><td>0</td></tr><tr><th>13</th><td>476</td><td>34</td><td>10</td><td>0.0</td><td>2</td><td>1</td><td>0</td></tr><tr><th>14</th><td>549</td><td>25</td><td>5</td><td>0.0</td><td>2</td><td>0</td><td>0</td></tr><tr><th>15</th><td>635</td><td>35</td><td>7</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>16</th><td>616</td><td>45</td><td>3</td><td>1.43129e5</td><td>2</td><td>0</td><td>1</td></tr><tr><th>17</th><td>653</td><td>58</td><td>1</td><td>1.32603e5</td><td>1</td><td>1</td><td>0</td></tr><tr><th>18</th><td>549</td><td>24</td><td>9</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>19</th><td>587</td><td>45</td><td>6</td><td>0.0</td><td>1</td><td>0</td><td>0</td></tr><tr><th>20</th><td>726</td><td>24</td><td>6</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>21</th><td>732</td><td>41</td><td>8</td><td>0.0</td><td>2</td><td>1</td><td>1</td></tr><tr><th>22</th><td>636</td><td>32</td><td>8</td><td>0.0</td><td>2</td><td>1</td><td>0</td></tr><tr><th>23</th><td>510</td><td>38</td><td>4</td><td>0.0</td><td>1</td><td>1</td><td>0</td></tr><tr><th>24</th><td>669</td><td>46</td><td>3</td><td>0.0</td><td>2</td><td>0</td><td>1</td></tr><tr><th>25</th><td>846</td><td>38</td><td>5</td><td>0.0</td><td>1</td><td>1</td><td>1</td></tr><tr><th>26</th><td>577</td><td>25</td><td>3</td><td>0.0</td><td>2</td><td>0</td><td>1</td></tr><tr><th>27</th><td>756</td><td>36</td><td>2</td><td>1.36816e5</td><td>1</td><td>1</td><td>1</td></tr><tr><th>28</th><td>571</td><td>44</td><td>9</td><td>0.0</td><td>2</td><td>0</td><td>0</td></tr><tr><th>29</th><td>574</td><td>43</td><td>3</td><td>1.41349e5</td><td>1</td><td>1</td><td>1</td></tr><tr><th>30</th><td>411</td><td>29</td><td>0</td><td>59697.2</td><td>2</td><td>1</td><td>1</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table>
 </div>
 <h3 id="split-trainand-test-data" >Split Train/and Test Data
@@ -468,19 +467,19 @@ select!(marketing_df, Not([<span style="color:#e6db74">:RowNumber</span>, <span 
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Train test split</span>
-<span style="color:#66d9ef">using</span> Lathe<span style="color:#f92672">.</span>preprocess<span style="color:#f92672">:</span> TrainTestSplit
-train, test <span style="color:#f92672">=</span> TrainTestSplit(marketing_df,<span style="color:#ae81ff">.75</span>);
-</code></pre></div><h2 id="build-model" >Build Model
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Train test split</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> Lathe<span style="color:#f92672">.</span>preprocess<span style="color:#f92672">:</span> TrainTestSplit
+</span></span><span style="display:flex;"><span>train, test <span style="color:#f92672">=</span> TrainTestSplit(marketing_df,<span style="color:#ae81ff">.75</span>);
+</span></span></code></pre></div><h2 id="build-model" >Build Model
 <span>
     <a href="#build-model">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Train logistic regression model</span>
-fm <span style="color:#f92672">=</span> <span style="color:#a6e22e">@formula</span>(Exited <span style="color:#f92672">~</span> CreditScore <span style="color:#f92672">+</span> Age <span style="color:#f92672">+</span> Tenure <span style="color:#f92672">+</span> Balance <span style="color:#f92672">+</span> NumOfProducts <span style="color:#f92672">+</span> HasCrCard <span style="color:#f92672">+</span> IsActiveMember <span style="color:#f92672">+</span> EstimatedSalary <span style="color:#f92672">+</span> Female <span style="color:#f92672">+</span> France <span style="color:#f92672">+</span> Spain)
-logit <span style="color:#f92672">=</span> glm(fm, train, Binomial(), ProbitLink())
-</code></pre></div><pre><code>StatsModels.TableRegressionModel{GeneralizedLinearModel{GLM.GlmResp{Vector{Float64}, Binomial{Float64}, ProbitLink}, GLM.DensePredChol{Float64, LinearAlgebra.Cholesky{Float64, Matrix{Float64}}}}, Matrix{Float64}}
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Train logistic regression model</span>
+</span></span><span style="display:flex;"><span>fm <span style="color:#f92672">=</span> <span style="color:#a6e22e">@formula</span>(Exited <span style="color:#f92672">~</span> CreditScore <span style="color:#f92672">+</span> Age <span style="color:#f92672">+</span> Tenure <span style="color:#f92672">+</span> Balance <span style="color:#f92672">+</span> NumOfProducts <span style="color:#f92672">+</span> HasCrCard <span style="color:#f92672">+</span> IsActiveMember <span style="color:#f92672">+</span> EstimatedSalary <span style="color:#f92672">+</span> Female <span style="color:#f92672">+</span> France <span style="color:#f92672">+</span> Spain)
+</span></span><span style="display:flex;"><span>logit <span style="color:#f92672">=</span> glm(fm, train, Binomial(), ProbitLink())
+</span></span></code></pre></div><pre><code>StatsModels.TableRegressionModel{GeneralizedLinearModel{GLM.GlmResp{Vector{Float64}, Binomial{Float64}, ProbitLink}, GLM.DensePredChol{Float64, LinearAlgebra.Cholesky{Float64, Matrix{Float64}}}}, Matrix{Float64}}
 
 Exited ~ 1 + CreditScore + Age + Tenure + Balance + NumOfProducts + HasCrCard + IsActiveMember + EstimatedSalary + Female + France + Spain
 
@@ -508,9 +507,9 @@ Spain            -0.443184     0.051707      -8.57    &lt;1e-16  -0.544527     -
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Predict the target variable on test data </span>
-prediction <span style="color:#f92672">=</span> predict(logit,test)
-</code></pre></div><pre><code>2406-element Vector{Union{Missing, Float64}}:
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Predict the target variable on test data </span>
+</span></span><span style="display:flex;"><span>prediction <span style="color:#f92672">=</span> predict(logit,test)
+</span></span></code></pre></div><pre><code>2406-element Vector{Union{Missing, Float64}}:
  0.24401107345293602
  0.1266535868551322
  0.031721959583257124
@@ -538,12 +537,12 @@ prediction <span style="color:#f92672">=</span> predict(logit,test)
  0.12888818685657766
  0.15310112069144077
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Convert probability score to class</span>
-prediction_class <span style="color:#f92672">=</span> [<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">end</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> prediction];
-
-prediction_df <span style="color:#f92672">=</span> DataFrame(y_actual <span style="color:#f92672">=</span> test<span style="color:#f92672">.</span>Exited, y_predicted <span style="color:#f92672">=</span> prediction_class, prob_predicted <span style="color:#f92672">=</span> prediction);
-prediction_df<span style="color:#f92672">.</span>correctly_classified <span style="color:#f92672">=</span> prediction_df<span style="color:#f92672">.</span>y_actual <span style="color:#f92672">.==</span> prediction_df<span style="color:#f92672">.</span>y_predicted
-</code></pre></div><pre><code>2406-element BitVector:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Convert probability score to class</span>
+</span></span><span style="display:flex;"><span>prediction_class <span style="color:#f92672">=</span> [<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">end</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> prediction];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prediction_df <span style="color:#f92672">=</span> DataFrame(y_actual <span style="color:#f92672">=</span> test<span style="color:#f92672">.</span>Exited, y_predicted <span style="color:#f92672">=</span> prediction_class, prob_predicted <span style="color:#f92672">=</span> prediction);
+</span></span><span style="display:flex;"><span>prediction_df<span style="color:#f92672">.</span>correctly_classified <span style="color:#f92672">=</span> prediction_df<span style="color:#f92672">.</span>y_actual <span style="color:#f92672">.==</span> prediction_df<span style="color:#f92672">.</span>y_predicted
+</span></span></code></pre></div><pre><code>2406-element BitVector:
  0
  1
  1
@@ -577,8 +576,8 @@ prediction_df<span style="color:#f92672">.</span>correctly_classified <span styl
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">accuracy <span style="color:#f92672">=</span> mean(prediction_df<span style="color:#f92672">.</span>correctly_classified)
-</code></pre></div><pre><code>0.8100581878636741
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>accuracy <span style="color:#f92672">=</span> mean(prediction_df<span style="color:#f92672">.</span>correctly_classified)
+</span></span></code></pre></div><pre><code>0.8100581878636741
 </code></pre>
 <h3 id="confusion-matrix" >Confusion Matrix
 <span>
@@ -586,9 +585,9 @@ prediction_df<span style="color:#f92672">.</span>correctly_classified <span styl
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># confusion_matrix = confusmat(2,prediction_df.y_actual, prediction_df.y_predicted)</span>
-confusion_matrix <span style="color:#f92672">=</span> MLBase<span style="color:#f92672">.</span>roc(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>y_predicted)
-</code></pre></div><pre><code>ROCNums{Int64}
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># confusion_matrix = confusmat(2,prediction_df.y_actual, prediction_df.y_predicted)</span>
+</span></span><span style="display:flex;"><span>confusion_matrix <span style="color:#f92672">=</span> MLBase<span style="color:#f92672">.</span>roc(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>y_predicted)
+</span></span></code></pre></div><pre><code>ROCNums{Int64}
   p = 510
   n = 1896
   tp = 105
@@ -603,22 +602,22 @@ confusion_matrix <span style="color:#f92672">=</span> MLBase<span style="color:#
     </a>
 </span>
 </h3><p>The model is estimating far to many exiting cases.  About 4 times the true value.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">fpr, tpr, thresholds <span style="color:#f92672">=</span> sklearn<span style="color:#f92672">.</span>roc_curve(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>prob_predicted)
-</code></pre></div><pre><code>([0.0, 0.0, 0.0, 0.0005274261603375527, 0.0005274261603375527, 0.0010548523206751054, 0.0010548523206751054, 0.0015822784810126582, 0.0015822784810126582, 0.0026371308016877636  …  0.8829113924050633, 0.9066455696202531, 0.9066455696202531, 0.9193037974683544, 0.9193037974683544, 0.92457805907173, 0.92457805907173, 0.9725738396624473, 0.9725738396624473, 1.0], [0.0, 0.00196078431372549, 0.00392156862745098, 0.00392156862745098, 0.00784313725490196, 0.00784313725490196, 0.01568627450980392, 0.01568627450980392, 0.03137254901960784, 0.03137254901960784  …  0.9921568627450981, 0.9921568627450981, 0.9941176470588236, 0.9941176470588236, 0.996078431372549, 0.996078431372549, 0.9980392156862745, 0.9980392156862745, 1.0, 1.0], [1.8467335270755767, 0.8467335270755767, 0.8140811888019499, 0.8092555110984978, 0.7970873802691381, 0.79684704533007, 0.7719016175181805, 0.7709263202992206, 0.7060214606993195, 0.6994801619873218  …  0.04233143871590189, 0.03786940431261241, 0.037850945580692276, 0.035665362242897694, 0.03532968973176317, 0.03416668456674327, 0.03407543014692377, 0.020932892669754958, 0.020885871157504798, 0.00597005405256463])
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>fpr, tpr, thresholds <span style="color:#f92672">=</span> sklearn<span style="color:#f92672">.</span>roc_curve(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>prob_predicted)
+</span></span></code></pre></div><pre><code>([0.0, 0.0, 0.0, 0.0005274261603375527, 0.0005274261603375527, 0.0010548523206751054, 0.0010548523206751054, 0.0015822784810126582, 0.0015822784810126582, 0.0026371308016877636  …  0.8829113924050633, 0.9066455696202531, 0.9066455696202531, 0.9193037974683544, 0.9193037974683544, 0.92457805907173, 0.92457805907173, 0.9725738396624473, 0.9725738396624473, 1.0], [0.0, 0.00196078431372549, 0.00392156862745098, 0.00392156862745098, 0.00784313725490196, 0.00784313725490196, 0.01568627450980392, 0.01568627450980392, 0.03137254901960784, 0.03137254901960784  …  0.9921568627450981, 0.9921568627450981, 0.9941176470588236, 0.9941176470588236, 0.996078431372549, 0.996078431372549, 0.9980392156862745, 0.9980392156862745, 1.0, 1.0], [1.8467335270755767, 0.8467335270755767, 0.8140811888019499, 0.8092555110984978, 0.7970873802691381, 0.79684704533007, 0.7719016175181805, 0.7709263202992206, 0.7060214606993195, 0.6994801619873218  …  0.04233143871590189, 0.03786940431261241, 0.037850945580692276, 0.035665362242897694, 0.03532968973176317, 0.03416668456674327, 0.03407543014692377, 0.020932892669754958, 0.020885871157504798, 0.00597005405256463])
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Plot ROC curve</span>
-plot(fpr, tpr)
-title!(<span style="color:#e6db74">&#34;ROC curve&#34;</span>)
-</code></pre></div><p><img src="propensity_scoring_files/propensity_scoring_24_0.svg" alt="svg"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Plot ROC curve</span>
+</span></span><span style="display:flex;"><span>plot(fpr, tpr)
+</span></span><span style="display:flex;"><span>title!(<span style="color:#e6db74">&#34;ROC curve&#34;</span>)
+</span></span></code></pre></div><p><img src="propensity_scoring_files/propensity_scoring_24_0.svg" alt="svg"></p>
 <h2 id="the-class-imbalance-problem" >The Class Imbalance Problem
 <span>
     <a href="#the-class-imbalance-problem">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Count the classes</span>
-countmap(marketing_df<span style="color:#f92672">.</span>Exited)
-</code></pre></div><pre><code>Dict{Int64, Int64} with 2 entries:
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Count the classes</span>
+</span></span><span style="display:flex;"><span>countmap(marketing_df<span style="color:#f92672">.</span>Exited)
+</span></span></code></pre></div><pre><code>Dict{Int64, Int64} with 2 entries:
   0 =&gt; 7963
   1 =&gt; 2037
 </code></pre>
@@ -628,15 +627,15 @@ countmap(marketing_df<span style="color:#f92672">.</span>Exited)
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">X2, y2 <span style="color:#f92672">=</span>smote(marketing_df[<span style="color:#f92672">!</span>,[<span style="color:#e6db74">:CreditScore</span>,<span style="color:#e6db74">:Age</span> ,<span style="color:#e6db74">:Tenure</span>, <span style="color:#e6db74">:Balance</span>, <span style="color:#e6db74">:NumOfProducts</span>, <span style="color:#e6db74">:HasCrCard</span>, <span style="color:#e6db74">:IsActiveMember</span>, <span style="color:#e6db74">:EstimatedSalary</span>, <span style="color:#e6db74">:Female</span> , <span style="color:#e6db74">:France</span>, <span style="color:#e6db74">:Spain</span>]], marketing_df<span style="color:#f92672">.</span>Exited, k <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>, pct_under <span style="color:#f92672">=</span> <span style="color:#ae81ff">150</span>, pct_over <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>)
-df_balanced <span style="color:#f92672">=</span> X2
-df_balanced<span style="color:#f92672">.</span>Exited <span style="color:#f92672">=</span> y2;
-
-df <span style="color:#f92672">=</span> df_balanced;
-
-<span style="color:#75715e"># Count the classes</span>
-countmap(df<span style="color:#f92672">.</span>Exited)
-</code></pre></div><pre><code>Dict{Int64, Int64} with 2 entries:
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>X2, y2 <span style="color:#f92672">=</span>smote(marketing_df[<span style="color:#f92672">!</span>,[<span style="color:#e6db74">:CreditScore</span>,<span style="color:#e6db74">:Age</span> ,<span style="color:#e6db74">:Tenure</span>, <span style="color:#e6db74">:Balance</span>, <span style="color:#e6db74">:NumOfProducts</span>, <span style="color:#e6db74">:HasCrCard</span>, <span style="color:#e6db74">:IsActiveMember</span>, <span style="color:#e6db74">:EstimatedSalary</span>, <span style="color:#e6db74">:Female</span> , <span style="color:#e6db74">:France</span>, <span style="color:#e6db74">:Spain</span>]], marketing_df<span style="color:#f92672">.</span>Exited, k <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>, pct_under <span style="color:#f92672">=</span> <span style="color:#ae81ff">150</span>, pct_over <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>)
+</span></span><span style="display:flex;"><span>df_balanced <span style="color:#f92672">=</span> X2
+</span></span><span style="display:flex;"><span>df_balanced<span style="color:#f92672">.</span>Exited <span style="color:#f92672">=</span> y2;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> df_balanced;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Count the classes</span>
+</span></span><span style="display:flex;"><span>countmap(df<span style="color:#f92672">.</span>Exited)
+</span></span></code></pre></div><pre><code>Dict{Int64, Int64} with 2 entries:
   0 =&gt; 6111
   1 =&gt; 6111
 </code></pre>
@@ -646,30 +645,30 @@ countmap(df<span style="color:#f92672">.</span>Exited)
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
     </a>
 </span>
-</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Train test split</span>
-train, test <span style="color:#f92672">=</span> TrainTestSplit(df,<span style="color:#ae81ff">.75</span>);
-
-<span style="color:#75715e"># Model Building</span>
-fm <span style="color:#f92672">=</span> <span style="color:#a6e22e">@formula</span>(Exited <span style="color:#f92672">~</span> CreditScore <span style="color:#f92672">+</span> Age <span style="color:#f92672">+</span> Tenure <span style="color:#f92672">+</span> Balance <span style="color:#f92672">+</span> NumOfProducts <span style="color:#f92672">+</span> HasCrCard <span style="color:#f92672">+</span> IsActiveMember <span style="color:#f92672">+</span> EstimatedSalary <span style="color:#f92672">+</span> Female <span style="color:#f92672">+</span> France <span style="color:#f92672">+</span> Spain)
-logit <span style="color:#f92672">=</span> glm(fm, train, Binomial(), ProbitLink())
-
-<span style="color:#75715e"># Predict the target variable on test data </span>
-prediction <span style="color:#f92672">=</span> predict(logit,test)
-
-<span style="color:#75715e"># Convert probability score to class</span>
-prediction_class <span style="color:#f92672">=</span> [<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">end</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> prediction];
-
-prediction_df <span style="color:#f92672">=</span> DataFrame(y_actual <span style="color:#f92672">=</span> test<span style="color:#f92672">.</span>Exited, y_predicted <span style="color:#f92672">=</span> prediction_class, prob_predicted <span style="color:#f92672">=</span> prediction);
-prediction_df<span style="color:#f92672">.</span>correctly_classified <span style="color:#f92672">=</span> prediction_df<span style="color:#f92672">.</span>y_actual <span style="color:#f92672">.==</span> prediction_df<span style="color:#f92672">.</span>y_predicted
-
-
-<span style="color:#75715e"># Accuracy Score</span>
-accuracy <span style="color:#f92672">=</span> mean(prediction_df<span style="color:#f92672">.</span>correctly_classified)
-print(<span style="color:#e6db74">&#34;Accuracy of the model is : &#34;</span>,accuracy)
-
-<span style="color:#75715e"># Confusion Matrix</span>
-confusion_matrix <span style="color:#f92672">=</span> MLBase<span style="color:#f92672">.</span>roc(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>y_predicted)
-</code></pre></div><pre><code>Accuracy of the model is : 0.7169563791407019
+</h3><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span><span style="color:#75715e"># Train test split</span>
+</span></span><span style="display:flex;"><span>train, test <span style="color:#f92672">=</span> TrainTestSplit(df,<span style="color:#ae81ff">.75</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Model Building</span>
+</span></span><span style="display:flex;"><span>fm <span style="color:#f92672">=</span> <span style="color:#a6e22e">@formula</span>(Exited <span style="color:#f92672">~</span> CreditScore <span style="color:#f92672">+</span> Age <span style="color:#f92672">+</span> Tenure <span style="color:#f92672">+</span> Balance <span style="color:#f92672">+</span> NumOfProducts <span style="color:#f92672">+</span> HasCrCard <span style="color:#f92672">+</span> IsActiveMember <span style="color:#f92672">+</span> EstimatedSalary <span style="color:#f92672">+</span> Female <span style="color:#f92672">+</span> France <span style="color:#f92672">+</span> Spain)
+</span></span><span style="display:flex;"><span>logit <span style="color:#f92672">=</span> glm(fm, train, Binomial(), ProbitLink())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Predict the target variable on test data </span>
+</span></span><span style="display:flex;"><span>prediction <span style="color:#f92672">=</span> predict(logit,test)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Convert probability score to class</span>
+</span></span><span style="display:flex;"><span>prediction_class <span style="color:#f92672">=</span> [<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">end</span> <span style="color:#66d9ef">for</span> x <span style="color:#66d9ef">in</span> prediction];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prediction_df <span style="color:#f92672">=</span> DataFrame(y_actual <span style="color:#f92672">=</span> test<span style="color:#f92672">.</span>Exited, y_predicted <span style="color:#f92672">=</span> prediction_class, prob_predicted <span style="color:#f92672">=</span> prediction);
+</span></span><span style="display:flex;"><span>prediction_df<span style="color:#f92672">.</span>correctly_classified <span style="color:#f92672">=</span> prediction_df<span style="color:#f92672">.</span>y_actual <span style="color:#f92672">.==</span> prediction_df<span style="color:#f92672">.</span>y_predicted
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Accuracy Score</span>
+</span></span><span style="display:flex;"><span>accuracy <span style="color:#f92672">=</span> mean(prediction_df<span style="color:#f92672">.</span>correctly_classified)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Accuracy of the model is : &#34;</span>,accuracy)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Confusion Matrix</span>
+</span></span><span style="display:flex;"><span>confusion_matrix <span style="color:#f92672">=</span> MLBase<span style="color:#f92672">.</span>roc(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>y_predicted)
+</span></span></code></pre></div><pre><code>Accuracy of the model is : 0.7169563791407019
 
 
 
@@ -682,14 +681,13 @@ ROCNums{Int64}
   fp = 404
   fn = 459
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">fpr, tpr, thresholds <span style="color:#f92672">=</span> sklearn<span style="color:#f92672">.</span>roc_curve(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>prob_predicted)
-<span style="color:#75715e"># Plot ROC curve</span>
-
-</code></pre></div><pre><code>([0.0, 0.0, 0.0, 0.00066711140760507, 0.00066711140760507, 0.00133422281521014, 0.00133422281521014, 0.0020013342228152103, 0.0020013342228152103, 0.00266844563042028  …  0.9846564376250834, 0.9893262174783188, 0.9893262174783188, 0.9913275517011341, 0.9913275517011341, 0.9973315543695798, 0.9986657771847899, 0.9993328885923949, 0.9993328885923949, 1.0], [0.0, 0.0006451612903225806, 0.0025806451612903226, 0.0025806451612903226, 0.005161290322580645, 0.005161290322580645, 0.007741935483870968, 0.007741935483870968, 0.00903225806451613, 0.00903225806451613  …  0.9980645161290322, 0.9980645161290322, 0.9987096774193548, 0.9987096774193548, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 1.0, 1.0], [1.9907624292252022, 0.9907624292252022, 0.983731024429679, 0.97951657298985, 0.9730082291507035, 0.9713532719467679, 0.9629327481173712, 0.9604203755106321, 0.9593444340323958, 0.9584649467140461  …  0.06923199350115271, 0.06553287523911823, 0.06469253560487893, 0.058594401854125504, 0.057872556108602216, 0.034170953161915506, 0.03357051125028141, 0.03297342671224324, 0.030937011626933943, 0.023743078872535135])
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>fpr, tpr, thresholds <span style="color:#f92672">=</span> sklearn<span style="color:#f92672">.</span>roc_curve(prediction_df<span style="color:#f92672">.</span>y_actual, prediction_df<span style="color:#f92672">.</span>prob_predicted)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Plot ROC curve</span>
+</span></span></code></pre></div><pre><code>([0.0, 0.0, 0.0, 0.00066711140760507, 0.00066711140760507, 0.00133422281521014, 0.00133422281521014, 0.0020013342228152103, 0.0020013342228152103, 0.00266844563042028  …  0.9846564376250834, 0.9893262174783188, 0.9893262174783188, 0.9913275517011341, 0.9913275517011341, 0.9973315543695798, 0.9986657771847899, 0.9993328885923949, 0.9993328885923949, 1.0], [0.0, 0.0006451612903225806, 0.0025806451612903226, 0.0025806451612903226, 0.005161290322580645, 0.005161290322580645, 0.007741935483870968, 0.007741935483870968, 0.00903225806451613, 0.00903225806451613  …  0.9980645161290322, 0.9980645161290322, 0.9987096774193548, 0.9987096774193548, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 0.9993548387096775, 1.0, 1.0], [1.9907624292252022, 0.9907624292252022, 0.983731024429679, 0.97951657298985, 0.9730082291507035, 0.9713532719467679, 0.9629327481173712, 0.9604203755106321, 0.9593444340323958, 0.9584649467140461  …  0.06923199350115271, 0.06553287523911823, 0.06469253560487893, 0.058594401854125504, 0.057872556108602216, 0.034170953161915506, 0.03357051125028141, 0.03297342671224324, 0.030937011626933943, 0.023743078872535135])
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">plot(fpr, tpr)
-title!(<span style="color:#e6db74">&#34;ROC curve&#34;</span>)
-</code></pre></div><p><img src="propensity_scoring_files/propensity_scoring_32_0.svg" alt="svg"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-julia" data-lang="julia"><span style="display:flex;"><span>plot(fpr, tpr)
+</span></span><span style="display:flex;"><span>title!(<span style="color:#e6db74">&#34;ROC curve&#34;</span>)
+</span></span></code></pre></div><p><img src="propensity_scoring_files/propensity_scoring_32_0.svg" alt="svg"></p>
 <h2 id="final-discussion" >Final Discussion
 <span>
     <a href="#final-discussion">
@@ -822,7 +820,7 @@ title!(<span style="color:#e6db74">&#34;ROC curve&#34;</span>)
         
     <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
