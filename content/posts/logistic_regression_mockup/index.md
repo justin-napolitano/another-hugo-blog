@@ -5,7 +5,7 @@ description = "Designing a logistic regression model of from randomized bioinfor
 author = "Justin Napolitano"
 categories = ['Python','Tutorials', 'Quantitative Analysis']
 tags = ['julia','numerical-computing','Logistic Regression','statistics']
-images = ['featured-julia.png']
+images = ['feature-bio.jpeg']
 +++
 
 # Model Design and Logistic Regression in Python
@@ -37,7 +37,6 @@ from sklearn.preprocessing import StandardScaler
 
 ## Data Import
 
-include a raw html here  to include the project description data file in the final markdown document
 
 ### Data  Description
 
