@@ -68,10 +68,4 @@ The generated site will be in the `public` directory.
 
 - Add more detailed documentation and contribution guidelines
 - Expand multi-language support and translations
-- Integrate additional analytics and SEO improvements
-- Automate deployment to hosting providers
-- Enhance UI with more interactive features
-
----
-
-*Note: This repository contains rich blog content primarily authored by Justin Napolitano, focusing on data science, legal AI research, and energy sector analysis.*
+- Integrate additional analytics
