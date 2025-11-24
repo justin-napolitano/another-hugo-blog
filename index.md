@@ -1,12 +1,27 @@
 ---
-slug: "github-another-hugo-blog"
-title: "another-hugo-blog"
-repo: "justin-napolitano/another-hugo-blog"
-githubUrl: "https://github.com/justin-napolitano/another-hugo-blog"
-generatedAt: "2025-11-23T08:35:51.611325Z"
-source: "github-auto"
+slug: github-another-hugo-blog
+title: 'Technical Overview of another-hugo-blog: Hugo-based Multilingual Static Blog'
+repo: justin-napolitano/another-hugo-blog
+githubUrl: https://github.com/justin-napolitano/another-hugo-blog
+generatedAt: '2025-11-23T08:35:51.611325Z'
+source: github-auto
+summary: >-
+  Technical documentation of another-hugo-blog, a multilingual Hugo static site featuring code
+  tutorials, analytics, internationalization, and legal-energy content.
+tags:
+  - hugo
+  - static-site
+  - multilingual
+  - blogging
+  - analytics
+  - code-highlighting
+seoPrimaryKeyword: another-hugo-blog
+seoSecondaryKeywords:
+  - hugo
+  - static site generator
+  - multilingual blog
+seoOptimized: true
 ---
-
 
 # another-hugo-blog: Technical Overview and Implementation Notes
 
