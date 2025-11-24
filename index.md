@@ -21,6 +21,13 @@ seoSecondaryKeywords:
   - static site generator
   - multilingual blog
 seoOptimized: true
+topicFamily: static
+topicFamilyConfidence: 0.95
+topicFamilyNotes: >-
+  The post describes a Hugo-based multilingual static blog project, focusing on static site
+  generation, theme, configuration, internationalization, code highlighting, analytics, and
+  deployment. This matches the 'static' family that covers static site and blog projects using Hugo
+  and related tooling.
 ---
 
 # another-hugo-blog: Technical Overview and Implementation Notes
@@ -78,3 +85,4 @@ The need for a customizable, static blog that supports multiple languages, integ
 - QuantEcon Julia lectures: https://julia.quantecon.org/
 
 This document serves as a technical reference to quickly reacquaint with the project structure, configuration, and implementation choices when returning to development or maintenance.
+
