@@ -7,8 +7,8 @@ githubUrl: https://github.com/justin-napolitano/another-hugo-blog
 generatedAt: '2025-11-24T21:33:56.873Z'
 source: github-auto
 summary: >-
-  Learn how to set up a multi-language blog using Hugo, featuring data science
-  and legal research content.
+  Learn how to set up a multi-language blog using Hugo, featuring data science and legal research
+  content.
 tags:
   - hugo
   - data science
@@ -33,8 +33,8 @@ seoSecondaryKeywords:
   - Hugo installation guide
   - running Hugo locally
 seoOptimized: true
-topicFamily: null
-topicFamilyConfidence: null
+topicFamily: static
+topicFamilyConfidence: 0.9
 kind: project
 entryLayout: project
 showInProjects: true
@@ -112,4 +112,5 @@ The generated site will be in the `public` directory.
 - Add more detailed documentation and contribution guidelines
 - Expand multi-language support and translations
 - Integrate additional analytics
+
 
