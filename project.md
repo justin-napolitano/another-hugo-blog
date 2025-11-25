@@ -1,19 +1,31 @@
 ---
 slug: github-another-hugo-blog
 id: github-another-hugo-blog
-title: another-hugo-blog
+title: 'Another Hugo Blog: Data Science and Legal Research'
 repo: justin-napolitano/another-hugo-blog
 githubUrl: https://github.com/justin-napolitano/another-hugo-blog
 generatedAt: '2025-11-24T21:33:56.873Z'
 source: github-auto
 summary: >-
-  A personal data science and legal research blog powered by Hugo, featuring
-  rich content on quantitative analysis, legal AI research, and energy sector
-  insights.
-tags: []
-seoPrimaryKeyword: ''
-seoSecondaryKeywords: []
-seoOptimized: false
+  Explore a Hugo-powered blog focused on data science, legal AI research, and
+  energy sector insights with multi-language support.
+tags:
+  - hugo
+  - data science
+  - legal research
+  - static site generator
+  - julia
+  - python
+  - google analytics
+  - disqus
+seoPrimaryKeyword: hugo blog for data science
+seoSecondaryKeywords:
+  - static site with hugo
+  - legal AI blog
+  - energy sector analysis
+  - multi-language blog
+  - data analysis with julia
+seoOptimized: true
 topicFamily: null
 topicFamilyConfidence: null
 kind: project
