@@ -1,14 +1,14 @@
 ---
 slug: github-another-hugo-blog
 id: github-another-hugo-blog
-title: 'Another Hugo Blog: Data Science and Legal Research'
+title: Building a Multi-Language Blog with Hugo
 repo: justin-napolitano/another-hugo-blog
 githubUrl: https://github.com/justin-napolitano/another-hugo-blog
 generatedAt: '2025-11-24T21:33:56.873Z'
 source: github-auto
 summary: >-
-  Explore a Hugo-powered blog focused on data science, legal AI research, and
-  energy sector insights with multi-language support.
+  Learn how to set up a multi-language blog using Hugo, featuring data science
+  and legal research content.
 tags:
   - hugo
   - data science
@@ -18,13 +18,20 @@ tags:
   - python
   - google analytics
   - disqus
-seoPrimaryKeyword: hugo blog for data science
+  - data analysis
+  - legal AI
+  - multi-language support
+  - Julia
+  - Python
+  - Google Analytics
+seoPrimaryKeyword: hugo multi-language blog setup
 seoSecondaryKeywords:
-  - static site with hugo
-  - legal AI blog
-  - energy sector analysis
-  - multi-language blog
-  - data analysis with julia
+  - static site with Hugo
+  - Hugo blog features
+  - data science blog
+  - legal research blog
+  - Hugo installation guide
+  - running Hugo locally
 seoOptimized: true
 topicFamily: null
 topicFamilyConfidence: null
