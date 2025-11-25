@@ -1,13 +1,13 @@
 ---
 slug: github-another-hugo-blog
-title: 'Technical Overview of another-hugo-blog: Hugo-based Multilingual Static Blog'
+title: Technical Overview of Another Hugo Blog Implementation
 repo: justin-napolitano/another-hugo-blog
 githubUrl: https://github.com/justin-napolitano/another-hugo-blog
 generatedAt: '2025-11-23T08:35:51.611325Z'
 source: github-auto
 summary: >-
-  Technical documentation of another-hugo-blog, a multilingual Hugo static site featuring code
-  tutorials, analytics, internationalization, and legal-energy content.
+  Explore the architecture, features, and implementation details of a
+  customizable static blog built with Hugo for diverse technical content.
 tags:
   - hugo
   - static-site
@@ -15,19 +15,26 @@ tags:
   - blogging
   - analytics
   - code-highlighting
-seoPrimaryKeyword: another-hugo-blog
+  - static site generation
+  - markdown
+  - javascript
+seoPrimaryKeyword: hugo blog implementation
 seoSecondaryKeywords:
-  - hugo
   - static site generator
-  - multilingual blog
+  - code highlighting
+  - multi-language support
+  - content organization
+  - blog architecture
 seoOptimized: true
 topicFamily: static
 topicFamilyConfidence: 0.95
 topicFamilyNotes: >-
-  The post describes a Hugo-based multilingual static blog project, focusing on static site
-  generation, theme, configuration, internationalization, code highlighting, analytics, and
-  deployment. This matches the 'static' family that covers static site and blog projects using Hugo
-  and related tooling.
+  The post describes a Hugo-based multilingual static blog project, focusing on
+  static site generation, theme, configuration, internationalization, code
+  highlighting, analytics, and deployment. This matches the 'static' family that
+  covers static site and blog projects using Hugo and related tooling.
+kind: project
+id: github-another-hugo-blog
 ---
 
 # another-hugo-blog: Technical Overview and Implementation Notes
